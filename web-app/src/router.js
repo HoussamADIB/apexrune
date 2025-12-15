@@ -1391,7 +1391,7 @@ function loadCaseStudiesPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </main>
