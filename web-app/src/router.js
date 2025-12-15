@@ -107,6 +107,11 @@ function loadServicePage(serviceKey) {
 
     // Add service detail page styles
     addServiceDetailStyles();
+    
+    // Re-initialize contact form for dynamically loaded pages
+    import('./contact-form.js').then(({ initContactForm }) => {
+      initContactForm();
+    });
   });
 }
 

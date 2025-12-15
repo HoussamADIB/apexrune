@@ -3,6 +3,7 @@ import { initServiceTabs } from './services.js'
 import { initRouter } from './router.js'
 import { certifications, initCertificationsCarousel, getSalesforceCloudIcon } from './certifications.js'
 import { initDashboardAnimations } from './dashboard-animations.js'
+import { initContactForm } from './contact-form.js'
 
 document.querySelector('#app').innerHTML = `
   <header class="header">
@@ -579,10 +580,12 @@ if (document.readyState === 'loading') {
     initRouter();
     initCertifications();
     initDashboardAnimations();
+    initContactForm();
   });
 } else {
   initServiceTabs();
   initRouter();
   initCertifications();
   initDashboardAnimations();
+  initContactForm();
 }
