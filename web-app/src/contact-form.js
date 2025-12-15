@@ -270,9 +270,9 @@ async function handleFormSubmit(e) {
       body: new URLSearchParams(formData).toString()
     });
     
-    // Netlify Forms returns 200 on success, even if there are validation errors
-    // Check if response is ok or if it's a redirect (302) which also indicates success
-    if (response.ok || response.status === 200 || response.status === 302) {
+    // Netlify Forms returns 200 on successful submission
+    // According to Netlify docs, successful AJAX submissions return 200
+    if (response.ok && response.status === 200) {
       // Show success message
       form.style.display = 'none';
       if (successDiv) successDiv.style.display = 'block';

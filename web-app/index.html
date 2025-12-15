@@ -8,12 +8,14 @@
   </head>
   <body>
     <div id="app"></div>
-    <!-- Hidden form for Netlify Forms detection -->
+    <!-- Hidden form for Netlify Forms detection (required for JavaScript-rendered forms) -->
     <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="text" name="company" />
       <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
     </form>
     <script type="module" src="/src/main.js"></script>
   </body>

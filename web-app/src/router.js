@@ -2295,11 +2295,11 @@ async function handleContactPageFormSubmit(e) {
       body: new URLSearchParams(formData).toString()
     });
     
-    // Netlify Forms returns 200 on success, 302 redirect, or sometimes 422 for validation errors
-    // Check response status
+    // Netlify Forms returns 200 on successful submission
+    // According to Netlify docs, successful AJAX submissions return 200
     const status = response.status;
     
-    if (status === 200 || status === 302 || status === 0) {
+    if (status === 200) {
       // Success - show success message
       formPanel.innerHTML = `
         <div class="form-success">
