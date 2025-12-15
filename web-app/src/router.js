@@ -24,7 +24,7 @@ function handleRoute() {
 
   if (path === '/' || path === '') {
     // If we're already on home page, don't reload
-    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page') && !app.innerHTML.includes('our-services-page')) {
+    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page') && !app.innerHTML.includes('our-services-page') && !app.innerHTML.includes('contact-page')) {
       return; // Already on home page
     }
     // Otherwise reload to show home page and scroll to top
@@ -40,6 +40,8 @@ function handleRoute() {
     loadTermsOfServicePage();
   } else if (path === '/services' || path === '/our-services') {
     loadOurServicesPage();
+  } else if (path === '/contact') {
+    loadContactPage();
   }
 }
 
@@ -124,7 +126,7 @@ function loadServicePage(serviceKey) {
             <a href="#/" class="nav-link">HOME</a>
             <a href="#/services" class="nav-link">OUR SERVICES</a>
             <a href="#/" class="nav-link">WHY US</a>
-            <a href="#/" class="nav-link">CONTACT US</a>
+            <a href="#/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
       </header>
@@ -195,9 +197,9 @@ function loadServicePage(serviceKey) {
               <div class="service-sidebar-card">
                 <h2 class="sidebar-title">${service.ctaTitle || 'Ready to Start?'}</h2>
                 <p class="sidebar-description">${service.ctaDescription || 'Let\'s discuss how we can help transform your Salesforce platform.'}</p>
-                <button class="sidebar-cta-button">
+                <a href="#/contact" class="sidebar-cta-button">
                   Discuss Your Project
-                </button>
+                </a>
               </div>
             </aside>
           </div>
@@ -273,20 +275,9 @@ function loadServicePage(serviceKey) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
     
-    // Re-initialize contact form for dynamically loaded pages
-    import('./contact-form.js').then(({ initContactForm, openContactModal }) => {
+    // Re-initialize contact form for dynamically loaded pages (if needed)
+    import('./contact-form.js').then(({ initContactForm }) => {
       initContactForm();
-      
-      // Add click handler to sidebar CTA button
-      const sidebarButton = document.querySelector('.sidebar-cta-button');
-      if (sidebarButton) {
-        sidebarButton.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (openContactModal) {
-            openContactModal();
-          }
-        });
-      }
     });
   });
 }
@@ -493,6 +484,9 @@ function addServiceDetailStyles() {
       cursor: pointer;
       transition: background 0.2s;
       margin-top: 0.5rem;
+      text-decoration: none;
+      display: block;
+      text-align: center;
     }
 
     .sidebar-cta-button:hover {
@@ -589,7 +583,7 @@ function loadOurServicesPage() {
             <a href="#/" class="nav-link">HOME</a>
             <a href="#/services" class="nav-link">OUR SERVICES</a>
             <a href="#/" class="nav-link">WHY US</a>
-            <a href="#/" class="nav-link">CONTACT US</a>
+            <a href="#/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
       </header>
@@ -730,7 +724,7 @@ function loadPrivacyPolicyPage() {
           <a href="#/" class="nav-link">HOME</a>
           <a href="#/services" class="nav-link">OUR SERVICES</a>
           <a href="#/" class="nav-link">WHY US</a>
-          <a href="#/" class="nav-link">CONTACT US</a>
+          <a href="#/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
     </header>
@@ -933,7 +927,7 @@ function loadTermsOfServicePage() {
           <a href="#/" class="nav-link">HOME</a>
           <a href="#/services" class="nav-link">OUR SERVICES</a>
           <a href="#/" class="nav-link">WHY US</a>
-          <a href="#/" class="nav-link">CONTACT US</a>
+          <a href="#/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
     </header>
@@ -1118,6 +1112,341 @@ function loadTermsOfServicePage() {
   requestAnimationFrame(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   });
+}
+
+function loadContactPage() {
+  import('./contact-form.js').then(({ getContactFormHTML }) => {
+    const app = document.querySelector('#app');
+    app.innerHTML = `
+      <header class="header">
+        <div class="header-content">
+          <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+            <div class="logo-square">
+              <span class="logo-letter">A</span>
+            </div>
+            <span class="logo-text">ApexRune</span>
+          </a>
+          <nav class="nav">
+            <a href="#/" class="nav-link">HOME</a>
+            <a href="#/services" class="nav-link">OUR SERVICES</a>
+            <a href="#/" class="nav-link">WHY US</a>
+            <a href="#/contact" class="nav-link">CONTACT US</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="contact-page">
+        <div class="container">
+          <a href="#/" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+          </a>
+          
+          <div class="contact-page-content">
+            ${getContactFormHTML()}
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-column">
+              <div class="footer-logo">
+                <div class="logo-square">
+                  <span class="logo-letter">A</span>
+                </div>
+                <span class="logo-text">ApexRune</span>
+              </div>
+              <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+              <div class="social-icons">
+                <a href="#" class="social-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                <a href="#" class="social-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="footer-column">
+              <h4 class="footer-heading">Get In Touch</h4>
+              <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+              <p class="footer-text">+1 (563) 123-4567</p>
+              <p class="footer-text">info@apexrune.com</p>
+            </div>
+            <div class="footer-column">
+              <h4 class="footer-heading">Our Services</h4>
+              <ul class="footer-links">
+                <li><a href="#/service/custom-development">Custom Development</a></li>
+                <li><a href="#/service/system-integration">System Integration</a></li>
+                <li><a href="#/service/health-checks">Health Checks</a></li>
+                <li><a href="#/service/process-automation">Process Automation</a></li>
+              </ul>
+              <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
+              <div class="latest-post">
+                <div class="post-image"></div>
+                <div class="post-content">
+                  <p class="post-title">Will AI Replace The Salesforce Admin?</p>
+                  <p class="post-date">Oct 24, 2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2025 ApexRune. All rights reserved.</p>
+            <div class="footer-bottom-links">
+              <a href="#/privacy-policy">Privacy Policy</a>
+              <a href="#/terms-of-service">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    `;
+
+    addContactPageStyles();
+    initContactPageForm();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  });
+}
+
+function addContactPageStyles() {
+  if (document.getElementById('contact-page-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'contact-page-styles';
+  style.textContent = `
+    .contact-page {
+      padding: 2rem 2rem 4rem;
+      min-height: calc(100vh - 100px);
+      background: var(--white);
+    }
+
+    .contact-page-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-form-container {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .contact-form-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .contact-form-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.75rem;
+      border: 2px solid #E5E7EB;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--bright-blue);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .contact-form-submit {
+      background: var(--bright-blue);
+      color: var(--white);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .contact-form-submit:hover:not(:disabled) {
+      background: var(--primary-blue);
+    }
+
+    .contact-form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-success,
+    .form-error {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .form-success svg,
+    .form-error svg {
+      margin: 0 auto 1.5rem;
+    }
+
+    .form-success h3,
+    .form-error h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p,
+    .form-error p {
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .contact-page {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .contact-form-container {
+        padding: 2rem 1.5rem;
+      }
+
+      .contact-form-title {
+        font-size: 2rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function initContactPageForm() {
+  const form = document.querySelector('.contact-form');
+  if (form) {
+    form.addEventListener('submit', handleContactPageFormSubmit);
+  }
+}
+
+async function handleContactPageFormSubmit(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const submitBtn = form.querySelector('.contact-form-submit');
+  const formContainer = document.querySelector('.contact-form-container');
+  const originalHTML = formContainer.innerHTML;
+  
+  // Validate form
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+  
+  // Disable submit button
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Sending...';
+  
+  try {
+    const formData = new FormData(form);
+    formData.set('form-name', 'contact');
+    
+    // Submit to Netlify
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    });
+    
+    if (response.ok) {
+      // Show success message
+      formContainer.innerHTML = `
+        <div class="form-success">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" fill="#10B981" opacity="0.1"/>
+            <path d="M32 4C16.536 4 4 16.536 4 32C4 47.464 16.536 60 32 60C47.464 60 60 47.464 60 32C60 16.536 47.464 4 32 4Z" fill="#10B981"/>
+            <path d="M24 32L30 38L40 26" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Thank you for your message!</h3>
+          <p>We'll get back to you within 24 hours.</p>
+          <a href="#/" class="back-link" style="margin-top: 2rem; display: inline-block;">Back to Home</a>
+        </div>
+      `;
+    } else {
+      throw new Error(`Form submission failed: ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Form submission error:', error);
+    
+    // Show error message
+    formContainer.innerHTML = `
+      <div class="form-error">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="#EF4444" opacity="0.1"/>
+          <circle cx="32" cy="32" r="30" stroke="#EF4444" stroke-width="2"/>
+          <path d="M32 20V36M32 44H32.01" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <h3>Something went wrong</h3>
+        <p>Please try again or contact us directly at info@apexrune.com</p>
+        <button onclick="location.reload()" class="contact-form-submit" style="margin-top: 1.5rem;">Try Again</button>
+      </div>
+    `;
+  }
 }
 
 function addOurServicesPageStyles() {

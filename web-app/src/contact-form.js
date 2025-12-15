@@ -1,10 +1,81 @@
 // Contact form functionality with Netlify Forms integration
 export function initContactForm() {
-  // Create contact form modal
+  // Create contact form modal (for backward compatibility if needed)
   createContactModal();
   
   // Add event listeners to all CTA buttons
   setupCTAButtons();
+}
+
+// Export function to get contact form HTML for page view
+export function getContactFormHTML() {
+  return `
+    <div class="contact-form-container">
+      <h2 class="contact-form-title">Schedule Your Free Consultation</h2>
+      <p class="contact-form-subtitle">Let's discuss how we can help transform your Salesforce platform.</p>
+      
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+        <input type="hidden" name="form-name" value="contact" />
+        <p style="display: none;">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" name="firstName" required />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <input type="text" id="lastName" name="lastName" required />
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" />
+        </div>
+        
+        <div class="form-group">
+          <label for="service">Service Interest</label>
+          <select id="service" name="service">
+            <option value="">Select a service...</option>
+            <option value="custom-development">Custom Development</option>
+            <option value="system-integration">System Integration</option>
+            <option value="health-checks">Health Checks</option>
+            <option value="process-automation">Process Automation</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Tell us about your project *</label>
+          <textarea id="message" name="message" rows="5" required placeholder="What challenges are you facing with Salesforce? What would you like to achieve?"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="urgency">Urgency</label>
+          <select id="urgency" name="urgency">
+            <option value="not-urgent">Not urgent - Just exploring</option>
+            <option value="soon">Soon - Within 1-3 months</option>
+            <option value="urgent">Urgent - Need help ASAP</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="contact-form-submit">
+          Send Message
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  `;
 }
 
 function createContactModal() {
@@ -141,20 +212,24 @@ function setupCTAButtons() {
   const ctaButtons = document.querySelectorAll('button.cta-button, button.service-cta-button');
   
   ctaButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      openContactModal();
-    });
+    // Check if button is inside a link or has href attribute
+    const parentLink = button.closest('a');
+    if (!parentLink && !button.hasAttribute('href')) {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.hash = '#/contact';
+      });
+    }
   });
   
-  // Also handle "Contact US" nav link
+  // Also handle "Contact US" nav link - now navigates to contact page
   const contactNavLinks = document.querySelectorAll('.nav-link');
   contactNavLinks.forEach(link => {
     if (link.textContent.trim() === 'CONTACT US') {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        openContactModal();
-      });
+      // Only update if it doesn't already have a proper href
+      if (!link.getAttribute('href') || link.getAttribute('href') === '#') {
+        link.setAttribute('href', '#/contact');
+      }
     }
   });
 }

@@ -18,7 +18,7 @@ document.querySelector('#app').innerHTML = `
         <a href="#" class="nav-link">HOME</a>
             <a href="#/services" class="nav-link">OUR SERVICES</a>
         <a href="#" class="nav-link">WHY US</a>
-        <a href="#" class="nav-link">CONTACT US</a>
+        <a href="#/contact" class="nav-link">CONTACT US</a>
       </nav>
     </div>
   </header>
@@ -39,12 +39,12 @@ document.querySelector('#app').innerHTML = `
             Salesforce and start scaling your business.
           </p>
           <div class="cta-section">
-            <button class="cta-button">
+            <a href="#/contact" class="cta-button">
               Schedule Your Free Consultation
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-            </button>
+            </a>
             <div class="quick-fix">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 1L10.5 5.5L15.5 6.5L12 10L12.5 15L8 12.5L3.5 15L4 10L0.5 6.5L5.5 5.5L8 1Z" fill="currentColor"/>
@@ -474,7 +474,7 @@ document.querySelector('#app').innerHTML = `
       <div class="container">
         <h2 class="cta-title">Ready to Unlock Your Salesforce Potential?</h2>
         <p class="cta-description">Let's talk about your goals. Our initial consultation is always free, and always valuable.</p>
-        <button class="cta-button">Schedule Your Free Consultation</button>
+        <a href="#/contact" class="cta-button">Schedule Your Free Consultation</a>
       </div>
     </section>
 
