@@ -165,61 +165,66 @@ document.querySelector('#app').innerHTML = `
       </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services-section">
+    <!-- Core Services Section -->
+    <section class="core-services-section">
       <div class="container">
-        <h2 class="section-title">Explore Our Services</h2>
-        <p class="section-description">A focused suite of services designed to architect, automate, and optimize your Salesforce platform.</p>
-        
-        <div class="service-buttons">
-          <button class="service-btn active">Salesforce Quick Start</button>
-          <button class="service-btn">Custom Automation</button>
-          <button class="service-btn">Org Health</button>
-          <button class="service-btn">Platform Integration</button>
-          <button class="service-btn">Custom Solutions</button>
+        <div class="core-services-header">
+          <span class="core-services-label">OUR CORE SERVICES</span>
+          <h2 class="core-services-title">How We Help You Succeed</h2>
         </div>
-
-        <div class="unified-card">
-          <div class="unified-content">
-            <h3 class="unified-title">Get Started Fast with Salesforce Quick Start</h3>
-            <p class="unified-description">Jumpstart your Salesforce journey with our comprehensive setup service. We configure your org, set up essential objects, and get your team up and running in days, not months.</p>
-            <ul class="unified-list">
-              <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Complete Org Setup & Configuration
-              </li>
-              <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                User Training & Onboarding
-              </li>
-              <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Essential Customizations
-              </li>
-              <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Data Migration Support
-              </li>
-            </ul>
-            <a href="#/service/salesforce-quick-start" class="read-more">READ MORE
+        
+        <div class="core-services-grid">
+          <div class="core-service-card">
+            <div class="service-icon blue-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
+                <rect x="18" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
+                <rect x="6" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
+                <rect x="18" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
+              </svg>
+            </div>
+            <h3 class="service-card-title">Custom Development</h3>
+            <p class="service-card-description">We build bespoke applications on the Salesforce platform that solve your unique business challenges.</p>
+            <a href="#/service/custom-development" class="service-learn-more">Learn More →
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
           </div>
-          <div class="unified-icon">
-            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="60" cy="60" r="50" stroke="#3B82F6" stroke-width="3" fill="none"/>
-              <path d="M40 60L55 75L80 45" stroke="#3B82F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+
+          <div class="core-service-card">
+            <div class="service-icon purple-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="16" r="4" fill="#8B5CF6"/>
+                <circle cx="22" cy="16" r="4" fill="#8B5CF6"/>
+                <path d="M14 16H18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 12L14 16L10 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 12L18 16L22 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="service-card-title">System Integration</h3>
+            <p class="service-card-description">We connect Salesforce to your other essential tools like Slack, Mailchimp, and ERPs.</p>
+            <a href="#/service/system-integration" class="service-learn-more">Learn More →
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="core-service-card">
+            <div class="service-icon green-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 16L12 10L18 16L26 8" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 24L12 18L18 24L26 16" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="service-card-title">Health Checks</h3>
+            <p class="service-card-description">We audit your existing setup to find and fix inefficiencies, boost performance, and improve user experience.</p>
+            <a href="#/service/health-checks" class="service-learn-more">Learn More →
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
