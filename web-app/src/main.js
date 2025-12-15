@@ -518,14 +518,14 @@ document.querySelector('#app').innerHTML = `
               <li><a href="#/service/health-checks">Health Checks</a></li>
               <li><a href="#/service/process-automation">Process Automation</a></li>
             </ul>
-            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
-            <div class="latest-post">
+            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
+            <a href="#/case-study/automating-onboarding" class="latest-post">
               <div class="post-image"></div>
               <div class="post-content">
-                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
-                <p class="post-date">Oct 24, 2025</p>
+                <p class="post-title">SAMPLECORP: Automating Onboarding</p>
+                <p class="post-date">Jan 15, 2025</p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
         <div class="footer-bottom">
