@@ -24,7 +24,7 @@ function handleRoute() {
 
   if (path === '/' || path === '') {
     // If we're already on home page, don't reload
-    if (!app.innerHTML.includes('service-detail-page')) {
+    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page')) {
       return; // Already on home page
     }
     // Otherwise reload to show home page and scroll to top
@@ -34,6 +34,10 @@ function handleRoute() {
     // Load service detail page
     const serviceKey = path.split('/service/')[1];
     loadServicePage(serviceKey);
+  } else if (path === '/privacy-policy') {
+    loadPrivacyPolicyPage();
+  } else if (path === '/terms-of-service') {
+    loadTermsOfServicePage();
   }
 }
 
@@ -252,8 +256,8 @@ function loadServicePage(serviceKey) {
           <div class="footer-bottom">
             <p>© 2025 ApexRune. All rights reserved.</p>
             <div class="footer-bottom-links">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
+              <a href="#/privacy-policy">Privacy Policy</a>
+              <a href="#/terms-of-service">Terms of Service</a>
             </div>
           </div>
         </div>
@@ -528,6 +532,506 @@ function addServiceDetailStyles() {
 
       .service-results-grid {
         grid-template-columns: 1fr;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function loadPrivacyPolicyPage() {
+  const app = document.querySelector('#app');
+  app.innerHTML = `
+    <header class="header">
+      <div class="header-content">
+        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <div class="logo-square">
+            <span class="logo-letter">A</span>
+          </div>
+          <span class="logo-text">ApexRune</span>
+        </a>
+        <nav class="nav">
+          <a href="#/" class="nav-link">HOME</a>
+          <a href="#/" class="nav-link">OUR SERVICES</a>
+          <a href="#/" class="nav-link">WHY US</a>
+          <a href="#/" class="nav-link">CONTACT US</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="legal-page">
+      <div class="container">
+        <a href="#/" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Home
+        </a>
+        
+        <div class="legal-content">
+          <h1 class="legal-title">Privacy Policy</h1>
+          <p class="legal-last-updated">Last Updated: January 2025</p>
+          
+          <section class="legal-section">
+            <h2>1. Introduction</h2>
+            <p>Welcome to ApexRune ("we," "our," or "us"). We are committed to protecting your privacy and ensuring you have a positive experience on our website and in using our services. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our Salesforce consulting services.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>2. Information We Collect</h2>
+            <h3>2.1 Information You Provide</h3>
+            <p>We collect information that you voluntarily provide to us when you:</p>
+            <ul>
+              <li>Fill out contact forms or request consultations</li>
+              <li>Subscribe to our newsletter or marketing communications</li>
+              <li>Communicate with us via email or other channels</li>
+              <li>Engage with our services</li>
+            </ul>
+            <p>This information may include your name, email address, phone number, company name, and any other information you choose to provide.</p>
+
+            <h3>2.2 Automatically Collected Information</h3>
+            <p>When you visit our website, we automatically collect certain information about your device, including:</p>
+            <ul>
+              <li>IP address</li>
+              <li>Browser type and version</li>
+              <li>Pages you visit and time spent on pages</li>
+              <li>Referring website addresses</li>
+              <li>Date and time of your visit</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>3. How We Use Your Information</h2>
+            <p>We use the information we collect to:</p>
+            <ul>
+              <li>Provide, operate, and maintain our services</li>
+              <li>Respond to your inquiries and provide customer support</li>
+              <li>Send you marketing communications (with your consent)</li>
+              <li>Improve our website and services</li>
+              <li>Analyze usage patterns and trends</li>
+              <li>Comply with legal obligations</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>4. Information Sharing and Disclosure</h2>
+            <p>We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:</p>
+            <ul>
+              <li><strong>Service Providers:</strong> We may share information with third-party service providers who perform services on our behalf</li>
+              <li><strong>Legal Requirements:</strong> We may disclose information if required by law or in response to valid legal requests</li>
+              <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>5. Data Security</h2>
+            <p>We implement appropriate technical and organizational security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>6. Your Rights</h2>
+            <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
+            <ul>
+              <li>The right to access your personal information</li>
+              <li>The right to correct inaccurate information</li>
+              <li>The right to request deletion of your information</li>
+              <li>The right to object to processing of your information</li>
+              <li>The right to data portability</li>
+            </ul>
+            <p>To exercise these rights, please contact us using the information provided below.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>7. Cookies and Tracking Technologies</h2>
+            <p>We use cookies and similar tracking technologies to track activity on our website and store certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>8. Third-Party Links</h2>
+            <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>9. Children's Privacy</h2>
+            <p>Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If you become aware that a child has provided us with personal information, please contact us.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>10. Changes to This Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>11. Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us:</p>
+            <ul>
+              <li>Email: info@apexrune.com</li>
+              <li>Phone: +1 (563) 123-4567</li>
+              <li>Address: 123 Tech Boulevard, Innovation City, ST 84000</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <div class="footer-logo">
+              <div class="logo-square">
+                <span class="logo-letter">A</span>
+              </div>
+              <span class="logo-text">ApexRune</span>
+            </div>
+            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+            <div class="social-icons">
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Get In Touch</h4>
+            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+            <p class="footer-text">+1 (563) 123-4567</p>
+            <p class="footer-text">info@apexrune.com</p>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">IT Services</h4>
+            <ul class="footer-links">
+              <li><a href="#">Salesforce Quick Start</a></li>
+              <li><a href="#">Platform Integration</a></li>
+              <li><a href="#">Custom Automation</a></li>
+              <li><a href="#">Org Health Check</a></li>
+              <li><a href="#">Custom Solutions</a></li>
+            </ul>
+            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
+            <div class="latest-post">
+              <div class="post-image"></div>
+              <div class="post-content">
+                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
+                <p class="post-date">Oct 24, 2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 ApexRune. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#/privacy-policy">Privacy Policy</a>
+            <a href="#/terms-of-service">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  `;
+
+  addLegalPageStyles();
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+}
+
+function loadTermsOfServicePage() {
+  const app = document.querySelector('#app');
+  app.innerHTML = `
+    <header class="header">
+      <div class="header-content">
+        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <div class="logo-square">
+            <span class="logo-letter">A</span>
+          </div>
+          <span class="logo-text">ApexRune</span>
+        </a>
+        <nav class="nav">
+          <a href="#/" class="nav-link">HOME</a>
+          <a href="#/" class="nav-link">OUR SERVICES</a>
+          <a href="#/" class="nav-link">WHY US</a>
+          <a href="#/" class="nav-link">CONTACT US</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="legal-page">
+      <div class="container">
+        <a href="#/" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Home
+        </a>
+        
+        <div class="legal-content">
+          <h1 class="legal-title">Terms of Service</h1>
+          <p class="legal-last-updated">Last Updated: January 2025</p>
+          
+          <section class="legal-section">
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using the ApexRune website and services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use our services.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>2. Description of Services</h2>
+            <p>ApexRune provides Salesforce consulting, development, and optimization services. Our services include but are not limited to:</p>
+            <ul>
+              <li>Custom Salesforce development</li>
+              <li>System integration services</li>
+              <li>Health checks and optimization</li>
+              <li>Process automation</li>
+              <li>Training and consultation</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>3. Use of Services</h2>
+            <h3>3.1 Eligibility</h3>
+            <p>You must be at least 18 years old and have the legal capacity to enter into contracts to use our services.</p>
+
+            <h3>3.2 User Responsibilities</h3>
+            <p>You agree to:</p>
+            <ul>
+              <li>Provide accurate and complete information</li>
+              <li>Maintain the security of your account credentials</li>
+              <li>Use our services only for lawful purposes</li>
+              <li>Not interfere with or disrupt our services</li>
+              <li>Comply with all applicable laws and regulations</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>4. Intellectual Property</h2>
+            <p>All content, features, and functionality of our website and services, including but not limited to text, graphics, logos, and software, are the exclusive property of ApexRune and are protected by copyright, trademark, and other intellectual property laws.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>5. Service Agreements</h2>
+            <p>Specific service engagements will be governed by separate service agreements or statements of work that will detail the scope, deliverables, timelines, and payment terms for each project.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>6. Payment Terms</h2>
+            <p>Payment terms will be specified in individual service agreements. Generally:</p>
+            <ul>
+              <li>Invoices are due within 30 days of receipt unless otherwise specified</li>
+              <li>Late payments may incur interest charges</li>
+              <li>We reserve the right to suspend services for non-payment</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>7. Confidentiality</h2>
+            <p>We understand the sensitive nature of your business information. We agree to maintain the confidentiality of all proprietary information disclosed to us in the course of providing services, subject to applicable legal requirements.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>8. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by law, ApexRune shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from your use of our services.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>9. Indemnification</h2>
+            <p>You agree to indemnify and hold harmless ApexRune, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses arising out of your use of our services or violation of these Terms of Service.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>10. Termination</h2>
+            <p>We reserve the right to terminate or suspend your access to our services immediately, without prior notice, for any breach of these Terms of Service or for any other reason we deem necessary.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>11. Disclaimers</h2>
+            <p>Our services are provided "as is" and "as available" without warranties of any kind, either express or implied. We do not guarantee that our services will be uninterrupted, secure, or error-free.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>12. Governing Law</h2>
+            <p>These Terms of Service shall be governed by and construed in accordance with the laws of the jurisdiction in which ApexRune operates, without regard to its conflict of law provisions.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>13. Changes to Terms</h2>
+            <p>We reserve the right to modify these Terms of Service at any time. We will notify users of any material changes by posting the updated terms on our website and updating the "Last Updated" date.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>14. Contact Information</h2>
+            <p>If you have any questions about these Terms of Service, please contact us:</p>
+            <ul>
+              <li>Email: info@apexrune.com</li>
+              <li>Phone: +1 (563) 123-4567</li>
+              <li>Address: 123 Tech Boulevard, Innovation City, ST 84000</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <div class="footer-logo">
+              <div class="logo-square">
+                <span class="logo-letter">A</span>
+              </div>
+              <span class="logo-text">ApexRune</span>
+            </div>
+            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+            <div class="social-icons">
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Get In Touch</h4>
+            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+            <p class="footer-text">+1 (563) 123-4567</p>
+            <p class="footer-text">info@apexrune.com</p>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">IT Services</h4>
+            <ul class="footer-links">
+              <li><a href="#">Salesforce Quick Start</a></li>
+              <li><a href="#">Platform Integration</a></li>
+              <li><a href="#">Custom Automation</a></li>
+              <li><a href="#">Org Health Check</a></li>
+              <li><a href="#">Custom Solutions</a></li>
+            </ul>
+            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
+            <div class="latest-post">
+              <div class="post-image"></div>
+              <div class="post-content">
+                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
+                <p class="post-date">Oct 24, 2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 ApexRune. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#/privacy-policy">Privacy Policy</a>
+            <a href="#/terms-of-service">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  `;
+
+  addLegalPageStyles();
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+}
+
+function addLegalPageStyles() {
+  if (document.getElementById('legal-page-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'legal-page-styles';
+  style.textContent = `
+    .legal-page {
+      padding: 2rem 2rem 4rem;
+      min-height: calc(100vh - 100px);
+      background: var(--white);
+    }
+
+    .legal-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .legal-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .legal-last-updated {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      margin-bottom: 3rem;
+    }
+
+    .legal-section {
+      margin-bottom: 3rem;
+    }
+
+    .legal-section h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+    }
+
+    .legal-section h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .legal-section h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .legal-section p {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .legal-section ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .legal-section li {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .legal-section strong {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .legal-page {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .legal-title {
+        font-size: 2rem;
+      }
+
+      .legal-section h2 {
+        font-size: 1.5rem;
       }
     }
   `;
