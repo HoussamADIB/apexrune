@@ -10,7 +10,7 @@ export function initContactForm() {
 // Export function to get contact form HTML for page view
 export function getContactFormHTML() {
   return `
-    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+    <form name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
       <input type="hidden" name="form-name" value="contact" />
       <p style="display: none;">
         <label>Don't fill this out if you're human: <input name="bot-field" /></label>

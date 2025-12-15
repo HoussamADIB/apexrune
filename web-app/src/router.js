@@ -2279,16 +2279,25 @@ async function handleContactPageFormSubmit(e) {
   
   try {
     const formData = new FormData(form);
-    formData.set('form-name', 'contact');
     
-    // Submit to Netlify
+    // Ensure form-name is set
+    if (!formData.has('form-name')) {
+      formData.set('form-name', 'contact');
+    }
+    
+    // Submit to Netlify Forms
     const response = await fetch('/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
       body: new URLSearchParams(formData).toString()
     });
     
-    if (response.ok) {
+    // Netlify Forms returns 200 on success, even if there are validation errors
+    // Check if response is ok or if it's a redirect (302) which also indicates success
+    if (response.ok || response.status === 200 || response.status === 302) {
       // Show success message
       formPanel.innerHTML = `
         <div class="form-success">
