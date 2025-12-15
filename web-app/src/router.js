@@ -15,6 +15,15 @@ export function initRouter() {
       window.history.pushState({}, '', href);
       handleRoute();
     }
+    
+    // Also handle back-link clicks specifically
+    const backLink = e.target.closest('.back-link, .back-to-home');
+    if (backLink && backLink.hasAttribute('href')) {
+      e.preventDefault();
+      const href = backLink.getAttribute('href');
+      window.history.pushState({}, '', href);
+      handleRoute();
+    }
   });
 }
 
