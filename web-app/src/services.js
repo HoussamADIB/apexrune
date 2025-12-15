@@ -1,93 +1,133 @@
 // Service content data
 export const servicesData = {
+  'custom-development': {
+    title: 'Custom Development',
+    description: 'We build bespoke applications on the Salesforce platform that solve your unique business challenges.',
+    overview: 'Standard Salesforce functionality is powerful, but sometimes it is not enough. We build custom solutions tailored to your specific processes using Apex, Lightning Web Components (LWC), and Visualforce.',
+    features: [
+      'Discovery & requirements gathering',
+      'Custom objects & field design',
+      'Apex triggers & classes',
+      'LWC development'
+    ],
+    results: [
+      { icon: 'lightning', title: 'Increased Efficiency', color: '#F59E0B' },
+      { icon: 'users', title: 'Higher Adoption', color: '#3B82F6' },
+      { icon: 'target', title: 'Competitive Advantage', color: '#EF4444' }
+    ],
+    ctaTitle: 'Ready to Start?',
+    ctaDescription: 'Standard Salesforce isn\'t enough? Let\'s build a tool tailored to your specific processes.',
+    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="12" y="12" width="40" height="40" rx="4" stroke="white" stroke-width="2" fill="none"/>
+      <rect x="16" y="20" width="32" height="4" fill="white" opacity="0.8"/>
+      <rect x="16" y="28" width="24" height="4" fill="white" opacity="0.8"/>
+      <rect x="16" y="36" width="32" height="4" fill="white" opacity="0.8"/>
+      <circle cx="52" cy="20" r="3" fill="white" opacity="0.6"/>
+    </svg>`
+  },
   'salesforce-quick-start': {
     title: 'Get Started Fast with Salesforce Quick Start',
     description: 'Jumpstart your Salesforce journey with our comprehensive setup service. We configure your org, set up essential objects, and get your team up and running in days, not months.',
+    overview: 'Starting with Salesforce can be overwhelming. We provide a complete setup service that gets your organization up and running quickly, with best practices built in from day one.',
     features: [
       'Complete Org Setup & Configuration',
       'User Training & Onboarding',
       'Essential Customizations',
       'Data Migration Support'
     ],
-    icon: `<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="60" cy="60" r="50" stroke="#3B82F6" stroke-width="3" fill="none"/>
-      <path d="M40 60L55 75L80 45" stroke="#3B82F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    results: [
+      { icon: 'rocket', title: 'Faster Time to Value', color: '#10B981' },
+      { icon: 'shield', title: 'Best Practices Built In', color: '#3B82F6' },
+      { icon: 'users', title: 'Team Ready to Use', color: '#8B5CF6' }
+    ],
+    ctaTitle: 'Ready to Start?',
+    ctaDescription: 'New to Salesforce? Let\'s get you set up the right way from the start.',
+    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="32" r="24" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M24 32L30 38L40 26" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>`
   },
-  'custom-automation': {
-    title: 'Automate Your Workflows, Boost Your Productivity',
-    description: 'Transform manual processes into automated workflows. Our automation solutions save hours every week by eliminating repetitive tasks and ensuring data consistency across your Salesforce org.',
+  'system-integration': {
+    title: 'System Integration',
+    description: 'We connect Salesforce to your other essential tools like Slack, Mailchimp, and ERPs.',
+    overview: 'Your business uses multiple tools, but they don\'t talk to each other. We create seamless integrations that connect Salesforce with your existing systems, eliminating data silos and providing a unified view of your business.',
     features: [
-      'Process Builder & Flow Automation',
-      'Apex Trigger Development',
-      'Workflow Rules & Field Updates',
-      'Email & Notification Automation'
+      'API Development',
+      'Third-party connectors',
+      'Data synchronization',
+      'Real-time data flow'
     ],
-    icon: `<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M60 20L70 45L95 45L75 60L85 85L60 70L35 85L45 60L25 45L50 45L60 20Z" fill="#3B82F6" opacity="0.3"/>
-      <path d="M60 30L67 48L85 48L72 58L78 75L60 67L42 75L48 58L35 48L53 48L60 30Z" fill="#3B82F6"/>
+    results: [
+      { icon: 'link', title: 'Unified Data', color: '#10B981' },
+      { icon: 'sync', title: 'Real-Time Sync', color: '#3B82F6' },
+      { icon: 'chart', title: 'Better Insights', color: '#8B5CF6' }
+    ],
+    ctaTitle: 'Ready to Start?',
+    ctaDescription: 'Need to connect Salesforce with your other tools? Let\'s create seamless integrations.',
+    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="6" stroke="white" stroke-width="2" fill="none"/>
+      <circle cx="48" cy="16" r="6" stroke="white" stroke-width="2" fill="none"/>
+      <circle cx="16" cy="48" r="6" stroke="white" stroke-width="2" fill="none"/>
+      <circle cx="48" cy="48" r="6" stroke="white" stroke-width="2" fill="none"/>
+      <line x1="22" y1="16" x2="42" y2="16" stroke="white" stroke-width="2"/>
+      <line x1="16" y1="22" x2="16" y2="42" stroke="white" stroke-width="2"/>
+      <line x1="22" y1="48" x2="42" y2="48" stroke="white" stroke-width="2"/>
+      <line x1="48" y1="22" x2="48" y2="42" stroke="white" stroke-width="2"/>
     </svg>`
   },
-  'org-health': {
-    title: 'Optimize Your Salesforce Org Health',
-    description: 'Comprehensive health checks and optimization to ensure your Salesforce org runs smoothly. We identify bottlenecks, clean up technical debt, and optimize performance.',
+  'health-checks': {
+    title: 'Health Checks',
+    description: 'We audit your existing setup to find and fix inefficiencies, boost performance, and improve user experience.',
+    overview: 'Is your Salesforce org running smoothly? Our comprehensive health checks identify performance bottlenecks, security issues, and optimization opportunities to ensure your platform operates at peak efficiency.',
     features: [
-      'Performance Analysis & Optimization',
-      'Data Quality Audits',
-      'Security & Compliance Review',
-      'Technical Debt Cleanup'
+      'System Audit',
+      'Security Review',
+      'Performance Optimization',
+      'Technical Debt Assessment'
     ],
-    icon: `<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="30" y="30" width="60" height="60" rx="8" stroke="#3B82F6" stroke-width="3" fill="none"/>
-      <path d="M50 50L55 55L70 40" stroke="#10B981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="75" cy="55" r="8" fill="#EF4444"/>
+    results: [
+      { icon: 'shield', title: 'Improved Security', color: '#10B981' },
+      { icon: 'speed', title: 'Better Performance', color: '#3B82F6' },
+      { icon: 'check', title: 'Reduced Risk', color: '#F59E0B' }
+    ],
+    ctaTitle: 'Ready to Start?',
+    ctaDescription: 'Worried about your Salesforce health? Let\'s audit and optimize your org.',
+    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="16" y="16" width="32" height="32" rx="4" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M24 32L30 38L40 26" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>`
   },
-  'platform-integration': {
-    title: 'Create A Single, Unified Source Of Truth.',
-    description: 'We connect Salesforce to your other essential business tools. By creating a seamless flow of information, we eliminate data silos and provide a complete view of your customers.',
+  'process-automation': {
+    title: 'Process Automation',
+    description: 'We build custom flows and triggers to make Salesforce work exactly how your business operates.',
+    overview: 'Stop wasting time on repetitive tasks. We automate your business processes using Salesforce Flow, Process Builder, and Apex to create seamless workflows that save hours every week.',
     features: [
-      'Custom API Development',
-      'Third-Party App Integration',
-      'Error Handling & Monitoring'
+      'Flow Builder',
+      'Process Builder Migration',
+      'Approval Processes',
+      'Automated Notifications'
     ],
-    icon: `<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="30" r="8" fill="#3B82F6" opacity="0.3"/>
-      <circle cx="90" cy="30" r="8" fill="#3B82F6" opacity="0.3"/>
-      <circle cx="30" cy="90" r="8" fill="#3B82F6" opacity="0.3"/>
-      <circle cx="90" cy="90" r="8" fill="#3B82F6" opacity="0.3"/>
-      <line x1="38" y1="30" x2="82" y2="30" stroke="#3B82F6" stroke-width="2"/>
-      <line x1="30" y1="38" x2="30" y2="82" stroke="#3B82F6" stroke-width="2"/>
-      <line x1="38" y1="90" x2="82" y2="90" stroke="#3B82F6" stroke-width="2"/>
-      <line x1="90" y1="38" x2="90" y2="82" stroke="#3B82F6" stroke-width="2"/>
-      <line x1="38" y1="38" x2="82" y2="82" stroke="#3B82F6" stroke-width="2"/>
-      <line x1="82" y1="38" x2="38" y2="82" stroke="#3B82F6" stroke-width="2"/>
-    </svg>`
-  },
-  'custom-solutions': {
-    title: 'Tailored Solutions for Your Unique Needs',
-    description: 'Every business is unique. We build custom Salesforce solutions designed specifically for your workflows, industry requirements, and business objectives.',
-    features: [
-      'Custom App Development',
-      'Industry-Specific Solutions',
-      'Complex Business Logic Implementation',
-      'Ongoing Support & Maintenance'
+    results: [
+      { icon: 'clock', title: 'Time Saved', color: '#10B981' },
+      { icon: 'accuracy', title: 'Reduced Errors', color: '#3B82F6' },
+      { icon: 'scale', title: 'Scalable Processes', color: '#8B5CF6' }
     ],
-    icon: `<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M60 20L80 50H40L60 20Z" fill="#3B82F6" opacity="0.3"/>
-      <path d="M40 50L60 80L80 50H40Z" fill="#3B82F6" opacity="0.5"/>
-      <circle cx="60" cy="50" r="15" fill="#3B82F6"/>
+    ctaTitle: 'Ready to Start?',
+    ctaDescription: 'Tired of manual work? Let\'s automate your processes and save time.',
+    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M32 8L40 24L56 24L44 36L48 52L32 42L16 52L20 36L8 24L24 24L32 8Z" fill="white" opacity="0.9"/>
+      <path d="M32 16L38 28L50 28L42 38L44 48L32 40L20 48L22 38L14 28L26 28L32 16Z" fill="white"/>
     </svg>`
   }
 };
 
 // Service button mapping
 export const serviceButtonMap = {
-  'Salesforce Quick Start': 'salesforce-quick-start',
-  'Custom Automation': 'custom-automation',
-  'Org Health': 'org-health',
-  'Platform Integration': 'platform-integration',
-  'Custom Solutions': 'custom-solutions'
+  'Custom Development': 'custom-development',
+  'System Integration': 'system-integration',
+  'Health Checks': 'health-checks',
+  'Process Automation': 'process-automation',
+  'Salesforce Quick Start': 'salesforce-quick-start'
 };
 
 // Function to update service card content

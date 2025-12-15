@@ -210,7 +210,7 @@ document.querySelector('#app').innerHTML = `
                 Apex triggers & classes
               </li>
             </ul>
-            <button class="service-cta-button">Discuss Your Project</button>
+            <a href="#/service/custom-development" class="service-cta-button">Discuss Your Project</a>
           </div>
 
           <div class="core-service-card">
@@ -248,7 +248,7 @@ document.querySelector('#app').innerHTML = `
                 Data synchronization
               </li>
             </ul>
-            <button class="service-cta-button">Discuss Your Project</button>
+            <a href="#/service/system-integration" class="service-cta-button">Discuss Your Project</a>
           </div>
 
           <div class="core-service-card">
@@ -283,7 +283,7 @@ document.querySelector('#app').innerHTML = `
                 Performance Optimization
               </li>
             </ul>
-            <button class="service-cta-button">Discuss Your Project</button>
+            <a href="#/service/health-checks" class="service-cta-button">Discuss Your Project</a>
           </div>
 
           <div class="core-service-card">
@@ -317,7 +317,7 @@ document.querySelector('#app').innerHTML = `
                 Approval Processes
               </li>
             </ul>
-            <button class="service-cta-button">Discuss Your Project</button>
+            <a href="#/service/process-automation" class="service-cta-button">Discuss Your Project</a>
           </div>
         </div>
       </div>

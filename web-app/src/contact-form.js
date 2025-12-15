@@ -137,8 +137,8 @@ function createContactModal() {
 }
 
 function setupCTAButtons() {
-  // Find all CTA buttons
-  const ctaButtons = document.querySelectorAll('.cta-button, .service-cta-button');
+  // Find all CTA buttons (only actual button elements, not links)
+  const ctaButtons = document.querySelectorAll('button.cta-button, button.service-cta-button');
   
   ctaButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -159,7 +159,7 @@ function setupCTAButtons() {
   });
 }
 
-function openContactModal() {
+export function openContactModal() {
   const modal = document.getElementById('contact-modal');
   if (modal) {
     modal.style.display = 'flex';

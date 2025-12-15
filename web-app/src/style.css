@@ -671,6 +671,9 @@ body {
   transition: all 0.2s;
   width: 100%;
   margin-top: auto;
+  display: block;
+  text-align: center;
+  text-decoration: none;
 }
 
 .service-cta-button:hover {
