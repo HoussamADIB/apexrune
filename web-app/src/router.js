@@ -32,13 +32,22 @@ function handleRoute() {
   const app = document.querySelector('#app');
 
   if (path === '/' || path === '') {
-    // If we're already on home page, don't reload
-    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page') && !app.innerHTML.includes('our-services-page') && !app.innerHTML.includes('contact-page') && !app.innerHTML.includes('case-studies-page')) {
-      return; // Already on home page
+    // Always reload to show home page when navigating to home
+    // Check if we're coming from another page
+    const isOnOtherPage = app.innerHTML.includes('service-detail-page') || 
+                         app.innerHTML.includes('legal-page') || 
+                         app.innerHTML.includes('our-services-page') || 
+                         app.innerHTML.includes('contact-page') || 
+                         app.innerHTML.includes('case-studies-page') ||
+                         app.innerHTML.includes('case-study-detail-page');
+    
+    if (isOnOtherPage) {
+      // Reload to show home page and scroll to top
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      window.location.href = window.location.pathname;
     }
-    // Otherwise reload to show home page and scroll to top
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    window.location.href = window.location.pathname;
+    // If already on home page, do nothing
+    return;
   } else if (path.startsWith('/service/')) {
     // Load service detail page
     const serviceKey = path.split('/service/')[1];
