@@ -27,7 +27,8 @@ function handleRoute() {
     if (!app.innerHTML.includes('service-detail-page')) {
       return; // Already on home page
     }
-    // Otherwise reload to show home page
+    // Otherwise reload to show home page and scroll to top
+    window.scrollTo({ top: 0, behavior: 'instant' });
     window.location.href = window.location.pathname;
   } else if (path.startsWith('/service/')) {
     // Load service detail page
@@ -196,10 +197,76 @@ function loadServicePage(serviceKey) {
           </div>
         </div>
       </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-column">
+              <div class="footer-logo">
+                <div class="logo-square">
+                  <span class="logo-letter">A</span>
+                </div>
+                <span class="logo-text">ApexRune</span>
+              </div>
+              <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+              <div class="social-icons">
+                <a href="#" class="social-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                <a href="#" class="social-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="footer-column">
+              <h4 class="footer-heading">Get In Touch</h4>
+              <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+              <p class="footer-text">+1 (563) 123-4567</p>
+              <p class="footer-text">info@apexrune.com</p>
+            </div>
+            <div class="footer-column">
+              <h4 class="footer-heading">IT Services</h4>
+              <ul class="footer-links">
+                <li><a href="#">Salesforce Quick Start</a></li>
+                <li><a href="#">Platform Integration</a></li>
+                <li><a href="#">Custom Automation</a></li>
+                <li><a href="#">Org Health Check</a></li>
+                <li><a href="#">Custom Solutions</a></li>
+              </ul>
+              <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
+              <div class="latest-post">
+                <div class="post-image"></div>
+                <div class="post-content">
+                  <p class="post-title">Will AI Replace The Salesforce Admin?</p>
+                  <p class="post-date">Oct 24, 2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2025 ApexRune. All rights reserved.</p>
+            <div class="footer-bottom-links">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     `;
 
     // Add service detail page styles
     addServiceDetailStyles();
+    
+    // Scroll to top after content is rendered so user sees the whole page from the beginning
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
     
     // Re-initialize contact form for dynamically loaded pages
     import('./contact-form.js').then(({ initContactForm, openContactModal }) => {
