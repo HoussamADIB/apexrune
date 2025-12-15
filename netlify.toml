@@ -1,0 +1,10 @@
+[build]
+  base = "web-app"
+  command = "npm install && npm run build"
+  publish = "web-app/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
