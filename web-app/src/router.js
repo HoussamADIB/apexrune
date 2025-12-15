@@ -24,7 +24,7 @@ function handleRoute() {
 
   if (path === '/' || path === '') {
     // If we're already on home page, don't reload
-    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page') && !app.innerHTML.includes('our-services-page') && !app.innerHTML.includes('contact-page')) {
+    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page') && !app.innerHTML.includes('our-services-page') && !app.innerHTML.includes('contact-page') && !app.innerHTML.includes('case-studies-page')) {
       return; // Already on home page
     }
     // Otherwise reload to show home page and scroll to top
@@ -42,6 +42,8 @@ function handleRoute() {
     loadOurServicesPage();
   } else if (path === '/contact') {
     loadContactPage();
+  } else if (path === '/case-studies') {
+    loadCaseStudiesPage();
   }
 }
 
@@ -125,7 +127,7 @@ function loadServicePage(serviceKey) {
           <nav class="nav">
             <a href="#/" class="nav-link">HOME</a>
             <a href="#/services" class="nav-link">OUR SERVICES</a>
-            <a href="#/" class="nav-link">WHY US</a>
+            <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
             <a href="#/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
@@ -582,7 +584,7 @@ function loadOurServicesPage() {
           <nav class="nav">
             <a href="#/" class="nav-link">HOME</a>
             <a href="#/services" class="nav-link">OUR SERVICES</a>
-            <a href="#/" class="nav-link">WHY US</a>
+            <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
             <a href="#/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
@@ -1129,7 +1131,7 @@ function loadContactPage() {
           <nav class="nav">
             <a href="#/" class="nav-link">HOME</a>
             <a href="#/services" class="nav-link">OUR SERVICES</a>
-            <a href="#/" class="nav-link">WHY US</a>
+            <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
             <a href="#/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
@@ -1246,6 +1248,250 @@ function loadContactPage() {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
   });
+}
+
+function loadCaseStudiesPage() {
+  const app = document.querySelector('#app');
+  app.innerHTML = `
+    <header class="header">
+      <div class="header-content">
+        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <div class="logo-square">
+            <span class="logo-letter">A</span>
+          </div>
+          <span class="logo-text">ApexRune</span>
+        </a>
+        <nav class="nav">
+          <a href="#/" class="nav-link">HOME</a>
+          <a href="#/services" class="nav-link">OUR SERVICES</a>
+          <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="#/contact" class="nav-link">CONTACT US</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="case-studies-page">
+      <div class="container">
+        <a href="#/" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Home
+        </a>
+        
+        <div class="case-studies-header">
+          <h1 class="case-studies-title">Case Studies: The Proof</h1>
+          <p class="case-studies-subtitle">Undeniable evidence that we deliver real-world results.</p>
+        </div>
+
+        <div class="case-studies-grid">
+          <!-- Case studies will be added here later -->
+          <div class="case-study-placeholder">
+            <p>Case studies coming soon...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <div class="footer-logo">
+              <div class="logo-square">
+                <span class="logo-letter">A</span>
+              </div>
+              <span class="logo-text">ApexRune</span>
+            </div>
+            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+            <div class="social-icons">
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Get In Touch</h4>
+            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+            <p class="footer-text">+1 (563) 123-4567</p>
+            <p class="footer-text">contact@apexrune.com</p>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Our Services</h4>
+            <ul class="footer-links">
+              <li><a href="#/service/custom-development">Custom Development</a></li>
+              <li><a href="#/service/system-integration">System Integration</a></li>
+              <li><a href="#/service/health-checks">Health Checks</a></li>
+              <li><a href="#/service/process-automation">Process Automation</a></li>
+            </ul>
+            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
+            <div class="latest-post">
+              <div class="post-image"></div>
+              <div class="post-content">
+                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
+                <p class="post-date">Oct 24, 2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 ApexRune. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#/privacy-policy">Privacy Policy</a>
+            <a href="#/terms-of-service">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  `;
+
+  addCaseStudiesPageStyles();
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+}
+
+function addCaseStudiesPageStyles() {
+  if (document.getElementById('case-studies-page-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'case-studies-page-styles';
+  style.textContent = `
+    .case-studies-page {
+      padding: 2rem 2rem 4rem;
+      min-height: calc(100vh - 100px);
+      background: var(--white);
+    }
+
+    .case-studies-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      margin-top: 2rem;
+    }
+
+    .case-studies-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 1rem;
+    }
+
+    .case-studies-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .case-studies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .case-study-card {
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .case-study-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .case-study-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      background: #F3F4F6;
+    }
+
+    .case-study-content {
+      padding: 2rem;
+    }
+
+    .case-study-client {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .case-study-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 1rem;
+    }
+
+    .case-study-challenge {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .case-study-results {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .case-study-result {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .case-study-result svg {
+      flex-shrink: 0;
+    }
+
+    .case-study-placeholder {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-light);
+      font-size: 1.125rem;
+    }
+
+    @media (max-width: 768px) {
+      .case-studies-page {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .case-studies-title {
+        font-size: 2rem;
+      }
+
+      .case-studies-subtitle {
+        font-size: 1rem;
+      }
+
+      .case-studies-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function addContactPageStyles() {

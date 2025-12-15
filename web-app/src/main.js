@@ -17,7 +17,7 @@ document.querySelector('#app').innerHTML = `
       <nav class="nav">
         <a href="#" class="nav-link">HOME</a>
             <a href="#/services" class="nav-link">OUR SERVICES</a>
-        <a href="#" class="nav-link">WHY US</a>
+        <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
         <a href="#/contact" class="nav-link">CONTACT US</a>
       </nav>
     </div>
