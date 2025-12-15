@@ -1277,7 +1277,7 @@ function addContactPageStyles() {
     }
 
     .contact-info-panel {
-      background: var(--bright-blue);
+      background: linear-gradient(135deg, #2563EB 0%, #1E40AF 50%, #1E3A8A 100%);
       padding: 4rem 3rem;
       display: flex;
       flex-direction: column;
