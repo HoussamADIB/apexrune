@@ -1271,6 +1271,9 @@ function addContactPageStyles() {
       gap: 0;
       min-height: calc(100vh - 200px);
       margin-top: 2rem;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
     .contact-info-panel {
@@ -1280,6 +1283,7 @@ function addContactPageStyles() {
       flex-direction: column;
       justify-content: center;
       color: var(--white);
+      border-radius: 16px 0 0 16px;
     }
 
     .contact-info-title {
@@ -1342,6 +1346,22 @@ function addContactPageStyles() {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .contact-page .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bright-blue);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      transition: opacity 0.2s;
+    }
+
+    .contact-page .back-link:hover {
+      opacity: 0.8;
     }
 
     .contact-form {
@@ -1439,10 +1459,12 @@ function addContactPageStyles() {
 
       .contact-info-panel {
         padding: 3rem 2rem;
+        border-radius: 16px 16px 0 0;
       }
 
       .contact-form-panel {
         padding: 3rem 2rem;
+        border-radius: 0 0 16px 16px;
       }
     }
 
