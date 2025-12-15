@@ -38,6 +38,8 @@ function handleRoute() {
     loadPrivacyPolicyPage();
   } else if (path === '/terms-of-service') {
     loadTermsOfServicePage();
+  } else if (path === '/services' || path === '/our-services') {
+    loadOurServicesPage();
   }
 }
 
@@ -235,13 +237,12 @@ function loadServicePage(serviceKey) {
               <p class="footer-text">info@apexrune.com</p>
             </div>
             <div class="footer-column">
-              <h4 class="footer-heading">IT Services</h4>
+              <h4 class="footer-heading">Our Services</h4>
               <ul class="footer-links">
-                <li><a href="#">Salesforce Quick Start</a></li>
-                <li><a href="#">Platform Integration</a></li>
-                <li><a href="#">Custom Automation</a></li>
-                <li><a href="#">Org Health Check</a></li>
-                <li><a href="#">Custom Solutions</a></li>
+                <li><a href="#/service/custom-development">Custom Development</a></li>
+                <li><a href="#/service/system-integration">System Integration</a></li>
+                <li><a href="#/service/health-checks">Health Checks</a></li>
+                <li><a href="#/service/process-automation">Process Automation</a></li>
               </ul>
               <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
               <div class="latest-post">
@@ -536,6 +537,182 @@ function addServiceDetailStyles() {
     }
   `;
   document.head.appendChild(style);
+}
+
+function loadOurServicesPage() {
+  import('./services.js').then(({ servicesData }) => {
+    const services = [
+      servicesData['custom-development'],
+      servicesData['system-integration'],
+      servicesData['health-checks'],
+      servicesData['process-automation']
+    ];
+
+    // Helper function to get service icon for card (colored versions)
+    function getServiceCardIcon(serviceKey) {
+      const icons = {
+        'custom-development': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
+          <rect x="18" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
+          <rect x="6" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
+          <rect x="18" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
+        </svg>`,
+        'system-integration': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="16" r="4" fill="#8B5CF6"/>
+          <circle cx="22" cy="16" r="4" fill="#8B5CF6"/>
+          <path d="M14 16H18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/>
+          <path d="M10 12L14 16L10 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 12L18 16L22 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`,
+        'health-checks': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 16L12 10L18 16L26 8" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 24L12 18L18 24L26 16" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`,
+        'process-automation': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 4L20 12L28 14L22 20L23 28L16 24L9 28L10 20L4 14L12 12L16 4Z" fill="#F59E0B"/>
+        </svg>`
+      };
+      return icons[serviceKey] || '';
+    }
+
+    const app = document.querySelector('#app');
+    app.innerHTML = `
+      <header class="header">
+        <div class="header-content">
+          <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+            <div class="logo-square">
+              <span class="logo-letter">A</span>
+            </div>
+            <span class="logo-text">ApexRune</span>
+          </a>
+          <nav class="nav">
+            <a href="#/" class="nav-link">HOME</a>
+            <a href="#/services" class="nav-link">OUR SERVICES</a>
+            <a href="#/" class="nav-link">WHY US</a>
+            <a href="#/" class="nav-link">CONTACT US</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="our-services-page">
+        <div class="container">
+          <a href="#/" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+          </a>
+          
+          <div class="our-services-header">
+            <h1 class="our-services-title">Our Services</h1>
+            <p class="our-services-description">We provide specialized Salesforce solutions that drive tangible business outcomes.</p>
+          </div>
+
+          <div class="our-services-grid">
+            ${services.map((service, index) => {
+              const serviceKey = ['custom-development', 'system-integration', 'health-checks', 'process-automation'][index];
+              const iconColors = {
+                'custom-development': { bg: '#EFF6FF', icon: '#3B82F6' },
+                'system-integration': { bg: '#F3E8FF', icon: '#8B5CF6' },
+                'health-checks': { bg: '#ECFDF5', icon: '#10B981' },
+                'process-automation': { bg: '#FEF3C7', icon: '#F59E0B' }
+              };
+              const colors = iconColors[serviceKey];
+              
+              return `
+                <div class="our-service-card">
+                  <div class="service-card-header">
+                    <div class="service-icon-wrapper" style="background: ${colors.bg};">
+                      ${getServiceCardIcon(serviceKey)}
+                    </div>
+                    <span class="engagement-tag">${service.engagementTag || 'Project based'}</span>
+                  </div>
+                  <h3 class="service-card-title">${service.title}</h3>
+                  <p class="service-card-description">${service.description}</p>
+                  <ul class="service-features">
+                    ${service.features.slice(0, 3).map(feature => `
+                      <li>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        ${feature}
+                      </li>
+                    `).join('')}
+                  </ul>
+                  <a href="#/service/${serviceKey}" class="service-cta-button">Discuss Your Project</a>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-column">
+              <div class="footer-logo">
+                <div class="logo-square">
+                  <span class="logo-letter">A</span>
+                </div>
+                <span class="logo-text">ApexRune</span>
+              </div>
+              <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+              <div class="social-icons">
+                <a href="#" class="social-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                <a href="#" class="social-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="footer-column">
+              <h4 class="footer-heading">Get In Touch</h4>
+              <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+              <p class="footer-text">+1 (563) 123-4567</p>
+              <p class="footer-text">info@apexrune.com</p>
+            </div>
+            <div class="footer-column">
+              <h4 class="footer-heading">Our Services</h4>
+              <ul class="footer-links">
+                <li><a href="#/service/custom-development">Custom Development</a></li>
+                <li><a href="#/service/system-integration">System Integration</a></li>
+                <li><a href="#/service/health-checks">Health Checks</a></li>
+                <li><a href="#/service/process-automation">Process Automation</a></li>
+              </ul>
+              <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
+              <div class="latest-post">
+                <div class="post-image"></div>
+                <div class="post-content">
+                  <p class="post-title">Will AI Replace The Salesforce Admin?</p>
+                  <p class="post-date">Oct 24, 2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2025 ApexRune. All rights reserved.</p>
+            <div class="footer-bottom-links">
+              <a href="#/privacy-policy">Privacy Policy</a>
+              <a href="#/terms-of-service">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    `;
+
+    addOurServicesPageStyles();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  });
 }
 
 function loadPrivacyPolicyPage() {
@@ -943,6 +1120,157 @@ function loadTermsOfServicePage() {
   });
 }
 
+function addOurServicesPageStyles() {
+  if (document.getElementById('our-services-page-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'our-services-page-styles';
+  style.textContent = `
+    .our-services-page {
+      padding: 2rem 2rem 4rem;
+      min-height: calc(100vh - 100px);
+      background: var(--white);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bright-blue);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      transition: opacity 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
+    }
+
+    .our-services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .our-services-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 1rem;
+    }
+
+    .our-services-description {
+      font-size: 1.125rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .our-services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .our-service-card {
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .our-service-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .service-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .service-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .engagement-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--bright-blue);
+      background: #EFF6FF;
+      padding: 0.375rem 0.75rem;
+      border-radius: 20px;
+    }
+
+    .service-card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .service-card-description {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .service-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+    }
+
+    .service-features svg {
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .our-services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .our-services-page {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .our-services-title {
+        font-size: 2rem;
+      }
+
+      .our-services-description {
+        font-size: 1rem;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 function addLegalPageStyles() {
   if (document.getElementById('legal-page-styles')) return;
 
@@ -953,6 +1281,21 @@ function addLegalPageStyles() {
       padding: 2rem 2rem 4rem;
       min-height: calc(100vh - 100px);
       background: var(--white);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bright-blue);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      transition: opacity 0.2s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
     }
 
     .legal-content {
