@@ -1136,7 +1136,7 @@ function loadContactPage() {
       </header>
 
       <main class="contact-page">
-        <div class="container">
+        <div class="contact-page-container">
           <a href="#/" class="back-link">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1144,8 +1144,37 @@ function loadContactPage() {
             Back to Home
           </a>
           
-          <div class="contact-page-content">
-            ${getContactFormHTML()}
+          <div class="contact-page-layout">
+            <div class="contact-info-panel">
+              <h1 class="contact-info-title">Let's Build Something Great Together.</h1>
+              <p class="contact-info-description">Whether you have a specific project in mind or just want to explore what's possible, we're here to help.</p>
+              
+              <div class="contact-info-items">
+                <div class="contact-info-item">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  <a href="mailto:info@apexrune.com" class="contact-info-link">info@apexrune.com</a>
+                </div>
+                
+                <div class="contact-info-item">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  <a href="#/contact" class="contact-info-link underlined">Book a Free 30-Minute Discovery Call</a>
+                </div>
+              </div>
+              
+              <p class="contact-info-footer">We'll respond within one business day.</p>
+            </div>
+            
+            <div class="contact-form-panel">
+              ${getContactFormHTML()}
+            </div>
           </div>
         </div>
       </main>
@@ -1226,48 +1255,99 @@ function addContactPageStyles() {
   style.id = 'contact-page-styles';
   style.textContent = `
     .contact-page {
-      padding: 2rem 2rem 4rem;
       min-height: calc(100vh - 100px);
       background: var(--white);
     }
 
-    .contact-page-content {
-      max-width: 700px;
+    .contact-page-container {
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 2rem;
     }
 
-    .contact-form-container {
-      background: var(--white);
-      border-radius: 16px;
-      padding: 3rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    .contact-page-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: calc(100vh - 200px);
+      margin-top: 2rem;
     }
 
-    .contact-form-title {
+    .contact-info-panel {
+      background: var(--bright-blue);
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: var(--white);
+    }
+
+    .contact-info-title {
       font-size: 2.5rem;
       font-weight: 700;
-      color: var(--dark-blue);
-      margin-bottom: 0.5rem;
-      text-align: center;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
 
-    .contact-form-subtitle {
+    .contact-info-description {
       font-size: 1.125rem;
-      color: var(--text-light);
-      text-align: center;
-      margin-bottom: 2.5rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      margin-bottom: 3rem;
+    }
+
+    .contact-info-items {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .contact-info-item svg {
+      flex-shrink: 0;
+      color: var(--white);
+    }
+
+    .contact-info-link {
+      color: var(--white);
+      font-size: 1rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .contact-info-link:hover {
+      opacity: 0.8;
+    }
+
+    .contact-info-link.underlined {
+      text-decoration: underline;
+    }
+
+    .contact-info-footer {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: auto;
+    }
+
+    .contact-form-panel {
+      background: var(--white);
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .contact-form {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
     }
 
     .form-group {
@@ -1283,7 +1363,6 @@ function addContactPageStyles() {
     }
 
     .form-group input,
-    .form-group select,
     .form-group textarea {
       padding: 0.75rem;
       border: 2px solid #E5E7EB;
@@ -1291,10 +1370,10 @@ function addContactPageStyles() {
       font-size: 1rem;
       font-family: inherit;
       transition: border-color 0.2s;
+      width: 100%;
     }
 
     .form-group input:focus,
-    .form-group select:focus,
     .form-group textarea:focus {
       outline: none;
       border-color: var(--bright-blue);
@@ -1302,11 +1381,11 @@ function addContactPageStyles() {
 
     .form-group textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 150px;
     }
 
     .contact-form-submit {
-      background: var(--bright-blue);
+      background: var(--dark-blue);
       color: var(--white);
       border: none;
       padding: 1rem 2rem;
@@ -1314,12 +1393,9 @@ function addContactPageStyles() {
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
       transition: background 0.2s;
       margin-top: 0.5rem;
+      width: 100%;
     }
 
     .contact-form-submit:hover:not(:disabled) {
@@ -1356,21 +1432,31 @@ function addContactPageStyles() {
       font-size: 1rem;
     }
 
+    @media (max-width: 1024px) {
+      .contact-page-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info-panel {
+        padding: 3rem 2rem;
+      }
+
+      .contact-form-panel {
+        padding: 3rem 2rem;
+      }
+    }
+
     @media (max-width: 768px) {
-      .contact-page {
-        padding: 1.5rem 1rem 3rem;
+      .contact-page-container {
+        padding: 1.5rem 1rem;
       }
 
-      .contact-form-container {
-        padding: 2rem 1.5rem;
-      }
-
-      .contact-form-title {
+      .contact-info-title {
         font-size: 2rem;
       }
 
-      .form-row {
-        grid-template-columns: 1fr;
+      .contact-info-description {
+        font-size: 1rem;
       }
     }
   `;
@@ -1389,8 +1475,8 @@ async function handleContactPageFormSubmit(e) {
   
   const form = e.target;
   const submitBtn = form.querySelector('.contact-form-submit');
-  const formContainer = document.querySelector('.contact-form-container');
-  const originalHTML = formContainer.innerHTML;
+  const formPanel = document.querySelector('.contact-form-panel');
+  const originalHTML = formPanel.innerHTML;
   
   // Validate form
   if (!form.checkValidity()) {
@@ -1415,7 +1501,7 @@ async function handleContactPageFormSubmit(e) {
     
     if (response.ok) {
       // Show success message
-      formContainer.innerHTML = `
+      formPanel.innerHTML = `
         <div class="form-success">
           <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="30" fill="#10B981" opacity="0.1"/>
@@ -1423,7 +1509,7 @@ async function handleContactPageFormSubmit(e) {
             <path d="M24 32L30 38L40 26" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <h3>Thank you for your message!</h3>
-          <p>We'll get back to you within 24 hours.</p>
+          <p>We'll get back to you within one business day.</p>
           <a href="#/" class="back-link" style="margin-top: 2rem; display: inline-block;">Back to Home</a>
         </div>
       `;
@@ -1434,7 +1520,7 @@ async function handleContactPageFormSubmit(e) {
     console.error('Form submission error:', error);
     
     // Show error message
-    formContainer.innerHTML = `
+    formPanel.innerHTML = `
       <div class="form-error">
         <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="32" cy="32" r="30" fill="#EF4444" opacity="0.1"/>
