@@ -61,7 +61,7 @@ function createContactModal() {
           <h2 class="contact-form-title">Schedule Your Free Consultation</h2>
           <p class="contact-form-subtitle">Let's discuss how we can help transform your Salesforce platform.</p>
           
-          <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+          <form name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
             <input type="hidden" name="form-name" value="contact" />
             <p style="display: none;">
               <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -256,16 +256,23 @@ async function handleFormSubmit(e) {
     const formData = new FormData(form);
     
     // Ensure form-name is set
-    formData.set('form-name', 'contact');
+    if (!formData.has('form-name')) {
+      formData.set('form-name', 'contact');
+    }
     
-    // Submit to Netlify
+    // Submit to Netlify Forms
     const response = await fetch('/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
       body: new URLSearchParams(formData).toString()
     });
     
-    if (response.ok) {
+    // Netlify Forms returns 200 on success, even if there are validation errors
+    // Check if response is ok or if it's a redirect (302) which also indicates success
+    if (response.ok || response.status === 200 || response.status === 302) {
       // Show success message
       form.style.display = 'none';
       if (successDiv) successDiv.style.display = 'block';
