@@ -1189,4 +1189,36 @@ body {
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  .core-services-section {
+    padding: 3rem 1rem;
+  }
+
+  .core-services-title {
+    font-size: 2rem;
+  }
+
+  .core-services-description {
+    font-size: 1rem;
+  }
+
+  .system-overview-card {
+    padding: 1rem;
+  }
+
+  .problems-section {
+    padding: 3rem 1rem;
+  }
+
+  .cta-section {
+    padding: 3rem 1rem;
+  }
+
+  .cta-title {
+    font-size: 2rem;
+  }
+
+  .cta-description {
+    font-size: 1rem;
+  }
 }
