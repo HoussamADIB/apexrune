@@ -128,10 +128,10 @@ document.querySelector('#app').innerHTML = `
         <p class="section-description">A focused suite of services designed to architect, automate, and optimize your Salesforce platform.</p>
         
         <div class="service-buttons">
-          <button class="service-btn">Salesforce Quick Start</button>
+          <button class="service-btn active">Salesforce Quick Start</button>
           <button class="service-btn">Custom Automation</button>
           <button class="service-btn">Org Health</button>
-          <button class="service-btn active">Platform Integration</button>
+          <button class="service-btn">Platform Integration</button>
           <button class="service-btn">Custom Solutions</button>
         </div>
 
@@ -406,8 +406,16 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initServiceTabs();
     initRouter();
+    // Set default service on page load
+    import('./services.js').then(({ updateServiceCard }) => {
+      updateServiceCard('salesforce-quick-start');
+    });
   });
 } else {
   initServiceTabs();
   initRouter();
+  // Set default service on page load
+  import('./services.js').then(({ updateServiceCard }) => {
+    updateServiceCard('salesforce-quick-start');
+  });
 }
