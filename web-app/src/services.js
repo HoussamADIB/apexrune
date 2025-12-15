@@ -124,9 +124,6 @@ export function updateServiceCard(serviceKey) {
   if (icon) {
     icon.innerHTML = service.icon;
   }
-
-  // Smooth scroll to card
-  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Initialize service tabs

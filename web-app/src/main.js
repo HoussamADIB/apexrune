@@ -404,16 +404,8 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initServiceTabs();
     initRouter();
-    // Set default service on page load
-    import('./services.js').then(({ updateServiceCard }) => {
-      updateServiceCard('salesforce-quick-start');
-    });
   });
 } else {
   initServiceTabs();
   initRouter();
-  // Set default service on page load
-  import('./services.js').then(({ updateServiceCard }) => {
-    updateServiceCard('salesforce-quick-start');
-  });
 }
