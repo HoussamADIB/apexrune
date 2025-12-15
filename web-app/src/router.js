@@ -24,7 +24,7 @@ function handleRoute() {
 
   if (path === '/' || path === '') {
     // If we're already on home page, don't reload
-    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page')) {
+    if (!app.innerHTML.includes('service-detail-page') && !app.innerHTML.includes('legal-page') && !app.innerHTML.includes('our-services-page')) {
       return; // Already on home page
     }
     // Otherwise reload to show home page and scroll to top

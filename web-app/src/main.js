@@ -16,7 +16,7 @@ document.querySelector('#app').innerHTML = `
       </a>
       <nav class="nav">
         <a href="#" class="nav-link">HOME</a>
-        <a href="#" class="nav-link">OUR SERVICES</a>
+            <a href="#/services" class="nav-link">OUR SERVICES</a>
         <a href="#" class="nav-link">WHY US</a>
         <a href="#" class="nav-link">CONTACT US</a>
       </nav>
@@ -511,13 +511,12 @@ document.querySelector('#app').innerHTML = `
             <p class="footer-text">info@apexrune.com</p>
           </div>
           <div class="footer-column">
-            <h4 class="footer-heading">IT Services</h4>
+            <h4 class="footer-heading">Our Services</h4>
             <ul class="footer-links">
-              <li><a href="#">Salesforce Quick Start</a></li>
-              <li><a href="#">Platform Integration</a></li>
-              <li><a href="#">Custom Automation</a></li>
-              <li><a href="#">Org Health Check</a></li>
-              <li><a href="#">Custom Solutions</a></li>
+              <li><a href="#/service/custom-development">Custom Development</a></li>
+              <li><a href="#/service/system-integration">System Integration</a></li>
+              <li><a href="#/service/health-checks">Health Checks</a></li>
+              <li><a href="#/service/process-automation">Process Automation</a></li>
             </ul>
             <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
             <div class="latest-post">

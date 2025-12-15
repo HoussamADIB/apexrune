@@ -4,6 +4,7 @@ export const servicesData = {
     title: 'Custom Development',
     description: 'We build bespoke applications on the Salesforce platform that solve your unique business challenges.',
     overview: 'Standard Salesforce functionality is powerful, but sometimes it is not enough. We build custom solutions tailored to your specific processes using Apex, Lightning Web Components (LWC), and Visualforce.',
+    engagementTag: 'Project based',
     features: [
       'Discovery & requirements gathering',
       'Custom objects & field design',
@@ -51,6 +52,7 @@ export const servicesData = {
     title: 'System Integration',
     description: 'We connect Salesforce to your other essential tools like Slack, Mailchimp, and ERPs.',
     overview: 'Your business uses multiple tools, but they don\'t talk to each other. We create seamless integrations that connect Salesforce with your existing systems, eliminating data silos and providing a unified view of your business.',
+    engagementTag: 'Project based',
     features: [
       'API Development',
       'Third-party connectors',
@@ -79,6 +81,7 @@ export const servicesData = {
     title: 'Health Checks',
     description: 'We audit your existing setup to find and fix inefficiencies, boost performance, and improve user experience.',
     overview: 'Is your Salesforce org running smoothly? Our comprehensive health checks identify performance bottlenecks, security issues, and optimization opportunities to ensure your platform operates at peak efficiency.',
+    engagementTag: 'Starting at $1,500',
     features: [
       'System Audit',
       'Security Review',
@@ -101,6 +104,7 @@ export const servicesData = {
     title: 'Process Automation',
     description: 'We build custom flows and triggers to make Salesforce work exactly how your business operates.',
     overview: 'Stop wasting time on repetitive tasks. We automate your business processes using Salesforce Flow, Process Builder, and Apex to create seamless workflows that save hours every week.',
+    engagementTag: 'Retainer based',
     features: [
       'Flow Builder',
       'Process Builder Migration',

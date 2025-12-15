@@ -149,7 +149,7 @@ body {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: background 0.2s;
