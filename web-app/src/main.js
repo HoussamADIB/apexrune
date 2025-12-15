@@ -408,15 +408,25 @@ function initCertifications() {
   const track = document.getElementById('certifications-track');
   if (!track) return;
 
-  track.innerHTML = certifications.map(cert => `
-    <div class="certification-badge" style="background: ${cert.color}; box-shadow: 4px 4px 0 0 ${cert.shadowColor};">
-      <div class="badge-cloud-icon">
-        ${getSalesforceCloudIcon(cert.iconColor)}
+  track.innerHTML = certifications.map(cert => {
+    // Check if image exists, otherwise use fallback
+    const hasImage = cert.image && cert.image !== '';
+    const backgroundStyle = hasImage 
+      ? `background-image: url('${cert.image}'); background-size: cover; background-position: center; background-color: ${cert.fallbackColor};`
+      : `background: ${cert.fallbackColor};`;
+    
+    return `
+      <div class="certification-badge" style="${backgroundStyle} box-shadow: 4px 4px 0 0 ${cert.shadowColor};">
+        ${hasImage ? '' : `
+          <div class="badge-cloud-icon">
+            ${getSalesforceCloudIcon('#FFFFFF')}
+          </div>
+          <div class="badge-certified-text">CERTIFIED</div>
+        `}
+        <div class="badge-cert-name">${cert.name}</div>
       </div>
-      <div class="badge-certified-text">CERTIFIED</div>
-      <div class="badge-cert-name">${cert.name}</div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   initCertificationsCarousel();
 }

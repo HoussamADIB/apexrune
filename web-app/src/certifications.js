@@ -2,33 +2,33 @@
 export const certifications = [
   {
     name: 'Platform Developer I',
-    color: '#1E3A8A', // Dark blue
+    image: '/certifications/platform-developer-i.png', // Path to image file
+    fallbackColor: '#1E3A8A', // Fallback color if image not found
     shadowColor: '#3B82F6', // Light blue shadow
-    iconColor: '#60A5FA' // Light blue cloud
   },
   {
     name: 'AI Associate',
-    color: '#3B82F6', // Bright blue
+    image: '/certifications/ai-associate.png',
+    fallbackColor: '#3B82F6', // Bright blue
     shadowColor: '#60A5FA', // Lighter blue shadow
-    iconColor: '#FFFFFF' // White cloud
   },
   {
     name: 'AI Specialist',
-    color: '#1E3A8A', // Dark blue
+    image: '/certifications/ai-specialist.png',
+    fallbackColor: '#1E3A8A', // Dark blue
     shadowColor: '#3B82F6', // Light blue shadow
-    iconColor: '#60A5FA' // Light blue cloud
   },
   {
     name: 'Technical Architect',
-    color: '#1E3A8A', // Dark blue
+    image: '/certifications/technical-architect.png',
+    fallbackColor: '#1E3A8A', // Dark blue
     shadowColor: '#10B981', // Teal/green shadow
-    iconColor: '#60A5FA' // Light blue cloud
   },
   {
     name: 'Integration Architect',
-    color: '#1E3A8A', // Dark blue
+    image: '/certifications/integration-architect.png',
+    fallbackColor: '#1E3A8A', // Dark blue
     shadowColor: '#10B981', // Teal/green shadow
-    iconColor: '#60A5FA' // Light blue cloud
   }
 ];
 
