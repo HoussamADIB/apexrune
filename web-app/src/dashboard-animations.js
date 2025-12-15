@@ -101,7 +101,7 @@ function startAnimations() {
   const performanceScore = document.querySelector('.performance-score');
   if (performanceScore) {
     setTimeout(() => {
-      animateScore(performanceScore, 60, 98, 100, 2000);
+      animateScore(performanceScore, 60, 98, 100, 2500);
     }, 300);
   }
 
@@ -123,7 +123,7 @@ function startAnimations() {
         } else {
           clearInterval(interval);
         }
-      }, 500);
+      }, 600);
     }, 800);
   }
 
@@ -131,7 +131,7 @@ function startAnimations() {
   const dataQuality = document.querySelector('.data-card .metric-value');
   if (dataQuality) {
     setTimeout(() => {
-      animatePercentage(dataQuality, 85.0, 99.9, 2000);
+      animatePercentage(dataQuality, 85.0, 99.9, 2500);
     }, 1000);
   }
 
@@ -140,7 +140,7 @@ function startAnimations() {
   if (speedBadge) {
     setTimeout(() => {
       const startTime = performance.now();
-      const duration = 1500;
+      const duration = 2000;
       const start = 0;
       const end = 24;
       
@@ -168,13 +168,13 @@ function startAnimations() {
     setTimeout(() => {
       item.style.opacity = '0';
       item.style.transform = 'translateY(10px)';
-      item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       
       setTimeout(() => {
         item.style.opacity = '1';
         item.style.transform = 'translateY(0)';
       }, 50);
-    }, 1500 + (index * 200));
+    }, 1800 + (index * 250));
   });
 
   // Animate performance card background gradient
@@ -182,7 +182,7 @@ function startAnimations() {
   if (performanceCard) {
     performanceCard.style.opacity = '0.7';
     performanceCard.style.transform = 'scale(0.95)';
-    performanceCard.style.transition = 'opacity 1s ease, transform 1s ease';
+    performanceCard.style.transition = 'opacity 1.2s ease, transform 1.2s ease';
     
     setTimeout(() => {
       performanceCard.style.opacity = '1';
@@ -196,7 +196,7 @@ function startAnimations() {
     setTimeout(() => {
       card.style.opacity = '0';
       card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
       
       setTimeout(() => {
         card.style.opacity = '1';
