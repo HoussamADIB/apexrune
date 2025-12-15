@@ -2,33 +2,57 @@
 export const certifications = [
   {
     name: 'Platform Developer I',
-    image: '/certifications/platform-developer-i.png', // Path to image file
-    fallbackColor: '#1E3A8A', // Fallback color if image not found
-    shadowColor: '#3B82F6', // Light blue shadow
+    image: '/certifications/salesforce-certified-Platform-Developer-I-salesforce-agentur-SUNZINET.png',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#3B82F6',
   },
   {
     name: 'AI Associate',
-    image: '/certifications/ai-associate.png',
-    fallbackColor: '#3B82F6', // Bright blue
-    shadowColor: '#60A5FA', // Lighter blue shadow
+    image: '/certifications/AI Associate - Salesforce Agency SUNZINET.png',
+    fallbackColor: '#3B82F6',
+    shadowColor: '#60A5FA',
   },
   {
     name: 'AI Specialist',
-    image: '/certifications/ai-specialist.png',
-    fallbackColor: '#1E3A8A', // Dark blue
-    shadowColor: '#3B82F6', // Light blue shadow
+    image: '/certifications/Salesforce AI specialist - Salesforce Agentur SUNZINET.png',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#3B82F6',
   },
   {
     name: 'Technical Architect',
-    image: '/certifications/technical-architect.png',
-    fallbackColor: '#1E3A8A', // Dark blue
-    shadowColor: '#10B981', // Teal/green shadow
+    image: '/certifications/Salesforce Certified Technical Architect-PhotoRoom.png-PhotoRoom.png',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#10B981',
   },
   {
-    name: 'Integration Architect',
-    image: '/certifications/integration-architect.png',
-    fallbackColor: '#1E3A8A', // Dark blue
-    shadowColor: '#10B981', // Teal/green shadow
+    name: 'Platform Developer II',
+    image: '/certifications/Salesforce-Platform-Developer-II-expert-salesforce agentur SUNZINET.png',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#10B981',
+  },
+  {
+    name: 'Sales Cloud Consultant',
+    image: '/certifications/Sales-Cloud-Consultant-1.png',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#3B82F6',
+  },
+  {
+    name: 'Service Cloud Consultant',
+    image: '/certifications/Salesforce-Certified-Service-Cloud-Consultant-Badge.png',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#3B82F6',
+  },
+  {
+    name: 'Platform App Builder',
+    image: '/certifications/Salesforce-certified-Platform-App-Builder.png',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#3B82F6',
+  },
+  {
+    name: 'Administrator',
+    image: '/certifications/salesforce-certified-administrator.jpeg',
+    fallbackColor: '#1E3A8A',
+    shadowColor: '#3B82F6',
   }
 ];
 
