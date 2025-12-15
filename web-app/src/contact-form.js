@@ -139,7 +139,7 @@ function createContactModal() {
               <path d="M32 20V36M32 44H32.01" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
             </svg>
             <h3>Something went wrong</h3>
-            <p>Please try again or contact us directly at info@apexrune.com</p>
+            <p>Please try again or contact us directly at contact@apexrune.com</p>
           </div>
         </div>
       </div>

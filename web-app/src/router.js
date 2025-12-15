@@ -236,7 +236,7 @@ function loadServicePage(serviceKey) {
               <h4 class="footer-heading">Get In Touch</h4>
               <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
               <p class="footer-text">+1 (563) 123-4567</p>
-              <p class="footer-text">info@apexrune.com</p>
+              <p class="footer-text">contact@apexrune.com</p>
             </div>
             <div class="footer-column">
               <h4 class="footer-heading">Our Services</h4>
@@ -671,7 +671,7 @@ function loadOurServicesPage() {
               <h4 class="footer-heading">Get In Touch</h4>
               <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
               <p class="footer-text">+1 (563) 123-4567</p>
-              <p class="footer-text">info@apexrune.com</p>
+              <p class="footer-text">contact@apexrune.com</p>
             </div>
             <div class="footer-column">
               <h4 class="footer-heading">Our Services</h4>
@@ -835,7 +835,7 @@ function loadPrivacyPolicyPage() {
             <h2>11. Contact Us</h2>
             <p>If you have any questions about this Privacy Policy, please contact us:</p>
             <ul>
-              <li>Email: info@apexrune.com</li>
+              <li>Email: contact@apexrune.com</li>
               <li>Phone: +1 (563) 123-4567</li>
               <li>Address: 123 Tech Boulevard, Innovation City, ST 84000</li>
             </ul>
@@ -874,7 +874,7 @@ function loadPrivacyPolicyPage() {
             <h4 class="footer-heading">Get In Touch</h4>
             <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
             <p class="footer-text">+1 (563) 123-4567</p>
-            <p class="footer-text">info@apexrune.com</p>
+            <p class="footer-text">contact@apexrune.com</p>
           </div>
           <div class="footer-column">
             <h4 class="footer-heading">IT Services</h4>
@@ -1037,7 +1037,7 @@ function loadTermsOfServicePage() {
             <h2>14. Contact Information</h2>
             <p>If you have any questions about these Terms of Service, please contact us:</p>
             <ul>
-              <li>Email: info@apexrune.com</li>
+              <li>Email: contact@apexrune.com</li>
               <li>Phone: +1 (563) 123-4567</li>
               <li>Address: 123 Tech Boulevard, Innovation City, ST 84000</li>
             </ul>
@@ -1076,7 +1076,7 @@ function loadTermsOfServicePage() {
             <h4 class="footer-heading">Get In Touch</h4>
             <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
             <p class="footer-text">+1 (563) 123-4567</p>
-            <p class="footer-text">info@apexrune.com</p>
+            <p class="footer-text">contact@apexrune.com</p>
           </div>
           <div class="footer-column">
             <h4 class="footer-heading">IT Services</h4>
@@ -1155,7 +1155,7 @@ function loadContactPage() {
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                     <polyline points="22,6 12,13 2,6"/>
                   </svg>
-                  <a href="mailto:info@apexrune.com" class="contact-info-link">info@apexrune.com</a>
+                  <a href="mailto:contact@apexrune.com" class="contact-info-link">contact@apexrune.com</a>
                 </div>
                 
                 <div class="contact-info-item">
@@ -1209,7 +1209,7 @@ function loadContactPage() {
               <h4 class="footer-heading">Get In Touch</h4>
               <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
               <p class="footer-text">+1 (563) 123-4567</p>
-              <p class="footer-text">info@apexrune.com</p>
+              <p class="footer-text">contact@apexrune.com</p>
             </div>
             <div class="footer-column">
               <h4 class="footer-heading">Our Services</h4>
@@ -1550,7 +1550,7 @@ async function handleContactPageFormSubmit(e) {
           <path d="M32 20V36M32 44H32.01" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
         </svg>
         <h3>Something went wrong</h3>
-        <p>Please try again or contact us directly at info@apexrune.com</p>
+        <p>Please try again or contact us directly at contact@apexrune.com</p>
         <button onclick="location.reload()" class="contact-form-submit" style="margin-top: 1.5rem;">Try Again</button>
       </div>
     `;
