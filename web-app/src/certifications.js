@@ -124,8 +124,8 @@ export function initCertificationsCarousel() {
 // Generate Salesforce cloud icon SVG
 export function getSalesforceCloudIcon(color) {
   return `
-    <svg width="40" height="32" viewBox="0 0 40 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M25.5 12C24.5 8 21 5 17 5C14.5 5 12.5 6 11 7.5C9 3 5 0 0.5 0C-2.5 0 -5 2.5 -5 5.5C-5 6 -4.5 6.5 -4 7C-5.5 8.5 -6.5 10.5 -6.5 13C-6.5 16.5 -3.5 19.5 0 19.5H25.5C29 19.5 32 16.5 32 13C32 9.5 29 6.5 25.5 6.5C25.5 6.5 25.5 12 25.5 12Z" fill="${color}" transform="translate(5, 5)"/>
+    <svg width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.4 9.6C19.6 6.4 16.8 4 13.6 4C11.6 4 10 4.8 8.8 6C7.2 2.4 4 0 0.4 0C-2 0 -4 2 -4 4.4C-4 4.8 -3.6 5.2 -3.2 5.6C-4.4 6.8 -5.2 8.4 -5.2 10.4C-5.2 13.2 -2.8 15.6 0 15.6H20.4C23.2 15.6 25.6 13.2 25.6 10.4C25.6 7.6 23.2 5.2 20.4 5.2C20.4 5.2 20.4 9.6 20.4 9.6Z" fill="${color}"/>
     </svg>
   `;
 }
