@@ -1755,17 +1755,43 @@ function addCaseStudyDetailPageStyles() {
       flex-shrink: 0;
     }
 
+    @media (max-width: 1024px) {
+      .case-study-detail {
+        max-width: 100%;
+      }
+
+      .case-study-detail-image-placeholder {
+        height: 350px;
+      }
+    }
+
     @media (max-width: 768px) {
       .case-study-detail-page {
         padding: 1.5rem 1rem 3rem;
+      }
+
+      .case-study-detail-header {
+        margin-bottom: 2rem;
       }
 
       .case-study-detail-title {
         font-size: 2rem;
       }
 
+      .case-study-detail-content {
+        gap: 2rem;
+      }
+
       .case-study-section-title {
         font-size: 1.5rem;
+      }
+
+      .case-study-section-text {
+        font-size: 1rem;
+      }
+
+      .case-study-detail-image {
+        margin-bottom: 2rem;
       }
 
       .case-study-detail-image-placeholder {
@@ -1916,9 +1942,21 @@ function addCaseStudiesPageStyles() {
     }
 
 
+    @media (max-width: 1024px) {
+      .case-studies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .case-studies-page {
         padding: 1.5rem 1rem 3rem;
+      }
+
+      .case-studies-header {
+        margin-bottom: 2rem;
+        margin-top: 1rem;
       }
 
       .case-studies-title {
@@ -1931,6 +1969,19 @@ function addCaseStudiesPageStyles() {
 
       .case-studies-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .case-study-image-wrapper {
+        height: 200px;
+      }
+
+      .case-study-content {
+        padding: 1.5rem;
+      }
+
+      .case-study-title {
+        font-size: 1.25rem;
       }
     }
   `;
@@ -2162,12 +2213,39 @@ function addContactPageStyles() {
         padding: 1.5rem 1rem;
       }
 
+      .contact-page-layout {
+        margin-top: 1rem;
+      }
+
+      .contact-info-panel {
+        padding: 2rem 1.5rem;
+      }
+
+      .contact-form-panel {
+        padding: 2rem 1.5rem;
+      }
+
       .contact-info-title {
         font-size: 2rem;
+        margin-bottom: 1rem;
       }
 
       .contact-info-description {
         font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-info-items {
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-info-item {
+        flex-wrap: wrap;
+      }
+
+      .contact-info-link {
+        font-size: 0.9375rem;
       }
     }
   `;
