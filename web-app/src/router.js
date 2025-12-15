@@ -2295,11 +2295,9 @@ async function handleContactPageFormSubmit(e) {
       body: new URLSearchParams(formData).toString()
     });
     
-    // Netlify Forms returns 200 on successful submission
-    // According to Netlify docs, successful AJAX submissions return 200
-    const status = response.status;
-    
-    if (status === 200) {
+    // Netlify Forms returns 200 on successful AJAX submission
+    // According to Netlify docs: "successful AJAX submissions return 200"
+    if (response.ok) {
       // Success - show success message
       formPanel.innerHTML = `
         <div class="form-success">
