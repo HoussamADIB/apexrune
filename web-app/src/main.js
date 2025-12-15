@@ -1,6 +1,7 @@
 import './style.css'
 import { initServiceTabs } from './services.js'
 import { initRouter } from './router.js'
+import { certifications, initCertificationsCarousel, getSalesforceCloudIcon } from './certifications.js'
 
 document.querySelector('#app').innerHTML = `
   <header class="header">
@@ -103,21 +104,24 @@ document.querySelector('#app').innerHTML = `
     <!-- Certified Experts Section -->
     <section class="certified-section">
       <div class="container">
-        <div class="certified-badges">
-          <div class="badge-item">
-            <span class="badge-text">Salesforce</span>
+        <h2 class="certified-section-title">Certified Experts in the Salesforce Ecosystem</h2>
+        <div class="certifications-carousel-wrapper">
+          <button class="carousel-btn prev" aria-label="Previous certifications">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="certifications-carousel">
+            <div class="certifications-track" id="certifications-track">
+              <!-- Badges will be inserted here by JavaScript -->
+            </div>
           </div>
-          <div class="badge-item">
-            <span class="badge-text">APEX</span>
-          </div>
-          <div class="badge-item">
-            <span class="badge-text">LWC</span>
-          </div>
-          <div class="badge-item">
-            <span class="badge-text">Admin</span>
-          </div>
+          <button class="carousel-btn next" aria-label="Next certifications">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
-        <p class="certified-text">Certified Experts in the Salesforce Ecosystem</p>
       </div>
     </section>
 
@@ -399,13 +403,33 @@ document.querySelector('#app').innerHTML = `
   </main>
 `
 
+// Initialize certifications carousel
+function initCertifications() {
+  const track = document.getElementById('certifications-track');
+  if (!track) return;
+
+  track.innerHTML = certifications.map(cert => `
+    <div class="certification-badge" style="background: ${cert.color}; box-shadow: 4px 4px 0 0 ${cert.shadowColor};">
+      <div class="badge-cloud-icon">
+        ${getSalesforceCloudIcon(cert.iconColor)}
+      </div>
+      <div class="badge-certified-text">CERTIFIED</div>
+      <div class="badge-cert-name">${cert.name}</div>
+    </div>
+  `).join('');
+
+  initCertificationsCarousel();
+}
+
 // Initialize service tabs and router after DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initServiceTabs();
     initRouter();
+    initCertifications();
   });
 } else {
   initServiceTabs();
   initRouter();
+  initCertifications();
 }
