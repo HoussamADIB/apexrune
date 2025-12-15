@@ -44,6 +44,9 @@ function handleRoute() {
     loadContactPage();
   } else if (path === '/case-studies') {
     loadCaseStudiesPage();
+  } else if (path.startsWith('/case-study/')) {
+    const caseStudyId = path.split('/case-study/')[1];
+    loadCaseStudyDetailPage(caseStudyId);
   }
 }
 
@@ -1286,9 +1289,12 @@ function loadCaseStudiesPage() {
 
         <div class="case-studies-grid">
           <!-- Case Study 1: Automating Onboarding -->
-          <div class="case-study-card">
+          <a href="#/case-study/automating-onboarding" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);"></div>
+              <div class="case-study-overlay">
+                <span class="read-full-story">Read Full Story</span>
+              </div>
             </div>
             <div class="case-study-content">
               <div class="case-study-client">SAMPLECORP (SAAS)</div>
@@ -1315,10 +1321,10 @@ function loadCaseStudiesPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </a>
 
           <!-- Case Study 2: FinTech Sales Efficiency -->
-          <div class="case-study-card">
+          <a href="#/case-study/fintech-sales-efficiency" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
               <div class="case-study-overlay">
@@ -1350,12 +1356,15 @@ function loadCaseStudiesPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </a>
 
           <!-- Case Study 3: ERP Integration -->
-          <div class="case-study-card">
+          <a href="#/case-study/erp-integration" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);"></div>
+              <div class="case-study-overlay">
+                <span class="read-full-story">Read Full Story</span>
+              </div>
             </div>
             <div class="case-study-content">
               <div class="case-study-client">LOGISTICS CO</div>
@@ -1454,6 +1463,301 @@ function loadCaseStudiesPage() {
   });
 }
 
+function loadCaseStudyDetailPage(caseStudyId) {
+  // Case study data - you can expand this later
+  const caseStudies = {
+    'automating-onboarding': {
+      client: 'SAMPLECORP (SAAS)',
+      title: 'Automating Onboarding',
+      challenge: 'Manual processing was causing delays and reducing team productivity. The onboarding process needed automation to scale efficiently.',
+      results: [
+        '+40% increase in team productivity',
+        'Reduced onboarding time by 15 hours',
+        '100% user adoption'
+      ],
+      fullStory: 'This is where the full case study story will go. You can add detailed information about the project, the challenges faced, the solution implemented, and the results achieved.'
+    },
+    'fintech-sales-efficiency': {
+      client: 'FINTECH CLIENT',
+      title: 'FinTech Sales Efficiency',
+      challenge: 'Sales team was wasting hours on manual data entry, leading to lost leads and reporting delays. Real-time automation was needed.',
+      results: [
+        'Sales efficiency up 35% in 90 days',
+        'Zero lost leads due to manual error',
+        'Real-time reporting enabled'
+      ],
+      fullStory: 'This is where the full case study story will go. You can add detailed information about the project, the challenges faced, the solution implemented, and the results achieved.'
+    },
+    'erp-integration': {
+      client: 'LOGISTICS CO',
+      title: 'ERP Integration',
+      challenge: 'Disconnected inventory data was causing stock-outs and customer dissatisfaction. Seamless integration was critical for operations.',
+      results: [
+        '99.9% data accuracy',
+        'Eliminated double-entry completely',
+        'Improved customer satisfaction scores'
+      ],
+      fullStory: 'This is where the full case study story will go. You can add detailed information about the project, the challenges faced, the solution implemented, and the results achieved.'
+    }
+  };
+
+  const caseStudy = caseStudies[caseStudyId];
+  if (!caseStudy) {
+    window.location.hash = '#/case-studies';
+    return;
+  }
+
+  const app = document.querySelector('#app');
+  app.innerHTML = `
+    <header class="header">
+      <div class="header-content">
+        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <div class="logo-square">
+            <span class="logo-letter">A</span>
+          </div>
+          <span class="logo-text">ApexRune</span>
+        </a>
+        <nav class="nav">
+          <a href="#/" class="nav-link">HOME</a>
+          <a href="#/services" class="nav-link">OUR SERVICES</a>
+          <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="#/contact" class="nav-link">CONTACT US</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="case-study-detail-page">
+      <div class="container">
+        <a href="#/case-studies" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Case Studies
+        </a>
+        
+        <article class="case-study-detail">
+          <div class="case-study-detail-header">
+            <div class="case-study-detail-client">${caseStudy.client}</div>
+            <h1 class="case-study-detail-title">${caseStudy.title}</h1>
+          </div>
+
+          <div class="case-study-detail-image">
+            <div class="case-study-detail-image-placeholder"></div>
+          </div>
+
+          <div class="case-study-detail-content">
+            <section class="case-study-section">
+              <h2 class="case-study-section-title">The Challenge</h2>
+              <p class="case-study-section-text">${caseStudy.challenge}</p>
+            </section>
+
+            <section class="case-study-section">
+              <h2 class="case-study-section-title">The Solution</h2>
+              <p class="case-study-section-text">${caseStudy.fullStory}</p>
+            </section>
+
+            <section class="case-study-section">
+              <h2 class="case-study-section-title">Key Results</h2>
+              <div class="case-study-results">
+                ${caseStudy.results.map(result => `
+                  <div class="case-study-result">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>${result}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </section>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <div class="footer-logo">
+              <div class="logo-square">
+                <span class="logo-letter">A</span>
+              </div>
+              <span class="logo-text">ApexRune</span>
+            </div>
+            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+            <div class="social-icons">
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a href="#" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Get In Touch</h4>
+            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+            <p class="footer-text">+1 (563) 123-4567</p>
+            <p class="footer-text">contact@apexrune.com</p>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Our Services</h4>
+            <ul class="footer-links">
+              <li><a href="#/service/custom-development">Custom Development</a></li>
+              <li><a href="#/service/system-integration">System Integration</a></li>
+              <li><a href="#/service/health-checks">Health Checks</a></li>
+              <li><a href="#/service/process-automation">Process Automation</a></li>
+            </ul>
+            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
+            <div class="latest-post">
+              <div class="post-image"></div>
+              <div class="post-content">
+                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
+                <p class="post-date">Oct 24, 2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 ApexRune. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#/privacy-policy">Privacy Policy</a>
+            <a href="#/terms-of-service">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  `;
+
+  addCaseStudyDetailPageStyles();
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+}
+
+function addCaseStudyDetailPageStyles() {
+  if (document.getElementById('case-study-detail-page-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'case-study-detail-page-styles';
+  style.textContent = `
+    .case-study-detail-page {
+      padding: 2rem 2rem 4rem;
+      min-height: calc(100vh - 100px);
+      background: var(--white);
+    }
+
+    .case-study-detail {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .case-study-detail-header {
+      margin-bottom: 3rem;
+    }
+
+    .case-study-detail-client {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .case-study-detail-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .case-study-detail-image {
+      width: 100%;
+      margin-bottom: 3rem;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .case-study-detail-image-placeholder {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+    }
+
+    .case-study-detail-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .case-study-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .case-study-section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+    }
+
+    .case-study-section-text {
+      font-size: 1.125rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .case-study-results {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .case-study-result {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .case-study-result svg {
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .case-study-detail-page {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .case-study-detail-title {
+        font-size: 2rem;
+      }
+
+      .case-study-section-title {
+        font-size: 1.5rem;
+      }
+
+      .case-study-detail-image-placeholder {
+        height: 250px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 function addCaseStudiesPageStyles() {
   if (document.getElementById('case-studies-page-styles')) return;
 
@@ -1500,6 +1804,10 @@ function addCaseStudiesPageStyles() {
       border-radius: 16px;
       overflow: hidden;
       transition: box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
     }
 
     .case-study-card:hover {
