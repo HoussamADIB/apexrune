@@ -139,12 +139,27 @@ function startAnimations() {
   const speedBadge = document.querySelector('.speed-badge span');
   if (speedBadge) {
     setTimeout(() => {
-      animatePercentage(speedBadge, 0, 24, 1500);
+      const startTime = performance.now();
+      const duration = 1500;
+      const start = 0;
+      const end = 24;
+      
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const current = Math.floor(start + ((end - start) * easeOutQuart));
+        speedBadge.textContent = '+' + current + '% Speed';
+        
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          speedBadge.textContent = '+24% Speed';
+        }
+      }
+      
+      requestAnimationFrame(update);
     }, 500);
-    // Add + prefix
-    setTimeout(() => {
-      speedBadge.textContent = '+' + speedBadge.textContent;
-    }, 2000);
   }
 
   // Animate optimization items appearing
