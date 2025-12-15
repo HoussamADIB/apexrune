@@ -137,29 +137,35 @@ document.querySelector('#app').innerHTML = `
 
         <div class="unified-card">
           <div class="unified-content">
-            <h3 class="unified-title">Create A Single, Unified Source Of Truth.</h3>
-            <p class="unified-description">We connect Salesforce to your other essential business tools. By creating a seamless flow of information, we eliminate data silos and provide a complete view of your customers.</p>
+            <h3 class="unified-title">Get Started Fast with Salesforce Quick Start</h3>
+            <p class="unified-description">Jumpstart your Salesforce journey with our comprehensive setup service. We configure your org, set up essential objects, and get your team up and running in days, not months.</p>
             <ul class="unified-list">
               <li>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Custom API Development
+                Complete Org Setup & Configuration
               </li>
               <li>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Third-Party App Integration
+                User Training & Onboarding
               </li>
               <li>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Error Handling & Monitoring
+                Essential Customizations
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Data Migration Support
               </li>
             </ul>
-            <a href="#" class="read-more">READ MORE
+            <a href="#/service/salesforce-quick-start" class="read-more">READ MORE
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -167,16 +173,8 @@ document.querySelector('#app').innerHTML = `
           </div>
           <div class="unified-icon">
             <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="30" r="8" fill="#3B82F6" opacity="0.3"/>
-              <circle cx="90" cy="30" r="8" fill="#3B82F6" opacity="0.3"/>
-              <circle cx="30" cy="90" r="8" fill="#3B82F6" opacity="0.3"/>
-              <circle cx="90" cy="90" r="8" fill="#3B82F6" opacity="0.3"/>
-              <line x1="38" y1="30" x2="82" y2="30" stroke="#3B82F6" stroke-width="2"/>
-              <line x1="30" y1="38" x2="30" y2="82" stroke="#3B82F6" stroke-width="2"/>
-              <line x1="38" y1="90" x2="82" y2="90" stroke="#3B82F6" stroke-width="2"/>
-              <line x1="90" y1="38" x2="90" y2="82" stroke="#3B82F6" stroke-width="2"/>
-              <line x1="38" y1="38" x2="82" y2="82" stroke="#3B82F6" stroke-width="2"/>
-              <line x1="82" y1="38" x2="38" y2="82" stroke="#3B82F6" stroke-width="2"/>
+              <circle cx="60" cy="60" r="50" stroke="#3B82F6" stroke-width="3" fill="none"/>
+              <path d="M40 60L55 75L80 45" stroke="#3B82F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
         </div>
