@@ -122,7 +122,7 @@ function loadServicePage(serviceKey) {
           </a>
           <nav class="nav">
             <a href="#/" class="nav-link">HOME</a>
-            <a href="#/" class="nav-link">OUR SERVICES</a>
+            <a href="#/services" class="nav-link">OUR SERVICES</a>
             <a href="#/" class="nav-link">WHY US</a>
             <a href="#/" class="nav-link">CONTACT US</a>
           </nav>
@@ -728,7 +728,7 @@ function loadPrivacyPolicyPage() {
         </a>
         <nav class="nav">
           <a href="#/" class="nav-link">HOME</a>
-          <a href="#/" class="nav-link">OUR SERVICES</a>
+          <a href="#/services" class="nav-link">OUR SERVICES</a>
           <a href="#/" class="nav-link">WHY US</a>
           <a href="#/" class="nav-link">CONTACT US</a>
         </nav>
@@ -931,7 +931,7 @@ function loadTermsOfServicePage() {
         </a>
         <nav class="nav">
           <a href="#/" class="nav-link">HOME</a>
-          <a href="#/" class="nav-link">OUR SERVICES</a>
+          <a href="#/services" class="nav-link">OUR SERVICES</a>
           <a href="#/" class="nav-link">WHY US</a>
           <a href="#/" class="nav-link">CONTACT US</a>
         </nav>
