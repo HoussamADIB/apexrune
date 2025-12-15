@@ -2295,10 +2295,12 @@ async function handleContactPageFormSubmit(e) {
       body: new URLSearchParams(formData).toString()
     });
     
-    // Netlify Forms returns 200 on success, even if there are validation errors
-    // Check if response is ok or if it's a redirect (302) which also indicates success
-    if (response.ok || response.status === 200 || response.status === 302) {
-      // Show success message
+    // Netlify Forms returns 200 on success, 302 redirect, or sometimes 422 for validation errors
+    // Check response status
+    const status = response.status;
+    
+    if (status === 200 || status === 302 || status === 0) {
+      // Success - show success message
       formPanel.innerHTML = `
         <div class="form-success">
           <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2312,7 +2314,17 @@ async function handleContactPageFormSubmit(e) {
         </div>
       `;
     } else {
-      throw new Error(`Form submission failed: ${response.status}`);
+      // Try to get error message from response
+      let errorMessage = `Form submission failed with status ${status}`;
+      try {
+        const responseText = await response.text();
+        if (responseText) {
+          console.error('Netlify form error response:', responseText);
+        }
+      } catch (e) {
+        console.error('Could not read error response:', e);
+      }
+      throw new Error(errorMessage);
     }
   } catch (error) {
     console.error('Form submission error:', error);
