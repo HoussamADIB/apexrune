@@ -276,8 +276,8 @@ document.querySelector('#app').innerHTML = `
         <p class="section-description">We eliminated the middlemen. No project managers or sales reps getting in the way. You work directly with the experts who will build your solution.</p>
         
         <div class="metrics-boxes">
-          <div class="metric-box">3 FOUNDERS</div>
-          <div class="metric-box">100% CERTIFIED</div>
+          <div class="metric-box">2 FOUNDERS</div>
+          <div class="metric-box">24 CERTIFICATIONS</div>
         </div>
 
         <div class="value-cards">
