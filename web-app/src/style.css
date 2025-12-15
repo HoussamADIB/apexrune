@@ -254,6 +254,8 @@ body {
   margin-bottom: 1rem;
   color: var(--white);
   position: relative;
+  opacity: 0.7;
+  transform: scale(0.95);
 }
 
 .performance-header {
@@ -306,6 +308,8 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .metric-card svg {
@@ -353,6 +357,8 @@ body {
   gap: 0.75rem;
   padding: 0.75rem 0;
   border-bottom: 1px solid #F3F4F6;
+  opacity: 0;
+  transform: translateY(10px);
 }
 
 .optimization-item:last-child {

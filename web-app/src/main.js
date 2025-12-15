@@ -2,6 +2,7 @@ import './style.css'
 import { initServiceTabs } from './services.js'
 import { initRouter } from './router.js'
 import { certifications, initCertificationsCarousel, getSalesforceCloudIcon } from './certifications.js'
+import { initDashboardAnimations } from './dashboard-animations.js'
 
 document.querySelector('#app').innerHTML = `
   <header class="header">
