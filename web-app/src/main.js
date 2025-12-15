@@ -53,47 +53,86 @@ document.querySelector('#app').innerHTML = `
         </div>
 
         <div class="right-section">
-          <div class="dashboard-card">
-            <div class="status-badge">
-              <div class="status-dot"></div>
-              <span>System Healthy</span>
-            </div>
-            <div class="pipeline-section">
-              <div class="pipeline-header">
-                <span class="pipeline-label">PIPELINE HEALTH</span>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="chart-icon">
-                  <rect x="2" y="12" width="3" height="4" fill="currentColor"/>
-                  <rect x="6" y="8" width="3" height="8" fill="currentColor"/>
-                  <rect x="10" y="10" width="3" height="6" fill="currentColor"/>
-                  <rect x="14" y="6" width="3" height="10" fill="currentColor"/>
-                </svg>
-              </div>
-              <div class="pipeline-value">
-                <span class="amount">$1.2M</span>
-                <span class="growth">+12%</span>
-              </div>
-            </div>
-            <div class="status-indicators">
-              <div class="status-item">
+          <div class="system-overview-card">
+            <div class="system-header">
+              <div class="system-header-left">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M10 2L2 5V9C2 13.55 5.16 17.74 10 19C14.84 17.74 18 13.55 18 9V5L10 2ZM10 17.65C6.11 16.35 3.5 13.05 3.5 9V6.3L10 3.75L16.5 6.3V9C16.5 13.05 13.89 16.35 10 17.65Z" fill="#6B7280"/>
+                  <path d="M10 9.5L7.5 7L6 8.5L10 12.5L14 8.5L12.5 7L10 9.5Z" fill="#6B7280"/>
                 </svg>
-                <span class="status-text optimized">Optimized</span>
+                <span class="system-title">System Overview</span>
               </div>
-              <div class="status-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2 10H4L6 6L10 14L14 8L16 10H18" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="status-text running">Running</span>
-              </div>
-              <div class="status-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 2L12.5 7.5L18 8.5L13.5 12L14.5 17.5L10 15L5.5 17.5L6.5 12L2 8.5L7.5 7.5L10 2Z" fill="#3B82F6"/>
-                </svg>
-                <div class="status-details">
-                  <span class="status-text automation">New Automation Active</span>
-                  <span class="status-subtext">Saved 4hrs this week</span>
+              <div class="system-header-right">
+                <span class="last-scan">Last scan: Just now</span>
+                <div class="live-badge">
+                  <div class="live-dot"></div>
+                  <span>Live</span>
                 </div>
+              </div>
+            </div>
+
+            <div class="org-performance-card">
+              <div class="performance-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 12H5L7 8L11 16L15 8L17 12H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="speed-badge">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 1L7.5 4.5L11 5.5L8.5 8L9 11.5L6 10L3 11.5L3.5 8L1 5.5L4.5 4.5L6 1Z" fill="white"/>
+                  </svg>
+                  <span>+24% Speed</span>
+                </div>
+              </div>
+              <div class="performance-content">
+                <div class="performance-label">Org Performance</div>
+                <div class="performance-score">98/100</div>
+              </div>
+            </div>
+
+            <div class="metrics-row">
+              <div class="metric-card health-card">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 6L9 17L4 12" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="metric-content">
+                  <div class="metric-label">Health</div>
+                  <div class="metric-value">Excellent</div>
+                  <div class="metric-detail">0 Critical Issues</div>
+                </div>
+              </div>
+
+              <div class="metric-card data-card">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="6" height="6" rx="1" fill="#8B5CF6"/>
+                  <rect x="11" y="3" width="6" height="6" rx="1" fill="#8B5CF6"/>
+                  <rect x="19" y="3" width="6" height="6" rx="1" fill="#8B5CF6"/>
+                  <rect x="3" y="11" width="6" height="6" rx="1" fill="#8B5CF6"/>
+                  <rect x="11" y="11" width="6" height="6" rx="1" fill="#8B5CF6"/>
+                  <rect x="19" y="11" width="6" height="6" rx="1" fill="#8B5CF6"/>
+                </svg>
+                <div class="metric-content">
+                  <div class="metric-label">Data Qlty</div>
+                  <div class="metric-value">99.9%</div>
+                  <div class="metric-detail">Duplicates removed</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="optimizations-section">
+              <div class="optimizations-title">Recent Optimizations</div>
+              <div class="optimization-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="optimization-name">Apex Class Optimization</span>
+                <span class="optimization-status">-120ms</span>
+              </div>
+              <div class="optimization-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="optimization-name">Storage Cleanup</span>
+                <span class="optimization-status">-2.4GB</span>
               </div>
             </div>
           </div>
