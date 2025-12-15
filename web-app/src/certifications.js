@@ -50,7 +50,7 @@ export const certifications = [
   },
   {
     name: 'Administrator',
-    image: '/certifications/salesforce-certified-administrator.jpeg',
+    image: '/certifications/salesforce-certified-administratorAdministrator.png',
     fallbackColor: '#1E3A8A',
     shadowColor: '#3B82F6',
   }
