@@ -481,9 +481,11 @@ if (document.readyState === 'loading') {
     initServiceTabs();
     initRouter();
     initCertifications();
+    initDashboardAnimations();
   });
 } else {
   initServiceTabs();
   initRouter();
   initCertifications();
+  initDashboardAnimations();
 }
