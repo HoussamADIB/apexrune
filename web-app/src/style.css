@@ -314,7 +314,7 @@ body {
 
 .certifications-carousel-wrapper {
   position: relative;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -336,7 +336,7 @@ body {
 
 .certification-badge {
   flex: 0 0 calc(20% - 1.6rem);
-  min-width: 180px;
+  min-width: 150px;
   aspect-ratio: 0.85;
   position: relative;
   display: flex;
@@ -356,8 +356,9 @@ body {
 }
 
 .certification-image {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: auto;
+  max-width: 180px;
   object-fit: contain;
   display: block;
 }
