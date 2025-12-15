@@ -1285,9 +1285,103 @@ function loadCaseStudiesPage() {
         </div>
 
         <div class="case-studies-grid">
-          <!-- Case studies will be added here later -->
-          <div class="case-study-placeholder">
-            <p>Case studies coming soon...</p>
+          <!-- Case Study 1: Automating Onboarding -->
+          <div class="case-study-card">
+            <div class="case-study-image-wrapper">
+              <div class="case-study-image" style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);"></div>
+            </div>
+            <div class="case-study-content">
+              <div class="case-study-client">SAMPLECORP (SAAS)</div>
+              <h3 class="case-study-title">Automating Onboarding</h3>
+              <p class="case-study-challenge">Manual processing was causing delays and reducing team productivity. The onboarding process needed automation to scale efficiently.</p>
+              <div class="case-study-results">
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>+40% increase in team productivity</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Reduced onboarding time by 15 hours</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>100% user adoption</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case Study 2: FinTech Sales Efficiency -->
+          <div class="case-study-card">
+            <div class="case-study-image-wrapper">
+              <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
+              <div class="case-study-overlay">
+                <span class="read-full-story">Read Full Story</span>
+              </div>
+            </div>
+            <div class="case-study-content">
+              <div class="case-study-client">FINTECH CLIENT</div>
+              <h3 class="case-study-title">FinTech Sales Efficiency</h3>
+              <p class="case-study-challenge">Sales team was wasting hours on manual data entry, leading to lost leads and reporting delays. Real-time automation was needed.</p>
+              <div class="case-study-results">
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Sales efficiency up 35% in 90 days</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Zero lost leads due to manual error</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Real-time reporting enabled</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case Study 3: ERP Integration -->
+          <div class="case-study-card">
+            <div class="case-study-image-wrapper">
+              <div class="case-study-image" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);"></div>
+            </div>
+            <div class="case-study-content">
+              <div class="case-study-client">LOGISTICS CO</div>
+              <h3 class="case-study-title">ERP Integration</h3>
+              <p class="case-study-challenge">Disconnected inventory data was causing stock-outs and customer dissatisfaction. Seamless integration was critical for operations.</p>
+              <div class="case-study-results">
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>99.9% data accuracy</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Eliminated double-entry completely</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Improved customer satisfaction scores</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1412,11 +1506,41 @@ function addCaseStudiesPageStyles() {
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
-    .case-study-image {
+    .case-study-image-wrapper {
+      position: relative;
       width: 100%;
       height: 250px;
+      overflow: hidden;
+    }
+
+    .case-study-image {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      background: #F3F4F6;
+    }
+
+    .case-study-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .case-study-card:hover .case-study-overlay {
+      opacity: 1;
+    }
+
+    .read-full-story {
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1rem;
     }
 
     .case-study-content {
@@ -1465,13 +1589,6 @@ function addCaseStudiesPageStyles() {
       flex-shrink: 0;
     }
 
-    .case-study-placeholder {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 4rem 2rem;
-      color: var(--text-light);
-      font-size: 1.125rem;
-    }
 
     @media (max-width: 768px) {
       .case-studies-page {
