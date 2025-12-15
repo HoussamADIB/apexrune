@@ -1,14 +1,16 @@
 import './style.css'
+import { initServiceTabs } from './services.js'
+import { initRouter } from './router.js'
 
 document.querySelector('#app').innerHTML = `
   <header class="header">
     <div class="header-content">
-      <div class="logo-container">
+      <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
         <div class="logo-square">
           <span class="logo-letter">A</span>
         </div>
         <span class="logo-text">ApexRune</span>
-      </div>
+      </a>
       <nav class="nav">
         <a href="#" class="nav-link">HOME</a>
         <a href="#" class="nav-link">OUR SERVICES</a>
@@ -394,7 +396,18 @@ document.querySelector('#app').innerHTML = `
             <a href="#">Terms of Service</a>
           </div>
         </div>
-      </div>
+  </div>
     </footer>
   </main>
 `
+
+// Initialize service tabs and router after DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initServiceTabs();
+    initRouter();
+  });
+} else {
+  initServiceTabs();
+  initRouter();
+}
