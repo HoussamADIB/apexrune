@@ -169,62 +169,154 @@ document.querySelector('#app').innerHTML = `
     <section class="core-services-section">
       <div class="container">
         <div class="core-services-header">
-          <span class="core-services-label">OUR CORE SERVICES</span>
-          <h2 class="core-services-title">How We Help You Succeed</h2>
+          <a href="#/" class="back-to-home">← Back to Home</a>
+          <h2 class="core-services-title">Our Services</h2>
+          <p class="core-services-description">We provide specialized Salesforce solutions that drive tangible business outcomes.</p>
         </div>
         
         <div class="core-services-grid">
           <div class="core-service-card">
-            <div class="service-icon blue-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="6" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
-                <rect x="18" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
-                <rect x="6" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
-                <rect x="18" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
-              </svg>
+            <div class="service-card-header">
+              <div class="service-icon blue-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
+                  <rect x="18" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
+                  <rect x="6" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
+                  <rect x="18" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
+                </svg>
+              </div>
+              <span class="engagement-tag">Project based</span>
             </div>
             <h3 class="service-card-title">Custom Development</h3>
             <p class="service-card-description">We build bespoke applications on the Salesforce platform that solve your unique business challenges.</p>
-            <a href="#/service/custom-development" class="service-learn-more">Learn More →
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
+            <ul class="service-features">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Discovery & requirements gathering
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Custom objects & field design
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Apex triggers & classes
+              </li>
+            </ul>
+            <button class="service-cta-button">Discuss Your Project</button>
           </div>
 
           <div class="core-service-card">
-            <div class="service-icon purple-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10" cy="16" r="4" fill="#8B5CF6"/>
-                <circle cx="22" cy="16" r="4" fill="#8B5CF6"/>
-                <path d="M14 16H18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/>
-                <path d="M10 12L14 16L10 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M22 12L18 16L22 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="service-card-header">
+              <div class="service-icon purple-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="10" cy="16" r="4" fill="#8B5CF6"/>
+                  <circle cx="22" cy="16" r="4" fill="#8B5CF6"/>
+                  <path d="M14 16H18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M10 12L14 16L10 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M22 12L18 16L22 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="engagement-tag">Project based</span>
             </div>
             <h3 class="service-card-title">System Integration</h3>
             <p class="service-card-description">We connect Salesforce to your other essential tools like Slack, Mailchimp, and ERPs.</p>
-            <a href="#/service/system-integration" class="service-learn-more">Learn More →
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
+            <ul class="service-features">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                API Development
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Third-party connectors
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Data synchronization
+              </li>
+            </ul>
+            <button class="service-cta-button">Discuss Your Project</button>
           </div>
 
           <div class="core-service-card">
-            <div class="service-icon green-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 16L12 10L18 16L26 8" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M6 24L12 18L18 24L26 16" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="service-card-header">
+              <div class="service-icon green-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 16L12 10L18 16L26 8" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6 24L12 18L18 24L26 16" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="engagement-tag">Starting at $1,500</span>
             </div>
             <h3 class="service-card-title">Health Checks</h3>
             <p class="service-card-description">We audit your existing setup to find and fix inefficiencies, boost performance, and improve user experience.</p>
-            <a href="#/service/health-checks" class="service-learn-more">Learn More →
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
+            <ul class="service-features">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                System Audit
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Security Review
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Performance Optimization
+              </li>
+            </ul>
+            <button class="service-cta-button">Discuss Your Project</button>
+          </div>
+
+          <div class="core-service-card">
+            <div class="service-card-header">
+              <div class="service-icon yellow-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 4L20 12L28 14L22 20L23 28L16 24L9 28L10 20L4 14L12 12L16 4Z" fill="#F59E0B"/>
+                </svg>
+              </div>
+              <span class="engagement-tag">Retainer based</span>
+            </div>
+            <h3 class="service-card-title">Process Automation</h3>
+            <p class="service-card-description">We build custom flows and triggers to make Salesforce work exactly how your business operates.</p>
+            <ul class="service-features">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Flow Builder
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Process Builder Migration
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Approval Processes
+              </li>
+            </ul>
+            <button class="service-cta-button">Discuss Your Project</button>
           </div>
         </div>
       </div>
