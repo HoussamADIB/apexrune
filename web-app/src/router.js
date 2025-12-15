@@ -2313,11 +2313,16 @@ async function handleContactPageFormSubmit(e) {
       `;
     } else {
       // Try to get error message from response
+      const status = response.status;
       let errorMessage = `Form submission failed with status ${status}`;
       try {
         const responseText = await response.text();
         if (responseText) {
           console.error('Netlify form error response:', responseText);
+          // Check if it's a validation error (422) or other error
+          if (status === 422) {
+            errorMessage = 'Please check your form fields and try again.';
+          }
         }
       } catch (e) {
         console.error('Could not read error response:', e);
