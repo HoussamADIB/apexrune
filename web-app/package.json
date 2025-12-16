@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "netlify-plugin-prerender-spa": "^1.0.2",
     "vite": "^7.2.4"
   }
 }

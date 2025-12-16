@@ -3,8 +3,26 @@
   command = "npm install && npm run build"
   publish = "dist"
 
+# Prerendering plugin for SEO (pre-renders pages at build time)
+[[plugins]]
+  package = "netlify-plugin-prerender-spa"
+  [plugins.inputs]
+  source = "dist"
+
+# Redirect all routes to index.html for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Ensure SEO files are accessible
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml"
 

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://apexrune.com/sitemap.xml
+
+# Allow all proper URLs
+
+# Allow all main pages
+Allow: /
+Allow: /services
+Allow: /contact
+Allow: /case-studies
+

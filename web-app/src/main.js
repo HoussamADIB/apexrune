@@ -8,19 +8,60 @@ import { initContactForm } from './contact-form.js'
 document.querySelector('#app').innerHTML = `
   <header class="header">
     <div class="header-content">
-      <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+      <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
         <div class="logo-square">
-          <span class="logo-letter">A</span>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+            <defs>
+              <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+              </filter>
+            </defs>
+            <!-- Blue rounded square background with shadow -->
+            <rect width="40" height="40" rx="8" fill="#1E40AF" filter="url(#shadow)"/>
+            
+            <!-- Modern automation icon: Connected workflow nodes -->
+            <g stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Workflow nodes -->
+              <circle cx="14" cy="14" r="3" fill="white"/>
+              <circle cx="26" cy="14" r="3" fill="white"/>
+              <circle cx="20" cy="26" r="3" fill="white"/>
+              
+              <!-- Connecting lines showing automation flow -->
+              <path d="M17 14L23 14" stroke-width="2"/>
+              <path d="M17.5 16.5L19 23.5" stroke-width="2"/>
+              <path d="M22.5 16.5L21 23.5" stroke-width="2"/>
+              
+              <!-- Arrow indicating automation direction -->
+              <path d="M24 14L26 14M25 13L26 14M25 15L26 14" stroke-width="2"/>
+            </g>
+          </svg>
         </div>
         <span class="logo-text">ApexRune</span>
       </a>
       <nav class="nav">
         <a href="#" class="nav-link">HOME</a>
-            <a href="#/services" class="nav-link">OUR SERVICES</a>
-        <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
-        <a href="#/contact" class="nav-link">CONTACT US</a>
+            <a href="/services" class="nav-link">OUR SERVICES</a>
+        <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+        <a href="/contact" class="nav-link">CONTACT US</a>
       </nav>
+      <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
+    <div class="mobile-menu-overlay"></div>
+    <nav class="mobile-menu">
+      <button class="mobile-menu-close" aria-label="Close mobile menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <a href="#" class="mobile-nav-link">HOME</a>
+      <a href="/services" class="mobile-nav-link">OUR SERVICES</a>
+      <a href="/case-studies" class="mobile-nav-link">CASE STUDIES</a>
+      <a href="/contact" class="mobile-nav-link">CONTACT US</a>
+    </nav>
   </header>
 
   <main>
@@ -39,7 +80,7 @@ document.querySelector('#app').innerHTML = `
             Salesforce and start scaling your business.
           </p>
           <div class="cta-section">
-            <a href="#/contact" class="cta-button">
+            <a href="/contact" class="cta-button">
               Schedule Your Free Consultation
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -170,7 +211,7 @@ document.querySelector('#app').innerHTML = `
     <section class="core-services-section">
       <div class="container">
         <div class="core-services-header">
-          <a href="#/" class="back-to-home">← Back to Home</a>
+          <a href="/" class="back-to-home">← Back to Home</a>
           <h2 class="core-services-title">Our Services</h2>
           <p class="core-services-description">We provide specialized Salesforce solutions that drive tangible business outcomes.</p>
         </div>
@@ -210,7 +251,7 @@ document.querySelector('#app').innerHTML = `
                 Apex triggers & classes
               </li>
             </ul>
-            <a href="#/service/custom-development" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/custom-development" class="service-cta-button">Discuss Your Project</a>
           </div>
 
           <div class="core-service-card">
@@ -248,7 +289,7 @@ document.querySelector('#app').innerHTML = `
                 Data synchronization
               </li>
             </ul>
-            <a href="#/service/system-integration" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/system-integration" class="service-cta-button">Discuss Your Project</a>
           </div>
 
           <div class="core-service-card">
@@ -283,7 +324,7 @@ document.querySelector('#app').innerHTML = `
                 Performance Optimization
               </li>
             </ul>
-            <a href="#/service/health-checks" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/health-checks" class="service-cta-button">Discuss Your Project</a>
           </div>
 
           <div class="core-service-card">
@@ -317,7 +358,7 @@ document.querySelector('#app').innerHTML = `
                 Approval Processes
               </li>
             </ul>
-            <a href="#/service/process-automation" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/process-automation" class="service-cta-button">Discuss Your Project</a>
           </div>
         </div>
       </div>
@@ -474,7 +515,7 @@ document.querySelector('#app').innerHTML = `
       <div class="container">
         <h2 class="cta-title">Ready to Unlock Your Salesforce Potential?</h2>
         <p class="cta-description">Let's talk about your goals. Our initial consultation is always free, and always valuable.</p>
-        <a href="#/contact" class="cta-button">Schedule Your Free Consultation</a>
+        <a href="/contact" class="cta-button">Schedule Your Free Consultation</a>
       </div>
     </section>
 
@@ -485,7 +526,31 @@ document.querySelector('#app').innerHTML = `
           <div class="footer-column">
             <div class="footer-logo">
               <div class="logo-square">
-                <span class="logo-letter">A</span>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+                  <defs>
+                    <filter id="footerShadow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                    </filter>
+                  </defs>
+                  <!-- Blue rounded square background with shadow -->
+                  <rect width="40" height="40" rx="8" fill="#1E40AF" filter="url(#footerShadow)"/>
+                  
+                  <!-- Modern automation icon: Connected workflow nodes -->
+                  <g stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Workflow nodes -->
+                    <circle cx="14" cy="14" r="3" fill="white"/>
+                    <circle cx="26" cy="14" r="3" fill="white"/>
+                    <circle cx="20" cy="26" r="3" fill="white"/>
+                    
+                    <!-- Connecting lines showing automation flow -->
+                    <path d="M17 14L23 14" stroke-width="2"/>
+                    <path d="M17.5 16.5L19 23.5" stroke-width="2"/>
+                    <path d="M22.5 16.5L21 23.5" stroke-width="2"/>
+                    
+                    <!-- Arrow indicating automation direction -->
+                    <path d="M24 14L26 14M25 13L26 14M25 15L26 14" stroke-width="2"/>
+                  </g>
+                </svg>
               </div>
               <span class="logo-text">ApexRune</span>
             </div>
@@ -513,13 +578,13 @@ document.querySelector('#app').innerHTML = `
           <div class="footer-column">
             <h4 class="footer-heading">Our Services</h4>
             <ul class="footer-links">
-              <li><a href="#/service/custom-development">Custom Development</a></li>
-              <li><a href="#/service/system-integration">System Integration</a></li>
-              <li><a href="#/service/health-checks">Health Checks</a></li>
-              <li><a href="#/service/process-automation">Process Automation</a></li>
+              <li><a href="/service/custom-development">Custom Development</a></li>
+              <li><a href="/service/system-integration">System Integration</a></li>
+              <li><a href="/service/health-checks">Health Checks</a></li>
+              <li><a href="/service/process-automation">Process Automation</a></li>
             </ul>
             <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
-            <a href="#/case-study/automating-onboarding" class="latest-post">
+            <a href="/case-study/automating-onboarding" class="latest-post">
               <div class="post-image"></div>
               <div class="post-content">
                 <p class="post-title">SAMPLECORP: Automating Onboarding</p>
@@ -531,8 +596,8 @@ document.querySelector('#app').innerHTML = `
         <div class="footer-bottom">
           <p>© 2025 ApexRune. All rights reserved.</p>
           <div class="footer-bottom-links">
-            <a href="#/privacy-policy">Privacy Policy</a>
-            <a href="#/terms-of-service">Terms of Service</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-of-service">Terms of Service</a>
           </div>
         </div>
   </div>
@@ -572,6 +637,36 @@ function initCertifications() {
   initCertificationsCarousel();
 }
 
+// Initialize mobile menu
+function initMobileMenu() {
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  const closeBtn = document.querySelector('.mobile-menu-close');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const overlay = document.querySelector('.mobile-menu-overlay');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  function openMenu() {
+    mobileMenu.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+  overlay?.addEventListener('click', closeMenu);
+  
+  // Close menu when clicking on a nav link
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+}
+
 // Initialize service tabs and router after DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
@@ -580,6 +675,7 @@ if (document.readyState === 'loading') {
     initCertifications();
     initDashboardAnimations();
     initContactForm();
+    initMobileMenu();
   });
 } else {
   initServiceTabs();
@@ -587,4 +683,5 @@ if (document.readyState === 'loading') {
   initCertifications();
   initDashboardAnimations();
   initContactForm();
+  initMobileMenu();
 }

@@ -1,34 +1,64 @@
 // Simple router for handling page navigation
+let updateMetaTags = null;
+
+// Load SEO functions
+import('./seo.js').then((module) => {
+  updateMetaTags = module.updateMetaTags;
+  // Update meta tags on initial load
+  if (updateMetaTags) {
+    updateMetaTags(window.location.pathname || '/');
+  }
+});
+
 export function initRouter() {
   // Handle initial load
   handleRoute();
 
   // Handle browser back/forward
-  window.addEventListener('popstate', handleRoute);
+  window.addEventListener('popstate', () => {
+    handleRoute();
+    if (updateMetaTags) {
+      updateMetaTags(window.location.pathname || '/');
+    }
+  });
 
   // Handle link clicks
   document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[href^="#/"]');
-    if (link) {
-      e.preventDefault();
+    const link = e.target.closest('a[href^="/"]');
+    if (link && !link.hasAttribute('target') && !link.hasAttribute('download')) {
       const href = link.getAttribute('href');
-      window.history.pushState({}, '', href);
-      handleRoute();
+      // Only handle internal links (not external URLs)
+      if (href.startsWith('/') && !href.startsWith('//')) {
+        e.preventDefault();
+        window.history.pushState({}, '', href);
+        handleRoute();
+        if (updateMetaTags) {
+          updateMetaTags(href);
+        }
+      }
     }
     
     // Also handle back-link clicks specifically
     const backLink = e.target.closest('.back-link, .back-to-home');
     if (backLink && backLink.hasAttribute('href')) {
-      e.preventDefault();
       const href = backLink.getAttribute('href');
-      window.history.pushState({}, '', href);
-      handleRoute();
+      if (href.startsWith('/') && !href.startsWith('//')) {
+        e.preventDefault();
+        window.history.pushState({}, '', href);
+        handleRoute();
+        if (updateMetaTags) {
+          updateMetaTags(href);
+        }
+      }
     }
   });
 }
 
+// Export handleRoute for use in other modules
+window.handleRoute = handleRoute;
+
 function handleRoute() {
-  const path = window.location.hash.slice(1) || '/';
+  const path = window.location.pathname || '/';
   const app = document.querySelector('#app');
 
   if (path === '/' || path === '') {
@@ -44,7 +74,7 @@ function handleRoute() {
     if (isOnOtherPage) {
       // Reload to show home page and scroll to top
       window.scrollTo({ top: 0, behavior: 'instant' });
-      window.location.href = window.location.pathname;
+      window.location.href = '/';
     }
     // If already on home page, do nothing
     return;
@@ -52,19 +82,30 @@ function handleRoute() {
     // Load service detail page
     const serviceKey = path.split('/service/')[1];
     loadServicePage(serviceKey);
+    if (updateMetaTags) updateMetaTags(path);
   } else if (path === '/privacy-policy') {
     loadPrivacyPolicyPage();
+    if (updateMetaTags) updateMetaTags(path);
   } else if (path === '/terms-of-service') {
     loadTermsOfServicePage();
+    if (updateMetaTags) updateMetaTags(path);
   } else if (path === '/services' || path === '/our-services') {
     loadOurServicesPage();
+    if (updateMetaTags) updateMetaTags('/services');
   } else if (path === '/contact') {
     loadContactPage();
+    if (updateMetaTags) updateMetaTags(path);
   } else if (path === '/case-studies') {
     loadCaseStudiesPage();
+    if (updateMetaTags) updateMetaTags(path);
   } else if (path.startsWith('/case-study/')) {
     const caseStudyId = path.split('/case-study/')[1];
     loadCaseStudyDetailPage(caseStudyId);
+    if (updateMetaTags) updateMetaTags(path);
+  } else {
+    // 404 - redirect to home
+    window.history.replaceState({}, '', '/');
+    handleRoute();
   }
 }
 
@@ -72,7 +113,8 @@ function loadServicePage(serviceKey) {
   import('./services.js').then(({ servicesData }) => {
     const service = servicesData[serviceKey];
     if (!service) {
-      window.location.hash = '#/';
+      window.history.replaceState({}, '', '/');
+      handleRoute();
       return;
     }
 
@@ -139,24 +181,24 @@ function loadServicePage(serviceKey) {
     app.innerHTML = `
       <header class="header">
         <div class="header-content">
-          <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
             <div class="logo-square">
               <span class="logo-letter">A</span>
             </div>
             <span class="logo-text">ApexRune</span>
           </a>
           <nav class="nav">
-            <a href="#/" class="nav-link">HOME</a>
-            <a href="#/services" class="nav-link">OUR SERVICES</a>
-            <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
-            <a href="#/contact" class="nav-link">CONTACT US</a>
+            <a href="/" class="nav-link">HOME</a>
+            <a href="/services" class="nav-link">OUR SERVICES</a>
+            <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+            <a href="/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
       </header>
 
       <main class="service-detail-page">
         <div class="container">
-          <a href="#/services" class="back-link">
+          <a href="/services" class="back-link">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -220,7 +262,7 @@ function loadServicePage(serviceKey) {
               <div class="service-sidebar-card">
                 <h2 class="sidebar-title">${service.ctaTitle || 'Ready to Start?'}</h2>
                 <p class="sidebar-description">${service.ctaDescription || 'Let\'s discuss how we can help transform your Salesforce platform.'}</p>
-                <a href="#/contact" class="sidebar-cta-button">
+                <a href="/contact" class="sidebar-cta-button">
                   Discuss Your Project
                 </a>
               </div>
@@ -264,13 +306,13 @@ function loadServicePage(serviceKey) {
             <div class="footer-column">
               <h4 class="footer-heading">Our Services</h4>
               <ul class="footer-links">
-                <li><a href="#/service/custom-development">Custom Development</a></li>
-                <li><a href="#/service/system-integration">System Integration</a></li>
-                <li><a href="#/service/health-checks">Health Checks</a></li>
-                <li><a href="#/service/process-automation">Process Automation</a></li>
+                <li><a href="/service/custom-development">Custom Development</a></li>
+                <li><a href="/service/system-integration">System Integration</a></li>
+                <li><a href="/service/health-checks">Health Checks</a></li>
+                <li><a href="/service/process-automation">Process Automation</a></li>
               </ul>
               <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
-              <a href="#/case-study/automating-onboarding" class="latest-post">
+              <a href="/case-study/automating-onboarding" class="latest-post">
                 <div class="post-image"></div>
                 <div class="post-content">
                   <p class="post-title">SAMPLECORP: Automating Onboarding</p>
@@ -282,8 +324,8 @@ function loadServicePage(serviceKey) {
           <div class="footer-bottom">
             <p>© 2025 ApexRune. All rights reserved.</p>
             <div class="footer-bottom-links">
-              <a href="#/privacy-policy">Privacy Policy</a>
-              <a href="#/terms-of-service">Terms of Service</a>
+              <a href="/privacy-policy">Privacy Policy</a>
+              <a href="/terms-of-service">Terms of Service</a>
             </div>
           </div>
         </div>
@@ -596,24 +638,24 @@ function loadOurServicesPage() {
     app.innerHTML = `
       <header class="header">
         <div class="header-content">
-          <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
             <div class="logo-square">
               <span class="logo-letter">A</span>
             </div>
             <span class="logo-text">ApexRune</span>
           </a>
           <nav class="nav">
-            <a href="#/" class="nav-link">HOME</a>
-            <a href="#/services" class="nav-link">OUR SERVICES</a>
-            <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
-            <a href="#/contact" class="nav-link">CONTACT US</a>
+            <a href="/" class="nav-link">HOME</a>
+            <a href="/services" class="nav-link">OUR SERVICES</a>
+            <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+            <a href="/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
       </header>
 
       <main class="our-services-page">
         <div class="container">
-          <a href="#/" class="back-link">
+          <a href="/" class="back-link">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -656,7 +698,7 @@ function loadOurServicesPage() {
                       </li>
                     `).join('')}
                   </ul>
-                  <a href="#/service/${serviceKey}" class="service-cta-button">Discuss Your Project</a>
+                  <a href="/service/${serviceKey}" class="service-cta-button">Discuss Your Project</a>
                 </div>
               `;
             }).join('')}
@@ -699,13 +741,13 @@ function loadOurServicesPage() {
             <div class="footer-column">
               <h4 class="footer-heading">Our Services</h4>
               <ul class="footer-links">
-                <li><a href="#/service/custom-development">Custom Development</a></li>
-                <li><a href="#/service/system-integration">System Integration</a></li>
-                <li><a href="#/service/health-checks">Health Checks</a></li>
-                <li><a href="#/service/process-automation">Process Automation</a></li>
+                <li><a href="/service/custom-development">Custom Development</a></li>
+                <li><a href="/service/system-integration">System Integration</a></li>
+                <li><a href="/service/health-checks">Health Checks</a></li>
+                <li><a href="/service/process-automation">Process Automation</a></li>
               </ul>
               <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
-              <a href="#/case-study/automating-onboarding" class="latest-post">
+              <a href="/case-study/automating-onboarding" class="latest-post">
                 <div class="post-image"></div>
                 <div class="post-content">
                   <p class="post-title">SAMPLECORP: Automating Onboarding</p>
@@ -717,8 +759,8 @@ function loadOurServicesPage() {
           <div class="footer-bottom">
             <p>© 2025 ApexRune. All rights reserved.</p>
             <div class="footer-bottom-links">
-              <a href="#/privacy-policy">Privacy Policy</a>
-              <a href="#/terms-of-service">Terms of Service</a>
+              <a href="/privacy-policy">Privacy Policy</a>
+              <a href="/terms-of-service">Terms of Service</a>
             </div>
           </div>
         </div>
@@ -737,24 +779,24 @@ function loadPrivacyPolicyPage() {
   app.innerHTML = `
     <header class="header">
       <div class="header-content">
-        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
           <div class="logo-square">
             <span class="logo-letter">A</span>
           </div>
           <span class="logo-text">ApexRune</span>
         </a>
         <nav class="nav">
-          <a href="#/" class="nav-link">HOME</a>
-          <a href="#/services" class="nav-link">OUR SERVICES</a>
-          <a href="#/" class="nav-link">WHY US</a>
-          <a href="#/contact" class="nav-link">CONTACT US</a>
+          <a href="/" class="nav-link">HOME</a>
+          <a href="/services" class="nav-link">OUR SERVICES</a>
+          <a href="/" class="nav-link">WHY US</a>
+          <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
     </header>
 
     <main class="legal-page">
       <div class="container">
-        <a href="#/" class="back-link">
+        <a href="/" class="back-link">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -921,8 +963,8 @@ function loadPrivacyPolicyPage() {
         <div class="footer-bottom">
           <p>© 2025 ApexRune. All rights reserved.</p>
           <div class="footer-bottom-links">
-            <a href="#/privacy-policy">Privacy Policy</a>
-            <a href="#/terms-of-service">Terms of Service</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-of-service">Terms of Service</a>
           </div>
         </div>
       </div>
@@ -940,24 +982,24 @@ function loadTermsOfServicePage() {
   app.innerHTML = `
     <header class="header">
       <div class="header-content">
-        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
           <div class="logo-square">
             <span class="logo-letter">A</span>
           </div>
           <span class="logo-text">ApexRune</span>
         </a>
         <nav class="nav">
-          <a href="#/" class="nav-link">HOME</a>
-          <a href="#/services" class="nav-link">OUR SERVICES</a>
-          <a href="#/" class="nav-link">WHY US</a>
-          <a href="#/contact" class="nav-link">CONTACT US</a>
+          <a href="/" class="nav-link">HOME</a>
+          <a href="/services" class="nav-link">OUR SERVICES</a>
+          <a href="/" class="nav-link">WHY US</a>
+          <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
     </header>
 
     <main class="legal-page">
       <div class="container">
-        <a href="#/" class="back-link">
+        <a href="/" class="back-link">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -1123,8 +1165,8 @@ function loadTermsOfServicePage() {
         <div class="footer-bottom">
           <p>© 2025 ApexRune. All rights reserved.</p>
           <div class="footer-bottom-links">
-            <a href="#/privacy-policy">Privacy Policy</a>
-            <a href="#/terms-of-service">Terms of Service</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-of-service">Terms of Service</a>
           </div>
         </div>
       </div>
@@ -1143,24 +1185,24 @@ function loadContactPage() {
     app.innerHTML = `
       <header class="header">
         <div class="header-content">
-          <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
             <div class="logo-square">
               <span class="logo-letter">A</span>
             </div>
             <span class="logo-text">ApexRune</span>
           </a>
           <nav class="nav">
-            <a href="#/" class="nav-link">HOME</a>
-            <a href="#/services" class="nav-link">OUR SERVICES</a>
-            <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
-            <a href="#/contact" class="nav-link">CONTACT US</a>
+            <a href="/" class="nav-link">HOME</a>
+            <a href="/services" class="nav-link">OUR SERVICES</a>
+            <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+            <a href="/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
       </header>
 
       <main class="contact-page">
         <div class="contact-page-container">
-          <a href="#/" class="back-link">
+          <a href="/" class="back-link">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -1188,7 +1230,7 @@ function loadContactPage() {
                     <line x1="8" y1="2" x2="8" y2="6"/>
                     <line x1="3" y1="10" x2="21" y2="10"/>
                   </svg>
-                  <a href="#/contact" class="contact-info-link underlined">Book a Free 30-Minute Discovery Call</a>
+                  <a href="/contact" class="contact-info-link underlined">Book a Free 30-Minute Discovery Call</a>
                 </div>
               </div>
               
@@ -1237,13 +1279,13 @@ function loadContactPage() {
             <div class="footer-column">
               <h4 class="footer-heading">Our Services</h4>
               <ul class="footer-links">
-                <li><a href="#/service/custom-development">Custom Development</a></li>
-                <li><a href="#/service/system-integration">System Integration</a></li>
-                <li><a href="#/service/health-checks">Health Checks</a></li>
-                <li><a href="#/service/process-automation">Process Automation</a></li>
+                <li><a href="/service/custom-development">Custom Development</a></li>
+                <li><a href="/service/system-integration">System Integration</a></li>
+                <li><a href="/service/health-checks">Health Checks</a></li>
+                <li><a href="/service/process-automation">Process Automation</a></li>
               </ul>
               <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
-              <a href="#/case-study/automating-onboarding" class="latest-post">
+              <a href="/case-study/automating-onboarding" class="latest-post">
                 <div class="post-image"></div>
                 <div class="post-content">
                   <p class="post-title">SAMPLECORP: Automating Onboarding</p>
@@ -1255,8 +1297,8 @@ function loadContactPage() {
           <div class="footer-bottom">
             <p>© 2025 ApexRune. All rights reserved.</p>
             <div class="footer-bottom-links">
-              <a href="#/privacy-policy">Privacy Policy</a>
-              <a href="#/terms-of-service">Terms of Service</a>
+              <a href="/privacy-policy">Privacy Policy</a>
+              <a href="/terms-of-service">Terms of Service</a>
             </div>
           </div>
         </div>
@@ -1276,24 +1318,24 @@ function loadCaseStudiesPage() {
   app.innerHTML = `
     <header class="header">
       <div class="header-content">
-        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
           <div class="logo-square">
             <span class="logo-letter">A</span>
           </div>
           <span class="logo-text">ApexRune</span>
         </a>
         <nav class="nav">
-          <a href="#/" class="nav-link">HOME</a>
-          <a href="#/services" class="nav-link">OUR SERVICES</a>
-          <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
-          <a href="#/contact" class="nav-link">CONTACT US</a>
+          <a href="/" class="nav-link">HOME</a>
+          <a href="/services" class="nav-link">OUR SERVICES</a>
+          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
     </header>
 
     <main class="case-studies-page">
       <div class="container">
-        <a href="#/" class="back-link">
+        <a href="/" class="back-link">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -1307,7 +1349,7 @@ function loadCaseStudiesPage() {
 
         <div class="case-studies-grid">
           <!-- Case Study 1: Automating Onboarding -->
-          <a href="#/case-study/automating-onboarding" class="case-study-card">
+          <a href="/case-study/automating-onboarding" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);"></div>
               <div class="case-study-overlay">
@@ -1342,7 +1384,7 @@ function loadCaseStudiesPage() {
           </a>
 
           <!-- Case Study 2: FinTech Sales Efficiency -->
-          <a href="#/case-study/fintech-sales-efficiency" class="case-study-card">
+          <a href="/case-study/fintech-sales-efficiency" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
               <div class="case-study-overlay">
@@ -1377,7 +1419,7 @@ function loadCaseStudiesPage() {
           </a>
 
           <!-- Case Study 3: ERP Integration -->
-          <a href="#/case-study/erp-integration" class="case-study-card">
+          <a href="/case-study/erp-integration" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);"></div>
               <div class="case-study-overlay">
@@ -1449,10 +1491,10 @@ function loadCaseStudiesPage() {
           <div class="footer-column">
             <h4 class="footer-heading">Our Services</h4>
             <ul class="footer-links">
-              <li><a href="#/service/custom-development">Custom Development</a></li>
-              <li><a href="#/service/system-integration">System Integration</a></li>
-              <li><a href="#/service/health-checks">Health Checks</a></li>
-              <li><a href="#/service/process-automation">Process Automation</a></li>
+              <li><a href="/service/custom-development">Custom Development</a></li>
+              <li><a href="/service/system-integration">System Integration</a></li>
+              <li><a href="/service/health-checks">Health Checks</a></li>
+              <li><a href="/service/process-automation">Process Automation</a></li>
             </ul>
             <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
             <div class="latest-post">
@@ -1467,8 +1509,8 @@ function loadCaseStudiesPage() {
         <div class="footer-bottom">
           <p>© 2025 ApexRune. All rights reserved.</p>
           <div class="footer-bottom-links">
-            <a href="#/privacy-policy">Privacy Policy</a>
-            <a href="#/terms-of-service">Terms of Service</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-of-service">Terms of Service</a>
           </div>
         </div>
       </div>
@@ -1521,7 +1563,8 @@ function loadCaseStudyDetailPage(caseStudyId) {
 
   const caseStudy = caseStudies[caseStudyId];
   if (!caseStudy) {
-    window.location.hash = '#/case-studies';
+    window.history.pushState({}, '', '/case-studies');
+    handleRoute();
     return;
   }
 
@@ -1529,24 +1572,24 @@ function loadCaseStudyDetailPage(caseStudyId) {
   app.innerHTML = `
     <header class="header">
       <div class="header-content">
-        <a href="#/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
           <div class="logo-square">
             <span class="logo-letter">A</span>
           </div>
           <span class="logo-text">ApexRune</span>
         </a>
         <nav class="nav">
-          <a href="#/" class="nav-link">HOME</a>
-          <a href="#/services" class="nav-link">OUR SERVICES</a>
-          <a href="#/case-studies" class="nav-link">CASE STUDIES</a>
-          <a href="#/contact" class="nav-link">CONTACT US</a>
+          <a href="/" class="nav-link">HOME</a>
+          <a href="/services" class="nav-link">OUR SERVICES</a>
+          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
     </header>
 
     <main class="case-study-detail-page">
       <div class="container">
-        <a href="#/case-studies" class="back-link">
+        <a href="/case-studies" class="back-link">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -1627,10 +1670,10 @@ function loadCaseStudyDetailPage(caseStudyId) {
           <div class="footer-column">
             <h4 class="footer-heading">Our Services</h4>
             <ul class="footer-links">
-              <li><a href="#/service/custom-development">Custom Development</a></li>
-              <li><a href="#/service/system-integration">System Integration</a></li>
-              <li><a href="#/service/health-checks">Health Checks</a></li>
-              <li><a href="#/service/process-automation">Process Automation</a></li>
+              <li><a href="/service/custom-development">Custom Development</a></li>
+              <li><a href="/service/system-integration">System Integration</a></li>
+              <li><a href="/service/health-checks">Health Checks</a></li>
+              <li><a href="/service/process-automation">Process Automation</a></li>
             </ul>
             <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
             <div class="latest-post">
@@ -1645,8 +1688,8 @@ function loadCaseStudyDetailPage(caseStudyId) {
         <div class="footer-bottom">
           <p>© 2025 ApexRune. All rights reserved.</p>
           <div class="footer-bottom-links">
-            <a href="#/privacy-policy">Privacy Policy</a>
-            <a href="#/terms-of-service">Terms of Service</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-of-service">Terms of Service</a>
           </div>
         </div>
       </div>
@@ -2308,7 +2351,7 @@ async function handleContactPageFormSubmit(e) {
           </svg>
           <h3>Thank you for your message!</h3>
           <p>We'll get back to you within one business day.</p>
-          <a href="#/" class="back-link" style="margin-top: 2rem; display: inline-block;">Back to Home</a>
+          <a href="/" class="back-link" style="margin-top: 2rem; display: inline-block;">Back to Home</a>
         </div>
       `;
     } else {

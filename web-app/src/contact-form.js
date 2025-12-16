@@ -182,7 +182,13 @@ function setupCTAButtons() {
     if (!parentLink && !button.hasAttribute('href')) {
       button.addEventListener('click', (e) => {
         e.preventDefault();
-        window.location.hash = '#/contact';
+        window.history.pushState({}, '', '/contact');
+        // Trigger route handler if router is initialized
+        if (window.handleRoute) {
+          window.handleRoute();
+        } else {
+          window.location.href = '/contact';
+        }
       });
     }
   });
@@ -193,7 +199,7 @@ function setupCTAButtons() {
     if (link.textContent.trim() === 'CONTACT US') {
       // Only update if it doesn't already have a proper href
       if (!link.getAttribute('href') || link.getAttribute('href') === '#') {
-        link.setAttribute('href', '#/contact');
+        link.setAttribute('href', '/contact');
       }
     }
   });
