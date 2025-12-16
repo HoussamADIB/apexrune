@@ -1,5 +1,11 @@
 // Simple router for handling page navigation
 let updateMetaTags = null;
+let iconsModule = null;
+
+// Load icons module
+import('./icons.js').then((module) => {
+  iconsModule = module;
+});
 
 // Logo SVG component - matches home page logo
 function getLogoHTML() {
@@ -31,6 +37,63 @@ function getLogoHTML() {
         </g>
       </svg>
     </div>
+  `;
+}
+
+// Helper function to get footer HTML with Lucide icons
+function getFooterHTML(getCommonIcon) {
+  return `
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <div class="footer-logo">
+              ${getLogoHTML()}
+              <span class="logo-text">ApexRune</span>
+            </div>
+            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
+            <div class="social-icons">
+              <a href="#" class="social-icon">
+                ${getCommonIcon('linkedin', 24, 'currentColor')}
+              </a>
+              <a href="#" class="social-icon">
+                ${getCommonIcon('mail', 24, 'currentColor')}
+              </a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Get In Touch</h4>
+            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
+            <p class="footer-text">+1 (563) 123-4567</p>
+            <p class="footer-text">contact@apexrune.com</p>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Our Services</h4>
+            <ul class="footer-links">
+              <li><a href="/service/custom-development">Custom Development</a></li>
+              <li><a href="/service/system-integration">System Integration</a></li>
+              <li><a href="/service/health-checks">Health Checks</a></li>
+              <li><a href="/service/process-automation">Process Automation</a></li>
+            </ul>
+            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
+            <a href="/case-study/automating-onboarding" class="latest-post">
+              <div class="post-image"></div>
+              <div class="post-content">
+                <p class="post-title">SAMPLECORP: Automating Onboarding</p>
+                <p class="post-date">Jan 15, 2025</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 ApexRune. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms-of-service">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   `;
 }
 
@@ -143,71 +206,15 @@ function handleRoute() {
 }
 
 function loadServicePage(serviceKey) {
-  import('./services.js').then(({ servicesData }) => {
+  Promise.all([
+    import('./services.js'),
+    import('./icons.js')
+  ]).then(([{ servicesData }, { getResultIcon, getServiceIcon, getCommonIcon }]) => {
     const service = servicesData[serviceKey];
     if (!service) {
       window.history.replaceState({}, '', '/');
       handleRoute();
       return;
-    }
-
-    // Helper function to get result icon SVG
-    function getResultIcon(iconType, color) {
-      const icons = {
-        lightning: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 4L18 20H28L20 44L30 28H20L24 4Z" fill="${color}"/>
-        </svg>`,
-        users: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="14" r="6" stroke="${color}" stroke-width="2" fill="none"/>
-          <circle cx="32" cy="14" r="6" stroke="${color}" stroke-width="2" fill="none"/>
-          <path d="M8 36C8 30 12 28 24 28C36 28 40 30 40 36" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        </svg>`,
-        target: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="18" stroke="${color}" stroke-width="2" fill="none"/>
-          <circle cx="24" cy="24" r="12" stroke="${color}" stroke-width="2" fill="none"/>
-          <circle cx="24" cy="24" r="4" fill="${color}"/>
-        </svg>`,
-        rocket: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 8L20 16L12 20L20 24L24 32L28 24L36 20L28 16L24 8Z" fill="${color}"/>
-          <path d="M24 32V40M20 36H28" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        </svg>`,
-        shield: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 4L8 8V20C8 28 12 34 24 40C36 34 40 28 40 20V8L24 4Z" stroke="${color}" stroke-width="2" fill="none"/>
-        </svg>`,
-        link: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 18L30 30M30 18L18 30" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="20" cy="20" r="6" stroke="${color}" stroke-width="2" fill="none"/>
-          <circle cx="28" cy="28" r="6" stroke="${color}" stroke-width="2" fill="none"/>
-        </svg>`,
-        sync: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M32 16L40 8L32 0M16 32L8 40L16 48" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M8 24C8 16 14 10 24 10M40 24C40 32 34 38 24 38" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        </svg>`,
-        chart: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="28" width="8" height="12" fill="${color}"/>
-          <rect x="20" y="20" width="8" height="20" fill="${color}"/>
-          <rect x="32" y="12" width="8" height="28" fill="${color}"/>
-        </svg>`,
-        speed: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="18" stroke="${color}" stroke-width="2" fill="none"/>
-          <path d="M24 6L28 18L36 20" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        </svg>`,
-        check: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="18" stroke="${color}" stroke-width="2" fill="none"/>
-          <path d="M18 24L22 28L30 20" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`,
-        clock: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="18" stroke="${color}" stroke-width="2" fill="none"/>
-          <path d="M24 12V24L30 30" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-        </svg>`,
-        accuracy: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 8L30 20L42 22L32 30L34 42L24 36L14 42L16 30L6 22L18 20L24 8Z" fill="${color}"/>
-        </svg>`,
-        scale: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 24L24 12L36 24M12 36L24 24L36 36" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`
-      };
-      return icons[iconType] || icons.target;
     }
 
     const app = document.querySelector('#app');
@@ -230,16 +237,14 @@ function loadServicePage(serviceKey) {
       <main class="service-detail-page">
         <div class="container">
           <a href="/services" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            ${getCommonIcon('chevron-left', 20, 'currentColor')}
             Back to Services
           </a>
           
           <!-- Hero Section -->
           <div class="service-hero">
             <div class="service-hero-icon">
-              ${service.icon}
+              ${getServiceIcon(serviceKey, 64, 'white')}
             </div>
             <h1 class="service-hero-title">${service.title}</h1>
             <p class="service-hero-description">${service.description}</p>
@@ -261,9 +266,7 @@ function loadServicePage(serviceKey) {
                 <div class="service-features-grid">
                   ${service.features.map(feature => `
                     <div class="service-feature-card">
-                      <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
+                      ${getCommonIcon('check', 24, '#10B981')}
                       <span>${feature}</span>
                     </div>
                   `).join('')}
@@ -278,7 +281,7 @@ function loadServicePage(serviceKey) {
                   ${service.results.map(result => `
                     <div class="service-result-card">
                       <div class="result-icon-wrapper">
-                        ${getResultIcon(result.icon, result.color)}
+                        ${getResultIcon(result.icon, 48, result.color)}
                       </div>
                       <h3 class="result-title">${result.title}</h3>
                     </div>
@@ -302,63 +305,7 @@ function loadServicePage(serviceKey) {
         </div>
       </main>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="container">
-          <div class="footer-content">
-            <div class="footer-column">
-              <div class="footer-logo">
-                ${getLogoHTML()}
-                <span class="logo-text">ApexRune</span>
-              </div>
-              <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
-              <div class="social-icons">
-                <a href="#" class="social-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div class="footer-column">
-              <h4 class="footer-heading">Get In Touch</h4>
-              <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-              <p class="footer-text">+1 (563) 123-4567</p>
-              <p class="footer-text">contact@apexrune.com</p>
-            </div>
-            <div class="footer-column">
-              <h4 class="footer-heading">Our Services</h4>
-              <ul class="footer-links">
-                <li><a href="/service/custom-development">Custom Development</a></li>
-                <li><a href="/service/system-integration">System Integration</a></li>
-                <li><a href="/service/health-checks">Health Checks</a></li>
-                <li><a href="/service/process-automation">Process Automation</a></li>
-              </ul>
-              <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
-              <a href="/case-study/automating-onboarding" class="latest-post">
-                <div class="post-image"></div>
-                <div class="post-content">
-                  <p class="post-title">SAMPLECORP: Automating Onboarding</p>
-                  <p class="post-date">Jan 15, 2025</p>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="footer-bottom">
-            <p>© 2025 ApexRune. All rights reserved.</p>
-            <div class="footer-bottom-links">
-              <a href="/privacy-policy">Privacy Policy</a>
-              <a href="/terms-of-service">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      ${getFooterHTML(getCommonIcon)}
     `;
 
     // Add service detail page styles
@@ -628,40 +575,16 @@ function addServiceDetailStyles() {
 }
 
 function loadOurServicesPage() {
-  import('./services.js').then(({ servicesData }) => {
+  Promise.all([
+    import('./services.js'),
+    import('./icons.js')
+  ]).then(([{ servicesData }, { getServiceCardIcon, getCommonIcon }]) => {
     const services = [
       servicesData['custom-development'],
       servicesData['system-integration'],
       servicesData['health-checks'],
       servicesData['process-automation']
     ];
-
-    // Helper function to get service icon for card (colored versions)
-    function getServiceCardIcon(serviceKey) {
-      const icons = {
-        'custom-development': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="6" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
-          <rect x="18" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
-          <rect x="6" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
-          <rect x="18" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
-        </svg>`,
-        'system-integration': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="10" cy="16" r="4" fill="#8B5CF6"/>
-          <circle cx="22" cy="16" r="4" fill="#8B5CF6"/>
-          <path d="M14 16H18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/>
-          <path d="M10 12L14 16L10 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M22 12L18 16L22 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`,
-        'health-checks': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 16L12 10L18 16L26 8" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M6 24L12 18L18 24L26 16" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`,
-        'process-automation': `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 4L20 12L28 14L22 20L23 28L16 24L9 28L10 20L4 14L12 12L16 4Z" fill="#F59E0B"/>
-        </svg>`
-      };
-      return icons[serviceKey] || '';
-    }
 
     const app = document.querySelector('#app');
     app.innerHTML = `
@@ -683,9 +606,7 @@ function loadOurServicesPage() {
       <main class="our-services-page">
         <div class="container">
           <a href="/" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            ${getCommonIcon('chevron-left', 20, 'currentColor')}
             Back to Home
           </a>
           
@@ -709,7 +630,7 @@ function loadOurServicesPage() {
                 <div class="our-service-card">
                   <div class="service-card-header">
                     <div class="service-icon-wrapper" style="background: ${colors.bg};">
-                      ${getServiceCardIcon(serviceKey)}
+                      ${getServiceCardIcon(serviceKey, 32)}
                     </div>
                     <span class="engagement-tag">${service.engagementTag || 'Project based'}</span>
                   </div>
@@ -718,9 +639,7 @@ function loadOurServicesPage() {
                   <ul class="service-features">
                     ${service.features.slice(0, 3).map(feature => `
                       <li>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        ${getCommonIcon('check', 20, '#10B981')}
                         ${feature}
                       </li>
                     `).join('')}
@@ -733,63 +652,7 @@ function loadOurServicesPage() {
         </div>
       </main>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="container">
-          <div class="footer-content">
-            <div class="footer-column">
-              <div class="footer-logo">
-                ${getLogoHTML()}
-                <span class="logo-text">ApexRune</span>
-              </div>
-              <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
-              <div class="social-icons">
-                <a href="#" class="social-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div class="footer-column">
-              <h4 class="footer-heading">Get In Touch</h4>
-              <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-              <p class="footer-text">+1 (563) 123-4567</p>
-              <p class="footer-text">contact@apexrune.com</p>
-            </div>
-            <div class="footer-column">
-              <h4 class="footer-heading">Our Services</h4>
-              <ul class="footer-links">
-                <li><a href="/service/custom-development">Custom Development</a></li>
-                <li><a href="/service/system-integration">System Integration</a></li>
-                <li><a href="/service/health-checks">Health Checks</a></li>
-                <li><a href="/service/process-automation">Process Automation</a></li>
-              </ul>
-              <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
-              <a href="/case-study/automating-onboarding" class="latest-post">
-                <div class="post-image"></div>
-                <div class="post-content">
-                  <p class="post-title">SAMPLECORP: Automating Onboarding</p>
-                  <p class="post-date">Jan 15, 2025</p>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="footer-bottom">
-            <p>© 2025 ApexRune. All rights reserved.</p>
-            <div class="footer-bottom-links">
-              <a href="/privacy-policy">Privacy Policy</a>
-              <a href="/terms-of-service">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      ${getFooterHTML(getCommonIcon)}
     `;
 
     addOurServicesPageStyles();
@@ -800,8 +663,9 @@ function loadOurServicesPage() {
 }
 
 function loadPrivacyPolicyPage() {
-  const app = document.querySelector('#app');
-  app.innerHTML = `
+  import('./icons.js').then(({ getCommonIcon }) => {
+    const app = document.querySelector('#app');
+    app.innerHTML = `
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
@@ -822,9 +686,7 @@ function loadPrivacyPolicyPage() {
     <main class="legal-page">
       <div class="container">
         <a href="/" class="back-link">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          ${getCommonIcon('chevron-left', 20, 'currentColor')}
           Back to Home
         </a>
         
@@ -994,15 +856,17 @@ function loadPrivacyPolicyPage() {
     </footer>
   `;
 
-  addLegalPageStyles();
-  requestAnimationFrame(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    addLegalPageStyles();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
   });
 }
 
 function loadTermsOfServicePage() {
-  const app = document.querySelector('#app');
-  app.innerHTML = `
+  import('./icons.js').then(({ getCommonIcon }) => {
+    const app = document.querySelector('#app');
+    app.innerHTML = `
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
@@ -1023,9 +887,7 @@ function loadTermsOfServicePage() {
     <main class="legal-page">
       <div class="container">
         <a href="/" class="back-link">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          ${getCommonIcon('chevron-left', 20, 'currentColor')}
           Back to Home
         </a>
         
@@ -1194,14 +1056,18 @@ function loadTermsOfServicePage() {
     </footer>
   `;
 
-  addLegalPageStyles();
-  requestAnimationFrame(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    addLegalPageStyles();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
   });
 }
 
 function loadContactPage() {
-  import('./contact-form.js').then(({ getContactFormHTML }) => {
+  Promise.all([
+    import('./contact-form.js'),
+    import('./icons.js')
+  ]).then(([{ getContactFormHTML }, { getCommonIcon }]) => {
     const app = document.querySelector('#app');
     app.innerHTML = `
       <header class="header">
@@ -1331,8 +1197,9 @@ function loadContactPage() {
 }
 
 function loadCaseStudiesPage() {
-  const app = document.querySelector('#app');
-  app.innerHTML = `
+  import('./icons.js').then(({ getCommonIcon }) => {
+    const app = document.querySelector('#app');
+    app.innerHTML = `
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
@@ -1351,9 +1218,7 @@ function loadCaseStudiesPage() {
     <main class="case-studies-page">
       <div class="container">
         <a href="/" class="back-link">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          ${getCommonIcon('chevron-left', 20, 'currentColor')}
           Back to Home
         </a>
         
@@ -1600,9 +1465,10 @@ function loadCaseStudiesPage() {
     </footer>
   `;
 
-  addCaseStudiesPageStyles();
-  requestAnimationFrame(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    addCaseStudiesPageStyles();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
   });
 }
 
@@ -1689,8 +1555,9 @@ function loadCaseStudyDetailPage(caseStudyId) {
     return;
   }
 
-  const app = document.querySelector('#app');
-  app.innerHTML = `
+  import('./icons.js').then(({ getCommonIcon }) => {
+    const app = document.querySelector('#app');
+    app.innerHTML = `
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
@@ -1906,9 +1773,10 @@ function loadCaseStudyDetailPage(caseStudyId) {
     </footer>
   `;
 
-  addCaseStudyDetailPageStyles();
-  requestAnimationFrame(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    addCaseStudyDetailPageStyles();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
   });
 }
 

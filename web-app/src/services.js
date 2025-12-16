@@ -1,3 +1,5 @@
+import { getServiceIcon } from './icons.js';
+
 // Service content data
 export const servicesData = {
   'custom-development': {
@@ -18,13 +20,7 @@ export const servicesData = {
     ],
     ctaTitle: 'Ready to Start?',
     ctaDescription: 'Standard Salesforce isn\'t enough? Let\'s build a tool tailored to your specific processes.',
-    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="12" y="12" width="40" height="40" rx="4" stroke="white" stroke-width="2" fill="none"/>
-      <rect x="16" y="20" width="32" height="4" fill="white" opacity="0.8"/>
-      <rect x="16" y="28" width="24" height="4" fill="white" opacity="0.8"/>
-      <rect x="16" y="36" width="32" height="4" fill="white" opacity="0.8"/>
-      <circle cx="52" cy="20" r="3" fill="white" opacity="0.6"/>
-    </svg>`
+    iconKey: 'custom-development'
   },
   'salesforce-quick-start': {
     title: 'Get Started Fast with Salesforce Quick Start',
@@ -43,10 +39,7 @@ export const servicesData = {
     ],
     ctaTitle: 'Ready to Start?',
     ctaDescription: 'New to Salesforce? Let\'s get you set up the right way from the start.',
-    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="32" r="24" stroke="white" stroke-width="2" fill="none"/>
-      <path d="M24 32L30 38L40 26" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`
+    iconKey: 'salesforce-quick-start'
   },
   'system-integration': {
     title: 'System Integration',
@@ -66,16 +59,7 @@ export const servicesData = {
     ],
     ctaTitle: 'Ready to Start?',
     ctaDescription: 'Need to connect Salesforce with your other tools? Let\'s create seamless integrations.',
-    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="16" cy="16" r="6" stroke="white" stroke-width="2" fill="none"/>
-      <circle cx="48" cy="16" r="6" stroke="white" stroke-width="2" fill="none"/>
-      <circle cx="16" cy="48" r="6" stroke="white" stroke-width="2" fill="none"/>
-      <circle cx="48" cy="48" r="6" stroke="white" stroke-width="2" fill="none"/>
-      <line x1="22" y1="16" x2="42" y2="16" stroke="white" stroke-width="2"/>
-      <line x1="16" y1="22" x2="16" y2="42" stroke="white" stroke-width="2"/>
-      <line x1="22" y1="48" x2="42" y2="48" stroke="white" stroke-width="2"/>
-      <line x1="48" y1="22" x2="48" y2="42" stroke="white" stroke-width="2"/>
-    </svg>`
+    iconKey: 'system-integration'
   },
   'health-checks': {
     title: 'Health Checks',
@@ -95,10 +79,7 @@ export const servicesData = {
     ],
     ctaTitle: 'Ready to Start?',
     ctaDescription: 'Worried about your Salesforce health? Let\'s audit and optimize your org.',
-    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="16" y="16" width="32" height="32" rx="4" stroke="white" stroke-width="2" fill="none"/>
-      <path d="M24 32L30 38L40 26" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`
+    iconKey: 'health-checks'
   },
   'process-automation': {
     title: 'Process Automation',
@@ -118,12 +99,14 @@ export const servicesData = {
     ],
     ctaTitle: 'Ready to Start?',
     ctaDescription: 'Tired of manual work? Let\'s automate your processes and save time.',
-    icon: `<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M32 8L40 24L56 24L44 36L48 52L32 42L16 52L20 36L8 24L24 24L32 8Z" fill="white" opacity="0.9"/>
-      <path d="M32 16L38 28L50 28L42 38L44 48L32 40L20 48L22 38L14 28L26 28L32 16Z" fill="white"/>
-    </svg>`
+    iconKey: 'process-automation'
   }
 };
+
+// Helper function to get icon for a service
+export function getServiceIconHTML(serviceKey) {
+  return getServiceIcon(serviceKey, 64, 'white');
+}
 
 // Service button mapping
 export const serviceButtonMap = {
@@ -145,29 +128,31 @@ export function updateServiceCard(serviceKey) {
   const content = card.querySelector('.unified-content');
   const icon = card.querySelector('.unified-icon');
 
-  content.innerHTML = `
-    <h3 class="unified-title">${service.title}</h3>
-    <p class="unified-description">${service.description}</p>
-    <ul class="unified-list">
-      ${service.features.map(feature => `
-        <li>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          ${feature}
-        </li>
-      `).join('')}
-    </ul>
-    <a href="/service/${serviceKey}" class="read-more">READ MORE
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  `;
+  // Import icons dynamically
+  import('./icons.js').then(({ getCommonIcon, getServiceIcon }) => {
+    const checkIcon = getCommonIcon('check', 20, '#3B82F6');
+    const arrowIcon = getCommonIcon('chevron-right', 16, 'currentColor');
+    
+    content.innerHTML = `
+      <h3 class="unified-title">${service.title}</h3>
+      <p class="unified-description">${service.description}</p>
+      <ul class="unified-list">
+        ${service.features.map(feature => `
+          <li>
+            ${checkIcon}
+            ${feature}
+          </li>
+        `).join('')}
+      </ul>
+      <a href="/service/${serviceKey}" class="read-more">READ MORE
+        ${arrowIcon}
+      </a>
+    `;
 
-  if (icon) {
-    icon.innerHTML = service.icon;
-  }
+    if (icon && service.iconKey) {
+      icon.innerHTML = getServiceIcon(service.iconKey, 64, 'white');
+    }
+  });
 }
 
 // Initialize service tabs

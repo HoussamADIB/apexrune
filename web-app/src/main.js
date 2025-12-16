@@ -4,6 +4,7 @@ import { initRouter } from './router.js'
 import { certifications, initCertificationsCarousel, getSalesforceCloudIcon } from './certifications.js'
 import { initDashboardAnimations } from './dashboard-animations.js'
 import { initContactForm } from './contact-form.js'
+import { getCommonIcon, getServiceCardIcon } from './icons.js'
 
 document.querySelector('#app').innerHTML = `
   <header class="header">
@@ -45,17 +46,13 @@ document.querySelector('#app').innerHTML = `
         <a href="/contact" class="nav-link">CONTACT US</a>
       </nav>
       <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        ${getCommonIcon('menu', 24, 'currentColor')}
       </button>
     </div>
     <div class="mobile-menu-overlay"></div>
     <nav class="mobile-menu">
       <button class="mobile-menu-close" aria-label="Close mobile menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        ${getCommonIcon('x', 24, 'currentColor')}
       </button>
       <a href="#" class="mobile-nav-link">HOME</a>
       <a href="/services" class="mobile-nav-link">OUR SERVICES</a>
@@ -82,14 +79,10 @@ document.querySelector('#app').innerHTML = `
           <div class="cta-section">
             <a href="/contact" class="cta-button">
               Schedule Your Free Consultation
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              ${getCommonIcon('chevron-right', 20, 'currentColor')}
             </a>
             <div class="quick-fix">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 1L10.5 5.5L15.5 6.5L12 10L12.5 15L8 12.5L3.5 15L4 10L0.5 6.5L5.5 5.5L8 1Z" fill="currentColor"/>
-              </svg>
+              ${getCommonIcon('sparkles', 16, 'currentColor')}
               <span>Just need a quick fix?</span>
             </div>
           </div>
@@ -99,10 +92,7 @@ document.querySelector('#app').innerHTML = `
           <div class="system-overview-card">
             <div class="system-header">
               <div class="system-header-left">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 2L2 5V9C2 13.55 5.16 17.74 10 19C14.84 17.74 18 13.55 18 9V5L10 2ZM10 17.65C6.11 16.35 3.5 13.05 3.5 9V6.3L10 3.75L16.5 6.3V9C16.5 13.05 13.89 16.35 10 17.65Z" fill="#6B7280"/>
-                  <path d="M10 9.5L7.5 7L6 8.5L10 12.5L14 8.5L12.5 7L10 9.5Z" fill="#6B7280"/>
-                </svg>
+                ${getCommonIcon('shield-check', 20, '#6B7280')}
                 <span class="system-title">System Overview</span>
               </div>
               <div class="system-header-right">
@@ -116,13 +106,9 @@ document.querySelector('#app').innerHTML = `
 
             <div class="org-performance-card">
               <div class="performance-header">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 12H5L7 8L11 16L15 8L17 12H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('trending-up', 24, 'white')}
                 <div class="speed-badge">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 1L7.5 4.5L11 5.5L8.5 8L9 11.5L6 10L3 11.5L3.5 8L1 5.5L4.5 4.5L6 1Z" fill="white"/>
-                  </svg>
+                  ${getCommonIcon('sparkles', 12, 'white')}
                   <span>+24% Speed</span>
                 </div>
               </div>
@@ -134,9 +120,7 @@ document.querySelector('#app').innerHTML = `
 
             <div class="metrics-row">
               <div class="metric-card health-card">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 6L9 17L4 12" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check-circle', 24, '#10B981')}
                 <div class="metric-content">
                   <div class="metric-label">Health</div>
                   <div class="metric-value">Excellent</div>
@@ -145,14 +129,7 @@ document.querySelector('#app').innerHTML = `
               </div>
 
               <div class="metric-card data-card">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="3" y="3" width="6" height="6" rx="1" fill="#8B5CF6"/>
-                  <rect x="11" y="3" width="6" height="6" rx="1" fill="#8B5CF6"/>
-                  <rect x="19" y="3" width="6" height="6" rx="1" fill="#8B5CF6"/>
-                  <rect x="3" y="11" width="6" height="6" rx="1" fill="#8B5CF6"/>
-                  <rect x="11" y="11" width="6" height="6" rx="1" fill="#8B5CF6"/>
-                  <rect x="19" y="11" width="6" height="6" rx="1" fill="#8B5CF6"/>
-                </svg>
+                ${getCommonIcon('database', 24, '#8B5CF6')}
                 <div class="metric-content">
                   <div class="metric-label">Data Qlty</div>
                   <div class="metric-value">99.9%</div>
@@ -164,16 +141,12 @@ document.querySelector('#app').innerHTML = `
             <div class="optimizations-section">
               <div class="optimizations-title">Recent Optimizations</div>
               <div class="optimization-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#3B82F6')}
                 <span class="optimization-name">Apex Class Optimization</span>
                 <span class="optimization-status">-120ms</span>
               </div>
               <div class="optimization-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#3B82F6')}
                 <span class="optimization-name">Storage Cleanup</span>
                 <span class="optimization-status">-2.4GB</span>
               </div>
@@ -189,9 +162,7 @@ document.querySelector('#app').innerHTML = `
         <h2 class="certified-section-title">Certified Experts in the Salesforce Ecosystem</h2>
         <div class="certifications-carousel-wrapper">
           <button class="carousel-btn prev" aria-label="Previous certifications">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            ${getCommonIcon('chevron-left', 24, 'currentColor')}
           </button>
           <div class="certifications-carousel">
             <div class="certifications-track" id="certifications-track">
@@ -199,9 +170,7 @@ document.querySelector('#app').innerHTML = `
             </div>
           </div>
           <button class="carousel-btn next" aria-label="Next certifications">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            ${getCommonIcon('chevron-right', 24, 'currentColor')}
           </button>
         </div>
       </div>
@@ -220,12 +189,7 @@ document.querySelector('#app').innerHTML = `
           <div class="core-service-card">
             <div class="service-card-header">
               <div class="service-icon blue-icon">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="6" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
-                  <rect x="18" y="6" width="8" height="8" rx="1" fill="#3B82F6"/>
-                  <rect x="6" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
-                  <rect x="18" y="18" width="8" height="8" rx="1" fill="#3B82F6"/>
-                </svg>
+                ${getServiceCardIcon('custom-development', 32)}
               </div>
               <span class="engagement-tag">Project based</span>
             </div>
@@ -233,21 +197,15 @@ document.querySelector('#app').innerHTML = `
             <p class="service-card-description">We build bespoke applications on the Salesforce platform that solve your unique business challenges.</p>
             <ul class="service-features">
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Discovery & requirements gathering
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Custom objects & field design
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Apex triggers & classes
               </li>
             </ul>
@@ -257,13 +215,7 @@ document.querySelector('#app').innerHTML = `
           <div class="core-service-card">
             <div class="service-card-header">
               <div class="service-icon purple-icon">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="10" cy="16" r="4" fill="#8B5CF6"/>
-                  <circle cx="22" cy="16" r="4" fill="#8B5CF6"/>
-                  <path d="M14 16H18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M10 12L14 16L10 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M22 12L18 16L22 20" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getServiceCardIcon('system-integration', 32)}
               </div>
               <span class="engagement-tag">Project based</span>
             </div>
@@ -271,21 +223,15 @@ document.querySelector('#app').innerHTML = `
             <p class="service-card-description">We connect Salesforce to your other essential tools like Slack, Mailchimp, and ERPs.</p>
             <ul class="service-features">
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 API Development
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Third-party connectors
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Data synchronization
               </li>
             </ul>
@@ -295,10 +241,7 @@ document.querySelector('#app').innerHTML = `
           <div class="core-service-card">
             <div class="service-card-header">
               <div class="service-icon green-icon">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 16L12 10L18 16L26 8" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M6 24L12 18L18 24L26 16" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getServiceCardIcon('health-checks', 32)}
               </div>
               <span class="engagement-tag">Starting at $1,500</span>
             </div>
@@ -306,21 +249,15 @@ document.querySelector('#app').innerHTML = `
             <p class="service-card-description">We audit your existing setup to find and fix inefficiencies, boost performance, and improve user experience.</p>
             <ul class="service-features">
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 System Audit
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Security Review
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Performance Optimization
               </li>
             </ul>
@@ -330,9 +267,7 @@ document.querySelector('#app').innerHTML = `
           <div class="core-service-card">
             <div class="service-card-header">
               <div class="service-icon yellow-icon">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16 4L20 12L28 14L22 20L23 28L16 24L9 28L10 20L4 14L12 12L16 4Z" fill="#F59E0B"/>
-                </svg>
+                ${getServiceCardIcon('process-automation', 32)}
               </div>
               <span class="engagement-tag">Retainer based</span>
             </div>
@@ -340,21 +275,15 @@ document.querySelector('#app').innerHTML = `
             <p class="service-card-description">We build custom flows and triggers to make Salesforce work exactly how your business operates.</p>
             <ul class="service-features">
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Flow Builder
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Process Builder Migration
               </li>
               <li>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                ${getCommonIcon('check', 20, '#10B981')}
                 Approval Processes
               </li>
             </ul>
@@ -371,34 +300,21 @@ document.querySelector('#app').innerHTML = `
         <div class="problems-grid">
           <div class="problem-card">
             <div class="problem-icon">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="20" r="8" stroke="currentColor" stroke-width="2"/>
-                <path d="M12 38C12 32 16 28 24 28C32 28 36 32 36 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M24 20V12M24 8V12M24 12H20M24 12H28" stroke="currentColor" stroke-width="2"/>
-              </svg>
+              ${getCommonIcon('user-x', 48, 'currentColor')}
             </div>
             <p class="problem-text">Your team avoids using Salesforce because it's clunky and overly complicated.</p>
             <span class="problem-label">Low Adoption</span>
           </div>
           <div class="problem-card">
             <div class="problem-icon">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="12" width="32" height="24" rx="2" stroke="currentColor" stroke-width="2"/>
-                <rect x="14" y="18" width="20" height="2" fill="currentColor"/>
-                <rect x="14" y="22" width="16" height="2" fill="currentColor"/>
-                <rect x="14" y="26" width="20" height="2" fill="currentColor"/>
-              </svg>
+              ${getCommonIcon('file-text', 48, 'currentColor')}
             </div>
             <p class="problem-text">You're wasting hours on manual data entry and work that should be automated.</p>
             <span class="problem-label">Manual Tasks</span>
           </div>
           <div class="problem-card">
             <div class="problem-icon">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="8" width="28" height="32" rx="2" stroke="currentColor" stroke-width="2"/>
-                <path d="M18 18H30M18 24H26M18 30H28" stroke="currentColor" stroke-width="2"/>
-                <circle cx="32" cy="20" r="4" fill="#EF4444"/>
-              </svg>
+              ${getCommonIcon('alert-circle', 48, 'currentColor')}
             </div>
             <p class="problem-text">You can't get clear insights because your data is a disconnected disaster.</p>
             <span class="problem-label">Messy Data</span>
@@ -433,59 +349,42 @@ document.querySelector('#app').innerHTML = `
         <div class="value-cards">
           <div class="value-card">
             <div class="value-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
-                <path d="M8 24C8 20 10 18 16 18C22 18 24 20 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
+              ${getCommonIcon('user-x', 32, 'currentColor')}
             </div>
             <h3 class="value-title">Direct-to-Expert Access</h3>
             <p class="value-text">Connect directly with the architects. Faster communication, fewer misunderstandings, and immediate technical feedback on your ideas.</p>
           </div>
           <div class="value-card">
             <div class="value-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 4L20 12L28 14L22 20L23 28L16 24L9 28L10 20L4 14L12 12L16 4Z" fill="currentColor"/>
-              </svg>
+              ${getCommonIcon('sparkles', 32, 'currentColor')}
             </div>
             <h3 class="value-title">Lean & Agile Results</h3>
             <p class="value-text">We're fast, flexible, and focused on results, not bloated processes. You get better value and faster deployment times.</p>
           </div>
           <div class="value-card">
             <div class="value-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 16L12 20L16 12L20 20L24 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              ${getCommonIcon('trending-up', 32, 'currentColor')}
             </div>
             <h3 class="value-title">Deep Collective Expertise</h3>
             <p class="value-text">With collective years of experience, we've solved complex challenges for businesses of all sizes across various industries.</p>
           </div>
           <div class="value-card">
             <div class="value-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="6" y="20" width="4" height="8" fill="currentColor"/>
-                <rect x="12" y="16" width="4" height="12" fill="currentColor"/>
-                <rect x="18" y="12" width="4" height="16" fill="currentColor"/>
-                <rect x="24" y="8" width="4" height="20" fill="currentColor"/>
-              </svg>
+              ${getCommonIcon('trending-up', 32, 'currentColor')}
             </div>
             <h3 class="value-title">Focused On Growth</h3>
             <p class="value-text">We don't just build code; we build engines for revenue. Every solution is designed to impact your bottom line directly.</p>
           </div>
           <div class="value-card">
             <div class="value-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/>
-                <path d="M16 8V16L20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
+              ${getCommonIcon('calendar', 32, 'currentColor')}
             </div>
             <h3 class="value-title">24/7 Support</h3>
             <p class="value-text">Round-the-clock assistance when you need it most. We're here to ensure your Salesforce runs smoothly.</p>
           </div>
           <div class="value-card">
             <div class="value-icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 4L20 12L28 14L22 20L23 28L16 24L9 28L10 20L4 14L12 12L16 4Z" fill="currentColor"/>
-              </svg>
+              ${getCommonIcon('star', 32, 'currentColor')}
             </div>
             <h3 class="value-title">Proven Track Record</h3>
             <p class="value-text">Trusted by businesses worldwide to deliver exceptional Salesforce solutions that drive real results.</p>
@@ -568,15 +467,10 @@ document.querySelector('#app').innerHTML = `
             <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
             <div class="social-icons">
               <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
+                ${getCommonIcon('linkedin', 24, 'currentColor')}
               </a>
               <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
+                ${getCommonIcon('mail', 24, 'currentColor')}
               </a>
             </div>
           </div>
