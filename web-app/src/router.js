@@ -1363,7 +1363,42 @@ function loadCaseStudiesPage() {
         </div>
 
         <div class="case-studies-grid">
-          <!-- Case Study 1: Automating Onboarding -->
+          <!-- Case Study 1: Platform Paralysis -->
+          <a href="/case-study/platform-paralysis" class="case-study-card">
+            <div class="case-study-image-wrapper">
+              <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
+              <div class="case-study-overlay">
+                <span class="read-full-story">Read Full Story</span>
+              </div>
+            </div>
+            <div class="case-study-content">
+              <div class="case-study-client">ENTERPRISE SERVICES (BE/LU)</div>
+              <h3 class="case-study-title">Eliminating Platform Paralysis</h3>
+              <p class="case-study-challenge">The Salesforce 'Account' object was overloaded with complex triggers causing CPU timeout errors and lost data. Core architecture optimization was needed.</p>
+              <div class="case-study-results">
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>+23% Performance Gain</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>0 CPU Timeout Errors</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>100% Scalability Restored</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Case Study 2: Automating Onboarding -->
           <a href="/case-study/automating-onboarding" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);"></div>
@@ -1398,7 +1433,7 @@ function loadCaseStudiesPage() {
             </div>
           </a>
 
-          <!-- Case Study 2: FinTech Sales Efficiency -->
+          <!-- Case Study 3: FinTech Sales Efficiency -->
           <a href="/case-study/fintech-sales-efficiency" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
@@ -1433,7 +1468,7 @@ function loadCaseStudiesPage() {
             </div>
           </a>
 
-          <!-- Case Study 3: ERP Integration -->
+          <!-- Case Study 4: ERP Integration -->
           <a href="/case-study/erp-integration" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);"></div>
@@ -1463,41 +1498,6 @@ function loadCaseStudiesPage() {
                     <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   <span>Improved customer satisfaction scores</span>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <!-- Case Study 4: Platform Paralysis -->
-          <a href="/case-study/platform-paralysis" class="case-study-card">
-            <div class="case-study-image-wrapper">
-              <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
-              <div class="case-study-overlay">
-                <span class="read-full-story">Read Full Story</span>
-              </div>
-            </div>
-            <div class="case-study-content">
-              <div class="case-study-client">ENTERPRISE SERVICES (BE/LU)</div>
-              <h3 class="case-study-title">Eliminating Platform Paralysis</h3>
-              <p class="case-study-challenge">The Salesforce 'Account' object was overloaded with complex triggers causing CPU timeout errors and lost data. Core architecture optimization was needed.</p>
-              <div class="case-study-results">
-                <div class="case-study-result">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>+23% Performance Gain</span>
-                </div>
-                <div class="case-study-result">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>0 CPU Timeout Errors</span>
-                </div>
-                <div class="case-study-result">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>100% Scalability Restored</span>
                 </div>
               </div>
             </div>
@@ -1865,27 +1865,45 @@ function addCaseStudyDetailPageStyles() {
   style.id = 'case-study-detail-page-styles';
   style.textContent = `
     .case-study-detail-page {
-      padding: 0;
+      padding: 2rem 2rem 4rem;
       min-height: calc(100vh - 100px);
-      background: var(--white);
-    }
-
-    .case-study-detail {
-      max-width: 1400px;
-      margin: 0 auto;
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
     }
 
     .case-study-detail-page .container {
-      padding: 2rem 2rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .case-study-detail-page .back-link {
+      padding: 0 0 1.5rem 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bright-blue);
+      text-decoration: none;
+      margin-bottom: 0;
+      font-weight: 600;
+    }
+
+    .case-study-detail {
+      max-width: 100%;
+      margin: 0;
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     /* Hero Section */
     .case-study-hero {
       background: var(--dark-blue);
       color: var(--white);
-      padding: 3rem 2rem;
-      margin: 0 -2rem 3rem -2rem;
-      border-radius: 0;
+      padding: 4rem 2rem;
+      margin-bottom: 0;
+      border-radius: 16px 16px 0 0;
+      position: relative;
     }
 
     .case-study-tag {
@@ -1921,32 +1939,64 @@ function addCaseStudyDetailPageStyles() {
       flex-shrink: 0;
     }
 
+    /* Article Content Container */
+    .case-study-detail article {
+      padding: 0;
+      margin-top: 0;
+      background: var(--white);
+    }
+
     /* Two Column Layout */
     .case-study-layout {
       display: grid;
       grid-template-columns: 1fr 380px;
       gap: 3rem;
       align-items: start;
+      margin-top: 0;
+      padding: 0 2rem 4rem;
     }
 
     .case-study-main {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 0;
     }
 
     /* Content Sections */
     .case-study-content-section {
       background: var(--white);
-      border-radius: 12px;
+      border-radius: 0;
       padding: 2rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      margin: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .case-study-content-section:first-of-type {
+      border-radius: 0;
+    }
+
+    .case-study-content-section:last-of-type {
+      border-radius: 0 0 16px 16px;
     }
 
     .challenge-section {
       background: #FDF2F8;
+      border-radius: 0;
+      padding: 2rem;
+    }
+
+    .challenge-section .case-study-section-header {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .challenge-section .case-study-section-text {
+      padding-left: 0;
+      padding-right: 0;
     }
 
     .proof-section {
@@ -2173,13 +2223,25 @@ function addCaseStudyDetailPageStyles() {
     }
 
     @media (max-width: 768px) {
-      .case-study-detail-page .container {
+      .case-study-detail-page {
         padding: 1.5rem 1rem 3rem;
       }
 
+      .case-study-detail-page .back-link {
+        padding: 0 0 1rem 0;
+      }
+
+      .case-study-layout {
+        padding: 0 1.5rem 3rem;
+      }
+
       .case-study-hero {
-        padding: 2rem 1.5rem;
-        margin: 0 -1rem 2rem -1rem;
+        padding: 2.5rem 1.5rem;
+        border-radius: 12px 12px 0 0;
+      }
+
+      .case-study-detail {
+        border-radius: 12px;
       }
 
       .case-study-hero-title {
