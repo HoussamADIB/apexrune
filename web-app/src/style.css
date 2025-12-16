@@ -579,6 +579,14 @@ img, svg, video, iframe {
   will-change: transform;
 }
 
+.certifications-carousel.auto-sliding .certifications-track {
+  transition: transform 0.3s linear;
+}
+
+.certifications-carousel:hover .certifications-track {
+  transition: transform 0.5s ease;
+}
+
 .certification-badge {
   flex: 0 0 calc(20% - 1.6rem);
   min-width: 150px;

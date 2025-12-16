@@ -68,7 +68,8 @@ export function initCertificationsCarousel() {
   let currentIndex = 0;
   const badges = track.querySelectorAll('.certification-badge');
   const totalBadges = badges.length;
-  const badgesPerView = getBadgesPerView();
+  let autoSlideEnabled = true;
+  let autoSlidePaused = false;
 
   function getBadgesPerView() {
     if (window.innerWidth >= 1024) return 5;
@@ -76,13 +77,23 @@ export function initCertificationsCarousel() {
     return 2; // Show 2 badges on mobile
   }
 
-  function updateCarousel() {
-    const offset = -currentIndex * (100 / badgesPerView);
+  function updateCarousel(smooth = true) {
+    const badgesPerView = getBadgesPerView();
+    const badgeWidth = 100 / badgesPerView;
+    const offset = -currentIndex * badgeWidth;
+    
+    if (smooth) {
+      track.style.transition = 'transform 0.5s ease';
+    } else {
+      track.style.transition = 'transform 0.3s linear';
+    }
+    
     track.style.transform = `translateX(${offset}%)`;
     updateButtons();
   }
 
   function updateButtons() {
+    const badgesPerView = getBadgesPerView();
     if (prevBtn) {
       prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
       prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
@@ -95,36 +106,103 @@ export function initCertificationsCarousel() {
   }
 
   function next() {
+    const badgesPerView = getBadgesPerView();
     const maxIndex = Math.max(0, totalBadges - badgesPerView);
     if (currentIndex < maxIndex) {
       currentIndex++;
-      updateCarousel();
+      updateCarousel(true);
+    } else {
+      // Loop back to start for infinite scroll
+      currentIndex = 0;
+      updateCarousel(true);
     }
   }
 
   function prev() {
+    const badgesPerView = getBadgesPerView();
     if (currentIndex > 0) {
       currentIndex--;
-      updateCarousel();
+      updateCarousel(true);
+    } else {
+      // Loop to end for infinite scroll
+      const maxIndex = Math.max(0, totalBadges - badgesPerView);
+      currentIndex = maxIndex;
+      updateCarousel(true);
     }
   }
 
+  // Auto-slide function - smooth continuous sliding
+  let autoSlideInterval;
+  
+  function startAutoSlide() {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    
+    autoSlideInterval = setInterval(() => {
+      if (!autoSlidePaused && autoSlideEnabled) {
+        const currentBadgesPerView = getBadgesPerView();
+        const maxIndex = Math.max(0, totalBadges - currentBadgesPerView);
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+        } else {
+          currentIndex = 0; // Loop back to start
+        }
+        updateCarousel(false); // Use linear transition for smooth auto-slide
+      }
+    }, 3000); // Slide every 3 seconds - adjust for faster/slower
+  }
+  
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+  }
+
+  // Pause auto-slide on hover
+  carousel.addEventListener('mouseenter', () => {
+    autoSlidePaused = true;
+    carousel.classList.remove('auto-sliding');
+  });
+
+  carousel.addEventListener('mouseleave', () => {
+    autoSlidePaused = false;
+    carousel.classList.add('auto-sliding');
+  });
+
+  // Pause auto-slide when buttons are clicked
+  function pauseAutoSlide() {
+    autoSlidePaused = true;
+    carousel.classList.remove('auto-sliding');
+    setTimeout(() => {
+      autoSlidePaused = false;
+      carousel.classList.add('auto-sliding');
+    }, 5000); // Resume after 5 seconds
+  }
+
   if (nextBtn) {
-    nextBtn.addEventListener('click', next);
+    nextBtn.addEventListener('click', () => {
+      next();
+      pauseAutoSlide();
+    });
   }
 
   if (prevBtn) {
-    prevBtn.addEventListener('click', prev);
+    prevBtn.addEventListener('click', () => {
+      prev();
+      pauseAutoSlide();
+    });
   }
 
   // Handle window resize
   let resizeTimeout;
+  let previousBadgesPerView = getBadgesPerView();
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       const newBadgesPerView = getBadgesPerView();
-      if (newBadgesPerView !== badgesPerView) {
+      if (newBadgesPerView !== previousBadgesPerView) {
         currentIndex = 0;
+        previousBadgesPerView = newBadgesPerView;
         updateCarousel();
       }
     }, 250);
@@ -132,17 +210,8 @@ export function initCertificationsCarousel() {
 
   // Initialize
   updateCarousel();
-
-  // Auto-scroll (optional - can be removed if not needed)
-  // setInterval(() => {
-  //   const maxIndex = Math.max(0, totalBadges - badgesPerView);
-  //   if (currentIndex < maxIndex) {
-  //     next();
-  //   } else {
-  //     currentIndex = 0;
-  //     updateCarousel();
-  //   }
-  // }, 5000);
+  carousel.classList.add('auto-sliding');
+  startAutoSlide(); // Start auto-sliding animation
 }
 
 // Generate Salesforce cloud icon SVG
