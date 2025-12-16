@@ -411,12 +411,23 @@ document.querySelector('#app').innerHTML = `
     <!-- Why Choose Us Section -->
     <section class="why-section">
       <div class="container">
-        <h2 class="section-title">Agency-Level Expertise, Direct-To-Expert Access</h2>
-        <p class="section-description">We eliminated the middlemen. No project managers or sales reps getting in the way. You work directly with the experts who will build your solution.</p>
-        
-        <div class="metrics-boxes">
-          <div class="metric-box">2 FOUNDERS</div>
-          <div class="metric-box">24 CERTIFICATIONS</div>
+        <div class="expertise-content">
+          <div class="expertise-text">
+            <h2 class="section-title">Agency-Level Expertise, Direct-To-Expert Access</h2>
+            <p class="section-description">We eliminated the middlemen. No project managers or sales reps getting in the way. You work directly with the experts who will build your solution.</p>
+          </div>
+          
+          <div class="stats-display">
+            <div class="stat-item">
+              <span class="stat-number">2</span>
+              <span class="stat-text">Expert<br>Founders</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">24</span>
+              <span class="stat-text">Salesforce<br>Certifications</span>
+            </div>
+          </div>
         </div>
 
         <div class="value-cards">
