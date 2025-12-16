@@ -1398,7 +1398,42 @@ function loadCaseStudiesPage() {
             </div>
           </a>
 
-          <!-- Case Study 2: Automating Onboarding -->
+          <!-- Case Study 2: UX/UI Modernization -->
+          <a href="/case-study/ux-ui-modernization" class="case-study-card">
+            <div class="case-study-image-wrapper">
+              <div class="case-study-image" style="background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);"></div>
+              <div class="case-study-overlay">
+                <span class="read-full-story">Read Full Story</span>
+              </div>
+            </div>
+            <div class="case-study-content">
+              <div class="case-study-client">MEDICAL DEVICE MFG (DE)</div>
+              <h3 class="case-study-title">UX/UI Modernization</h3>
+              <p class="case-study-challenge">A critical sales process was trapped inside a complex, undocumented Flow that took days to debug.</p>
+              <div class="case-study-results">
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>70% Maint. Time Cut</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>3x Faster Deployment</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>100% Better UX</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Case Study 3: Automating Onboarding -->
           <a href="/case-study/automating-onboarding" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);"></div>
@@ -1433,7 +1468,7 @@ function loadCaseStudiesPage() {
             </div>
           </a>
 
-          <!-- Case Study 3: FinTech Sales Efficiency -->
+          <!-- Case Study 4: FinTech Sales Efficiency -->
           <a href="/case-study/fintech-sales-efficiency" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
@@ -1468,7 +1503,7 @@ function loadCaseStudiesPage() {
             </div>
           </a>
 
-          <!-- Case Study 4: ERP Integration -->
+          <!-- Case Study 5: ERP Integration -->
           <a href="/case-study/erp-integration" class="case-study-card">
             <div class="case-study-image-wrapper">
               <div class="case-study-image" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);"></div>
@@ -1625,6 +1660,25 @@ function loadCaseStudyDetailPage(caseStudyId) {
       ],
       testimonial: 'The client\'s sales and operations teams no longer fear the \'Save\' button. The platform works silently and instantly in the background, allowing them to focus on revenue, not troubleshooting.',
       technicalDetails: 'We performed comprehensive profiling and refactoring of trigger handlers, implementing a clean architecture pattern that separates concerns and optimizes database operations.'
+    },
+    'ux-ui-modernization': {
+      client: 'Medical Device Mfg (DE)',
+      title: 'From "Spaghetti Logic" to a Seamless Sales Wizard',
+      clientDescription: 'A leading Medical Device Manufacturer (Germany) with a complex portfolio comprising implants, equipment, and consumables.',
+      challenge: 'Visual tools are great—until they aren\'t. The client\'s \'New Lead\' process had grown into a massive, unmanageable Salesforce Flow. What started as simple logic had mutated into a spiderweb of decision nodes, undocumented loops, and legacy Aura components. The cost of this complexity was paralyzing the IT team: \'What should take 2 hours was taking 2 days\'.',
+      solution: 'We didn\'t just patch the Flow; we launched a complete modernization initiative. We replaced the monolithic backend process with a modular Lightning Web Component (LWC) Architecture.',
+      solutionSteps: [
+        '3-Step Progressive Disclosure: Broke the process into three intuitive stages: Product Interest, Fulfillment, and Review.',
+        'Modern UI Patterns: Ditched standard dropdowns for visual \'Pill Selectors\' and \'Card Layouts\' for faster entry.',
+        'Smart Validation: Real-time client-side validation prevents errors before the user even hits \'Save\'.'
+      ],
+      results: [
+        '70% Maint. Time Cut',
+        '3x Faster Deployment',
+        '100% Better UX'
+      ],
+      testimonial: 'The Sales team now has a tool that feels like a modern consumer app, not a legacy database. The IT team has reclaimed their time, shifting focus from fixing old bugs to building new innovation.',
+      technicalDetails: 'We moved away from the \'Spaghetti Flow\' model. We implemented a core LWC Wizard that handles step management, while separate child components handle the logic for each stage. We also standardized the codebase with JSDoc and ApexDoc.'
     }
   };
 
