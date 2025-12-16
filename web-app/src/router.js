@@ -63,8 +63,6 @@ function getFooterHTML(getCommonIcon) {
           </div>
           <div class="footer-column">
             <h4 class="footer-heading">Get In Touch</h4>
-            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-            <p class="footer-text">+1 (563) 123-4567</p>
             <p class="footer-text">contact@apexrune.com</p>
           </div>
           <div class="footer-column">
@@ -75,7 +73,7 @@ function getFooterHTML(getCommonIcon) {
               <li><a href="/service/health-checks">Health Checks</a></li>
               <li><a href="/service/process-automation">Process Automation</a></li>
             </ul>
-            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
+            <h4 class="footer-heading latest-case-study" style="margin-top: 2rem;">Latest Case Study</h4>
             <a href="/case-study/automating-onboarding" class="latest-post">
               <div class="post-image"></div>
               <div class="post-content">

@@ -38,6 +38,17 @@ img, svg, video, iframe {
   height: auto;
 }
 
+/* Hidden sections - can be shown later */
+.testimonials-section {
+  display: none !important;
+}
+
+.latest-case-study,
+.footer-column h4:has(+ .latest-post),
+.footer-column .latest-post {
+  display: none !important;
+}
+
 #app {
   min-height: 100vh;
   overflow-x: hidden;

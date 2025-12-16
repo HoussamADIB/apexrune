@@ -476,8 +476,6 @@ document.querySelector('#app').innerHTML = `
           </div>
           <div class="footer-column">
             <h4 class="footer-heading">Get In Touch</h4>
-            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-            <p class="footer-text">+1 (563) 123-4567</p>
             <p class="footer-text">contact@apexrune.com</p>
           </div>
           <div class="footer-column">
