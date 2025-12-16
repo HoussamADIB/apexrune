@@ -73,7 +73,7 @@ export function initCertificationsCarousel() {
   function getBadgesPerView() {
     if (window.innerWidth >= 1024) return 5;
     if (window.innerWidth >= 768) return 3;
-    return 1;
+    return 2; // Show 2 badges on mobile
   }
 
   function updateCarousel() {
