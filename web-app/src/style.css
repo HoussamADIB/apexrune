@@ -929,8 +929,8 @@ img, svg, video, iframe {
   display: inline-block;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--bright-blue);
-  background: rgba(59, 130, 246, 0.2);
+  color: var(--white);
+  background: var(--bright-blue);
   padding: 0.5rem 1rem;
   border-radius: 20px;
 }
