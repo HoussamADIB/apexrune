@@ -294,7 +294,7 @@ function loadServicePage(serviceKey) {
               <div class="service-sidebar-card">
                 <h2 class="sidebar-title">${service.ctaTitle || 'Ready to Start?'}</h2>
                 <p class="sidebar-description">${service.ctaDescription || 'Let\'s discuss how we can help transform your Salesforce platform.'}</p>
-                <a href="/contact" class="sidebar-cta-button">
+                <a href="/contact?service=${serviceKey}" class="sidebar-cta-button">
                   Discuss Your Project
                 </a>
               </div>

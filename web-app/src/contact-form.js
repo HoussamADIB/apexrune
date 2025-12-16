@@ -7,8 +7,23 @@ export function initContactForm() {
   setupCTAButtons();
 }
 
+// Get service options for dropdown
+function getServiceOptions() {
+  return [
+    { value: 'custom-development', label: 'Custom Development' },
+    { value: 'system-integration', label: 'System Integration' },
+    { value: 'health-checks', label: 'Health Checks' },
+    { value: 'process-automation', label: 'Process Automation' },
+    { value: 'other', label: 'Other' }
+  ];
+}
+
 // Export function to get contact form HTML for page view
 export function getContactFormHTML() {
+  const serviceOptions = getServiceOptions();
+  const urlParams = new URLSearchParams(window.location.search);
+  const prefillService = urlParams.get('service') || '';
+  
   return `
     <form name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
       <input type="hidden" name="form-name" value="contact" />
@@ -32,6 +47,16 @@ export function getContactFormHTML() {
       </div>
       
       <div class="form-group">
+        <label for="serviceInterest">Service Interest</label>
+        <select id="serviceInterest" name="serviceInterest">
+          <option value="">Select a service...</option>
+          ${serviceOptions.map(option => 
+            `<option value="${option.value}" ${prefillService === option.value ? 'selected' : ''}>${option.label}</option>`
+          ).join('')}
+        </select>
+      </div>
+      
+      <div class="form-group">
         <label for="message">How can we help?</label>
         <textarea id="message" name="message" rows="6" required placeholder="Tell us about your Salesforce challenges..."></textarea>
       </div>
@@ -46,6 +71,10 @@ export function getContactFormHTML() {
 function createContactModal() {
   // Check if modal already exists
   if (document.getElementById('contact-modal')) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const prefillService = urlParams.get('service') || '';
+  const serviceOptions = getServiceOptions();
 
   const modalHTML = `
     <div id="contact-modal" class="contact-modal" style="display: none;">
@@ -89,14 +118,12 @@ function createContactModal() {
             </div>
             
             <div class="form-group">
-              <label for="service">Service Interest</label>
-              <select id="service" name="service">
+              <label for="serviceInterest">Service Interest</label>
+              <select id="serviceInterest" name="serviceInterest">
                 <option value="">Select a service...</option>
-                <option value="custom-development">Custom Development</option>
-                <option value="system-integration">System Integration</option>
-                <option value="health-checks">Health Checks</option>
-                <option value="process-automation">Process Automation</option>
-                <option value="other">Other</option>
+                ${serviceOptions.map(option => 
+                  `<option value="${option.value}" ${prefillService === option.value ? 'selected' : ''}>${option.label}</option>`
+                ).join('')}
               </select>
             </div>
             
@@ -205,11 +232,19 @@ function setupCTAButtons() {
   });
 }
 
-export function openContactModal() {
+export function openContactModal(serviceKey = null) {
   const modal = document.getElementById('contact-modal');
   if (modal) {
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    
+    // Pre-fill service interest if provided
+    if (serviceKey) {
+      const serviceSelect = modal.querySelector('#serviceInterest');
+      if (serviceSelect) {
+        serviceSelect.value = serviceKey;
+      }
+    }
     
     // Focus on first input
     setTimeout(() => {
