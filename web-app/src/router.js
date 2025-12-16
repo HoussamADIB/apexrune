@@ -1467,6 +1467,41 @@ function loadCaseStudiesPage() {
               </div>
             </div>
           </a>
+
+          <!-- Case Study 4: Platform Paralysis -->
+          <a href="/case-study/platform-paralysis" class="case-study-card">
+            <div class="case-study-image-wrapper">
+              <div class="case-study-image" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);"></div>
+              <div class="case-study-overlay">
+                <span class="read-full-story">Read Full Story</span>
+              </div>
+            </div>
+            <div class="case-study-content">
+              <div class="case-study-client">ENTERPRISE SERVICES (BE/LU)</div>
+              <h3 class="case-study-title">Eliminating Platform Paralysis</h3>
+              <p class="case-study-challenge">The Salesforce 'Account' object was overloaded with complex triggers causing CPU timeout errors and lost data. Core architecture optimization was needed.</p>
+              <div class="case-study-results">
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>+23% Performance Gain</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>0 CPU Timeout Errors</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>100% Scalability Restored</span>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </main>
@@ -1571,6 +1606,25 @@ function loadCaseStudyDetailPage(caseStudyId) {
         'Improved customer satisfaction scores'
       ],
       fullStory: 'This is where the full case study story will go. You can add detailed information about the project, the challenges faced, the solution implemented, and the results achieved.'
+    },
+    'platform-paralysis': {
+      client: 'Enterprise Services (BE/LU)',
+      title: 'Eliminating Platform Paralysis: How We Optimized Core Architecture to Boost Speed by 23%',
+      clientDescription: 'An International Enterprise Client (Belgium & Luxembourg Region) relying on Salesforce for high-volume account management.',
+      challenge: 'The Salesforce \'Account\' object was overloaded with complex triggers and workflows, causing frequent "Apex CPU Time Limit Exceeded" exceptions. This led to lost data, operational drag, and an inability to scale. The platform was becoming a bottleneck rather than an enabler.',
+      solution: 'We identified that the \'Account Trigger\' was suffering from years of technical debt. Our approach was systematic:',
+      solutionSteps: [
+        'Deep-Dive Profiling: We analyzed every trigger handler, workflow, and process builder firing on Account updates.',
+        'Consolidation: Merged redundant logic and eliminated duplicate processing paths.',
+        'Redesign: Rebuilt the trigger architecture using best practices, implementing bulkification and efficient SOQL queries.'
+      ],
+      results: [
+        '+23% Performance Gain',
+        '0 CPU Timeout Errors',
+        '100% Scalability Restored'
+      ],
+      testimonial: 'The client\'s sales and operations teams no longer fear the \'Save\' button. The platform works silently and instantly in the background, allowing them to focus on revenue, not troubleshooting.',
+      technicalDetails: 'We performed comprehensive profiling and refactoring of trigger handlers, implementing a clean architecture pattern that separates concerns and optimizes database operations.'
     }
   };
 
@@ -1608,39 +1662,132 @@ function loadCaseStudyDetailPage(caseStudyId) {
         </a>
         
         <article class="case-study-detail">
-          <div class="case-study-detail-header">
-            <div class="case-study-detail-client">${caseStudy.client}</div>
-            <h1 class="case-study-detail-title">${caseStudy.title}</h1>
+          <!-- Hero Section -->
+          <div class="case-study-hero">
+            <span class="case-study-tag">CASE STUDY</span>
+            <h1 class="case-study-hero-title">${caseStudy.title}</h1>
+            <div class="case-study-hero-client">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 17C4 14 6 12 10 12C14 12 16 14 16 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span>${caseStudy.client}</span>
+            </div>
           </div>
 
-          <div class="case-study-detail-image">
-            <div class="case-study-detail-image-placeholder"></div>
-          </div>
-
-          <div class="case-study-detail-content">
-            <section class="case-study-section">
-              <h2 class="case-study-section-title">The Challenge</h2>
-              <p class="case-study-section-text">${caseStudy.challenge}</p>
-            </section>
-
-            <section class="case-study-section">
-              <h2 class="case-study-section-title">The Solution</h2>
-              <p class="case-study-section-text">${caseStudy.fullStory}</p>
-            </section>
-
-            <section class="case-study-section">
-              <h2 class="case-study-section-title">Key Results</h2>
-              <div class="case-study-results">
-                ${caseStudy.results.map(result => `
-                  <div class="case-study-result">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span>${result}</span>
+          <!-- Main Layout: Two Columns -->
+          <div class="case-study-layout">
+            <!-- Main Content Column -->
+            <div class="case-study-main">
+              ${caseStudy.clientDescription ? `
+                <section class="case-study-content-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon user-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                        <path d="M6 20C6 16 8 14 12 14C16 14 18 16 18 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">The Client</h2>
                   </div>
-                `).join('')}
+                  <p class="case-study-section-text">${caseStudy.clientDescription}</p>
+                </section>
+              ` : ''}
+
+              <section class="case-study-content-section challenge-section">
+                <div class="case-study-section-header">
+                  <div class="case-study-section-icon challenge-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                      <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <h2 class="case-study-section-title">The Challenge</h2>
+                </div>
+                <p class="case-study-section-text">${caseStudy.challenge}</p>
+              </section>
+
+              <section class="case-study-content-section">
+                <div class="case-study-section-header">
+                  <div class="case-study-section-icon solution-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                      <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <h2 class="case-study-section-title">Our Solution</h2>
+                </div>
+                <p class="case-study-section-text">${caseStudy.solution || caseStudy.fullStory}</p>
+                ${caseStudy.solutionSteps ? `
+                  <ol class="case-study-solution-steps">
+                    ${caseStudy.solutionSteps.map((step, index) => `
+                      <li>
+                        <span class="step-number">${index + 1}</span>
+                        <span class="step-text">${step}</span>
+                      </li>
+                    `).join('')}
+                  </ol>
+                ` : ''}
+              </section>
+
+              <section class="case-study-content-section proof-section">
+                <div class="case-study-section-header">
+                  <div class="case-study-section-icon proof-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 13L12 18L22 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M22 6H12M12 6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <h2 class="case-study-section-title">The Proof: Undeniable Gains</h2>
+                </div>
+                <div class="case-study-results-grid">
+                  ${caseStudy.results.map(result => `
+                    <div class="case-study-result-box">
+                      <span>${result}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                ${caseStudy.testimonial ? `
+                  <div class="case-study-testimonial">
+                    <p>"${caseStudy.testimonial}"</p>
+                  </div>
+                ` : ''}
+              </section>
+            </div>
+
+            <!-- Sidebar Column -->
+            <aside class="case-study-sidebar">
+              <div class="case-study-sidebar-card">
+                <h3 class="sidebar-card-title">Technical Deep Dive</h3>
+                <p class="sidebar-card-text">${caseStudy.technicalDetails || 'We performed comprehensive profiling and refactoring of trigger handlers, implementing a clean architecture pattern that separates concerns and optimizes database operations.'}</p>
+                <ul class="sidebar-card-list">
+                  <li>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Architecture Review</span>
+                  </li>
+                  <li>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Apex Optimization</span>
+                  </li>
+                  <li>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Query Tuning</span>
+                  </li>
+                </ul>
               </div>
-            </section>
+
+              <div class="case-study-sidebar-card cta-card">
+                <h3 class="sidebar-card-title">Is your Salesforce hitting its limits?</h3>
+                <p class="sidebar-card-text">Slow performance isn't just annoying; it costs you money.</p>
+                <a href="/contact" class="sidebar-cta-button">Schedule Audit</a>
+              </div>
+            </aside>
           </div>
         </article>
       </div>
@@ -1718,136 +1865,341 @@ function addCaseStudyDetailPageStyles() {
   style.id = 'case-study-detail-page-styles';
   style.textContent = `
     .case-study-detail-page {
-      padding: 2rem 2rem 4rem;
+      padding: 0;
       min-height: calc(100vh - 100px);
       background: var(--white);
     }
 
     .case-study-detail {
-      max-width: 900px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
-    .case-study-detail-header {
-      margin-bottom: 3rem;
+    .case-study-detail-page .container {
+      padding: 2rem 2rem 4rem;
     }
 
-    .case-study-detail-client {
+    /* Hero Section */
+    .case-study-hero {
+      background: var(--dark-blue);
+      color: var(--white);
+      padding: 3rem 2rem;
+      margin: 0 -2rem 3rem -2rem;
+      border-radius: 0;
+    }
+
+    .case-study-tag {
+      display: inline-block;
+      background: var(--bright-blue);
+      color: var(--white);
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--text-light);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
     }
 
-    .case-study-detail-title {
-      font-size: 3rem;
+    .case-study-hero-title {
+      font-size: 2.5rem;
       font-weight: 700;
-      color: var(--dark-blue);
-      margin: 0;
+      color: var(--white);
+      margin: 0 0 1.5rem 0;
       line-height: 1.2;
     }
 
-    .case-study-detail-image {
-      width: 100%;
-      margin-bottom: 3rem;
-      border-radius: 16px;
-      overflow: hidden;
+    .case-study-hero-client {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
     }
 
-    .case-study-detail-image-placeholder {
-      width: 100%;
-      height: 400px;
-      background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+    .case-study-hero-client svg {
+      flex-shrink: 0;
     }
 
-    .case-study-detail-content {
+    /* Two Column Layout */
+    .case-study-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .case-study-main {
       display: flex;
       flex-direction: column;
-      gap: 3rem;
+      gap: 2rem;
     }
 
-    .case-study-section {
+    /* Content Sections */
+    .case-study-content-section {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
 
+    .challenge-section {
+      background: #FDF2F8;
+    }
+
+    .proof-section {
+      background: var(--white);
+    }
+
+    .case-study-section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .case-study-section-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .user-icon {
+      background: #EFF6FF;
+      color: var(--bright-blue);
+    }
+
+    .challenge-icon {
+      background: #FEE2E2;
+      color: #EF4444;
+    }
+
+    .solution-icon {
+      background: #EFF6FF;
+      color: var(--bright-blue);
+    }
+
+    .proof-icon {
+      background: #D1FAE5;
+      color: var(--green);
+    }
+
     .case-study-section-title {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--dark-blue);
       margin: 0;
     }
 
     .case-study-section-text {
-      font-size: 1.125rem;
+      font-size: 1rem;
       color: var(--text-light);
-      line-height: 1.8;
+      line-height: 1.7;
       margin: 0;
     }
 
-    .case-study-results {
+    /* Solution Steps */
+    .case-study-solution-steps {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0 0;
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
 
-    .case-study-result {
+    .case-study-solution-steps li {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 1rem;
-      color: var(--green);
-      font-weight: 500;
+      align-items: flex-start;
+      gap: 1rem;
     }
 
-    .case-study-result svg {
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--bright-blue);
+      color: var(--white);
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
       flex-shrink: 0;
     }
 
+    .step-text {
+      flex: 1;
+      font-size: 1rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-top: 0.25rem;
+    }
+
+    /* Results Grid */
+    .case-study-results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .case-study-result-box {
+      background: #D1FAE5;
+      color: var(--green);
+      padding: 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    /* Testimonial */
+    .case-study-testimonial {
+      background: #EFF6FF;
+      border-left: 4px solid var(--bright-blue);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+    }
+
+    .case-study-testimonial p {
+      font-size: 1.125rem;
+      color: var(--text-dark);
+      line-height: 1.7;
+      margin: 0;
+      font-style: italic;
+    }
+
+    /* Sidebar */
+    .case-study-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: 2rem;
+    }
+
+    .case-study-sidebar-card {
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar-card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+    }
+
+    .sidebar-card-text {
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .sidebar-card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .sidebar-card-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+    }
+
+    .sidebar-card-list svg {
+      flex-shrink: 0;
+    }
+
+    .cta-card {
+      background: var(--white);
+      border: 2px solid var(--bright-blue);
+    }
+
+    .sidebar-cta-button {
+      background: var(--bright-blue);
+      color: var(--white);
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .sidebar-cta-button:hover {
+      background: var(--primary-blue);
+    }
+
+    /* Responsive */
     @media (max-width: 1024px) {
-      .case-study-detail {
-        max-width: 100%;
+      .case-study-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
 
-      .case-study-detail-image-placeholder {
-        height: 350px;
+      .case-study-sidebar {
+        position: static;
+      }
+
+      .case-study-results-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 768px) {
-      .case-study-detail-page {
+      .case-study-detail-page .container {
         padding: 1.5rem 1rem 3rem;
       }
 
-      .case-study-detail-header {
-        margin-bottom: 2rem;
+      .case-study-hero {
+        padding: 2rem 1.5rem;
+        margin: 0 -1rem 2rem -1rem;
       }
 
-      .case-study-detail-title {
-        font-size: 2rem;
+      .case-study-hero-title {
+        font-size: 1.75rem;
       }
 
-      .case-study-detail-content {
-        gap: 2rem;
+      .case-study-content-section {
+        padding: 1.5rem;
       }
 
       .case-study-section-title {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
       }
 
-      .case-study-section-text {
-        font-size: 1rem;
+      .case-study-results-grid {
+        grid-template-columns: 1fr;
       }
 
-      .case-study-detail-image {
-        margin-bottom: 2rem;
-      }
-
-      .case-study-detail-image-placeholder {
-        height: 250px;
+      .case-study-layout {
+        gap: 1.5rem;
       }
     }
   `;
