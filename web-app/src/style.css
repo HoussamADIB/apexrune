@@ -1144,7 +1144,7 @@ img, svg, video, iframe {
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 2fr;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;
   gap: 4rem;
   margin-bottom: 3rem;
 }
@@ -1177,17 +1177,25 @@ img, svg, video, iframe {
 .social-icon {
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background: transparent;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--white);
-  transition: background 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  opacity: 0.9;
+}
+
+.social-icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .social-icon:hover {
-  background: rgba(255, 255, 255, 0.2);
+  opacity: 1;
+  transform: scale(1.15);
+  color: var(--bright-blue);
 }
 
 .footer-heading {
@@ -1221,6 +1229,26 @@ img, svg, video, iframe {
 
 .footer-links a:hover {
   color: var(--white);
+}
+
+.footer-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bright-blue);
+  color: var(--white);
+  padding: 0.875rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 0.5rem;
+}
+
+.footer-cta-button:hover {
+  background: var(--primary-blue);
+  transform: translateY(-2px);
 }
 
 .latest-post {

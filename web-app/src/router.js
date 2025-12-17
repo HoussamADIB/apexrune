@@ -52,33 +52,35 @@ function getFooterHTML(getCommonIcon) {
             </div>
             <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
             <div class="social-icons">
-              <a href="#" class="social-icon">
-                ${getCommonIcon('linkedin', 24, 'currentColor')}
+              <a href="https://www.linkedin.com/company/apexrune/" target="_blank" rel="noopener noreferrer" class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
               </a>
-              <a href="#" class="social-icon">
+              <a href="mailto:contact@apexrune.com" class="social-icon">
                 ${getCommonIcon('mail', 24, 'currentColor')}
               </a>
             </div>
           </div>
           <div class="footer-column">
-            <h4 class="footer-heading">Get In Touch</h4>
-            <p class="footer-text">contact@apexrune.com</p>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Our Services</h4>
+            <h4 class="footer-heading">What We Do</h4>
             <ul class="footer-links">
               <li><a href="/service/custom-development">Custom Development</a></li>
               <li><a href="/service/system-integration">System Integration</a></li>
               <li><a href="/service/health-checks">Health Checks</a></li>
               <li><a href="/service/process-automation">Process Automation</a></li>
             </ul>
-            <h4 class="footer-heading latest-case-study" style="margin-top: 2rem;">Latest Case Study</h4>
-            <a href="/case-study/automating-onboarding" class="latest-post">
-              <div class="post-image"></div>
-              <div class="post-content">
-                <p class="post-title">SAMPLECORP: Automating Onboarding</p>
-                <p class="post-date">Jan 15, 2025</p>
               </div>
+          <div class="footer-column">
+            <h4 class="footer-heading">Insights</h4>
+            <ul class="footer-links">
+              <li><a href="/case-studies">Case Studies</a></li>
+              <li><a href="/blog">Technical Blog</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <a href="/contact" class="footer-cta-button">
+              Contact Us
             </a>
           </div>
         </div>
