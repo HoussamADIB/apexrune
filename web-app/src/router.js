@@ -673,9 +673,7 @@ function loadPrivacyPolicyPage() {
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          <div class="logo-square">
-            <span class="logo-letter">A</span>
-          </div>
+          ${getLogoHTML()}
           <span class="logo-text">ApexRune</span>
         </a>
         <nav class="nav">
@@ -874,9 +872,7 @@ function loadTermsOfServicePage() {
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          <div class="logo-square">
-            <span class="logo-letter">A</span>
-          </div>
+          ${getLogoHTML()}
           <span class="logo-text">ApexRune</span>
         </a>
         <nav class="nav">

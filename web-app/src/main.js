@@ -131,7 +131,7 @@ document.querySelector('#app').innerHTML = `
               <div class="metric-card data-card">
                 ${getCommonIcon('database', 24, '#8B5CF6')}
                 <div class="metric-content">
-                  <div class="metric-label">Data Qlty</div>
+                  <div class="metric-label">Data Quality</div>
                   <div class="metric-value">99.9%</div>
                   <div class="metric-detail">Duplicates removed</div>
                 </div>
