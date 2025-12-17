@@ -48,8 +48,7 @@ function getFooterHTML(getCommonIcon) {
         <div class="footer-content">
           <div class="footer-column">
             <div class="footer-logo">
-              ${getLogoHTML()}
-              <span class="logo-text">ApexRune</span>
+              <img src="/logo-v2.png" alt="ApexRune Logo" class="logo-icon" style="height: 40px; width: auto;">
             </div>
             <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
             <div class="social-icons">
@@ -229,8 +228,7 @@ function loadServicePage(serviceKey) {
       <header class="header">
         <div class="header-content">
           <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-            ${getLogoHTML()}
-            <span class="logo-text">ApexRune</span>
+            <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
           </a>
           <nav class="nav">
             <a href="/" class="nav-link">HOME</a>
@@ -602,8 +600,7 @@ function loadOurServicesPage() {
       <header class="header">
         <div class="header-content">
           <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-            ${getLogoHTML()}
-            <span class="logo-text">ApexRune</span>
+            <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
           </a>
           <nav class="nav">
             <a href="/" class="nav-link">HOME</a>
@@ -684,8 +681,7 @@ function loadPrivacyPolicyPage() {
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          ${getLogoHTML()}
-          <span class="logo-text">ApexRune</span>
+          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
         </a>
         <nav class="nav">
           <a href="/" class="nav-link">HOME</a>
@@ -827,8 +823,7 @@ function loadTermsOfServicePage() {
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          ${getLogoHTML()}
-          <span class="logo-text">ApexRune</span>
+          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
         </a>
         <nav class="nav">
           <a href="/" class="nav-link">HOME</a>
@@ -972,8 +967,7 @@ function loadContactPage() {
       <header class="header">
         <div class="header-content">
           <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-            ${getLogoHTML()}
-            <span class="logo-text">ApexRune</span>
+            <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
           </a>
           <nav class="nav">
             <a href="/" class="nav-link">HOME</a>
@@ -1047,8 +1041,7 @@ function loadCaseStudiesPage() {
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          ${getLogoHTML()}
-          <span class="logo-text">ApexRune</span>
+          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
         </a>
         <nav class="nav">
           <a href="/" class="nav-link">HOME</a>
@@ -1350,8 +1343,7 @@ function loadCaseStudyDetailPage(caseStudyId) {
     <header class="header">
       <div class="header-content">
         <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          ${getLogoHTML()}
-          <span class="logo-text">ApexRune</span>
+          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
         </a>
         <nav class="nav">
           <a href="/" class="nav-link">HOME</a>
@@ -2750,8 +2742,7 @@ function loadBlogPage() {
         <header class="header">
           <div class="header-content">
             <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-              ${getLogoHTML()}
-              <span class="logo-text">ApexRune</span>
+              <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
             </a>
             <nav class="nav">
               <a href="/" class="nav-link">HOME</a>
@@ -2852,8 +2843,7 @@ function loadBlogPostPage(postId) {
         <header class="header">
           <div class="header-content">
             <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-              ${getLogoHTML()}
-              <span class="logo-text">ApexRune</span>
+              <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
             </a>
             <nav class="nav">
               <a href="/" class="nav-link">HOME</a>
