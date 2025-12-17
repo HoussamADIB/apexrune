@@ -135,6 +135,40 @@ export function updateMetaTags(path) {
     document.head.appendChild(canonical);
   }
   canonical.setAttribute('href', `https://apexrune.com${path}`);
+
+  // Update OG image (always use the same OG image)
+  updateOGImage('https://apexrune.com/og-image.png');
+
+  // Add Breadcrumb Schema for all pages (except home) - async
+  addBreadcrumbSchema(path).catch(err => console.error('Error adding breadcrumb schema:', err));
+
+  // Add Service Schema for service detail pages
+  if (path.startsWith('/service/')) {
+    const serviceKey = path.split('/service/')[1];
+    const serviceNames = {
+      'custom-development': 'Custom Salesforce Development',
+      'system-integration': 'Salesforce System Integration',
+      'health-checks': 'Salesforce Health Check & Audit',
+      'process-automation': 'Salesforce Process Automation'
+    };
+    const serviceDescriptions = {
+      'custom-development': 'Bespoke Salesforce applications built to solve your unique business challenges. Custom objects, Apex triggers, and tailored solutions.',
+      'system-integration': 'Connect Salesforce to your essential tools like Slack, Mailchimp, and ERPs. Seamless API development and third-party integrations.',
+      'health-checks': 'Comprehensive Salesforce audits to find and fix inefficiencies. Boost performance, improve user experience, and optimize your org.',
+      'process-automation': 'Custom flows, triggers, and automation to make Salesforce work exactly how your business operates. Streamline processes and eliminate manual work.'
+    };
+    
+    const serviceName = serviceNames[serviceKey] || 'Salesforce Service';
+    const serviceDescription = serviceDescriptions[serviceKey] || meta.description;
+    
+    addServiceSchema(serviceKey, serviceName, serviceDescription);
+  } else {
+    // Remove service schema if not on a service page
+    const existingServiceSchema = document.querySelector('script[type="application/ld+json"][data-schema="service"]');
+    if (existingServiceSchema) {
+      existingServiceSchema.remove();
+    }
+  }
 }
 
 function updateOGTag(property, content) {
@@ -155,5 +189,152 @@ function updateTwitterTag(name, content) {
     document.head.appendChild(tag);
   }
   tag.setAttribute('content', content);
+}
+
+// Service Schema for service detail pages
+function addServiceSchema(serviceKey, serviceName, serviceDescription) {
+  // Remove existing service schema if any
+  const existingSchema = document.querySelector('script[type="application/ld+json"][data-schema="service"]');
+  if (existingSchema) {
+    existingSchema.remove();
+  }
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": serviceName,
+    "description": serviceDescription,
+    "provider": {
+      "@type": "ProfessionalService",
+      "name": "ApexRune",
+      "url": "https://apexrune.com"
+    },
+    "serviceType": "Salesforce Consulting",
+    "areaServed": "Worldwide",
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock"
+    }
+  };
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.setAttribute('data-schema', 'service');
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
+// Breadcrumb Schema - dynamically generated based on URL path
+async function addBreadcrumbSchema(path) {
+  // Remove existing breadcrumb schema if any
+  const existingSchema = document.querySelector('script[type="application/ld+json"][data-schema="breadcrumb"]');
+  if (existingSchema) {
+    existingSchema.remove();
+  }
+
+  // Don't add breadcrumbs for home page
+  if (path === '/' || path === '') {
+    return;
+  }
+
+  const baseUrl = 'https://apexrune.com';
+  const items = [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": baseUrl
+    }
+  ];
+
+  let position = 2;
+  const pathParts = path.split('/').filter(p => p);
+
+  // Map path segments to readable names
+  const pathNameMap = {
+    'services': 'Services',
+    'service': 'Services',
+    'blog': 'Blog',
+    'case-studies': 'Case Studies',
+    'case-study': 'Case Studies',
+    'contact': 'Contact',
+    'privacy-policy': 'Privacy Policy',
+    'terms-of-service': 'Terms of Service'
+  };
+
+  // Service name mapping
+  const serviceNameMap = {
+    'custom-development': 'Custom Development',
+    'system-integration': 'System Integration',
+    'health-checks': 'Health Checks',
+    'process-automation': 'Process Automation'
+  };
+
+  // Build breadcrumb items
+  let currentPath = '';
+  for (let i = 0; i < pathParts.length; i++) {
+    const part = pathParts[i];
+    currentPath += '/' + part;
+
+    let name = pathNameMap[part] || part;
+    
+    // Special handling for service pages
+    if (part === 'service' && i + 1 < pathParts.length) {
+      const serviceKey = pathParts[i + 1];
+      name = serviceNameMap[serviceKey] || serviceKey.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      currentPath += '/' + serviceKey;
+      i++; // Skip next part as we've processed it
+    }
+    // Special handling for blog posts - try to get actual post title
+    else if (part === 'blog' && i + 1 < pathParts.length) {
+      const postId = pathParts[i + 1];
+      // Try to get post title dynamically
+      try {
+        const { getPostById } = await import('./blog.js');
+        const post = getPostById(postId);
+        if (post && post.title) {
+          name = post.title;
+        } else {
+          name = postId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        }
+      } catch (e) {
+        name = postId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      }
+      currentPath += '/' + postId;
+      i++; // Skip next part
+    }
+    // Special handling for case studies
+    else if (part === 'case-study' && i + 1 < pathParts.length) {
+      const caseId = pathParts[i + 1];
+      name = caseId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      currentPath += '/' + caseId;
+      i++; // Skip next part
+    }
+
+    items.push({
+      "@type": "ListItem",
+      "position": position++,
+      "name": name,
+      "item": baseUrl + currentPath
+    });
+  }
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items
+  };
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.setAttribute('data-schema', 'breadcrumb');
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
+// Update OG image tag
+function updateOGImage(imageUrl) {
+  updateOGTag('og:image', imageUrl);
+  updateTwitterTag('twitter:image', imageUrl);
 }
 
