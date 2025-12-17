@@ -872,8 +872,10 @@ img, svg, video, iframe {
   transition: all 0.2s;
   width: 100%;
   margin-top: auto;
-  display: block;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   text-decoration: none;
 }
 

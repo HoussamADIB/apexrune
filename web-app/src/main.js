@@ -78,8 +78,8 @@ document.querySelector('#app').innerHTML = `
           </p>
           <div class="cta-section">
             <a href="/contact" class="cta-button">
+              ${getCommonIcon('calendar', 20, 'currentColor')}
               Schedule Your Free Consultation
-              ${getCommonIcon('chevron-right', 20, 'currentColor')}
             </a>
             <div class="quick-fix">
               ${getCommonIcon('sparkles', 16, 'currentColor')}
@@ -180,7 +180,6 @@ document.querySelector('#app').innerHTML = `
     <section class="core-services-section">
       <div class="container">
         <div class="core-services-header">
-          <a href="/" class="back-to-home">← Back to Home</a>
           <h2 class="core-services-title">Our Services</h2>
           <p class="core-services-description">We provide specialized Salesforce solutions that drive tangible business outcomes.</p>
         </div>
@@ -209,7 +208,10 @@ document.querySelector('#app').innerHTML = `
                 Apex triggers & classes
               </li>
             </ul>
-            <a href="/service/custom-development" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/custom-development" class="service-cta-button">
+              Learn More
+              ${getCommonIcon('arrow-right', 18, 'currentColor')}
+            </a>
           </div>
 
           <div class="core-service-card">
@@ -235,7 +237,10 @@ document.querySelector('#app').innerHTML = `
                 Data synchronization
               </li>
             </ul>
-            <a href="/service/system-integration" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/system-integration" class="service-cta-button">
+              Learn More
+              ${getCommonIcon('arrow-right', 18, 'currentColor')}
+            </a>
           </div>
 
           <div class="core-service-card">
@@ -261,7 +266,10 @@ document.querySelector('#app').innerHTML = `
                 Performance Optimization
               </li>
             </ul>
-            <a href="/service/health-checks" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/health-checks" class="service-cta-button">
+              Learn More
+              ${getCommonIcon('arrow-right', 18, 'currentColor')}
+            </a>
           </div>
 
           <div class="core-service-card">
@@ -287,7 +295,10 @@ document.querySelector('#app').innerHTML = `
                 Approval Processes
               </li>
             </ul>
-            <a href="/service/process-automation" class="service-cta-button">Discuss Your Project</a>
+            <a href="/service/process-automation" class="service-cta-button">
+              Learn More
+              ${getCommonIcon('arrow-right', 18, 'currentColor')}
+            </a>
           </div>
         </div>
       </div>
@@ -425,7 +436,10 @@ document.querySelector('#app').innerHTML = `
       <div class="container">
         <h2 class="cta-title">Ready to Unlock Your Salesforce Potential?</h2>
         <p class="cta-description">Let's talk about your goals. Our initial consultation is always free, and always valuable.</p>
-        <a href="/contact" class="cta-button">Schedule Your Free Consultation</a>
+        <a href="/contact" class="cta-button">
+          ${getCommonIcon('calendar', 20, 'currentColor')}
+          Schedule Your Free Consultation
+        </a>
       </div>
     </section>
 

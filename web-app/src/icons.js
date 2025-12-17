@@ -136,7 +136,8 @@ export function getCommonIcon(iconName, size = 24, color = 'currentColor', strok
     'database': Database,
     'file-text': FileText,
     'alert-circle': AlertCircle,
-    'user-x': UserX
+    'user-x': UserX,
+    'rocket': Rocket
   };
   
   const iconData = iconMap[iconName];

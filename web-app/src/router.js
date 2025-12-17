@@ -295,7 +295,8 @@ function loadServicePage(serviceKey) {
                 <h2 class="sidebar-title">${service.ctaTitle || 'Ready to Start?'}</h2>
                 <p class="sidebar-description">${service.ctaDescription || 'Let\'s discuss how we can help transform your Salesforce platform.'}</p>
                 <a href="/contact?service=${serviceKey}" class="sidebar-cta-button">
-                  Discuss Your Project
+                  Get Started
+                  ${getCommonIcon('rocket', 18, 'currentColor')}
                 </a>
               </div>
             </aside>
@@ -524,8 +525,10 @@ function addServiceDetailStyles() {
       transition: background 0.2s;
       margin-top: 0.5rem;
       text-decoration: none;
-      display: block;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
 
     .sidebar-cta-button:hover {
@@ -642,7 +645,10 @@ function loadOurServicesPage() {
                       </li>
                     `).join('')}
                   </ul>
-                  <a href="/service/${serviceKey}" class="service-cta-button">Discuss Your Project</a>
+                  <a href="/service/${serviceKey}" class="service-cta-button">
+                    Learn More
+                    ${getCommonIcon('arrow-right', 18, 'currentColor')}
+                  </a>
                 </div>
               `;
             }).join('')}
@@ -1704,7 +1710,10 @@ function loadCaseStudyDetailPage(caseStudyId) {
               <div class="case-study-sidebar-card cta-card">
                 <h3 class="sidebar-card-title">Is your Salesforce hitting its limits?</h3>
                 <p class="sidebar-card-text">Slow performance isn't just annoying; it costs you money.</p>
-                <a href="/contact" class="sidebar-cta-button">Schedule Audit</a>
+                <a href="/contact" class="sidebar-cta-button">
+                  ${getCommonIcon('calendar', 18, 'currentColor')}
+                  Schedule Audit
+                </a>
               </div>
             </aside>
           </div>
@@ -2117,6 +2126,10 @@ function addCaseStudyDetailPageStyles() {
       cursor: pointer;
       transition: background 0.2s;
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       display: block;
       text-align: center;
       margin-top: 0.5rem;
