@@ -163,7 +163,9 @@ function handleRoute() {
                          app.innerHTML.includes('our-services-page') || 
                          app.innerHTML.includes('contact-page') || 
                          app.innerHTML.includes('case-studies-page') ||
-                         app.innerHTML.includes('case-study-detail-page');
+                         app.innerHTML.includes('case-study-detail-page') ||
+                         app.innerHTML.includes('blog-page') ||
+                         app.innerHTML.includes('blog-post-page');
     
     if (isOnOtherPage) {
       // Reload to show home page and scroll to top
@@ -196,6 +198,13 @@ function handleRoute() {
     const caseStudyId = path.split('/case-study/')[1];
     loadCaseStudyDetailPage(caseStudyId);
     if (updateMetaTags) updateMetaTags(path);
+  } else if (path === '/blog') {
+    loadBlogPage();
+    if (updateMetaTags) updateMetaTags(path);
+  } else if (path.startsWith('/blog/')) {
+    const postId = path.split('/blog/')[1];
+    loadBlogPostPage(postId);
+    if (updateMetaTags) updateMetaTags(path);
   } else {
     // 404 - redirect to home
     window.history.replaceState({}, '', '/');
@@ -227,6 +236,7 @@ function loadServicePage(serviceKey) {
             <a href="/" class="nav-link">HOME</a>
             <a href="/services" class="nav-link">OUR SERVICES</a>
             <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+            <a href="/blog" class="nav-link">BLOG</a>
             <a href="/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
@@ -599,6 +609,7 @@ function loadOurServicesPage() {
             <a href="/" class="nav-link">HOME</a>
             <a href="/services" class="nav-link">OUR SERVICES</a>
             <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+            <a href="/blog" class="nav-link">BLOG</a>
             <a href="/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
@@ -679,7 +690,8 @@ function loadPrivacyPolicyPage() {
         <nav class="nav">
           <a href="/" class="nav-link">HOME</a>
           <a href="/services" class="nav-link">OUR SERVICES</a>
-          <a href="/" class="nav-link">WHY US</a>
+          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="/blog" class="nav-link">BLOG</a>
           <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
@@ -798,64 +810,7 @@ function loadPrivacyPolicyPage() {
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-column">
-            <div class="footer-logo">
-              ${getLogoHTML()}
-              <span class="logo-text">ApexRune</span>
-            </div>
-            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
-            <div class="social-icons">
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Get In Touch</h4>
-            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-            <p class="footer-text">+1 (563) 123-4567</p>
-            <p class="footer-text">contact@apexrune.com</p>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">IT Services</h4>
-            <ul class="footer-links">
-              <li><a href="#">Salesforce Quick Start</a></li>
-              <li><a href="#">Platform Integration</a></li>
-              <li><a href="#">Custom Automation</a></li>
-              <li><a href="#">Org Health Check</a></li>
-              <li><a href="#">Custom Solutions</a></li>
-            </ul>
-            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
-            <div class="latest-post">
-              <div class="post-image"></div>
-              <div class="post-content">
-                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
-                <p class="post-date">Oct 24, 2025</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>© 2025 ApexRune. All rights reserved.</p>
-          <div class="footer-bottom-links">
-            <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/terms-of-service">Terms of Service</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    ${getFooterHTML(getCommonIcon)}
   `;
 
     addLegalPageStyles();
@@ -878,7 +833,8 @@ function loadTermsOfServicePage() {
         <nav class="nav">
           <a href="/" class="nav-link">HOME</a>
           <a href="/services" class="nav-link">OUR SERVICES</a>
-          <a href="/" class="nav-link">WHY US</a>
+          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="/blog" class="nav-link">BLOG</a>
           <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
@@ -996,64 +952,7 @@ function loadTermsOfServicePage() {
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-column">
-            <div class="footer-logo">
-              ${getLogoHTML()}
-              <span class="logo-text">ApexRune</span>
-            </div>
-            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
-            <div class="social-icons">
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Get In Touch</h4>
-            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-            <p class="footer-text">+1 (563) 123-4567</p>
-            <p class="footer-text">contact@apexrune.com</p>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">IT Services</h4>
-            <ul class="footer-links">
-              <li><a href="#">Salesforce Quick Start</a></li>
-              <li><a href="#">Platform Integration</a></li>
-              <li><a href="#">Custom Automation</a></li>
-              <li><a href="#">Org Health Check</a></li>
-              <li><a href="#">Custom Solutions</a></li>
-            </ul>
-            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
-            <div class="latest-post">
-              <div class="post-image"></div>
-              <div class="post-content">
-                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
-                <p class="post-date">Oct 24, 2025</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>© 2025 ApexRune. All rights reserved.</p>
-          <div class="footer-bottom-links">
-            <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/terms-of-service">Terms of Service</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    ${getFooterHTML(getCommonIcon)}
   `;
 
     addLegalPageStyles();
@@ -1080,6 +979,7 @@ function loadContactPage() {
             <a href="/" class="nav-link">HOME</a>
             <a href="/services" class="nav-link">OUR SERVICES</a>
             <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+            <a href="/blog" class="nav-link">BLOG</a>
             <a href="/contact" class="nav-link">CONTACT US</a>
           </nav>
         </div>
@@ -1129,63 +1029,7 @@ function loadContactPage() {
         </div>
       </main>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="container">
-          <div class="footer-content">
-            <div class="footer-column">
-              <div class="footer-logo">
-                ${getLogoHTML()}
-                <span class="logo-text">ApexRune</span>
-              </div>
-              <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
-              <div class="social-icons">
-                <a href="#" class="social-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div class="footer-column">
-              <h4 class="footer-heading">Get In Touch</h4>
-              <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-              <p class="footer-text">+1 (563) 123-4567</p>
-              <p class="footer-text">contact@apexrune.com</p>
-            </div>
-            <div class="footer-column">
-              <h4 class="footer-heading">Our Services</h4>
-              <ul class="footer-links">
-                <li><a href="/service/custom-development">Custom Development</a></li>
-                <li><a href="/service/system-integration">System Integration</a></li>
-                <li><a href="/service/health-checks">Health Checks</a></li>
-                <li><a href="/service/process-automation">Process Automation</a></li>
-              </ul>
-              <h4 class="footer-heading" style="margin-top: 2rem;">Latest Case Study</h4>
-              <a href="/case-study/automating-onboarding" class="latest-post">
-                <div class="post-image"></div>
-                <div class="post-content">
-                  <p class="post-title">SAMPLECORP: Automating Onboarding</p>
-                  <p class="post-date">Jan 15, 2025</p>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="footer-bottom">
-            <p>© 2025 ApexRune. All rights reserved.</p>
-            <div class="footer-bottom-links">
-              <a href="/privacy-policy">Privacy Policy</a>
-              <a href="/terms-of-service">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      ${getFooterHTML(getCommonIcon)}
     `;
 
     addContactPageStyles();
@@ -1210,6 +1054,7 @@ function loadCaseStudiesPage() {
           <a href="/" class="nav-link">HOME</a>
           <a href="/services" class="nav-link">OUR SERVICES</a>
           <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="/blog" class="nav-link">BLOG</a>
           <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
@@ -1406,63 +1251,7 @@ function loadCaseStudiesPage() {
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-column">
-            <div class="footer-logo">
-              ${getLogoHTML()}
-              <span class="logo-text">ApexRune</span>
-            </div>
-            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
-            <div class="social-icons">
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Get In Touch</h4>
-            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-            <p class="footer-text">+1 (563) 123-4567</p>
-            <p class="footer-text">contact@apexrune.com</p>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Our Services</h4>
-            <ul class="footer-links">
-              <li><a href="/service/custom-development">Custom Development</a></li>
-              <li><a href="/service/system-integration">System Integration</a></li>
-              <li><a href="/service/health-checks">Health Checks</a></li>
-              <li><a href="/service/process-automation">Process Automation</a></li>
-            </ul>
-            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
-            <div class="latest-post">
-              <div class="post-image"></div>
-              <div class="post-content">
-                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
-                <p class="post-date">Oct 24, 2025</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>© 2025 ApexRune. All rights reserved.</p>
-          <div class="footer-bottom-links">
-            <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/terms-of-service">Terms of Service</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    ${getFooterHTML(getCommonIcon)}
   `;
 
     addCaseStudiesPageStyles();
@@ -1568,6 +1357,7 @@ function loadCaseStudyDetailPage(caseStudyId) {
           <a href="/" class="nav-link">HOME</a>
           <a href="/services" class="nav-link">OUR SERVICES</a>
           <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+          <a href="/blog" class="nav-link">BLOG</a>
           <a href="/contact" class="nav-link">CONTACT US</a>
         </nav>
       </div>
@@ -1717,63 +1507,7 @@ function loadCaseStudyDetailPage(caseStudyId) {
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-column">
-            <div class="footer-logo">
-              ${getLogoHTML()}
-              <span class="logo-text">ApexRune</span>
-            </div>
-            <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
-            <div class="social-icons">
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-              <a href="#" class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Get In Touch</h4>
-            <p class="footer-text">123 Tech Boulevard<br>Innovation City, ST 84000</p>
-            <p class="footer-text">+1 (563) 123-4567</p>
-            <p class="footer-text">contact@apexrune.com</p>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Our Services</h4>
-            <ul class="footer-links">
-              <li><a href="/service/custom-development">Custom Development</a></li>
-              <li><a href="/service/system-integration">System Integration</a></li>
-              <li><a href="/service/health-checks">Health Checks</a></li>
-              <li><a href="/service/process-automation">Process Automation</a></li>
-            </ul>
-            <h4 class="footer-heading" style="margin-top: 2rem;">Latest Post</h4>
-            <div class="latest-post">
-              <div class="post-image"></div>
-              <div class="post-content">
-                <p class="post-title">Will AI Replace The Salesforce Admin?</p>
-                <p class="post-date">Oct 24, 2025</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>© 2025 ApexRune. All rights reserved.</p>
-          <div class="footer-bottom-links">
-            <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/terms-of-service">Terms of Service</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    ${getFooterHTML(getCommonIcon)}
   `;
 
     addCaseStudyDetailPageStyles();
@@ -2998,6 +2732,591 @@ function addLegalPageStyles() {
 
       .legal-section h2 {
         font-size: 1.5rem;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function loadBlogPage() {
+  import('./blog.js').then(({ blogPosts, getAllCategories }) => {
+    import('./icons.js').then(({ getCommonIcon }) => {
+      const app = document.querySelector('#app');
+      const categories = getAllCategories();
+      const featuredPosts = blogPosts.filter(post => post.featured);
+      const recentPosts = blogPosts.slice(0, 3);
+      
+      app.innerHTML = `
+        <header class="header">
+          <div class="header-content">
+            <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+              ${getLogoHTML()}
+              <span class="logo-text">ApexRune</span>
+            </a>
+            <nav class="nav">
+              <a href="/" class="nav-link">HOME</a>
+              <a href="/services" class="nav-link">OUR SERVICES</a>
+              <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+              <a href="/blog" class="nav-link">BLOG</a>
+              <a href="/contact" class="nav-link">CONTACT US</a>
+            </nav>
+          </div>
+        </header>
+
+        <main class="blog-page">
+          <div class="container">
+            <a href="/" class="back-link">
+              ${getCommonIcon('chevron-left', 20, 'currentColor')}
+              Back to Home
+            </a>
+            
+            <div class="blog-header">
+              <h1 class="blog-page-title">Salesforce Insights & Best Practices</h1>
+              <p class="blog-page-subtitle">Expert tips, guides, and insights to help you get the most out of your Salesforce platform.</p>
+            </div>
+
+            ${featuredPosts.length > 0 ? `
+            <section class="featured-posts">
+              <h2 class="section-title">Featured Posts</h2>
+              <div class="featured-posts-grid">
+                ${featuredPosts.map(post => `
+                  <article class="featured-post-card">
+                    <div class="post-category-badge">${post.category}</div>
+                    <h3 class="post-title"><a href="/blog/${post.id}">${post.title}</a></h3>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                    <div class="post-meta">
+                      <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                      <span class="post-read-time">${post.readTime}</span>
+                    </div>
+                    <a href="/blog/${post.id}" class="read-more-link">
+                      Read More
+                      ${getCommonIcon('arrow-right', 16, 'currentColor')}
+                    </a>
+                  </article>
+                `).join('')}
+              </div>
+            </section>
+            ` : ''}
+
+            <section class="all-posts-section">
+              <h2 class="section-title">All Posts</h2>
+              <div class="blog-posts-grid">
+                ${blogPosts.map(post => `
+                  <article class="blog-post-card">
+                    <div class="post-header">
+                      <span class="post-category">${post.category}</span>
+                      <span class="post-read-time">${post.readTime}</span>
+                    </div>
+                    <h3 class="post-title"><a href="/blog/${post.id}">${post.title}</a></h3>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                    <div class="post-footer">
+                      <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                      <a href="/blog/${post.id}" class="read-more-link">
+                        Read More
+                        ${getCommonIcon('arrow-right', 16, 'currentColor')}
+                      </a>
+                    </div>
+                  </article>
+                `).join('')}
+              </div>
+            </section>
+          </div>
+        </main>
+
+        ${getFooterHTML(getCommonIcon)}
+      `;
+
+      addBlogPageStyles();
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    });
+  });
+}
+
+function loadBlogPostPage(postId) {
+  import('./blog.js').then(({ blogPosts, getPostById }) => {
+    import('./icons.js').then(({ getCommonIcon }) => {
+      const post = getPostById(postId);
+      
+      if (!post) {
+        window.history.replaceState({}, '', '/blog');
+        loadBlogPage();
+        return;
+      }
+
+      const app = document.querySelector('#app');
+      const relatedPosts = blogPosts.filter(p => p.id !== postId && p.category === post.category).slice(0, 2);
+      
+      app.innerHTML = `
+        <header class="header">
+          <div class="header-content">
+            <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+              ${getLogoHTML()}
+              <span class="logo-text">ApexRune</span>
+            </a>
+            <nav class="nav">
+              <a href="/" class="nav-link">HOME</a>
+              <a href="/services" class="nav-link">OUR SERVICES</a>
+              <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+              <a href="/blog" class="nav-link">BLOG</a>
+              <a href="/contact" class="nav-link">CONTACT US</a>
+            </nav>
+          </div>
+        </header>
+
+        <main class="blog-post-page">
+          <div class="container">
+            <a href="/blog" class="back-link">
+              ${getCommonIcon('chevron-left', 20, 'currentColor')}
+              Back to Blog
+            </a>
+            
+            <article class="blog-post">
+              <header class="post-header">
+                <div class="post-meta-header">
+                  <span class="post-category-badge">${post.category}</span>
+                  <span class="post-read-time">${post.readTime}</span>
+                </div>
+                <h1 class="post-title">${post.title}</h1>
+                <div class="post-author-date">
+                  <span class="post-author">By ${post.author}</span>
+                  <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </div>
+              </header>
+              
+              <div class="post-content">
+                ${post.content}
+              </div>
+              
+              <footer class="post-footer">
+                <div class="post-tags">
+                  <span class="tag-label">Tags:</span>
+                  <span class="tag">${post.category}</span>
+                  <span class="tag">Salesforce</span>
+                  <span class="tag">Best Practices</span>
+                </div>
+                <div class="post-cta">
+                  <p><strong>Need help with your Salesforce org?</strong></p>
+                  <a href="/contact" class="cta-button">
+                    ${getCommonIcon('calendar', 20, 'currentColor')}
+                    Schedule a Free Consultation
+                  </a>
+                </div>
+              </footer>
+            </article>
+
+            ${relatedPosts.length > 0 ? `
+            <section class="related-posts">
+              <h2 class="section-title">Related Posts</h2>
+              <div class="related-posts-grid">
+                ${relatedPosts.map(relatedPost => `
+                  <article class="related-post-card">
+                    <span class="post-category">${relatedPost.category}</span>
+                    <h3 class="post-title"><a href="/blog/${relatedPost.id}">${relatedPost.title}</a></h3>
+                    <p class="post-excerpt">${relatedPost.excerpt}</p>
+                    <a href="/blog/${relatedPost.id}" class="read-more-link">
+                      Read More
+                      ${getCommonIcon('arrow-right', 16, 'currentColor')}
+                    </a>
+                  </article>
+                `).join('')}
+              </div>
+            </section>
+            ` : ''}
+          </div>
+        </main>
+
+        ${getFooterHTML(getCommonIcon)}
+      `;
+
+      addBlogPostPageStyles();
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    });
+  });
+}
+
+function addBlogPageStyles() {
+  if (document.getElementById('blog-page-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'blog-page-styles';
+  style.textContent = `
+    .blog-page {
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+      min-height: calc(100vh - 200px);
+    }
+
+    .blog-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .blog-page-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 1rem;
+    }
+
+    .blog-page-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .featured-posts {
+      margin-bottom: 4rem;
+    }
+
+    .featured-posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .featured-post-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .featured-post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .blog-post-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid #E5E7EB;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-post-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-post-card .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .post-category-badge {
+      display: inline-block;
+      background: var(--bright-blue);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .post-category {
+      color: var(--bright-blue);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .post-read-time {
+      color: var(--text-light);
+      font-size: 0.875rem;
+    }
+
+    .blog-post-card .post-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .post-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .post-title a:hover {
+      color: var(--bright-blue);
+    }
+
+    .post-excerpt {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .post-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    .post-date {
+      color: var(--text-light);
+      font-size: 0.875rem;
+    }
+
+    .blog-post-card .post-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    .read-more-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bright-blue);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: gap 0.2s;
+    }
+
+    .read-more-link:hover {
+      gap: 0.75rem;
+    }
+
+    .all-posts-section {
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .blog-page {
+        padding: 2rem 1rem;
+      }
+
+      .blog-page-title {
+        font-size: 2rem;
+      }
+
+      .featured-posts-grid,
+      .blog-posts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function addBlogPostPageStyles() {
+  if (document.getElementById('blog-post-page-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'blog-post-page-styles';
+  style.textContent = `
+    .blog-post-page {
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+      min-height: calc(100vh - 200px);
+    }
+
+    .blog-post {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-post .post-header {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #E5E7EB;
+    }
+
+    .post-meta-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .post-author-date {
+      display: flex;
+      gap: 1rem;
+      color: var(--text-light);
+      font-size: 0.875rem;
+      margin-top: 1rem;
+    }
+
+    .blog-post .post-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .post-content {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text-dark);
+    }
+
+    .post-content h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .post-content h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-content ul,
+    .post-content ol {
+      margin: 1rem 0;
+      padding-left: 2rem;
+    }
+
+    .post-content li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .post-content a {
+      color: var(--bright-blue);
+      text-decoration: underline;
+    }
+
+    .post-content a:hover {
+      color: var(--primary-blue);
+    }
+
+    .post-content strong {
+      font-weight: 600;
+      color: var(--dark-blue);
+    }
+
+    .blog-post .post-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid #E5E7EB;
+    }
+
+    .post-tags {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .tag-label {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .tag {
+      background: #EFF6FF;
+      color: var(--bright-blue);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .post-cta {
+      background: #EFF6FF;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .post-cta p {
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+      color: var(--text-dark);
+    }
+
+    .related-posts {
+      max-width: 1200px;
+      margin: 4rem auto 0;
+    }
+
+    .related-posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .related-post-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid #E5E7EB;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .related-post-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .related-post-card .post-title {
+      font-size: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .blog-post-page {
+        padding: 2rem 1rem;
+      }
+
+      .blog-post {
+        padding: 2rem 1.5rem;
+      }
+
+      .blog-post .post-title {
+        font-size: 2rem;
+      }
+
+      .post-content {
+        font-size: 1rem;
+      }
+
+      .related-posts-grid {
+        grid-template-columns: 1fr;
       }
     }
   `;

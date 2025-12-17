@@ -40,6 +40,11 @@ const pageMeta = {
     title: 'Salesforce Case Studies - Real Results | ApexRune',
     description: 'See how we\'ve helped businesses transform their Salesforce platforms. Real case studies with measurable results.',
     keywords: 'Salesforce case studies, Salesforce success stories, Salesforce results'
+  },
+  '/blog': {
+    title: 'Salesforce Blog - Insights & Best Practices | ApexRune',
+    description: 'Expert Salesforce tips, guides, and insights. Learn best practices for optimization, automation, integration, and more.',
+    keywords: 'Salesforce blog, Salesforce tips, Salesforce best practices, Salesforce guides, Salesforce insights'
   }
 };
 
@@ -61,6 +66,30 @@ export function updateMetaTags(path) {
       description: `Expert ${serviceName.toLowerCase()} services for Salesforce. Transform your platform with certified Salesforce consultants.`,
       keywords: `Salesforce ${serviceKey}, ${serviceName.toLowerCase()}, Salesforce services`
     };
+  }
+  
+  // Handle blog post pages dynamically
+  if (!meta && path.startsWith('/blog/')) {
+    import('./blog.js').then(({ getPostById }) => {
+      const postId = path.split('/blog/')[1];
+      const post = getPostById(postId);
+      if (post) {
+        meta = {
+          title: `${post.title} | ApexRune Blog`,
+          description: post.excerpt,
+          keywords: `Salesforce, ${post.category}, Salesforce best practices, Salesforce tips`
+        };
+        // Update meta tags with post data
+        document.title = meta.title;
+        let descMeta = document.querySelector('meta[name="description"]');
+        if (!descMeta) {
+          descMeta = document.createElement('meta');
+          descMeta.setAttribute('name', 'description');
+          document.head.appendChild(descMeta);
+        }
+        descMeta.setAttribute('content', meta.description);
+      }
+    });
   }
   
   // Fallback to home page meta

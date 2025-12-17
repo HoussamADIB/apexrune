@@ -43,6 +43,7 @@ document.querySelector('#app').innerHTML = `
         <a href="#" class="nav-link">HOME</a>
             <a href="/services" class="nav-link">OUR SERVICES</a>
         <a href="/case-studies" class="nav-link">CASE STUDIES</a>
+        <a href="/blog" class="nav-link">BLOG</a>
         <a href="/contact" class="nav-link">CONTACT US</a>
       </nav>
       <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
@@ -57,6 +58,7 @@ document.querySelector('#app').innerHTML = `
       <a href="#" class="mobile-nav-link">HOME</a>
       <a href="/services" class="mobile-nav-link">OUR SERVICES</a>
       <a href="/case-studies" class="mobile-nav-link">CASE STUDIES</a>
+      <a href="/blog" class="mobile-nav-link">BLOG</a>
       <a href="/contact" class="mobile-nav-link">CONTACT US</a>
     </nav>
   </header>
