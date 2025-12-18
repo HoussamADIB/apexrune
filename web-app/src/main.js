@@ -212,6 +212,9 @@ document.querySelector('#app').innerHTML = `
             ${getCommonIcon('chevron-right', 24, 'currentColor')}
           </button>
         </div>
+        <div class="section-divider">
+          <span class="divider-diamond"></span>
+        </div>
       </div>
     </section>
 
@@ -383,15 +386,18 @@ document.querySelector('#app').innerHTML = `
             <p class="section-description">We eliminated the middlemen. No project managers or sales reps getting in the way. You work directly with the experts who will build your solution.</p>
           </div>
           
-          <div class="stats-display">
-            <div class="stat-item">
-              <span class="stat-number">2</span>
-              <span class="stat-text">Expert<br>Founders</span>
+          <div class="trust-badges">
+            <div class="trust-badge">
+              ${getCommonIcon('users', 20, 'currentColor')}
+              <span>Founder-Led Team</span>
             </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-number">24</span>
-              <span class="stat-text">Salesforce<br>Certifications</span>
+            <div class="trust-badge">
+              ${getCommonIcon('shield-check', 20, 'currentColor')}
+              <span>Multi-Certified Experts</span>
+            </div>
+            <div class="trust-badge">
+              ${getCommonIcon('zap', 20, 'currentColor')}
+              <span>Direct Communication</span>
             </div>
           </div>
         </div>
@@ -479,6 +485,41 @@ document.querySelector('#app').innerHTML = `
           ${getCommonIcon('calendar', 20, 'currentColor')}
           Schedule Your Free Consultation
         </a>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-content">
+          <div class="newsletter-text">
+            <div class="newsletter-icon">
+              ${getCommonIcon('mail', 28, 'currentColor')}
+            </div>
+            <h2 class="newsletter-title">Stay Ahead of the Curve</h2>
+            <p class="newsletter-description">Get Salesforce optimization tips, release updates, and expert insights delivered to your inbox. No spam, just value.</p>
+          </div>
+          <form class="newsletter-form" id="newsletter-form">
+            <div class="newsletter-input-wrapper">
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                class="newsletter-input" 
+                id="newsletter-email"
+                required
+              />
+              <button type="submit" class="newsletter-button">
+                Subscribe
+                ${getCommonIcon('arrow-right', 18, 'currentColor')}
+              </button>
+            </div>
+            <p class="newsletter-disclaimer">We respect your inbox. Unsubscribe anytime.</p>
+            <div class="newsletter-success">
+              ${getCommonIcon('check-circle', 20, 'currentColor')}
+              <span>You're in! Check your inbox for a confirmation.</span>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -598,6 +639,64 @@ function initMobileMenu() {
   });
 }
 
+// Initialize scroll animations
+function initScrollAnimations() {
+  const animatedElements = document.querySelectorAll(
+    '.core-service-card, .problem-card, .value-card, .trust-badge, ' +
+    '.section-title, .core-services-title, .problems-title, .newsletter-title, .cta-title'
+  );
+  
+  if (animatedElements.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Add staggered delay for cards in same section
+        setTimeout(() => {
+          entry.target.classList.add('animate-visible');
+        }, index * 50);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  animatedElements.forEach(el => {
+    el.classList.add('animate-hidden');
+    observer.observe(el);
+  });
+}
+
+// Initialize newsletter form
+function initNewsletterForm() {
+  const form = document.getElementById('newsletter-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('newsletter-email').value;
+    const button = form.querySelector('.newsletter-button');
+    
+    // Show loading state
+    button.disabled = true;
+    button.innerHTML = 'Subscribing...';
+    
+    // Simulate API call (replace with actual Mailchimp/ConvertKit integration)
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Show success state
+    form.classList.add('submitted');
+    
+    // Optional: Send to your backend or email service
+    // await fetch('/api/newsletter', { method: 'POST', body: JSON.stringify({ email }) });
+    
+    console.log('Newsletter signup:', email);
+  });
+}
+
 // Initialize dropdown menus with hover delay to prevent gap issues
 function initDropdownMenus() {
   const dropdowns = document.querySelectorAll('.nav-dropdown');
@@ -640,6 +739,8 @@ if (document.readyState === 'loading') {
     initContactForm();
     initMobileMenu();
     initDropdownMenus();
+    initNewsletterForm();
+    initScrollAnimations();
   });
 } else {
   initServiceTabs();
@@ -649,4 +750,6 @@ if (document.readyState === 'loading') {
   initContactForm();
   initMobileMenu();
   initDropdownMenus();
+  initNewsletterForm();
+  initScrollAnimations();
 }

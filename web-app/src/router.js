@@ -500,7 +500,9 @@ function addServiceDetailStyles() {
     .service-detail-page {
       padding: 2rem 2rem 4rem;
       min-height: calc(100vh - 100px);
-      background: var(--white);
+      background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+      margin-top: -90px;
+      padding-top: calc(2rem + 90px);
     }
 
     .back-link {
@@ -1916,7 +1918,9 @@ function addCaseStudiesPageStyles() {
     .case-studies-page {
       padding: 0;
       min-height: calc(100vh - 100px);
-      background: var(--white);
+      background: linear-gradient(to bottom, #F0F9FF, var(--white) 250px);
+      margin-top: -90px;
+      padding-top: 90px;
     }
 
     .case-studies-container {
@@ -2121,7 +2125,9 @@ function addContactPageStyles() {
   style.textContent = `
     .contact-page {
       min-height: calc(100vh - 100px);
-      background: var(--white);
+      background: linear-gradient(135deg, #EEF4FF 0%, #E0EBFF 100%);
+      margin-top: -90px;
+      padding-top: 90px;
     }
 
     .contact-page-container {
@@ -2481,7 +2487,9 @@ function addLegalPageStyles() {
     .legal-page {
       padding: 2rem 2rem 4rem;
       min-height: calc(100vh - 100px);
-      background: var(--white);
+      background: linear-gradient(to bottom, #F8FAFC, var(--white) 150px);
+      margin-top: -90px;
+      padding-top: calc(2rem + 90px);
     }
 
     .back-link {
@@ -2763,8 +2771,10 @@ function addBlogPageStyles() {
   style.textContent = `
     .blog-page {
       padding: 0;
-      background: var(--white);
+      background: linear-gradient(to bottom, #F8FAFC, var(--white) 200px);
       min-height: calc(100vh - 200px);
+      margin-top: -90px;
+      padding-top: 90px;
     }
 
     .blog-container {
