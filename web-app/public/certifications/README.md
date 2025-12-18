@@ -29,3 +29,5 @@ Name your images exactly as shown (case-sensitive):
 
 If your images have different names, update the `certifications.js` file and change the `image` property for each certification.
 
+
+
