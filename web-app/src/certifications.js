@@ -3,60 +3,42 @@ export const certifications = [
   {
     name: 'Platform Developer I',
     image: '/certifications/salesforce-certified-Platform-Developer-I-salesforce-agentur-SUNZINET.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#3B82F6',
   },
   {
     name: 'AI Associate',
     image: '/certifications/AI Associate - Salesforce Agency SUNZINET.png',
-    fallbackColor: '#3B82F6',
-    shadowColor: '#60A5FA',
   },
   {
     name: 'AI Specialist',
     image: '/certifications/Salesforce AI specialist - Salesforce Agentur SUNZINET.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#3B82F6',
   },
   {
     name: 'Technical Architect',
     image: '/certifications/Salesforce Certified Technical Architect-PhotoRoom.png-PhotoRoom.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#10B981',
   },
   {
     name: 'Platform Developer II',
     image: '/certifications/Salesforce-Platform-Developer-II-expert-salesforce agentur SUNZINET.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#10B981',
   },
   {
     name: 'Sales Cloud Consultant',
     image: '/certifications/Sales-Cloud-Consultant-1.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#3B82F6',
   },
   {
     name: 'Service Cloud Consultant',
     image: '/certifications/Salesforce-Certified-Service-Cloud-Consultant-Badge.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#3B82F6',
   },
   {
     name: 'Platform App Builder',
     image: '/certifications/Salesforce-certified-Platform-App-Builder.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#3B82F6',
   },
   {
     name: 'Administrator',
     image: '/certifications/salesforce-certified-administratorAdministrator.png',
-    fallbackColor: '#1E3A8A',
-    shadowColor: '#3B82F6',
   }
 ];
 
-// Initialize certifications carousel
+// Modern infinite carousel with gentle auto-slide and manual controls
 export function initCertificationsCarousel() {
   const carousel = document.querySelector('.certifications-carousel');
   const track = document.querySelector('.certifications-track');
@@ -65,161 +47,149 @@ export function initCertificationsCarousel() {
   
   if (!carousel || !track) return;
 
-  let currentIndex = 0;
-  const badges = track.querySelectorAll('.certification-badge');
-  const totalBadges = badges.length;
-  let autoSlideEnabled = true;
-  let autoSlidePaused = false;
+  const originalBadges = Array.from(track.querySelectorAll('.certification-badge'));
+  const totalOriginal = originalBadges.length;
+  
+  if (totalOriginal === 0) return;
 
-  function getBadgesPerView() {
-    if (window.innerWidth >= 1024) return 5;
-    if (window.innerWidth >= 768) return 3;
-    return 2; // Show 2 badges on mobile
+  // Clone badges for infinite effect (prepend and append clones)
+  originalBadges.forEach(badge => {
+    const cloneEnd = badge.cloneNode(true);
+    cloneEnd.setAttribute('aria-hidden', 'true');
+    track.appendChild(cloneEnd);
+  });
+  
+  originalBadges.forEach(badge => {
+    const cloneStart = badge.cloneNode(true);
+    cloneStart.setAttribute('aria-hidden', 'true');
+    track.insertBefore(cloneStart, track.firstChild);
+  });
+
+  let currentIndex = totalOriginal; // Start at first original badge
+  let isTransitioning = false;
+  let autoSlideTimer = null;
+  let isPaused = false;
+
+  // Get badge width including gap
+  function getBadgeWidth() {
+    const badge = track.querySelector('.certification-badge');
+    if (!badge) return 0;
+    const style = getComputedStyle(track);
+    const gap = parseFloat(style.gap) || 24;
+    return badge.offsetWidth + gap;
   }
 
-  function updateCarousel(smooth = true) {
-    const badgesPerView = getBadgesPerView();
-    const badgeWidth = 100 / badgesPerView;
-    const offset = -currentIndex * badgeWidth;
+  // Update carousel position
+  function updatePosition(animate = true) {
+    const badgeWidth = getBadgeWidth();
+    const offset = currentIndex * badgeWidth;
     
-    if (smooth) {
-      track.style.transition = 'transform 0.5s ease';
-    } else {
-      track.style.transition = 'transform 0.3s linear';
-    }
+    track.style.transition = animate ? 'transform 0.5s ease-out' : 'none';
+    track.style.transform = `translateX(-${offset}px)`;
+  }
+
+  // Handle infinite loop reset
+  function handleTransitionEnd() {
+    isTransitioning = false;
     
-    track.style.transform = `translateX(${offset}%)`;
-    updateButtons();
-  }
-
-  function updateButtons() {
-    const badgesPerView = getBadgesPerView();
-    if (prevBtn) {
-      prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-      prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
-    }
-    if (nextBtn) {
-      const maxIndex = Math.max(0, totalBadges - badgesPerView);
-      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
-      nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+    // Reset to original set if we've gone past the clones
+    if (currentIndex >= totalOriginal * 2) {
+      currentIndex = totalOriginal;
+      updatePosition(false);
+    } else if (currentIndex < totalOriginal) {
+      currentIndex = totalOriginal * 2 - (totalOriginal - currentIndex);
+      updatePosition(false);
     }
   }
 
+  track.addEventListener('transitionend', handleTransitionEnd);
+
+  // Go to next slide
   function next() {
-    const badgesPerView = getBadgesPerView();
-    const maxIndex = Math.max(0, totalBadges - badgesPerView);
-    if (currentIndex < maxIndex) {
-      currentIndex++;
-      updateCarousel(true);
-    } else {
-      // Loop back to start for infinite scroll
-      currentIndex = 0;
-      updateCarousel(true);
-    }
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex++;
+    updatePosition(true);
   }
 
+  // Go to previous slide
   function prev() {
-    const badgesPerView = getBadgesPerView();
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateCarousel(true);
-    } else {
-      // Loop to end for infinite scroll
-      const maxIndex = Math.max(0, totalBadges - badgesPerView);
-      currentIndex = maxIndex;
-      updateCarousel(true);
-    }
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    updatePosition(true);
   }
 
-  // Auto-slide function - smooth continuous sliding
-  let autoSlideInterval;
-  
+  // Start auto-slide (gentle, every 4 seconds)
   function startAutoSlide() {
-    if (autoSlideInterval) clearInterval(autoSlideInterval);
-    
-    autoSlideInterval = setInterval(() => {
-      if (!autoSlidePaused && autoSlideEnabled) {
-        const currentBadgesPerView = getBadgesPerView();
-        const maxIndex = Math.max(0, totalBadges - currentBadgesPerView);
-        if (currentIndex < maxIndex) {
-          currentIndex++;
-        } else {
-          currentIndex = 0; // Loop back to start
-        }
-        updateCarousel(false); // Use linear transition for smooth auto-slide
+    stopAutoSlide();
+    autoSlideTimer = setInterval(() => {
+      if (!isPaused && !isTransitioning) {
+        next();
       }
-    }, 3000); // Slide every 3 seconds - adjust for faster/slower
+    }, 4000);
   }
-  
+
+  // Stop auto-slide
   function stopAutoSlide() {
-    if (autoSlideInterval) {
-      clearInterval(autoSlideInterval);
-      autoSlideInterval = null;
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+      autoSlideTimer = null;
     }
   }
 
-  // Pause auto-slide on hover
+  // Pause on hover
   carousel.addEventListener('mouseenter', () => {
-    autoSlidePaused = true;
-    carousel.classList.remove('auto-sliding');
+    isPaused = true;
   });
 
   carousel.addEventListener('mouseleave', () => {
-    autoSlidePaused = false;
-    carousel.classList.add('auto-sliding');
+    isPaused = false;
   });
 
-  // Pause auto-slide when buttons are clicked
-  function pauseAutoSlide() {
-    autoSlidePaused = true;
-    carousel.classList.remove('auto-sliding');
-    setTimeout(() => {
-      autoSlidePaused = false;
-      carousel.classList.add('auto-sliding');
-    }, 5000); // Resume after 5 seconds
-  }
-
+  // Button click handlers
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
       next();
-      pauseAutoSlide();
+      startAutoSlide(); // Reset timer
     });
   }
 
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       prev();
-      pauseAutoSlide();
+      startAutoSlide(); // Reset timer
     });
   }
 
-  // Handle window resize
-  let resizeTimeout;
-  let previousBadgesPerView = getBadgesPerView();
+  // Handle resize
+  let resizeTimer;
   window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      const newBadgesPerView = getBadgesPerView();
-      if (newBadgesPerView !== previousBadgesPerView) {
-        currentIndex = 0;
-        previousBadgesPerView = newBadgesPerView;
-        updateCarousel();
-      }
-    }, 250);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      updatePosition(false);
+    }, 150);
   });
 
-  // Initialize
-  updateCarousel();
-  carousel.classList.add('auto-sliding');
-  startAutoSlide(); // Start auto-sliding animation
+  // Pause when tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoSlide();
+    } else {
+      startAutoSlide();
+    }
+  });
+
+  // Initialize - set starting position without animation
+  updatePosition(false);
+  startAutoSlide();
 }
 
-// Generate Salesforce cloud icon SVG
+// Generate Salesforce cloud icon SVG (legacy fallback)
 export function getSalesforceCloudIcon(color) {
   return `
     <svg width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.4 9.6C19.6 6.4 16.8 4 13.6 4C11.6 4 10 4.8 8.8 6C7.2 2.4 4 0 0.4 0C-2 0 -4 2 -4 4.4C-4 4.8 -3.6 5.2 -3.2 5.6C-4.4 6.8 -5.2 8.4 -5.2 10.4C-5.2 13.2 -2.8 15.6 0 15.6H20.4C23.2 15.6 25.6 13.2 25.6 10.4C25.6 7.6 23.2 5.2 20.4 5.2C20.4 5.2 20.4 9.6 20.4 9.6Z" fill="${color}"/>
+      <path d="M26 12c0 3.3-2.7 6-6 6H8c-4.4 0-8-3.6-8-8s3.6-8 8-8c1.1 0 2.2.2 3.2.7C12.6 1.1 14.7 0 17 0c3.9 0 7.1 2.8 7.8 6.5.1 0 .2 0 .2 0 2.8 0 5 2.2 5 5s-2.2 5-5 5h-1" fill="${color}"/>
     </svg>
   `;
 }
-

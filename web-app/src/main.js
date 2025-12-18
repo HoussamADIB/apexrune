@@ -136,7 +136,7 @@ document.querySelector('#app').innerHTML = `
       <div class="container">
         <h2 class="certified-section-title">Certified Experts in the Salesforce Ecosystem</h2>
         <div class="certifications-carousel-wrapper">
-          <button class="carousel-btn prev" aria-label="Previous certifications">
+          <button class="carousel-btn prev" aria-label="Previous">
             ${getCommonIcon('chevron-left', 24, 'currentColor')}
           </button>
           <div class="certifications-carousel">
@@ -144,7 +144,7 @@ document.querySelector('#app').innerHTML = `
               <!-- Badges will be inserted here by JavaScript -->
             </div>
           </div>
-          <button class="carousel-btn next" aria-label="Next certifications">
+          <button class="carousel-btn next" aria-label="Next">
             ${getCommonIcon('chevron-right', 24, 'currentColor')}
           </button>
         </div>
