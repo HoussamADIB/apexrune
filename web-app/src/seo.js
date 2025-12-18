@@ -6,11 +6,6 @@ const pageMeta = {
     description: 'Expert Salesforce developers who build, optimize, and automate your platform. Certified Salesforce consultants specializing in custom development, system integration, health checks, and process automation.',
     keywords: 'Salesforce, Salesforce optimization, Salesforce automation, Salesforce consulting, Salesforce developers'
   },
-  '/services': {
-    title: 'Our Services - Salesforce Development & Consulting | ApexRune',
-    description: 'Comprehensive Salesforce services including custom development, system integration, health checks, and process automation. Transform your Salesforce platform with expert solutions.',
-    keywords: 'Salesforce services, Salesforce development, Salesforce integration, Salesforce health check, Salesforce automation'
-  },
   '/service/custom-development': {
     title: 'Custom Salesforce Development Services | ApexRune',
     description: 'Bespoke Salesforce applications built to solve your unique business challenges. Custom objects, Apex triggers, and tailored solutions.',

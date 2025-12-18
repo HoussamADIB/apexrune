@@ -40,6 +40,104 @@ function getLogoHTML() {
   `;
 }
 
+// Helper function to get header HTML with dropdown menus
+function getHeaderHTML(getCommonIcon) {
+  return `
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="logo-container">
+          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon">
+        </a>
+        <nav class="nav">
+          <a href="/" class="nav-link">Home</a>
+          <div class="nav-dropdown">
+            <button class="nav-link nav-dropdown-trigger" type="button">
+              What We Do
+              ${getCommonIcon('chevron-down', 16, 'currentColor')}
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="/service/custom-development" class="dropdown-item">
+                ${getCommonIcon('code', 18, 'currentColor')}
+                <div class="dropdown-item-content">
+                  <span class="dropdown-item-title">Custom Development</span>
+                  <span class="dropdown-item-desc">Bespoke Salesforce applications</span>
+                </div>
+              </a>
+              <a href="/service/system-integration" class="dropdown-item">
+                ${getCommonIcon('git-merge', 18, 'currentColor')}
+                <div class="dropdown-item-content">
+                  <span class="dropdown-item-title">System Integration</span>
+                  <span class="dropdown-item-desc">Connect your essential tools</span>
+                </div>
+              </a>
+              <a href="/service/health-checks" class="dropdown-item">
+                ${getCommonIcon('activity', 18, 'currentColor')}
+                <div class="dropdown-item-content">
+                  <span class="dropdown-item-title">Health Checks</span>
+                  <span class="dropdown-item-desc">Audit & optimize your org</span>
+                </div>
+              </a>
+              <a href="/service/process-automation" class="dropdown-item">
+                ${getCommonIcon('zap', 18, 'currentColor')}
+                <div class="dropdown-item-content">
+                  <span class="dropdown-item-title">Process Automation</span>
+                  <span class="dropdown-item-desc">Flows, triggers & workflows</span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="nav-dropdown">
+            <button class="nav-link nav-dropdown-trigger" type="button">
+              Insights
+              ${getCommonIcon('chevron-down', 16, 'currentColor')}
+            </button>
+            <div class="nav-dropdown-menu">
+              <a href="/case-studies" class="dropdown-item">
+                ${getCommonIcon('briefcase', 18, 'currentColor')}
+                <div class="dropdown-item-content">
+                  <span class="dropdown-item-title">Case Studies</span>
+                  <span class="dropdown-item-desc">Real results from real clients</span>
+                </div>
+              </a>
+              <a href="/blog" class="dropdown-item">
+                ${getCommonIcon('file-text', 18, 'currentColor')}
+                <div class="dropdown-item-content">
+                  <span class="dropdown-item-title">Blog</span>
+                  <span class="dropdown-item-desc">Tips, guides & best practices</span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <a href="/contact" class="nav-link nav-cta">Contact Us</a>
+        </nav>
+        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+          ${getCommonIcon('menu', 24, 'currentColor')}
+        </button>
+      </div>
+      <div class="mobile-menu-overlay"></div>
+      <nav class="mobile-menu">
+        <button class="mobile-menu-close" aria-label="Close mobile menu">
+          ${getCommonIcon('x', 24, 'currentColor')}
+        </button>
+        <a href="/" class="mobile-nav-link">Home</a>
+        <div class="mobile-nav-section">
+          <span class="mobile-nav-label">What We Do</span>
+          <a href="/service/custom-development" class="mobile-nav-link mobile-nav-sub">Custom Development</a>
+          <a href="/service/system-integration" class="mobile-nav-link mobile-nav-sub">System Integration</a>
+          <a href="/service/health-checks" class="mobile-nav-link mobile-nav-sub">Health Checks</a>
+          <a href="/service/process-automation" class="mobile-nav-link mobile-nav-sub">Process Automation</a>
+        </div>
+        <div class="mobile-nav-section">
+          <span class="mobile-nav-label">Insights</span>
+          <a href="/case-studies" class="mobile-nav-link mobile-nav-sub">Case Studies</a>
+          <a href="/blog" class="mobile-nav-link mobile-nav-sub">Blog</a>
+        </div>
+        <a href="/contact" class="mobile-nav-link mobile-nav-cta">Contact Us</a>
+      </nav>
+    </header>
+  `;
+}
+
 // Helper function to get footer HTML with Lucide icons
 function getFooterHTML(getCommonIcon) {
   return `
@@ -161,7 +259,6 @@ function handleRoute() {
     // Check if we're coming from another page
     const isOnOtherPage = app.innerHTML.includes('service-detail-page') || 
                          app.innerHTML.includes('legal-page') || 
-                         app.innerHTML.includes('our-services-page') || 
                          app.innerHTML.includes('contact-page') || 
                          app.innerHTML.includes('case-studies-page') ||
                          app.innerHTML.includes('case-study-detail-page') ||
@@ -186,9 +283,6 @@ function handleRoute() {
   } else if (path === '/terms-of-service') {
     loadTermsOfServicePage();
     if (updateMetaTags) updateMetaTags(path);
-  } else if (path === '/services' || path === '/our-services') {
-    loadOurServicesPage();
-    if (updateMetaTags) updateMetaTags('/services');
   } else if (path === '/contact') {
     loadContactPage();
     if (updateMetaTags) updateMetaTags(path);
@@ -211,6 +305,15 @@ function handleRoute() {
     window.history.replaceState({}, '', '/');
     handleRoute();
   }
+  
+  // Initialize mobile menu and dropdowns after page load
+  requestAnimationFrame(() => {
+    initMobileMenu();
+    // Small delay to ensure DOM is fully ready
+    setTimeout(() => {
+      initDropdownMenus();
+    }, 50);
+  });
 }
 
 function loadServicePage(serviceKey) {
@@ -227,28 +330,10 @@ function loadServicePage(serviceKey) {
 
     const app = document.querySelector('#app');
     app.innerHTML = `
-      <header class="header">
-        <div class="header-content">
-          <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-            <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-          </a>
-          <nav class="nav">
-            <a href="/" class="nav-link">HOME</a>
-            <a href="/services" class="nav-link">OUR SERVICES</a>
-            <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-            <a href="/blog" class="nav-link">BLOG</a>
-            <a href="/contact" class="nav-link">CONTACT US</a>
-          </nav>
-        </div>
-      </header>
+      ${getHeaderHTML(getCommonIcon)}
 
       <main class="service-detail-page">
         <div class="container">
-          <a href="/services" class="back-link">
-            ${getCommonIcon('chevron-left', 20, 'currentColor')}
-            Back to Services
-          </a>
-          
           <!-- Hero Section -->
           <div class="service-hero">
             <div class="service-hero-icon">
@@ -325,10 +410,84 @@ function loadServicePage(serviceKey) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
     
-    // Re-initialize contact form for dynamically loaded pages (if needed)
+    // Re-initialize contact form and mobile menu for dynamically loaded pages
     import('./contact-form.js').then(({ initContactForm }) => {
       initContactForm();
     });
+    
+    initMobileMenu();
+  });
+}
+
+// Initialize mobile menu functionality
+function initMobileMenu() {
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  const closeBtn = document.querySelector('.mobile-menu-close');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const overlay = document.querySelector('.mobile-menu-overlay');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  function openMenu() {
+    if (mobileMenu) mobileMenu.classList.add('active');
+    if (overlay) overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    if (mobileMenu) mobileMenu.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (toggle) toggle.addEventListener('click', openMenu);
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if (overlay) overlay.addEventListener('click', closeMenu);
+  
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+}
+
+// Initialize dropdown menus with hover delay to prevent gap issues
+function initDropdownMenus() {
+  const nav = document.querySelector('.nav');
+  if (!nav) return;
+  
+  // Add class to disable CSS hover (JavaScript will handle it)
+  nav.classList.add('js-dropdown-enabled');
+  
+  const dropdowns = document.querySelectorAll('.nav-dropdown');
+  
+  dropdowns.forEach(dropdown => {
+    const menu = dropdown.querySelector('.nav-dropdown-menu');
+    if (!menu) return;
+    
+    let hideTimeout;
+    let isVisible = false;
+    
+    function showMenu() {
+      clearTimeout(hideTimeout);
+      isVisible = true;
+      menu.style.setProperty('opacity', '1', 'important');
+      menu.style.setProperty('visibility', 'visible', 'important');
+      menu.style.setProperty('pointer-events', 'auto', 'important');
+    }
+    
+    function hideMenu() {
+      isVisible = false;
+      hideTimeout = setTimeout(() => {
+        if (!isVisible) {
+          menu.style.setProperty('opacity', '0', 'important');
+          menu.style.setProperty('visibility', 'hidden', 'important');
+          menu.style.setProperty('pointer-events', 'none', 'important');
+        }
+      }, 200);
+    }
+    
+    dropdown.addEventListener('mouseenter', showMenu);
+    dropdown.addEventListener('mouseleave', hideMenu);
+    menu.addEventListener('mouseenter', showMenu);
+    menu.addEventListener('mouseleave', hideMenu);
   });
 }
 
@@ -585,123 +744,14 @@ function addServiceDetailStyles() {
   document.head.appendChild(style);
 }
 
-function loadOurServicesPage() {
-  Promise.all([
-    import('./services.js'),
-    import('./icons.js')
-  ]).then(([{ servicesData }, { getServiceCardIcon, getCommonIcon }]) => {
-    const services = [
-      servicesData['custom-development'],
-      servicesData['system-integration'],
-      servicesData['health-checks'],
-      servicesData['process-automation']
-    ];
-
-    const app = document.querySelector('#app');
-    app.innerHTML = `
-      <header class="header">
-        <div class="header-content">
-          <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-            <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-          </a>
-          <nav class="nav">
-            <a href="/" class="nav-link">HOME</a>
-            <a href="/services" class="nav-link">OUR SERVICES</a>
-            <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-            <a href="/blog" class="nav-link">BLOG</a>
-            <a href="/contact" class="nav-link">CONTACT US</a>
-          </nav>
-        </div>
-      </header>
-
-      <main class="our-services-page">
-        <div class="container">
-          <a href="/" class="back-link">
-            ${getCommonIcon('chevron-left', 20, 'currentColor')}
-            Back to Home
-          </a>
-          
-          <div class="our-services-header">
-            <h1 class="our-services-title">Our Services</h1>
-            <p class="our-services-description">We provide specialized Salesforce solutions that drive tangible business outcomes.</p>
-          </div>
-
-          <div class="our-services-grid">
-            ${services.map((service, index) => {
-              const serviceKey = ['custom-development', 'system-integration', 'health-checks', 'process-automation'][index];
-              const iconColors = {
-                'custom-development': { bg: '#EFF6FF', icon: '#3B82F6' },
-                'system-integration': { bg: '#F3E8FF', icon: '#8B5CF6' },
-                'health-checks': { bg: '#ECFDF5', icon: '#10B981' },
-                'process-automation': { bg: '#FEF3C7', icon: '#F59E0B' }
-              };
-              const colors = iconColors[serviceKey];
-              
-              return `
-                <div class="our-service-card">
-                  <div class="service-card-header">
-                    <div class="service-icon-wrapper" style="background: ${colors.bg};">
-                      ${getServiceCardIcon(serviceKey, 32)}
-                    </div>
-                    <span class="engagement-tag">${service.engagementTag || 'Project based'}</span>
-                  </div>
-                  <h3 class="service-card-title">${service.title}</h3>
-                  <p class="service-card-description">${service.description}</p>
-                  <ul class="service-features">
-                    ${service.features.slice(0, 3).map(feature => `
-                      <li>
-                        ${getCommonIcon('check', 20, '#10B981')}
-                        ${feature}
-                      </li>
-                    `).join('')}
-                  </ul>
-                  <a href="/service/${serviceKey}" class="service-cta-button">
-                    Learn More
-                    ${getCommonIcon('arrow-right', 18, 'currentColor')}
-                  </a>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      </main>
-
-      ${getFooterHTML(getCommonIcon)}
-    `;
-
-    addOurServicesPageStyles();
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    });
-  });
-}
-
 function loadPrivacyPolicyPage() {
   import('./icons.js').then(({ getCommonIcon }) => {
     const app = document.querySelector('#app');
     app.innerHTML = `
-    <header class="header">
-      <div class="header-content">
-        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-        </a>
-        <nav class="nav">
-          <a href="/" class="nav-link">HOME</a>
-          <a href="/services" class="nav-link">OUR SERVICES</a>
-          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-          <a href="/blog" class="nav-link">BLOG</a>
-          <a href="/contact" class="nav-link">CONTACT US</a>
-        </nav>
-      </div>
-    </header>
+    ${getHeaderHTML(getCommonIcon)}
 
     <main class="legal-page">
       <div class="container">
-        <a href="/" class="back-link">
-          ${getCommonIcon('chevron-left', 20, 'currentColor')}
-          Back to Home
-        </a>
-        
         <div class="legal-content">
           <h1 class="legal-title">Privacy Policy</h1>
           <p class="legal-last-updated">Last Updated: January 2025</p>
@@ -822,28 +872,10 @@ function loadTermsOfServicePage() {
   import('./icons.js').then(({ getCommonIcon }) => {
     const app = document.querySelector('#app');
     app.innerHTML = `
-    <header class="header">
-      <div class="header-content">
-        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-        </a>
-        <nav class="nav">
-          <a href="/" class="nav-link">HOME</a>
-          <a href="/services" class="nav-link">OUR SERVICES</a>
-          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-          <a href="/blog" class="nav-link">BLOG</a>
-          <a href="/contact" class="nav-link">CONTACT US</a>
-        </nav>
-      </div>
-    </header>
+    ${getHeaderHTML(getCommonIcon)}
 
     <main class="legal-page">
       <div class="container">
-        <a href="/" class="back-link">
-          ${getCommonIcon('chevron-left', 20, 'currentColor')}
-          Back to Home
-        </a>
-        
         <div class="legal-content">
           <h1 class="legal-title">Terms of Service</h1>
           <p class="legal-last-updated">Last Updated: January 2025</p>
@@ -966,30 +998,10 @@ function loadContactPage() {
   ]).then(([{ getContactFormHTML }, { getCommonIcon }]) => {
     const app = document.querySelector('#app');
     app.innerHTML = `
-      <header class="header">
-        <div class="header-content">
-          <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-            <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-          </a>
-          <nav class="nav">
-            <a href="/" class="nav-link">HOME</a>
-            <a href="/services" class="nav-link">OUR SERVICES</a>
-            <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-            <a href="/blog" class="nav-link">BLOG</a>
-            <a href="/contact" class="nav-link">CONTACT US</a>
-          </nav>
-        </div>
-      </header>
+      ${getHeaderHTML(getCommonIcon)}
 
       <main class="contact-page">
         <div class="contact-page-container">
-          <a href="/" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Back to Home
-          </a>
-          
           <div class="contact-page-layout">
             <div class="contact-info-panel">
               <h1 class="contact-info-title">Let's Build Something Great Together.</h1>
@@ -1040,30 +1052,13 @@ function loadCaseStudiesPage() {
   import('./icons.js').then(({ getCommonIcon }) => {
     const app = document.querySelector('#app');
     app.innerHTML = `
-    <header class="header">
-      <div class="header-content">
-        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-        </a>
-        <nav class="nav">
-          <a href="/" class="nav-link">HOME</a>
-          <a href="/services" class="nav-link">OUR SERVICES</a>
-          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-          <a href="/blog" class="nav-link">BLOG</a>
-          <a href="/contact" class="nav-link">CONTACT US</a>
-        </nav>
-      </div>
-    </header>
+    ${getHeaderHTML(getCommonIcon)}
 
     <main class="case-studies-page">
-      <div class="container">
-        <a href="/" class="back-link">
-          ${getCommonIcon('chevron-left', 20, 'currentColor')}
-          Back to Home
-        </a>
-        
+      <div class="case-studies-container">
         <div class="case-studies-header">
-          <h1 class="case-studies-title">Case Studies: The Proof</h1>
+          <span class="case-studies-label">Insights</span>
+          <h1 class="case-studies-title">Case Studies</h1>
           <p class="case-studies-subtitle">Undeniable evidence that we deliver real-world results.</p>
         </div>
 
@@ -1342,20 +1337,7 @@ function loadCaseStudyDetailPage(caseStudyId) {
   import('./icons.js').then(({ getCommonIcon }) => {
     const app = document.querySelector('#app');
     app.innerHTML = `
-    <header class="header">
-      <div class="header-content">
-        <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-        </a>
-        <nav class="nav">
-          <a href="/" class="nav-link">HOME</a>
-          <a href="/services" class="nav-link">OUR SERVICES</a>
-          <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-          <a href="/blog" class="nav-link">BLOG</a>
-          <a href="/contact" class="nav-link">CONTACT US</a>
-        </nav>
-      </div>
-    </header>
+    ${getHeaderHTML(getCommonIcon)}
 
     <main class="case-study-detail-page">
       <div class="container">
@@ -1932,35 +1914,51 @@ function addCaseStudiesPageStyles() {
   style.id = 'case-studies-page-styles';
   style.textContent = `
     .case-studies-page {
-      padding: 2rem 2rem 4rem;
+      padding: 0;
       min-height: calc(100vh - 100px);
       background: var(--white);
     }
 
+    .case-studies-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
     .case-studies-header {
-      text-align: center;
       margin-bottom: 4rem;
-      margin-top: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .case-studies-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--bright-blue);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.75rem;
     }
 
     .case-studies-title {
-      font-size: 3rem;
-      font-weight: 700;
+      font-size: 3.5rem;
+      font-weight: 800;
       color: var(--dark-blue);
       margin-bottom: 1rem;
+      letter-spacing: -0.02em;
     }
 
     .case-studies-subtitle {
       font-size: 1.25rem;
       color: var(--text-light);
-      max-width: 700px;
-      margin: 0 auto;
+      max-width: 600px;
       line-height: 1.6;
     }
 
     .case-studies-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin-top: 3rem;
     }
@@ -2074,16 +2072,20 @@ function addCaseStudiesPageStyles() {
 
     @media (max-width: 768px) {
       .case-studies-page {
-        padding: 1.5rem 1rem 3rem;
+        padding: 0;
+      }
+
+      .case-studies-container {
+        padding: 2rem 1.25rem 4rem;
       }
 
       .case-studies-header {
         margin-bottom: 2rem;
-        margin-top: 1rem;
+        padding-bottom: 2rem;
       }
 
       .case-studies-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
       }
 
       .case-studies-subtitle {
@@ -2431,7 +2433,6 @@ async function handleContactPageFormSubmit(e) {
           </svg>
           <h3>Thank you for your message!</h3>
           <p>We'll get back to you within one business day.</p>
-          <a href="/" class="back-link" style="margin-top: 2rem; display: inline-block;">Back to Home</a>
         </div>
       `;
     } else {
@@ -2469,157 +2470,6 @@ async function handleContactPageFormSubmit(e) {
       </div>
     `;
   }
-}
-
-function addOurServicesPageStyles() {
-  if (document.getElementById('our-services-page-styles')) return;
-
-  const style = document.createElement('style');
-  style.id = 'our-services-page-styles';
-  style.textContent = `
-    .our-services-page {
-      padding: 2rem 2rem 4rem;
-      min-height: calc(100vh - 100px);
-      background: var(--white);
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--bright-blue);
-      text-decoration: none;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      transition: opacity 0.2s;
-    }
-
-    .back-link:hover {
-      opacity: 0.8;
-    }
-
-    .our-services-header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .our-services-title {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--dark-blue);
-      margin-bottom: 1rem;
-    }
-
-    .our-services-description {
-      font-size: 1.125rem;
-      color: var(--text-light);
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    .our-services-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    .our-service-card {
-      background: var(--white);
-      border: 1px solid #E5E7EB;
-      border-radius: 16px;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      transition: box-shadow 0.2s;
-    }
-
-    .our-service-card:hover {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-
-    .service-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .service-icon-wrapper {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .engagement-tag {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--bright-blue);
-      background: #EFF6FF;
-      padding: 0.375rem 0.75rem;
-      border-radius: 20px;
-    }
-
-    .service-card-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin: 0;
-    }
-
-    .service-card-description {
-      font-size: 1rem;
-      color: var(--text-light);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .service-features {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .service-features li {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9375rem;
-      color: var(--text-dark);
-    }
-
-    .service-features svg {
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 1024px) {
-      .our-services-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .our-services-page {
-        padding: 1.5rem 1rem 3rem;
-      }
-
-      .our-services-title {
-        font-size: 2rem;
-      }
-
-      .our-services-description {
-        font-size: 1rem;
-      }
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 function addLegalPageStyles() {
@@ -2737,77 +2587,70 @@ function loadBlogPage() {
     import('./icons.js').then(({ getCommonIcon }) => {
       const app = document.querySelector('#app');
       const categories = getAllCategories();
-      const featuredPosts = blogPosts.filter(post => post.featured);
-      const recentPosts = blogPosts.slice(0, 3);
+      const featuredPost = blogPosts.find(post => post.featured);
+      const otherPosts = blogPosts.filter(post => !post.featured || post !== featuredPost);
       
       app.innerHTML = `
-        <header class="header">
-          <div class="header-content">
-            <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-              <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-            </a>
-            <nav class="nav">
-              <a href="/" class="nav-link">HOME</a>
-              <a href="/services" class="nav-link">OUR SERVICES</a>
-              <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-              <a href="/blog" class="nav-link">BLOG</a>
-              <a href="/contact" class="nav-link">CONTACT US</a>
-            </nav>
-          </div>
-        </header>
+        ${getHeaderHTML(getCommonIcon)}
 
         <main class="blog-page">
-          <div class="container">
-            <a href="/" class="back-link">
-              ${getCommonIcon('chevron-left', 20, 'currentColor')}
-              Back to Home
-            </a>
-            
+          <div class="blog-container">
             <div class="blog-header">
-              <h1 class="blog-page-title">Salesforce Insights & Best Practices</h1>
-              <p class="blog-page-subtitle">Expert tips, guides, and insights to help you get the most out of your Salesforce platform.</p>
+              <span class="blog-label">Insights</span>
+              <h1 class="blog-page-title">Technical Blog</h1>
+              <p class="blog-page-subtitle">Expert insights on Salesforce optimization, automation, and best practices.</p>
             </div>
 
-            ${featuredPosts.length > 0 ? `
-            <section class="featured-posts">
-              <h2 class="section-title">Featured Posts</h2>
-              <div class="featured-posts-grid">
-                ${featuredPosts.map(post => `
-                  <article class="featured-post-card">
-                    <div class="post-category-badge">${post.category}</div>
-                    <h3 class="post-title"><a href="/blog/${post.id}">${post.title}</a></h3>
-                    <p class="post-excerpt">${post.excerpt}</p>
-                    <div class="post-meta">
-                      <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                      <span class="post-read-time">${post.readTime}</span>
-                    </div>
-                    <a href="/blog/${post.id}" class="read-more-link">
-                      Read More
-                      ${getCommonIcon('arrow-right', 16, 'currentColor')}
-                    </a>
-                  </article>
-                `).join('')}
-              </div>
+            ${featuredPost ? `
+            <section class="featured-section">
+              <a href="/blog/${featuredPost.id}" class="featured-article">
+                <div class="featured-content">
+                  <span class="category-tag">${featuredPost.category}</span>
+                  <h2 class="featured-title">${featuredPost.title}</h2>
+                  <p class="featured-excerpt">${featuredPost.excerpt}</p>
+                  <div class="featured-footer">
+                    <span class="post-date">${new Date(featuredPost.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    <span class="read-time">${featuredPost.readTime}</span>
+                  </div>
+                </div>
+                <div class="featured-image-area">
+                  <div class="featured-placeholder">
+                    ${getCommonIcon('newspaper', 64, 'currentColor')}
+                  </div>
+                </div>
+              </a>
             </section>
             ` : ''}
 
-            <section class="all-posts-section">
-              <h2 class="section-title">All Posts</h2>
-              <div class="blog-posts-grid">
-                ${blogPosts.map(post => `
-                  <article class="blog-post-card">
-                    <div class="post-header">
-                      <span class="post-category">${post.category}</span>
-                      <span class="post-read-time">${post.readTime}</span>
+            <section class="articles-section">
+              <div class="articles-header">
+                <h2 class="articles-title">All Articles</h2>
+                <span class="articles-count">${blogPosts.length} articles</span>
+              </div>
+              <div class="articles-grid">
+                ${otherPosts.map(post => `
+                  <article class="article-card">
+                    <div class="article-card-image">
+                      <div class="image-placeholder image-placeholder--small">
+                        ${getCommonIcon('image', 24, 'currentColor')}
+                      </div>
                     </div>
-                    <h3 class="post-title"><a href="/blog/${post.id}">${post.title}</a></h3>
-                    <p class="post-excerpt">${post.excerpt}</p>
-                    <div class="post-footer">
-                      <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                      <a href="/blog/${post.id}" class="read-more-link">
-                        Read More
-                        ${getCommonIcon('arrow-right', 16, 'currentColor')}
-                      </a>
+                    <div class="article-card-body">
+                      <div class="article-card-meta">
+                        <span class="category-tag category-tag--small">${post.category}</span>
+                        <span class="article-card-date">${new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                      </div>
+                      <h3 class="article-card-title">
+                        <a href="/blog/${post.id}">${post.title}</a>
+                      </h3>
+                      <p class="article-card-excerpt">${post.excerpt}</p>
+                      <div class="article-card-footer">
+                        <span class="read-time">${post.readTime}</span>
+                        <a href="/blog/${post.id}" class="read-article-link">
+                          Read
+                          ${getCommonIcon('arrow-right', 16, 'currentColor')}
+                        </a>
+                      </div>
                     </div>
                   </article>
                 `).join('')}
@@ -2842,81 +2685,63 @@ function loadBlogPostPage(postId) {
       const relatedPosts = blogPosts.filter(p => p.id !== postId && p.category === post.category).slice(0, 2);
       
       app.innerHTML = `
-        <header class="header">
-          <div class="header-content">
-            <a href="/" class="logo-container" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-              <img src="/logo.png" alt="ApexRune Logo" class="logo-icon" style="height: 45px; width: auto;">
-            </a>
-            <nav class="nav">
-              <a href="/" class="nav-link">HOME</a>
-              <a href="/services" class="nav-link">OUR SERVICES</a>
-              <a href="/case-studies" class="nav-link">CASE STUDIES</a>
-              <a href="/blog" class="nav-link">BLOG</a>
-              <a href="/contact" class="nav-link">CONTACT US</a>
-            </nav>
-          </div>
-        </header>
+        ${getHeaderHTML(getCommonIcon)}
 
         <main class="blog-post-page">
-          <div class="container">
-            <a href="/blog" class="back-link">
-              ${getCommonIcon('chevron-left', 20, 'currentColor')}
-              Back to Blog
-            </a>
+          <article class="blog-article">
+            <div class="article-nav">
+              <a href="/blog" class="back-btn">
+                ${getCommonIcon('chevron-left', 16, 'currentColor')}
+                <span>Back to Blog</span>
+              </a>
+            </div>
+            <header class="article-header">
+              <div class="article-header-inner">
+                <span class="category-tag category-tag--large">${post.category}</span>
+                <h1 class="article-main-title">${post.title}</h1>
+                <p class="article-lead">${post.excerpt}</p>
+                <div class="article-meta-bar">
+                  <span class="meta-item">
+                    ${getCommonIcon('calendar', 16, 'currentColor')}
+                    ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </span>
+                  <span class="meta-item">
+                    ${getCommonIcon('clock', 16, 'currentColor')}
+                    ${post.readTime}
+                  </span>
+                </div>
+              </div>
+            </header>
             
-            <article class="blog-post">
-              <header class="post-header">
-                <div class="post-meta-header">
-                  <span class="post-category-badge">${post.category}</span>
-                  <span class="post-read-time">${post.readTime}</span>
-                </div>
-                <h1 class="post-title">${post.title}</h1>
-                <div class="post-author-date">
-                  <span class="post-author">By ${post.author}</span>
-                  <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                </div>
-              </header>
-              
-              <div class="post-content">
+            <div class="article-body">
+              <div class="article-content">
                 ${post.content}
               </div>
               
-              <footer class="post-footer">
-                <div class="post-tags">
-                  <span class="tag-label">Tags:</span>
-                  <span class="tag">${post.category}</span>
-                  <span class="tag">Salesforce</span>
-                  <span class="tag">Best Practices</span>
-                </div>
-                <div class="post-cta">
-                  <p><strong>Need help with your Salesforce org?</strong></p>
-                  <a href="/contact" class="cta-button">
-                    ${getCommonIcon('calendar', 20, 'currentColor')}
-                    Schedule a Free Consultation
+              <aside class="article-sidebar">
+                <div class="sidebar-card">
+                  <h4 class="sidebar-title">Need Expert Help?</h4>
+                  <p class="sidebar-text">Our certified Salesforce experts can help you implement these best practices.</p>
+                  <a href="/contact" class="sidebar-cta">
+                    Get in Touch
+                    ${getCommonIcon('arrow-right', 16, 'currentColor')}
                   </a>
                 </div>
-              </footer>
-            </article>
-
-            ${relatedPosts.length > 0 ? `
-            <section class="related-posts">
-              <h2 class="section-title">Related Posts</h2>
-              <div class="related-posts-grid">
-                ${relatedPosts.map(relatedPost => `
-                  <article class="related-post-card">
-                    <span class="post-category">${relatedPost.category}</span>
-                    <h3 class="post-title"><a href="/blog/${relatedPost.id}">${relatedPost.title}</a></h3>
-                    <p class="post-excerpt">${relatedPost.excerpt}</p>
-                    <a href="/blog/${relatedPost.id}" class="read-more-link">
-                      Read More
-                      ${getCommonIcon('arrow-right', 16, 'currentColor')}
+                
+                ${relatedPosts.length > 0 ? `
+                <div class="sidebar-card sidebar-related">
+                  <h4 class="sidebar-title">Related Articles</h4>
+                  ${relatedPosts.map(relatedPost => `
+                    <a href="/blog/${relatedPost.id}" class="related-link">
+                      <span class="related-category">${relatedPost.category}</span>
+                      <span class="related-title">${relatedPost.title}</span>
                     </a>
-                  </article>
-                `).join('')}
-              </div>
-            </section>
-            ` : ''}
-          </div>
+                  `).join('')}
+                </div>
+                ` : ''}
+              </aside>
+            </div>
+          </article>
         </main>
 
         ${getFooterHTML(getCommonIcon)}
@@ -2937,138 +2762,149 @@ function addBlogPageStyles() {
   style.id = 'blog-page-styles';
   style.textContent = `
     .blog-page {
-      padding: 4rem 2rem;
-      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+      padding: 0;
+      background: var(--white);
       min-height: calc(100vh - 200px);
     }
 
+    .blog-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
     .blog-header {
-      text-align: center;
       margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .blog-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--bright-blue);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.75rem;
     }
 
     .blog-page-title {
-      font-size: 3rem;
-      font-weight: 700;
+      font-size: 3.5rem;
+      font-weight: 800;
       color: var(--dark-blue);
       margin-bottom: 1rem;
+      letter-spacing: -0.02em;
     }
 
     .blog-page-subtitle {
       font-size: 1.25rem;
       color: var(--text-light);
-      max-width: 700px;
-      margin: 0 auto;
+      max-width: 600px;
+      line-height: 1.6;
     }
 
-    .featured-posts {
+    /* Featured Section */
+    .featured-section {
       margin-bottom: 4rem;
     }
 
-    .featured-posts-grid {
+    .featured-article {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .featured-post-card {
-      background: var(--white);
+      grid-template-columns: 1fr 380px;
+      background: linear-gradient(135deg, var(--dark-blue) 0%, #1E3A8A 100%);
       border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-decoration: none;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .featured-post-card:hover {
+    .featured-article:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3);
     }
 
-    .blog-posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .blog-post-card {
-      background: var(--white);
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px solid #E5E7EB;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .featured-content {
       display: flex;
       flex-direction: column;
-    }
-
-    .blog-post-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .blog-post-card .post-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .post-category-badge {
-      display: inline-block;
-      background: var(--bright-blue);
+      padding: 2.5rem;
       color: var(--white);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 1rem;
     }
 
-    .post-category {
-      color: var(--bright-blue);
-      font-size: 0.875rem;
-      font-weight: 600;
+    .featured-content .category-tag {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      margin-bottom: 1.25rem;
     }
 
-    .post-read-time {
-      color: var(--text-light);
-      font-size: 0.875rem;
-    }
-
-    .blog-post-card .post-title {
-      font-size: 1.5rem;
+    .featured-title {
+      font-size: 1.75rem;
       font-weight: 700;
-      color: var(--dark-blue);
-      margin-bottom: 1rem;
+      color: var(--white);
       line-height: 1.3;
-    }
-
-    .post-title a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .post-title a:hover {
-      color: var(--bright-blue);
-    }
-
-    .post-excerpt {
-      color: var(--text-light);
-      line-height: 1.6;
       margin-bottom: 1rem;
+    }
+
+    .featured-excerpt {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
       flex: 1;
     }
 
-    .post-meta {
+    .featured-footer {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      font-size: 0.875rem;
+      align-items: center;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .featured-footer .post-date,
+    .featured-footer .read-time {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+    }
+
+    .featured-image-area {
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .featured-placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .category-tag {
+      display: inline-block;
+      background: var(--bright-blue);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .category-tag--small {
+      font-size: 0.65rem;
+      padding: 0.25rem 0.5rem;
+      background: #EFF6FF;
+      color: var(--dark-blue);
+    }
+
+    .meta-divider {
       color: var(--text-light);
+      opacity: 0.5;
+    }
+
+    .read-time {
+      color: var(--text-light);
+      font-size: 0.85rem;
     }
 
     .post-date {
@@ -3076,45 +2912,145 @@ function addBlogPageStyles() {
       font-size: 0.875rem;
     }
 
-    .blog-post-card .post-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: auto;
-      padding-top: 1rem;
-      border-top: 1px solid #E5E7EB;
-    }
-
-    .read-more-link {
+    .read-article-link {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       color: var(--bright-blue);
       font-weight: 600;
       text-decoration: none;
-      font-size: 0.875rem;
-      transition: gap 0.2s;
+      font-size: 0.95rem;
+      transition: gap 0.2s ease;
     }
 
-    .read-more-link:hover {
+    .read-article-link:hover {
       gap: 0.75rem;
     }
 
-    .all-posts-section {
-      margin-top: 4rem;
+    /* Articles Section */
+    .articles-section {
+      margin-top: 3rem;
+    }
+
+    .articles-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .articles-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+    }
+
+    .articles-count {
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .article-card {
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .article-card:hover {
+      border-color: var(--bright-blue);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    }
+
+    .article-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .article-card-date {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .article-card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+
+    .article-card-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .article-card-title a:hover {
+      color: var(--bright-blue);
+    }
+
+    .article-card-excerpt {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .article-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    @media (max-width: 900px) {
+      .featured-article {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-image-area {
+        display: none;
+      }
     }
 
     @media (max-width: 768px) {
-      .blog-page {
-        padding: 2rem 1rem;
+      .blog-container {
+        padding: 2rem 1.25rem 4rem;
       }
 
       .blog-page-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
       }
 
-      .featured-posts-grid,
-      .blog-posts-grid {
+      .featured-content {
+        padding: 1.75rem;
+      }
+
+      .featured-title {
+        font-size: 1.4rem;
+      }
+
+      .articles-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -3129,185 +3065,314 @@ function addBlogPostPageStyles() {
   style.id = 'blog-post-page-styles';
   style.textContent = `
     .blog-post-page {
-      padding: 4rem 2rem;
-      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+      padding: 0;
+      background: var(--white);
       min-height: calc(100vh - 200px);
     }
 
-    .blog-post {
+    .blog-article {
+      max-width: 100%;
+    }
+
+    /* Article Navigation */
+    .article-nav {
+      padding: 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--bright-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: gap 0.2s ease;
+    }
+
+    .back-btn:hover {
+      gap: 0.5rem;
+    }
+
+    .back-btn svg {
+      transition: transform 0.2s ease;
+    }
+
+    .back-btn:hover svg {
+      transform: translateX(-2px);
+    }
+
+    /* Article Header */
+    .article-header {
+      background: linear-gradient(135deg, var(--dark-blue) 0%, #1E3A8A 100%);
+      padding: 4rem 2rem;
+      color: var(--white);
+    }
+
+    .article-header-inner {
       max-width: 800px;
       margin: 0 auto;
-      background: var(--white);
-      border-radius: 16px;
-      padding: 3rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .blog-post .post-header {
+    .category-tag--large {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      font-size: 0.75rem;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-main-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .article-lead {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
       margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 2px solid #E5E7EB;
     }
 
-    .post-meta-header {
+    .article-meta-bar {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    .post-author-date {
-      display: flex;
-      gap: 1rem;
-      color: var(--text-light);
-      font-size: 0.875rem;
-      margin-top: 1rem;
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.75);
     }
 
-    .blog-post .post-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--dark-blue);
-      line-height: 1.2;
-      margin-bottom: 1rem;
+    .meta-item svg {
+      opacity: 0.7;
     }
 
-    .post-content {
-      font-size: 1.125rem;
-      line-height: 1.8;
+    /* Article Body */
+    .article-body {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .article-content {
+      font-size: 1.1rem;
+      line-height: 1.85;
       color: var(--text-dark);
     }
 
-    .post-content h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--dark-blue);
-      margin-top: 2rem;
-      margin-bottom: 1rem;
+    .article-content p {
+      margin-bottom: 1.5rem;
     }
 
-    .post-content h3 {
-      font-size: 1.5rem;
+    .article-content h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .article-content h3 {
+      font-size: 1.3rem;
       font-weight: 600;
       color: var(--dark-blue);
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       margin-bottom: 0.75rem;
     }
 
-    .post-content ul,
-    .post-content ol {
-      margin: 1rem 0;
-      padding-left: 2rem;
+    .article-content ul,
+    .article-content ol {
+      margin: 1.25rem 0;
+      padding-left: 1.5rem;
     }
 
-    .post-content li {
-      margin-bottom: 0.5rem;
-      line-height: 1.6;
+    .article-content li {
+      margin-bottom: 0.6rem;
+      line-height: 1.7;
     }
 
-    .post-content a {
+    .article-content a {
       color: var(--bright-blue);
-      text-decoration: underline;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      transition: border-color 0.2s;
     }
 
-    .post-content a:hover {
-      color: var(--primary-blue);
+    .article-content a:hover {
+      border-color: transparent;
     }
 
-    .post-content strong {
+    .article-content strong {
       font-weight: 600;
       color: var(--dark-blue);
     }
 
-    .blog-post .post-footer {
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 2px solid #E5E7EB;
+    /* Sidebar */
+    .article-sidebar {
+      position: sticky;
+      top: 2rem;
+      height: fit-content;
     }
 
-    .post-tags {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-
-    .tag-label {
-      font-weight: 600;
-      color: var(--text-dark);
-    }
-
-    .tag {
-      background: #EFF6FF;
-      color: var(--bright-blue);
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px;
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-
-    .post-cta {
-      background: #EFF6FF;
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .post-cta p {
-      margin-bottom: 1rem;
-      font-size: 1.125rem;
-      color: var(--text-dark);
-    }
-
-    .related-posts {
-      max-width: 1200px;
-      margin: 4rem auto 0;
-    }
-
-    .related-posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .related-post-card {
-      background: var(--white);
+    .sidebar-card {
+      background: #FAFBFC;
+      border: 1px solid #E5E7EB;
       border-radius: 12px;
       padding: 1.5rem;
-      border: 1px solid #E5E7EB;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 1.5rem;
     }
 
-    .related-post-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .sidebar-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 0.75rem;
     }
 
-    .related-post-card .post-title {
-      font-size: 1.25rem;
+    .sidebar-text {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .sidebar-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bright-blue);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .sidebar-cta:hover {
+      gap: 0.75rem;
+    }
+
+    .sidebar-related {
+      background: var(--white);
+    }
+
+    .related-link {
+      display: block;
+      padding: 1rem 0;
+      border-bottom: 1px solid #E5E7EB;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .related-link:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .related-link:first-of-type {
+      padding-top: 0.5rem;
+    }
+
+    .related-link:hover {
+      transform: translateX(4px);
+    }
+
+    .related-category {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--bright-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .related-title {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 1024px) {
+      .article-body {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .article-sidebar {
+        position: relative;
+        top: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .sidebar-card {
+        margin-bottom: 0;
+      }
     }
 
     @media (max-width: 768px) {
-      .blog-post-page {
-        padding: 2rem 1rem;
+      .article-nav {
+        padding: 0.75rem 1.25rem;
       }
 
-      .blog-post {
-        padding: 2rem 1.5rem;
+      .back-btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.75rem;
       }
 
-      .blog-post .post-title {
-        font-size: 2rem;
+      .article-header {
+        padding: 2.5rem 1.25rem;
       }
 
-      .post-content {
+      .article-main-title {
+        font-size: 1.85rem;
+      }
+
+      .article-lead {
+        font-size: 1.05rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .article-meta-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .article-body {
+        padding: 2rem 1.25rem;
+      }
+
+      .article-content {
         font-size: 1rem;
       }
 
-      .related-posts-grid {
+      .article-content h2 {
+        font-size: 1.4rem;
+      }
+
+      .article-sidebar {
         grid-template-columns: 1fr;
       }
     }
