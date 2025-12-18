@@ -1,5 +1,4 @@
 // Lucide icon helper functions
-import { createElement } from 'lucide';
 import { 
   Code2, 
   Plug, 
@@ -40,13 +39,32 @@ import {
 export function createIconSVG(iconData, size = 32, color = 'currentColor', strokeWidth = 2) {
   if (!iconData) return '';
   
-  const svg = createElement(iconData);
-  svg.setAttribute('width', size);
-  svg.setAttribute('height', size);
-  svg.setAttribute('stroke', color);
-  svg.setAttribute('stroke-width', strokeWidth);
-  
-  return svg.outerHTML;
+  // Lucide icons are arrays of path elements: [['path', {d: '...'}], ['path', {d: '...'}]]
+  try {
+    if (!Array.isArray(iconData)) {
+      return '';
+    }
+    
+    // Build SVG string
+    let svg = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">`;
+    
+    // Process each path element
+    iconData.forEach(element => {
+      if (Array.isArray(element) && element.length >= 2) {
+        const [tag, attrs = {}] = element;
+        const attrsString = Object.entries(attrs)
+          .map(([key, value]) => `${key}="${value}"`)
+          .join(' ');
+        svg += `<${tag} ${attrsString}></${tag}>`;
+      }
+    });
+    
+    svg += '</svg>';
+    return svg;
+  } catch (e) {
+    console.error('Error creating icon SVG:', e);
+    return '';
+  }
 }
 
 // Service icons mapping - using more relevant icons

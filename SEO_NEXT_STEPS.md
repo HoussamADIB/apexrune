@@ -138,3 +138,5 @@
 4. **Optimize images** (Easy, good impact)
 5. **Set up Google Search Console** (Free, valuable data)
 
+
+
