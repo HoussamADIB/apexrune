@@ -499,10 +499,9 @@ function addServiceDetailStyles() {
   style.textContent = `
     .service-detail-page {
       padding: 2rem 2rem 4rem;
+      padding-top: 100px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-      margin-top: -90px;
-      padding-top: calc(2rem + 90px);
     }
 
     .back-link {
@@ -724,6 +723,7 @@ function addServiceDetailStyles() {
     @media (max-width: 768px) {
       .service-detail-page {
         padding: 1.5rem 1rem 3rem;
+        padding-top: 70px;
       }
 
       .service-hero {
@@ -1866,6 +1866,8 @@ function addCaseStudyDetailPageStyles() {
     @media (max-width: 768px) {
       .case-study-detail-page {
         padding: 1.5rem 1rem 3rem;
+        margin-top: -60px;
+        padding-top: calc(1.5rem + 60px);
       }
 
       .case-study-detail-page .back-link {
@@ -1917,10 +1919,9 @@ function addCaseStudiesPageStyles() {
   style.textContent = `
     .case-studies-page {
       padding: 0;
+      padding-top: 100px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(to bottom, #F0F9FF, var(--white) 250px);
-      margin-top: -90px;
-      padding-top: 90px;
     }
 
     .case-studies-container {
@@ -2077,6 +2078,7 @@ function addCaseStudiesPageStyles() {
     @media (max-width: 768px) {
       .case-studies-page {
         padding: 0;
+        padding-top: 70px;
       }
 
       .case-studies-container {
@@ -2126,8 +2128,7 @@ function addContactPageStyles() {
     .contact-page {
       min-height: calc(100vh - 100px);
       background: linear-gradient(135deg, #EEF4FF 0%, #E0EBFF 100%);
-      margin-top: -90px;
-      padding-top: 90px;
+      padding-top: 100px;
     }
 
     .contact-page-container {
@@ -2340,6 +2341,10 @@ function addContactPageStyles() {
     }
 
     @media (max-width: 768px) {
+      .contact-page {
+        padding-top: 70px;
+      }
+
       .contact-page-container {
         padding: 1.5rem 1rem;
       }
@@ -2576,6 +2581,8 @@ function addLegalPageStyles() {
     @media (max-width: 768px) {
       .legal-page {
         padding: 1.5rem 1rem 3rem;
+        margin-top: -60px;
+        padding-top: calc(1.5rem + 60px);
       }
 
       .legal-title {
@@ -3044,6 +3051,11 @@ function addBlogPageStyles() {
     }
 
     @media (max-width: 768px) {
+      .blog-page {
+        margin-top: -60px;
+        padding-top: 60px;
+      }
+
       .blog-container {
         padding: 2rem 1.25rem 4rem;
       }
@@ -3076,8 +3088,17 @@ function addBlogPostPageStyles() {
   style.textContent = `
     .blog-post-page {
       padding: 0;
-      background: var(--white);
+      background: linear-gradient(to bottom, #F8FAFC, var(--white) 150px);
       min-height: calc(100vh - 200px);
+      margin-top: -90px;
+      padding-top: 90px;
+    }
+    
+    @media (max-width: 768px) {
+      .blog-post-page {
+        margin-top: -60px;
+        padding-top: 60px;
+      }
     }
 
     .blog-article {

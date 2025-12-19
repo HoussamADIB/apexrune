@@ -104,7 +104,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--white);
+  background: #EEF4FF;
   color: var(--text-dark);
   min-height: 100vh;
   overflow-x: hidden;
@@ -154,12 +154,19 @@ img, svg, video, iframe {
   width: 100%;
   box-sizing: border-box;
   overflow: visible;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
 }
 
 /* Ensure header blends with the content below on all pages */
 main {
+  position: relative;
+}
+
+#app {
   position: relative;
 }
 
@@ -520,8 +527,7 @@ main {
 /* Hero Section */
 .hero-section {
   padding: 4rem 2rem;
-  margin-top: -90px;
-  padding-top: calc(4rem + 90px);
+  padding-top: 140px;
   position: relative;
   background: 
     radial-gradient(circle, rgba(30, 64, 175, 0.12) 1px, transparent 1px),
@@ -2087,6 +2093,7 @@ main {
 
   .hero-section {
     padding: 1.5rem 1.25rem 2rem;
+    padding-top: 90px;
   }
 
   .content-wrapper {
