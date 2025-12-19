@@ -328,6 +328,15 @@ function loadServicePage(serviceKey) {
       return;
     }
 
+    // Get features - either detailed or simple
+    const features = service.featuresDetailed || service.features?.map(f => ({ title: f, description: '' })) || [];
+    
+    // Format overview text with proper paragraphs
+    const formatOverview = (text) => {
+      if (!text) return '';
+      return text.split('\n\n').map(p => `<p class="service-section-text">${p.trim()}</p>`).join('');
+    };
+
     const app = document.querySelector('#app');
     app.innerHTML = `
       ${getHeaderHTML(getCommonIcon)}
@@ -336,11 +345,23 @@ function loadServicePage(serviceKey) {
         <div class="container">
           <!-- Hero Section -->
           <div class="service-hero">
+            <div class="service-hero-content">
             <div class="service-hero-icon">
-              ${getServiceIcon(serviceKey, 64, 'white')}
+                ${getServiceIcon(serviceKey, 56, 'white')}
             </div>
+              <div class="service-hero-text">
+                ${service.subtitle ? `<p class="service-hero-subtitle">${service.subtitle}</p>` : ''}
             <h1 class="service-hero-title">${service.title}</h1>
             <p class="service-hero-description">${service.description}</p>
+                ${service.engagementTag ? `<span class="service-hero-tag">${service.engagementTag}</span>` : ''}
+              </div>
+            </div>
+            <div class="service-hero-cta">
+              <a href="/contact?service=${serviceKey}" class="service-hero-button">
+                Get Started
+                ${getCommonIcon('arrow-right', 18, 'currentColor')}
+              </a>
+            </div>
           </div>
 
           <!-- Main Content Layout -->
@@ -348,36 +369,128 @@ function loadServicePage(serviceKey) {
             <!-- Left Column -->
             <div class="service-detail-main">
               <!-- Overview Section -->
-              <section class="service-section">
-                <h2 class="service-section-title">Overview</h2>
-                <p class="service-section-text">${service.overview || service.description}</p>
+              <section class="service-section overview-section">
+                <h2 class="service-section-title">
+                  ${getCommonIcon('info', 24, 'var(--bright-blue)')}
+                  Overview
+                </h2>
+                <div class="service-overview-content">
+                  ${formatOverview(service.overview || service.description)}
+                </div>
               </section>
 
-              <!-- What It Includes Section -->
-              <section class="service-section">
-                <h2 class="service-section-title">What It Includes</h2>
-                <div class="service-features-grid">
-                  ${service.features.map(feature => `
-                    <div class="service-feature-card">
-                      ${getCommonIcon('check', 24, '#10B981')}
-                      <span>${feature}</span>
+              <!-- What's Included Section -->
+              <section class="service-section features-section">
+                <h2 class="service-section-title">
+                  ${getCommonIcon('check-circle', 24, 'var(--bright-blue)')}
+                  What's Included
+                </h2>
+                <div class="service-features-detailed">
+                  ${features.map(feature => `
+                    <div class="service-feature-detailed">
+                      <div class="feature-header">
+                        ${getCommonIcon('check', 20, '#10B981')}
+                        <h3 class="feature-title">${feature.title}</h3>
+                      </div>
+                      ${feature.description ? `<p class="feature-description">${feature.description}</p>` : ''}
                     </div>
                   `).join('')}
                 </div>
               </section>
 
-              <!-- The Results Section -->
+              <!-- Our Process Section -->
+              ${service.process ? `
+              <section class="service-section process-section">
+                <h2 class="service-section-title">
+                  ${getCommonIcon('git-branch', 24, 'var(--bright-blue)')}
+                  Our Process
+                </h2>
+                <div class="service-process-timeline">
+                  ${service.process.map((step, index) => `
+                    <div class="process-step">
+                      <div class="process-step-number">${step.step || index + 1}</div>
+                      <div class="process-step-content">
+                        <h3 class="process-step-title">${step.title}</h3>
+                        <p class="process-step-description">${step.description}</p>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </section>
+              ` : ''}
+
+              <!-- When You Need This Section -->
+              ${service.useCases ? `
+              <section class="service-section use-cases-section">
+                <h2 class="service-section-title">
+                  ${getCommonIcon('target', 24, 'var(--bright-blue)')}
+                  When You Need This
+                </h2>
+                <ul class="service-use-cases">
+                  ${service.useCases.map(useCase => `
+                    <li class="use-case-item">
+                      ${getCommonIcon('chevron-right', 18, '#10B981')}
+                      <span>${useCase}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </section>
+              ` : ''}
+
+              <!-- Technologies Section -->
+              ${service.technologies ? `
+              <section class="service-section tech-section">
+                <h2 class="service-section-title">
+                  ${getCommonIcon('code', 24, 'var(--bright-blue)')}
+                  Technologies & Tools
+                </h2>
+                <div class="service-tech-grid">
+                  ${service.technologies.map(tech => `
+                    <span class="tech-badge">${tech}</span>
+                  `).join('')}
+                </div>
+              </section>
+              ` : ''}
+
+              <!-- Results Section -->
               ${service.results ? `
-              <section class="service-section">
-                <h2 class="service-section-title">The Results</h2>
+              <section class="service-section results-section">
+                <h2 class="service-section-title">
+                  ${getCommonIcon('trending-up', 24, 'var(--bright-blue)')}
+                  The Results
+                </h2>
                 <div class="service-results-grid">
                   ${service.results.map(result => `
                     <div class="service-result-card">
-                      <div class="result-icon-wrapper">
-                        ${getResultIcon(result.icon, 48, result.color)}
+                      <div class="result-icon-wrapper" style="background: ${result.color}15;">
+                        ${getResultIcon(result.icon, 32, result.color)}
                       </div>
+                      <div class="result-content">
                       <h3 class="result-title">${result.title}</h3>
+                        ${result.description ? `<p class="result-description">${result.description}</p>` : ''}
+                      </div>
                     </div>
+                  `).join('')}
+                </div>
+              </section>
+              ` : ''}
+
+              <!-- FAQs Section -->
+              ${service.faqs ? `
+              <section class="service-section faq-section">
+                <h2 class="service-section-title">
+                  ${getCommonIcon('help-circle', 24, 'var(--bright-blue)')}
+                  Frequently Asked Questions
+                </h2>
+                <div class="service-faqs">
+                  ${service.faqs.map((faq, index) => `
+                    <details class="faq-item" ${index === 0 ? 'open' : ''}>
+                      <summary class="faq-question">
+                        <span>${faq.question}</span>
+                        ${getCommonIcon('chevron-down', 20, 'currentColor')}
+                      </summary>
+                      <p class="faq-answer">${faq.answer}</p>
+                    </details>
                   `).join('')}
                 </div>
               </section>
@@ -386,12 +499,59 @@ function loadServicePage(serviceKey) {
 
             <!-- Right Sidebar -->
             <aside class="service-sidebar">
-              <div class="service-sidebar-card">
+              <div class="service-sidebar-card cta-card">
                 <h2 class="sidebar-title">${service.ctaTitle || 'Ready to Start?'}</h2>
                 <p class="sidebar-description">${service.ctaDescription || 'Let\'s discuss how we can help transform your Salesforce platform.'}</p>
                 <a href="/contact?service=${serviceKey}" class="sidebar-cta-button">
-                  Get Started
-                  ${getCommonIcon('rocket', 18, 'currentColor')}
+                  Schedule a Call
+                  ${getCommonIcon('calendar', 18, 'currentColor')}
+                </a>
+              </div>
+
+              ${service.deliverables ? `
+              <div class="service-sidebar-card deliverables-card">
+                <h3 class="sidebar-subtitle">
+                  ${getCommonIcon('file-text', 20, 'var(--bright-blue)')}
+                  What You'll Receive
+                </h3>
+                <ul class="deliverables-list">
+                  ${service.deliverables.map(item => `
+                    <li>
+                      ${getCommonIcon('check', 16, '#10B981')}
+                      <span>${item}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+              ` : ''}
+
+              ${service.packages ? `
+              <div class="service-sidebar-card packages-card">
+                <h3 class="sidebar-subtitle">
+                  ${getCommonIcon('package', 20, 'var(--bright-blue)')}
+                  Available Packages
+                </h3>
+                <div class="packages-list">
+                  ${service.packages.map(pkg => `
+                    <div class="package-item">
+                      <h4 class="package-name">${pkg.name}</h4>
+                      <p class="package-description">${pkg.description}</p>
+                    </div>
+                  `).join('')}
+                </div>
+                <a href="/contact?service=${serviceKey}" class="sidebar-link">
+                  Compare packages
+                  ${getCommonIcon('arrow-right', 16, 'currentColor')}
+                </a>
+              </div>
+              ` : ''}
+
+              <div class="service-sidebar-card contact-card">
+                <h3 class="sidebar-subtitle">Have Questions?</h3>
+                <p class="sidebar-text">Talk directly to our experts. No sales reps, no middlemen.</p>
+                <a href="mailto:contact@apexrune.com" class="sidebar-email-link">
+                  ${getCommonIcon('mail', 18, 'currentColor')}
+                  contact@apexrune.com
                 </a>
               </div>
             </aside>
@@ -416,6 +576,7 @@ function loadServicePage(serviceKey) {
     });
     
     initMobileMenu();
+    initDropdownMenus();
   });
 }
 
@@ -499,56 +660,127 @@ function addServiceDetailStyles() {
   style.textContent = `
     .service-detail-page {
       padding: 2rem 2rem 4rem;
-      padding-top: 100px;
+      padding-top: 120px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
     }
 
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--bright-blue);
-      text-decoration: none;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      transition: opacity 0.2s;
-    }
-
-    .back-link:hover {
-      opacity: 0.8;
+    @media (max-width: 768px) {
+      .service-detail-page {
+        padding: 1.5rem 1rem 3rem;
+        padding-top: 100px;
+      }
     }
 
     /* Hero Section */
     .service-hero {
-      background: var(--dark-blue);
-      border-radius: 16px;
+      background: linear-gradient(135deg, var(--dark-blue) 0%, #1e3a5f 100%);
+      border-radius: 20px;
       padding: 3rem;
       margin-bottom: 3rem;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      background: radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .service-hero-content {
+      display: flex;
       gap: 1.5rem;
+      align-items: flex-start;
+      flex: 1;
+      position: relative;
+      z-index: 1;
     }
 
     .service-hero-icon {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .service-hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .service-hero-subtitle {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0;
     }
 
     .service-hero-title {
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
       color: var(--white);
       margin: 0;
+      line-height: 1.2;
     }
 
     .service-hero-description {
       font-size: 1.125rem;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.85);
       line-height: 1.6;
       margin: 0;
+      max-width: 600px;
+    }
+
+    .service-hero-tag {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      width: fit-content;
+      margin-top: 0.5rem;
+    }
+
+    .service-hero-cta {
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-hero-button {
+      background: white;
+      color: var(--dark-blue);
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .service-hero-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     /* Main Layout */
@@ -567,84 +799,224 @@ function addServiceDetailStyles() {
 
     /* Sections */
     .service-section {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     .service-section-title {
-      font-size: 1.5rem;
+      font-size: 1.375rem;
       font-weight: 700;
       color: var(--text-dark);
       margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .service-section-title svg {
+      flex-shrink: 0;
     }
 
     .service-section-text {
       font-size: 1rem;
       color: var(--text-light);
-      line-height: 1.7;
+      line-height: 1.8;
       margin: 0;
     }
 
-    /* Features Grid */
-    .service-features-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    .service-overview-content {
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
     }
 
-    .service-feature-card {
-      background: #F3F4F6;
+    /* Detailed Features */
+    .service-features-detailed {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .service-feature-detailed {
+      background: #F8FAFC;
       border-radius: 12px;
       padding: 1.25rem;
+      border-left: 3px solid var(--bright-blue);
+    }
+
+    .feature-header {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      transition: background 0.2s;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
-    .service-feature-card:hover {
-      background: #E5E7EB;
-    }
-
-    .service-feature-card svg {
+    .feature-header svg {
       flex-shrink: 0;
     }
 
-    .service-feature-card span {
-      font-size: 0.9375rem;
+    .feature-title {
+      font-size: 1rem;
+      font-weight: 600;
       color: var(--text-dark);
+      margin: 0;
+    }
+
+    .feature-description {
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+      padding-left: 2rem;
+    }
+
+    /* Process Timeline */
+    .service-process-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .process-step {
+      display: flex;
+      gap: 1.25rem;
+      position: relative;
+      padding-bottom: 1.5rem;
+    }
+
+    .process-step:last-child {
+      padding-bottom: 0;
+    }
+
+    .process-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      top: 40px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--bright-blue), #E5E7EB);
+    }
+
+    .process-step-number {
+      width: 38px;
+      height: 38px;
+      background: var(--bright-blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-step-content {
+      flex: 1;
+      padding-top: 0.25rem;
+    }
+
+    .process-step-title {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0 0 0.375rem 0;
+    }
+
+    .process-step-description {
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Use Cases */
+    .service-use-cases {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .use-case-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 1rem;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    .use-case-item svg {
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    /* Tech Grid */
+    .service-tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .tech-badge {
+      background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+      color: var(--dark-blue);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
       font-weight: 500;
+      border: 1px solid rgba(59, 130, 246, 0.2);
     }
 
     /* Results Grid */
     .service-results-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .service-result-card {
-      background: var(--white);
-      border: 1px solid #E5E7EB;
+      background: #F8FAFC;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.25rem;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: row;
+      align-items: flex-start;
       gap: 1rem;
-      text-align: center;
-      transition: box-shadow 0.2s;
+      transition: all 0.2s;
     }
 
     .service-result-card:hover {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: #F1F5F9;
+      transform: translateY(-2px);
     }
 
     .result-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .result-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
 
     .result-title {
@@ -654,46 +1026,136 @@ function addServiceDetailStyles() {
       margin: 0;
     }
 
+    .result-description {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* FAQs */
+    .service-faqs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .faq-item {
+      background: #F8FAFC;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #E5E7EB;
+    }
+
+    .faq-question {
+      padding: 1.25rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .faq-question::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-question span {
+      flex: 1;
+    }
+
+    .faq-question svg {
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] .faq-question svg {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0 1.25rem 1.25rem;
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin: 0;
+    }
+
     /* Sidebar */
     .service-sidebar {
       position: sticky;
-      top: 2rem;
-    }
-
-    .service-sidebar-card {
-      background: #F3F4F6;
-      border-radius: 16px;
-      padding: 2rem;
+      top: 120px;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
+    .service-sidebar-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .service-sidebar-card.cta-card {
+      background: linear-gradient(135deg, #1E3A5F 0%, var(--dark-blue) 100%);
+    }
+
+    .cta-card .sidebar-title {
+      color: white;
+    }
+
+    .cta-card .sidebar-description {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
     .sidebar-title {
-      font-size: 1.5rem;
+      font-size: 1.375rem;
       font-weight: 700;
       color: var(--text-dark);
       margin: 0;
     }
 
-    .sidebar-description {
+    .sidebar-subtitle {
       font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-description {
+      font-size: 0.9375rem;
       color: var(--text-light);
       line-height: 1.6;
       margin: 0;
     }
 
+    .sidebar-text {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      margin: 0;
+    }
+
     .sidebar-cta-button {
-      background: var(--bright-blue);
-      color: var(--white);
+      background: white;
+      color: var(--dark-blue);
       border: none;
       padding: 1rem 1.5rem;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 0.5rem;
+      transition: all 0.2s;
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -702,7 +1164,96 @@ function addServiceDetailStyles() {
     }
 
     .sidebar-cta-button:hover {
-      background: var(--primary-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Deliverables */
+    .deliverables-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .deliverables-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      font-size: 0.875rem;
+      color: var(--text-dark);
+      line-height: 1.4;
+    }
+
+    .deliverables-list li svg {
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+    }
+
+    /* Packages */
+    .packages-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .package-item {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .package-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .package-name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0 0 0.25rem 0;
+    }
+
+    .package-description {
+      font-size: 0.8125rem;
+      color: var(--text-light);
+      margin: 0;
+    }
+
+    .sidebar-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--bright-blue);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: gap 0.2s;
+    }
+
+    .sidebar-link:hover {
+      gap: 0.625rem;
+    }
+
+    /* Contact Card */
+    .contact-card {
+      background: #F8FAFC;
+    }
+
+    .sidebar-email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bright-blue);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 500;
+    }
+
+    .sidebar-email-link:hover {
+      text-decoration: underline;
     }
 
     /* Responsive */
@@ -713,33 +1264,70 @@ function addServiceDetailStyles() {
 
       .service-sidebar {
         position: static;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .service-sidebar-card.cta-card {
+        grid-column: 1 / -1;
       }
 
       .service-results-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      .service-hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .service-hero-cta {
+        width: 100%;
+      }
+
+      .service-hero-button {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     @media (max-width: 768px) {
-      .service-detail-page {
-        padding: 1.5rem 1rem 3rem;
-        padding-top: 70px;
+      .service-hero {
+        padding: 1.75rem;
       }
 
-      .service-hero {
-        padding: 2rem;
+      .service-hero-content {
+        flex-direction: column;
+        gap: 1rem;
       }
 
       .service-hero-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
       }
 
-      .service-features-grid {
-        grid-template-columns: 1fr;
+      .service-hero-description {
+        font-size: 1rem;
+      }
+
+      .service-section {
+        padding: 1.5rem;
+      }
+
+      .service-section-title {
+        font-size: 1.25rem;
       }
 
       .service-results-grid {
         grid-template-columns: 1fr;
+      }
+
+      .service-sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-description {
+        padding-left: 0;
       }
     }
   `;
@@ -867,6 +1455,10 @@ function loadPrivacyPolicyPage() {
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+    
+    // Initialize mobile menu and dropdowns
+    initMobileMenu();
+    initDropdownMenus();
   });
 }
 
@@ -990,6 +1582,10 @@ function loadTermsOfServicePage() {
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+    
+    // Initialize mobile menu and dropdowns
+    initMobileMenu();
+    initDropdownMenus();
   });
 }
 
@@ -1047,6 +1643,10 @@ function loadContactPage() {
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+    
+    // Initialize mobile menu and dropdowns
+    initMobileMenu();
+    initDropdownMenus();
   });
 }
 
@@ -1250,6 +1850,10 @@ function loadCaseStudiesPage() {
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+    
+    // Initialize mobile menu and dropdowns
+    initMobileMenu();
+    initDropdownMenus();
   });
 }
 
@@ -1492,6 +2096,10 @@ function loadCaseStudyDetailPage(caseStudyId) {
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+    
+    // Initialize mobile menu and dropdowns
+    initMobileMenu();
+    initDropdownMenus();
   });
 }
 
@@ -1503,8 +2111,17 @@ function addCaseStudyDetailPageStyles() {
   style.textContent = `
     .case-study-detail-page {
       padding: 2rem 2rem 4rem;
+      padding-top: 120px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+    }
+
+    @media (max-width: 768px) {
+      .case-study-detail-page {
+        padding-top: 100px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
     }
 
     .case-study-detail-page .container {
@@ -1919,9 +2536,15 @@ function addCaseStudiesPageStyles() {
   style.textContent = `
     .case-studies-page {
       padding: 0;
-      padding-top: 100px;
+      padding-top: 120px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(to bottom, #F0F9FF, var(--white) 250px);
+    }
+
+    @media (max-width: 768px) {
+      .case-studies-page {
+        padding-top: 100px;
+      }
     }
 
     .case-studies-container {
@@ -1937,13 +2560,7 @@ function addCaseStudiesPageStyles() {
     }
 
     .case-studies-label {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--bright-blue);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 0.75rem;
+      display: none;
     }
 
     .case-studies-title {
@@ -2128,7 +2745,7 @@ function addContactPageStyles() {
     .contact-page {
       min-height: calc(100vh - 100px);
       background: linear-gradient(135deg, #EEF4FF 0%, #E0EBFF 100%);
-      padding-top: 100px;
+      padding-top: 120px;
     }
 
     .contact-page-container {
@@ -2342,7 +2959,7 @@ function addContactPageStyles() {
 
     @media (max-width: 768px) {
       .contact-page {
-        padding-top: 70px;
+        padding-top: 100px;
       }
 
       .contact-page-container {
@@ -2491,10 +3108,9 @@ function addLegalPageStyles() {
   style.textContent = `
     .legal-page {
       padding: 2rem 2rem 4rem;
+      padding-top: 120px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(to bottom, #F8FAFC, var(--white) 150px);
-      margin-top: -90px;
-      padding-top: calc(2rem + 90px);
     }
 
     .back-link {
@@ -2581,8 +3197,7 @@ function addLegalPageStyles() {
     @media (max-width: 768px) {
       .legal-page {
         padding: 1.5rem 1rem 3rem;
-        margin-top: -60px;
-        padding-top: calc(1.5rem + 60px);
+        padding-top: 100px;
       }
 
       .legal-title {
@@ -2681,6 +3296,10 @@ function loadBlogPage() {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, behavior: 'instant' });
       });
+      
+      // Initialize mobile menu and dropdowns
+      initMobileMenu();
+      initDropdownMenus();
     });
   });
 }
@@ -2766,6 +3385,15 @@ function loadBlogPostPage(postId) {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, behavior: 'instant' });
       });
+      
+      // Initialize mobile menu and dropdowns
+      initMobileMenu();
+      initDropdownMenus();
+      
+      // Initialize Prism.js syntax highlighting
+      if (typeof Prism !== 'undefined') {
+        Prism.highlightAll();
+      }
     });
   });
 }
@@ -2778,10 +3406,9 @@ function addBlogPageStyles() {
   style.textContent = `
     .blog-page {
       padding: 0;
-      background: linear-gradient(to bottom, #F8FAFC, var(--white) 200px);
+      padding-top: 120px;
+      background: linear-gradient(to bottom, #F0F9FF, var(--white) 250px);
       min-height: calc(100vh - 200px);
-      margin-top: -90px;
-      padding-top: 90px;
     }
 
     .blog-container {
@@ -2797,13 +3424,7 @@ function addBlogPageStyles() {
     }
 
     .blog-label {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--bright-blue);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 0.75rem;
+      display: none;
     }
 
     .blog-page-title {
@@ -3052,8 +3673,7 @@ function addBlogPageStyles() {
 
     @media (max-width: 768px) {
       .blog-page {
-        margin-top: -60px;
-        padding-top: 60px;
+        padding-top: 100px;
       }
 
       .blog-container {
@@ -3088,16 +3708,14 @@ function addBlogPostPageStyles() {
   style.textContent = `
     .blog-post-page {
       padding: 0;
-      background: linear-gradient(to bottom, #F8FAFC, var(--white) 150px);
+      padding-top: 120px;
+      background: linear-gradient(to bottom, #F0F9FF, var(--white) 150px);
       min-height: calc(100vh - 200px);
-      margin-top: -90px;
-      padding-top: 90px;
     }
     
     @media (max-width: 768px) {
       .blog-post-page {
-        margin-top: -60px;
-        padding-top: 60px;
+        padding-top: 100px;
       }
     }
 
@@ -3256,6 +3874,187 @@ function addBlogPostPageStyles() {
       color: var(--dark-blue);
     }
 
+    /* Code Blocks - Prism.js Override */
+    .article-content pre[class*="language-"] {
+      background: #1a1b26 !important;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.75rem 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid #2d2f3d;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.2);
+      tab-size: 2;
+    }
+
+    .article-content pre[class*="language-"] code {
+      background: none !important;
+      padding: 0 !important;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+      white-space: pre;
+      word-wrap: normal;
+      display: block;
+      text-shadow: none !important;
+    }
+
+    /* Line numbers styling */
+    .article-content pre.line-numbers {
+      padding-left: 3.5rem;
+      position: relative;
+    }
+
+    .article-content .line-numbers-rows {
+      position: absolute;
+      left: 0;
+      top: 1.25rem;
+      width: 2.5rem;
+      padding: 0;
+      border-right: 1px solid #2d2f3d;
+      user-select: none;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      font-family: 'JetBrains Mono', monospace;
+      color: #4a4e69;
+    }
+
+    /* Inline code */
+    .article-content code:not([class*="language-"]) {
+      background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+      color: #3730A3;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.875em;
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      border: 1px solid #C7D2FE;
+      word-break: break-word;
+      font-weight: 500;
+    }
+
+    /* Prism token colors - Tokyo Night theme inspired */
+    .article-content .token.comment,
+    .article-content .token.prolog,
+    .article-content .token.doctype,
+    .article-content .token.cdata {
+      color: #565f89;
+      font-style: italic;
+    }
+
+    .article-content .token.punctuation {
+      color: #9aa5ce;
+    }
+
+    .article-content .token.property,
+    .article-content .token.tag,
+    .article-content .token.boolean,
+    .article-content .token.number,
+    .article-content .token.constant,
+    .article-content .token.symbol {
+      color: #ff9e64;
+    }
+
+    .article-content .token.selector,
+    .article-content .token.attr-name,
+    .article-content .token.string,
+    .article-content .token.char,
+    .article-content .token.builtin {
+      color: #9ece6a;
+    }
+
+    .article-content .token.operator,
+    .article-content .token.entity,
+    .article-content .token.url,
+    .article-content .language-css .token.string,
+    .article-content .style .token.string {
+      color: #89ddff;
+    }
+
+    .article-content .token.atrule,
+    .article-content .token.attr-value,
+    .article-content .token.keyword {
+      color: #bb9af7;
+    }
+
+    .article-content .token.function,
+    .article-content .token.class-name {
+      color: #7aa2f7;
+    }
+
+    .article-content .token.regex,
+    .article-content .token.important,
+    .article-content .token.variable {
+      color: #73daca;
+    }
+
+    /* Tables */
+    .article-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.75rem 0;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .article-content table thead tr {
+      background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    }
+
+    .article-content table th,
+    .article-content table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border: 1px solid #E2E8F0;
+      word-wrap: break-word;
+    }
+
+    .article-content table th {
+      font-weight: 600;
+      color: var(--dark-blue);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+
+    .article-content table tbody tr:hover {
+      background: #F8FAFC;
+    }
+
+    /* Text wrapping */
+    .article-content {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .article-content p,
+    .article-content li {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    /* Scrollbar for code blocks */
+    .article-content pre::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    .article-content pre::-webkit-scrollbar-track {
+      background: #1a1b26;
+      border-radius: 4px;
+    }
+    
+    .article-content pre::-webkit-scrollbar-thumb {
+      background: #414868;
+      border-radius: 4px;
+    }
+    
+    .article-content pre::-webkit-scrollbar-thumb:hover {
+      background: #565f89;
+    }
+
     /* Sidebar */
     .article-sidebar {
       position: sticky;
@@ -3403,8 +4202,73 @@ function addBlogPostPageStyles() {
         font-size: 1.4rem;
       }
 
+      .article-content h3 {
+        font-size: 1.15rem;
+      }
+
       .article-sidebar {
         grid-template-columns: 1fr;
+      }
+
+      /* Mobile code blocks */
+      .article-content pre[class*="language-"] {
+        padding: 1rem !important;
+        margin: 1.25rem -1.25rem !important;
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        font-size: 0.8rem;
+      }
+
+      .article-content pre[class*="language-"] code {
+        font-size: 0.75rem !important;
+        line-height: 1.6 !important;
+      }
+
+      .article-content pre.line-numbers {
+        padding-left: 2.75rem !important;
+      }
+
+      .article-content .line-numbers-rows {
+        width: 2rem;
+        font-size: 0.75rem;
+        top: 1rem;
+      }
+
+      .article-content code:not([class*="language-"]) {
+        font-size: 0.8em;
+        padding: 0.15rem 0.4rem;
+      }
+
+      /* Mobile tables - horizontal scroll */
+      .article-content table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.85rem;
+        margin: 1.25rem -1.25rem;
+        width: calc(100% + 2.5rem);
+        max-width: none;
+      }
+
+      .article-content table th,
+      .article-content table td {
+        padding: 0.75rem 0.75rem;
+        white-space: nowrap;
+      }
+      
+      /* Mobile text wrapping */
+      .article-content {
+        overflow-x: hidden;
+      }
+      
+      .article-content p,
+      .article-content li,
+      .article-content h2,
+      .article-content h3 {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
       }
     }
   `;

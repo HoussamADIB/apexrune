@@ -527,7 +527,7 @@ main {
 /* Hero Section */
 .hero-section {
   padding: 4rem 2rem;
-  padding-top: 140px;
+  padding-top: 120px;
   position: relative;
   background: 
     radial-gradient(circle, rgba(30, 64, 175, 0.12) 1px, transparent 1px),
@@ -2093,7 +2093,7 @@ main {
 
   .hero-section {
     padding: 1.5rem 1.25rem 2rem;
-    padding-top: 90px;
+    padding-top: 100px;
   }
 
   .content-wrapper {
