@@ -810,7 +810,13 @@ public class IntegrationLogger {
       <h2>Problem 1: Too Many Wire Calls</h2>
       <p>Each <code>@wire</code> decorator makes an Apex call. Multiple wires mean multiple round trips:</p>
       
-      <pre><code class="language-java">// ❌ BAD: Three separate server calls
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountViewer.js</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ❌ BAD: Three separate server calls
 @wire(getAccount, { accountId: '$recordId' })
 account;
 
@@ -819,10 +825,18 @@ contacts;
 
 @wire(getOpportunities, { accountId: '$recordId' })
 opportunities;</code></pre>
+        </div>
+      </div>
       
       <p>Combine them into one call:</p>
       
-      <pre><code class="language-java">// ✅ GOOD: One server call returns all data
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountViewer.js</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ✅ GOOD: One server call returns all data
 @wire(getAccountWithRelated, { accountId: '$recordId' })
 wiredData({ error, data }) {
     if (data) {
@@ -841,16 +855,32 @@ public static AccountWrapper getAccountWithRelated(Id accountId) {
         [SELECT Id, Name, Amount, StageName FROM Opportunity WHERE AccountId = :accountId LIMIT 50]
     );
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Problem 2: Rendering Large Lists</h2>
       <p>Rendering thousands of items kills performance. Use pagination or virtualization:</p>
       
-      <pre><code class="language-java">// ❌ BAD: Render all 5,000 records at once
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">RecordList.html</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ❌ BAD: Render all 5,000 records at once
 &lt;template for:each={allRecords} for:item="record"&gt;
     &lt;c-record-card key={record.Id} record={record}&gt;&lt;/c-record-card&gt;
-&lt;/template&gt;
-
-// ✅ GOOD: Paginate with "Load More"
+&lt;/template&gt;</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">RecordList.html</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ✅ GOOD: Paginate with "Load More"
 &lt;template for:each={visibleRecords} for:item="record"&gt;
     &lt;c-record-card key={record.Id} record={record}&gt;&lt;/c-record-card&gt;
 &lt;/template&gt;
@@ -858,8 +888,16 @@ public static AccountWrapper getAccountWithRelated(Id accountId) {
 &lt;template if:true={hasMore}&gt;
     &lt;lightning-button label="Load More" onclick={handleLoadMore}&gt;&lt;/lightning-button&gt;
 &lt;/template&gt;</code></pre>
+        </div>
+      </div>
       
-      <pre><code class="language-java">// JavaScript
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">RecordList.js</span>
+          <span class="code-badge good">Pagination Logic</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// JavaScript
 PAGE_SIZE = 50;
 currentPage = 1;
 
@@ -874,11 +912,19 @@ get hasMore() {
 handleLoadMore() {
     this.currentPage++;
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Problem 3: Expensive Getters</h2>
       <p>Getters run on every render. Complex calculations in getters cause performance issues:</p>
       
-      <pre><code class="language-java">// ❌ BAD: Complex calculation runs on every render
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">DataProcessor.js</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ❌ BAD: Complex calculation runs on every render
 get processedData() {
     return this.rawData.map(item => {
         return {
@@ -888,9 +934,17 @@ get processedData() {
             // More expensive operations...
         };
     });
-}
-
-// ✅ GOOD: Cache the result
+}</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">DataProcessor.js</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ✅ GOOD: Cache the result
 _processedData;
 
 get processedData() {
@@ -914,26 +968,50 @@ wiredData({ data }) {
         this._processedData = null; // Invalidate cache
     }
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Problem 4: Unnecessary Re-renders</h2>
       <p>Changing any <code>@track</code> property triggers a re-render. Batch your updates:</p>
       
-      <pre><code class="language-java">// ❌ BAD: Three separate re-renders
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">StateManagement.js</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ❌ BAD: Three separate re-renders
 this.isLoading = false;
 this.data = result;
-this.error = null;
-
-// ✅ GOOD: Update object properties (single re-render)
+this.error = null;</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">StateManagement.js</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ✅ GOOD: Update object properties (single re-render)
 this.state = {
     ...this.state,
     isLoading: false,
     data: result,
     error: null
 };</code></pre>
+        </div>
+      </div>
       
       <p>Or use a single state object from the start:</p>
       
-      <pre><code class="language-java">@track state = {
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">StateManagement.js</span>
+          <span class="code-badge good">State Object</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">@track state = {
     isLoading: false,
     data: null,
     error: null
@@ -943,21 +1021,39 @@ this.state = {
 updateState(updates) {
     this.state = { ...this.state, ...updates };
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Problem 5: Missing Cacheable</h2>
       <p>If your Apex method returns the same data for the same inputs, make it cacheable:</p>
       
-      <pre><code class="language-java">// ❌ Missing caching - calls server every time
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">ProductController.cls</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ❌ Missing caching - calls server every time
 @AuraEnabled
 public static List&lt;Product__c&gt; getProducts() {
     return [SELECT Id, Name, Price__c FROM Product__c];
-}
-
-// ✅ With caching - uses client-side cache when possible
+}</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">ProductController.cls</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ✅ With caching - uses client-side cache when possible
 @AuraEnabled(cacheable=true)
 public static List&lt;Product__c&gt; getProducts() {
     return [SELECT Id, Name, Price__c FROM Product__c];
 }</code></pre>
+        </div>
+      </div>
       
       <p><strong>Important:</strong> Only use <code>cacheable=true</code> for methods that:</p>
       <ul>
@@ -969,16 +1065,30 @@ public static List&lt;Product__c&gt; getProducts() {
       <h2>Problem 6: Heavy DOM Operations</h2>
       <p>Manipulating the DOM directly (querying elements, changing styles) is expensive. Let the framework handle it:</p>
       
-      <pre><code class="language-java">// ❌ BAD: Direct DOM manipulation in a loop
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">DOMManipulation.js</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ❌ BAD: Direct DOM manipulation in a loop
 this.template.querySelectorAll('.item').forEach(el => {
     if (this.selectedIds.includes(el.dataset.id)) {
         el.classList.add('selected');
     } else {
         el.classList.remove('selected');
     }
-});
-
-// ✅ GOOD: Let the template handle it
+});</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">ItemList.html</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ✅ GOOD: Let the template handle it
 &lt;template for:each={items} for:item="item"&gt;
     &lt;div key={item.id} class={item.cssClass}&gt;{item.name}&lt;/div&gt;
 &lt;/template&gt;
@@ -990,6 +1100,8 @@ get items() {
         cssClass: this.selectedIds.includes(item.id) ? 'item selected' : 'item'
     }));
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Real Performance Wins</h2>
       <p>We recently optimized a client's account hierarchy viewer component:</p>
@@ -1079,7 +1191,13 @@ get items() {
       <h3>Identify Data Quality Issues Early</h3>
       <p>Run these queries on your source data before migration:</p>
       
-      <pre><code class="language-sql">-- Find duplicates
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">DataAnalysis.sql</span>
+          <span class="code-badge good">Data Quality</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-sql">-- Find duplicates
 SELECT customer_name, COUNT(*)
 FROM customers
 GROUP BY customer_name
@@ -1100,6 +1218,8 @@ WHERE cu.id IS NULL;
 SELECT id, phone
 FROM customers
 WHERE LENGTH(phone) > 40; -- Salesforce limit</code></pre>
+        </div>
+      </div>
       
       <h3>Plan the Load Order</h3>
       <p>Salesforce enforces referential integrity. Load in this order:</p>
@@ -1131,7 +1251,13 @@ WHERE LENGTH(phone) > 40; -- Salesforce limit</code></pre>
       <h3>Create External ID Fields</h3>
       <p>This is critical for maintaining relationships and enabling updates:</p>
       
-      <pre><code class="language-java">// Create External ID field on Account
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">MigrationScript.apex</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Create External ID field on Account
 Field: Legacy_ID__c
 Type: Text (External ID, Unique)
 
@@ -1141,6 +1267,8 @@ Account acc = new Account(
     Name = 'Acme Corporation'
 );
 upsert acc Legacy_ID__c;</code></pre>
+        </div>
+      </div>
       
       <p>External IDs let you:</p>
       <ul>
@@ -1164,7 +1292,13 @@ upsert acc Legacy_ID__c;</code></pre>
       <h3>Disable Automation During Migration</h3>
       <p>Triggers, flows, and validation rules will slow down your migration and may cause failures:</p>
       
-      <pre><code class="language-java">// Create a bypass custom setting
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">TriggerControl.cls</span>
+          <span class="code-badge good">Bypass Pattern</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Create a bypass custom setting
 public class TriggerControl {
     public static Boolean bypassAllTriggers {
         get {
@@ -1180,6 +1314,8 @@ trigger AccountTrigger on Account (before insert, before update) {
     
     // Normal trigger logic...
 }</code></pre>
+        </div>
+      </div>
       
       <p><strong>Don't forget to re-enable automation after migration!</strong></p>
       
@@ -1192,10 +1328,18 @@ trigger AccountTrigger on Account (before insert, before update) {
         <li><strong>&gt;1M records:</strong> Bulk API with serial batches to avoid locking</li>
       </ul>
       
-      <pre><code class="language-java">// Bulk API settings for large migrations
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">BulkSettings.config</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Bulk API settings for large migrations
 Batch Size: 2000 (reduce if you hit failures)
 Parallel/Serial: Serial for same-object updates, Parallel for different objects
 Concurrency Mode: Parallel (unless updating the same records)</code></pre>
+        </div>
+      </div>
       
       <h2>Phase 4: Validation</h2>
       
