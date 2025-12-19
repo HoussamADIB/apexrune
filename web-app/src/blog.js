@@ -33,16 +33,28 @@ export const blogPosts = [
       <h3>Cause 1: SOQL Queries Inside Loops</h3>
       <p>This is the #1 issue we encounter. Here's a real example from a client's trigger:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: Query inside loop
-for (Account acc : Trigger.new) {
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountTriggerHandler.cls</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">for (Account acc : Trigger.new) {
     List&lt;Contact&gt; contacts = [SELECT Id FROM Contact WHERE AccountId = :acc.Id];
     // Process contacts...
 }</code></pre>
+        </div>
+      </div>
       
       <p>Each iteration executes a new query. With 200 records, that's 200 queries—and massive CPU overhead.</p>
       
-      <pre class="line-numbers"><code class="language-java">// ✅ GOOD: Bulkified query
-Set&lt;Id&gt; accountIds = new Set&lt;Id&gt;();
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountTriggerHandler.cls</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">Set&lt;Id&gt; accountIds = new Set&lt;Id&gt;();
 for (Account acc : Trigger.new) {
     accountIds.add(acc.Id);
 }
@@ -54,13 +66,29 @@ for (Contact c : [SELECT Id, AccountId FROM Contact WHERE AccountId IN :accountI
     }
     contactsByAccount.get(c.AccountId).add(c);
 }</code></pre>
+        </div>
+      </div>
       
       <h3>Cause 2: Recursive Triggers</h3>
       <p>Trigger A updates Object B, which fires Trigger B, which updates Object A, which fires Trigger A again... You get the picture.</p>
       
+      <div class="callout">
+        <div class="callout-title">
+          <span class="callout-icon">i</span>
+          Architect's Note
+        </div>
+        <p class="callout-text">We recommend adopting a Trigger Handler Framework (like the Kevin O'Hara framework) to manage execution order and logic separation cleanly.</p>
+      </div>
+      
       <p>The fix: Use a static variable to track recursion:</p>
       
-      <pre class="line-numbers"><code class="language-java">public class TriggerHelper {
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">TriggerHelper.cls</span>
+          <span class="code-badge good">Recursion Guard</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class TriggerHelper {
     public static Boolean isFirstRun = true;
 }
 
@@ -69,22 +97,38 @@ if (TriggerHelper.isFirstRun) {
     TriggerHelper.isFirstRun = false;
     // Your logic here
 }</code></pre>
+        </div>
+      </div>
       
       <h3>Cause 3: Inefficient String Operations</h3>
       <p>String concatenation in loops is surprisingly expensive:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: String concatenation in loop
-String result = '';
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">StringHelper.cls</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">String result = '';
 for (Account acc : accounts) {
     result += acc.Name + ', ';  // Creates new string each time
-}
-
-// ✅ GOOD: Use List and join
-List&lt;String&gt; names = new List&lt;String&gt;();
+}</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">StringHelper.cls</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">List&lt;String&gt; names = new List&lt;String&gt;();
 for (Account acc : accounts) {
     names.add(acc.Name);
 }
 String result = String.join(names, ', ');</code></pre>
+        </div>
+      </div>
       
       <h3>Cause 4: Complex Validation Rules + Triggers</h3>
       <p>Validation rules execute before triggers, but if your trigger updates the same record, validations run again. We've seen orgs with 30+ validation rules per object—each evaluation adds CPU time.</p>
@@ -94,24 +138,54 @@ String result = String.join(names, ', ');</code></pre>
       <h3>Consolidate Triggers</h3>
       <p>Multiple triggers on the same object have unpredictable execution order and compound CPU usage. We always recommend the <strong>one trigger per object</strong> pattern with a handler class:</p>
       
-      <pre class="line-numbers"><code class="language-java">trigger AccountTrigger on Account (before insert, before update, after insert, after update) {
+      <div class="callout">
+        <div class="callout-title">
+          <span class="callout-icon">i</span>
+          Architect's Note
+        </div>
+        <p class="callout-text">Salesforce best practice dictates <strong>one trigger per object</strong>. If you open an Object in Setup and see 5 different triggers (e.g., <code>AccountTrigger</code>, <code>AccountUpdate</code>, <code>PushToERP</code>), you have a problem.</p>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountTrigger.trigger</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">trigger AccountTrigger on Account (before insert, before update, after insert, after update) {
     AccountTriggerHandler handler = new AccountTriggerHandler();
     
     if (Trigger.isBefore && Trigger.isInsert) handler.beforeInsert(Trigger.new);
     if (Trigger.isBefore && Trigger.isUpdate) handler.beforeUpdate(Trigger.new, Trigger.oldMap);
     // ... etc
 }</code></pre>
+        </div>
+      </div>
       
       <h3>Move Logic to Async</h3>
       <p>Heavy processing that doesn't need to complete in real-time? Move it to a Queueable or Batch job:</p>
       
-      <pre class="line-numbers"><code class="language-java">// Instead of processing in the trigger:
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountTriggerHandler.cls</span>
+          <span class="code-badge good">Async Pattern</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Instead of processing in the trigger:
 System.enqueueJob(new ProcessAccountsQueueable(accountIds));</code></pre>
+        </div>
+      </div>
       
       <h3>Cache Expensive Operations</h3>
-      <p>If you're calling Custom Metadata or Custom Settings repeatedly, cache them:</p>
+      <p>If you're calling Custom Metadata or Custom Settings repeatedly, cache them. Instead, always use <code>Schema.DescribeSObjectResult</code> methods or Custom Metadata Types to fetch IDs dynamically based on Developer Name.</p>
       
-      <pre class="line-numbers"><code class="language-java">private static Map&lt;String, My_Setting__mdt&gt; settingsCache;
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">SettingsHelper.cls</span>
+          <span class="code-badge good">Caching Pattern</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">private static Map&lt;String, My_Setting__mdt&gt; settingsCache;
 
 public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
     if (settingsCache == null) {
@@ -122,6 +196,8 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
     }
     return settingsCache;
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Real Client Example</h2>
       <p>A client came to us with CPU timeouts occurring every time they tried to update more than 50 Accounts. After analysis, we found:</p>
@@ -292,7 +368,13 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
       
       <p>Here's how to create an invocable method that Flow can call:</p>
       
-      <pre class="line-numbers"><code class="language-java">public class LeadScoringService {
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">LeadScoringService.cls</span>
+          <span class="code-badge good">Invocable Method</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class LeadScoringService {
     
     @InvocableMethod(label='Calculate Lead Score' description='Calculates a lead score based on multiple factors')
     public static List&lt;Integer&gt; calculateScores(List&lt;LeadScoreRequest&gt; requests) {
@@ -324,6 +406,8 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
         public Integer engagementScore;
     }
 }</code></pre>
+        </div>
+      </div>
       
       <p>Now Flow can call this method, making the process visible while keeping complex logic in testable, maintainable Apex.</p>
       
@@ -381,13 +465,25 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
       <h3>Always Use Try-Catch</h3>
       <p>This seems obvious, but we regularly see callout code without exception handling:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: No error handling
-HttpResponse response = http.send(request);
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">IntegrationService.cls</span>
+          <span class="code-badge">Bad Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">HttpResponse response = http.send(request);
 Map&lt;String, Object&gt; data = (Map&lt;String, Object&gt;) JSON.deserializeUntyped(response.getBody());
-String customerId = (String) data.get('customer_id');
-
-// ✅ GOOD: Comprehensive error handling
-try {
+String customerId = (String) data.get('customer_id');</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">IntegrationService.cls</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">try {
     HttpResponse response = http.send(request);
     
     if (response.getStatusCode() != 200) {
@@ -418,11 +514,19 @@ try {
     // Unexpected issues
     handleUnexpectedFailure(e);
 }</code></pre>
+        </div>
+      </div>
       
       <h3>Validate Everything</h3>
       <p>Never trust external data:</p>
       
-      <pre class="line-numbers"><code class="language-java">public class ExternalCustomerData {
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">ExternalCustomerData.cls</span>
+          <span class="code-badge good">Data Validation</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class ExternalCustomerData {
     public String customerId;
     public String email;
     public Decimal revenue;
@@ -447,11 +551,19 @@ try {
         }
     }
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Layer 2: Retry Logic</h2>
       <p>Transient failures (network blips, temporary API issues) often resolve themselves. Implement automatic retries with exponential backoff:</p>
       
-      <pre class="line-numbers"><code class="language-java">public class RetryableCallout {
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">RetryableCallout.cls</span>
+          <span class="code-badge good">Retry Pattern</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class RetryableCallout {
     private static final Integer MAX_RETRIES = 3;
     private static final Integer BASE_DELAY_MS = 1000;
     
@@ -489,11 +601,19 @@ try {
         throw new IntegrationException('Max retries exceeded', lastException);
     }
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Layer 3: Dead Letter Queue</h2>
       <p>When retries fail, don't lose the data. Store failed requests for later processing:</p>
       
-      <pre class="line-numbers"><code class="language-java">// Custom object: Integration_Failure__c
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">IntegrationFailureHandler.cls</span>
+          <span class="code-badge good">Dead Letter Queue</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Custom object: Integration_Failure__c
 // Fields: Endpoint__c, Request_Body__c, Error_Message__c, Retry_Count__c, Status__c
 
 public class IntegrationFailureHandler {
@@ -533,11 +653,19 @@ public class IntegrationFailureHandler {
         }
     }
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Layer 4: Circuit Breaker Pattern</h2>
       <p>If an external system is down, stop hammering it with requests. Implement a circuit breaker:</p>
       
-      <pre class="line-numbers"><code class="language-java">public class CircuitBreaker {
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">CircuitBreaker.cls</span>
+          <span class="code-badge good">Circuit Breaker</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class CircuitBreaker {
     private static final Integer FAILURE_THRESHOLD = 5;
     private static final Integer RESET_TIMEOUT_MINUTES = 5;
     
@@ -596,6 +724,8 @@ public class IntegrationFailureHandler {
         public DateTime openedAt;
     }
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Layer 5: Monitoring & Alerting</h2>
       <p>You can't fix what you can't see. Set up proper monitoring:</p>
@@ -607,7 +737,13 @@ public class IntegrationFailureHandler {
         <li><strong>Audit Trail:</strong> Log all integration attempts with timestamps</li>
       </ul>
       
-      <pre class="line-numbers"><code class="language-java">// Platform Event: Integration_Event__e
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">IntegrationLogger.cls</span>
+          <span class="code-badge good">Platform Events</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Platform Event: Integration_Event__e
 // Fields: Integration_Name__c, Status__c, Message__c, Duration_Ms__c
 
 public class IntegrationLogger {
@@ -623,6 +759,8 @@ public class IntegrationLogger {
         EventBus.publish(event);
     }
 }</code></pre>
+        </div>
+      </div>
       
       <h2>Real-World Implementation</h2>
       <p>For a recent client, we built an integration with their ERP system that processes 50,000+ records daily. Our error handling architecture:</p>
@@ -672,7 +810,7 @@ public class IntegrationLogger {
       <h2>Problem 1: Too Many Wire Calls</h2>
       <p>Each <code>@wire</code> decorator makes an Apex call. Multiple wires mean multiple round trips:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: Three separate server calls
+      <pre><code class="language-java">// ❌ BAD: Three separate server calls
 @wire(getAccount, { accountId: '$recordId' })
 account;
 
@@ -684,7 +822,7 @@ opportunities;</code></pre>
       
       <p>Combine them into one call:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ✅ GOOD: One server call returns all data
+      <pre><code class="language-java">// ✅ GOOD: One server call returns all data
 @wire(getAccountWithRelated, { accountId: '$recordId' })
 wiredData({ error, data }) {
     if (data) {
@@ -707,7 +845,7 @@ public static AccountWrapper getAccountWithRelated(Id accountId) {
       <h2>Problem 2: Rendering Large Lists</h2>
       <p>Rendering thousands of items kills performance. Use pagination or virtualization:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: Render all 5,000 records at once
+      <pre><code class="language-java">// ❌ BAD: Render all 5,000 records at once
 &lt;template for:each={allRecords} for:item="record"&gt;
     &lt;c-record-card key={record.Id} record={record}&gt;&lt;/c-record-card&gt;
 &lt;/template&gt;
@@ -721,7 +859,7 @@ public static AccountWrapper getAccountWithRelated(Id accountId) {
     &lt;lightning-button label="Load More" onclick={handleLoadMore}&gt;&lt;/lightning-button&gt;
 &lt;/template&gt;</code></pre>
       
-      <pre class="line-numbers"><code class="language-java">// JavaScript
+      <pre><code class="language-java">// JavaScript
 PAGE_SIZE = 50;
 currentPage = 1;
 
@@ -740,7 +878,7 @@ handleLoadMore() {
       <h2>Problem 3: Expensive Getters</h2>
       <p>Getters run on every render. Complex calculations in getters cause performance issues:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: Complex calculation runs on every render
+      <pre><code class="language-java">// ❌ BAD: Complex calculation runs on every render
 get processedData() {
     return this.rawData.map(item => {
         return {
@@ -780,7 +918,7 @@ wiredData({ data }) {
       <h2>Problem 4: Unnecessary Re-renders</h2>
       <p>Changing any <code>@track</code> property triggers a re-render. Batch your updates:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: Three separate re-renders
+      <pre><code class="language-java">// ❌ BAD: Three separate re-renders
 this.isLoading = false;
 this.data = result;
 this.error = null;
@@ -795,7 +933,7 @@ this.state = {
       
       <p>Or use a single state object from the start:</p>
       
-      <pre class="line-numbers"><code class="language-java">@track state = {
+      <pre><code class="language-java">@track state = {
     isLoading: false,
     data: null,
     error: null
@@ -809,7 +947,7 @@ updateState(updates) {
       <h2>Problem 5: Missing Cacheable</h2>
       <p>If your Apex method returns the same data for the same inputs, make it cacheable:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ Missing caching - calls server every time
+      <pre><code class="language-java">// ❌ Missing caching - calls server every time
 @AuraEnabled
 public static List&lt;Product__c&gt; getProducts() {
     return [SELECT Id, Name, Price__c FROM Product__c];
@@ -831,7 +969,7 @@ public static List&lt;Product__c&gt; getProducts() {
       <h2>Problem 6: Heavy DOM Operations</h2>
       <p>Manipulating the DOM directly (querying elements, changing styles) is expensive. Let the framework handle it:</p>
       
-      <pre class="line-numbers"><code class="language-java">// ❌ BAD: Direct DOM manipulation in a loop
+      <pre><code class="language-java">// ❌ BAD: Direct DOM manipulation in a loop
 this.template.querySelectorAll('.item').forEach(el => {
     if (this.selectedIds.includes(el.dataset.id)) {
         el.classList.add('selected');
@@ -941,7 +1079,7 @@ get items() {
       <h3>Identify Data Quality Issues Early</h3>
       <p>Run these queries on your source data before migration:</p>
       
-      <pre class="line-numbers"><code class="language-sql">-- Find duplicates
+      <pre><code class="language-sql">-- Find duplicates
 SELECT customer_name, COUNT(*)
 FROM customers
 GROUP BY customer_name
@@ -993,7 +1131,7 @@ WHERE LENGTH(phone) > 40; -- Salesforce limit</code></pre>
       <h3>Create External ID Fields</h3>
       <p>This is critical for maintaining relationships and enabling updates:</p>
       
-      <pre class="line-numbers"><code class="language-java">// Create External ID field on Account
+      <pre><code class="language-java">// Create External ID field on Account
 Field: Legacy_ID__c
 Type: Text (External ID, Unique)
 
@@ -1026,7 +1164,7 @@ upsert acc Legacy_ID__c;</code></pre>
       <h3>Disable Automation During Migration</h3>
       <p>Triggers, flows, and validation rules will slow down your migration and may cause failures:</p>
       
-      <pre class="line-numbers"><code class="language-java">// Create a bypass custom setting
+      <pre><code class="language-java">// Create a bypass custom setting
 public class TriggerControl {
     public static Boolean bypassAllTriggers {
         get {
@@ -1054,7 +1192,7 @@ trigger AccountTrigger on Account (before insert, before update) {
         <li><strong>&gt;1M records:</strong> Bulk API with serial batches to avoid locking</li>
       </ul>
       
-      <pre class="line-numbers"><code class="language-java">// Bulk API settings for large migrations
+      <pre><code class="language-java">// Bulk API settings for large migrations
 Batch Size: 2000 (reduce if you hit failures)
 Parallel/Serial: Serial for same-object updates, Parallel for different objects
 Concurrency Mode: Parallel (unless updating the same records)</code></pre>

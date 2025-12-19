@@ -2548,7 +2548,7 @@ function addCaseStudiesPageStyles() {
     }
 
     .case-studies-container {
-      max-width: 1100px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 3rem 2rem 5rem;
     }
@@ -3301,7 +3301,7 @@ function loadBlogPage() {
                   const iconColors = ['#3B82F6', '#F59E0B', '#8B5CF6', '#10B981', '#EF4444'];
                   const iconColor = iconColors[index % iconColors.length];
                   return `
-                  <article class="article-card">
+                  <a href="/blog/${post.id}" class="article-card">
                     <div class="article-card-image">
                       <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
                         ${getCommonIcon(iconName, 28, iconColor)}
@@ -3313,7 +3313,7 @@ function loadBlogPage() {
                         <span class="article-card-date">${new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                       </div>
                       <h3 class="article-card-title">
-                        <a href="/blog/${post.id}">${post.title}</a>
+                        ${post.title}
                       </h3>
                       <p class="article-card-excerpt">${post.excerpt}</p>
                       <div class="article-card-footer">
@@ -3321,21 +3321,21 @@ function loadBlogPage() {
                           <div class="author-avatar-small">${(post.author || 'ApexRune Team').charAt(0)}</div>
                           <span class="author-name-small">${(post.author || 'ApexRune Team').split(' ')[0]}</span>
                         </div>
-                        <a href="/blog/${post.id}" class="read-article-link">
+                        <span class="read-article-link">
                           Read
                           ${getCommonIcon('arrow-right', 16, 'currentColor')}
-                        </a>
+                        </span>
                       </div>
                     </div>
-                  </article>
+                        </a>
                 `}).join('')}
-              </div>
+                      </div>
               <div class="load-more-container">
                 <button class="load-more-btn">
                   ${getCommonIcon('star', 16, 'currentColor')}
                   Load More Articles
                 </button>
-              </div>
+                    </div>
             </section>
 
             <section class="blog-cta-section">
@@ -3612,13 +3612,13 @@ function addBlogPageStyles() {
   style.textContent = `
     .blog-page {
       padding: 0;
-      padding-top: 100px;
+      padding-top: 120px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(to bottom, #F0F9FF, var(--white) 250px);
     }
 
     .blog-container {
-      max-width: 1100px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 3rem 2rem 5rem;
     }
@@ -3843,12 +3843,11 @@ function addBlogPageStyles() {
       gap: 0.5rem;
       color: var(--bright-blue);
       font-weight: 600;
-      text-decoration: none;
       font-size: 0.95rem;
       transition: gap 0.2s ease;
     }
 
-    .read-article-link:hover {
+    .article-card:hover .read-article-link {
       gap: 0.75rem;
     }
 
@@ -3958,6 +3957,9 @@ function addBlogPageStyles() {
       flex-direction: column;
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
       height: 100%;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
 
     .article-card:hover {
@@ -4024,15 +4026,10 @@ function addBlogPageStyles() {
       color: var(--dark-blue);
       line-height: 1.4;
       margin-bottom: 0.5rem;
-    }
-
-    .article-card-title a {
-      color: inherit;
-      text-decoration: none;
       transition: color 0.2s;
     }
 
-    .article-card-title a:hover {
+    .article-card:hover .article-card-title {
       color: var(--bright-blue);
     }
 
@@ -4216,7 +4213,7 @@ function addBlogPageStyles() {
     @media (max-width: 768px) {
       .blog-page {
         padding: 0;
-        padding-top: 70px;
+        padding-top: 100px;
       }
 
       .blog-container {
@@ -4673,14 +4670,14 @@ function addBlogPostPageStyles() {
 
     /* Code Blocks - Prism.js Override */
     .article-content pre[class*="language-"] {
-      background: #1a1b26 !important;
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      margin: 1.75rem 0;
+      background: transparent !important;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      border: 1px solid #2d2f3d;
-      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.2);
+      border: none;
+      box-shadow: none;
       tab-size: 2;
     }
 
@@ -4696,50 +4693,58 @@ function addBlogPostPageStyles() {
       text-shadow: none !important;
     }
 
-    /* Line numbers styling */
+    /* Hide line numbers - we don't want them */
     .article-content pre.line-numbers {
-      padding-left: 3.5rem;
-      position: relative;
+      padding-left: 1.5rem !important;
+      counter-reset: none !important;
     }
 
-    .article-content .line-numbers-rows {
-      position: absolute;
-      left: 0;
-      top: 1.25rem;
-      width: 2.5rem;
-      padding: 0;
-      border-right: 1px solid #2d2f3d;
-      user-select: none;
-      font-size: 0.875rem;
-      line-height: 1.75;
-      font-family: 'JetBrains Mono', monospace;
+    .article-content .line-numbers-rows,
+    .article-content pre::before,
+    .article-content pre .line-numbers-rows {
+      display: none !important;
+    }
+    
+    /* Remove any line number counters */
+    .article-content pre code {
+      counter-reset: none !important;
+    }
+    
+    .article-content pre code span::before {
+      content: none !important;
+      display: none !important;
       color: #4a4e69;
     }
 
     /* Inline code */
     .article-content code:not([class*="language-"]) {
-      background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
-      color: #3730A3;
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      font-size: 0.875em;
-      font-family: 'JetBrains Mono', 'SF Mono', monospace;
-      border: 1px solid #C7D2FE;
+      background: #EEF2FF;
+      color: #4F46E5;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      border: none;
       word-break: break-word;
       font-weight: 500;
     }
 
-    /* Prism token colors - Tokyo Night theme inspired */
+    /* Prism token colors - One Dark theme */
+    .article-content pre {
+      color: #abb2bf;
+      text-shadow: none !important;
+    }
+
     .article-content .token.comment,
     .article-content .token.prolog,
     .article-content .token.doctype,
     .article-content .token.cdata {
-      color: #565f89;
+      color: #5c6370;
       font-style: italic;
     }
 
     .article-content .token.punctuation {
-      color: #9aa5ce;
+      color: #abb2bf;
     }
 
     .article-content .token.property,
@@ -4748,7 +4753,7 @@ function addBlogPostPageStyles() {
     .article-content .token.number,
     .article-content .token.constant,
     .article-content .token.symbol {
-      color: #ff9e64;
+      color: #d19a66;
     }
 
     .article-content .token.selector,
@@ -4756,7 +4761,7 @@ function addBlogPostPageStyles() {
     .article-content .token.string,
     .article-content .token.char,
     .article-content .token.builtin {
-      color: #9ece6a;
+      color: #98c379;
     }
 
     .article-content .token.operator,
@@ -4764,24 +4769,24 @@ function addBlogPostPageStyles() {
     .article-content .token.url,
     .article-content .language-css .token.string,
     .article-content .style .token.string {
-      color: #89ddff;
+      color: #56b6c2;
     }
 
     .article-content .token.atrule,
     .article-content .token.attr-value,
     .article-content .token.keyword {
-      color: #bb9af7;
+      color: #c678dd;
     }
 
     .article-content .token.function,
     .article-content .token.class-name {
-      color: #7aa2f7;
+      color: #e5c07b;
     }
 
     .article-content .token.regex,
     .article-content .token.important,
     .article-content .token.variable {
-      color: #73daca;
+      color: #e06c75;
     }
 
     /* Tables */
@@ -4852,47 +4857,73 @@ function addBlogPostPageStyles() {
       background: #565f89;
     }
 
-    /* Code Block Header */
+    /* Code Block with Header */
     .code-block {
-      background: #1F2937;
-      border-radius: 12px;
-      margin: 1.5rem 0;
+      background: #282c34;
+      border-radius: 8px;
+      margin: 1.75rem 0;
       overflow: hidden;
+      border: 1px solid #1e2227;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
     .code-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem 1rem;
-      background: #374151;
-      border-bottom: 1px solid #4B5563;
+      padding: 0.5rem 1rem;
+      background: #21252b;
+      border-bottom: 1px solid #181a1f;
     }
 
     .code-filename {
       font-size: 0.8rem;
-      color: #9CA3AF;
-      font-family: 'SF Mono', monospace;
+      color: #9da5b4;
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-weight: 400;
     }
 
     .code-badge {
       font-size: 0.7rem;
-      padding: 0.25rem 0.5rem;
-      background: rgba(239, 68, 68, 0.2);
-      color: #FCA5A5;
+      padding: 0.2rem 0.5rem;
+      background: rgba(224, 108, 117, 0.1);
+      color: #e06c75;
       border-radius: 4px;
-      font-weight: 600;
+      font-weight: 400;
+    }
+
+    .code-badge.good {
+      background: rgba(152, 195, 121, 0.1);
+      color: #98c379;
     }
 
     .code-content {
-      padding: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: #282c34;
+    }
+
+    /* Override Prism pre background */
+    .article-content pre[class*="language-"] {
+      background: transparent !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .code-content pre {
+      margin: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
     .code-content code {
       background: none;
       padding: 0;
       color: #E5E7EB;
-      font-size: 0.85rem;
+        font-size: 0.85rem;
       line-height: 1.7;
     }
 
@@ -4910,27 +4941,48 @@ function addBlogPostPageStyles() {
 
     /* Callout Box */
     .callout {
-      background: #F0F9FF;
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
       border-left: 4px solid var(--bright-blue);
-      border-radius: 0 8px 8px 0;
-      padding: 1.25rem 1.5rem;
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem 1.75rem;
       margin: 2rem 0;
+    }
+
+    .callout-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: var(--bright-blue);
+      border-radius: 50%;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
     }
 
     .callout-title {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-weight: 600;
+        gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1rem;
       color: var(--dark-blue);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .callout-text {
       font-size: 0.95rem;
       color: var(--text-dark);
-      line-height: 1.6;
+      line-height: 1.7;
       margin: 0;
+      padding-left: 2.25rem;
+    }
+    
+    .callout-text a {
+      color: var(--bright-blue);
+      font-weight: 500;
     }
 
     /* Article Tags */
@@ -4947,7 +4999,7 @@ function addBlogPostPageStyles() {
       padding: 0.5rem 1rem;
       background: #F3F4F6;
       border-radius: 6px;
-      font-size: 0.85rem;
+        font-size: 0.85rem;
       color: var(--text-dark);
       font-weight: 500;
     }
@@ -5075,13 +5127,7 @@ function addBlogPostPageStyles() {
       }
 
       .article-content pre.line-numbers {
-        padding-left: 2.75rem !important;
-      }
-
-      .article-content .line-numbers-rows {
-        width: 2rem;
-        font-size: 0.75rem;
-        top: 1rem;
+        padding-left: 1rem !important;
       }
 
       .article-content code:not([class*="language-"]) {
