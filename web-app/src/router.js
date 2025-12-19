@@ -43,7 +43,7 @@ function getLogoHTML() {
 // Helper function to get header HTML with dropdown menus
 function getHeaderHTML(getCommonIcon) {
   return `
-    <header class="header">
+    <header class="header site-header">
       <div class="header-content">
         <a href="/" class="logo-container">
           <img src="/logo.png" alt="ApexRune Logo" class="logo-icon">
@@ -3228,41 +3228,83 @@ function loadBlogPage() {
             <div class="blog-header">
               <span class="blog-label">Insights</span>
               <h1 class="blog-page-title">Technical Blog</h1>
-              <p class="blog-page-subtitle">Expert insights on Salesforce optimization, automation, and best practices.</p>
+              <p class="blog-page-subtitle">Deep dives into Salesforce architecture, LWC performance, and automated CI/CD pipelines. Written by certified technical architects.</p>
             </div>
 
             ${featuredPost ? `
             <section class="featured-section">
+              <div class="featured-section-header">
+                ${getCommonIcon('star', 16, 'currentColor')}
+                <h2 class="featured-section-title">Editor's Choice</h2>
+              </div>
               <a href="/blog/${featuredPost.id}" class="featured-article">
                 <div class="featured-content">
+                  <div class="featured-top-meta">
                   <span class="category-tag">${featuredPost.category}</span>
+                    <span class="featured-date">
+                      ${getCommonIcon('calendar', 14, 'currentColor')}
+                      ${new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                  </div>
                   <h2 class="featured-title">${featuredPost.title}</h2>
                   <p class="featured-excerpt">${featuredPost.excerpt}</p>
                   <div class="featured-footer">
-                    <span class="post-date">${new Date(featuredPost.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                    <span class="read-time">${featuredPost.readTime}</span>
+                    <div class="featured-author">
+                      <div class="author-avatar">${(featuredPost.author || 'ApexRune Team').charAt(0)}</div>
+                      <div class="author-info">
+                        <div class="author-name">${featuredPost.author || 'ApexRune Team'}</div>
+                        <div class="author-title">Principal Architect</div>
                   </div>
                 </div>
-                <div class="featured-image-area">
-                  <div class="featured-placeholder">
-                    ${getCommonIcon('newspaper', 64, 'currentColor')}
+                    <div class="featured-read-time">
+                      <span>${featuredPost.readTime}</span>
+                      ${getCommonIcon('arrow-right', 16, 'currentColor')}
                   </div>
+                  </div>
+                </div>
+                <div class="featured-decoration">
+                  ${getCommonIcon('bar-chart-3', 80, 'currentColor')}
                 </div>
               </a>
             </section>
             ` : ''}
 
             <section class="articles-section">
+              <div class="articles-filters">
+                <div class="filter-buttons">
+                  <button class="filter-btn active">All Articles</button>
+                  <button class="filter-btn">Apex</button>
+                  <button class="filter-btn">LWC</button>
+                  <button class="filter-btn">Automation</button>
+                  <button class="filter-btn">Integrations</button>
+                </div>
+                <div class="search-container">
+                  ${getCommonIcon('search', 18, 'currentColor')}
+                  <input type="text" class="search-input" placeholder="Search by topic...">
+                </div>
+              </div>
               <div class="articles-header">
-                <h2 class="articles-title">All Articles</h2>
-                <span class="articles-count">${blogPosts.length} articles</span>
+                <h2 class="articles-title">Latest Articles</h2>
+                <span class="articles-count">Showing ${otherPosts.length} of ${blogPosts.length}</span>
               </div>
               <div class="articles-grid">
-                ${otherPosts.map(post => `
+                ${otherPosts.map((post, index) => {
+                  const categoryIcons = {
+                    'Automation': 'zap',
+                    'Integration': 'git-merge',
+                    'Security': 'shield',
+                    'Optimization': 'trending-up',
+                    'Migration': 'refresh-cw',
+                    'default': 'code'
+                  };
+                  const iconName = categoryIcons[post.category] || categoryIcons['default'];
+                  const iconColors = ['#3B82F6', '#F59E0B', '#8B5CF6', '#10B981', '#EF4444'];
+                  const iconColor = iconColors[index % iconColors.length];
+                  return `
                   <article class="article-card">
                     <div class="article-card-image">
-                      <div class="image-placeholder image-placeholder--small">
-                        ${getCommonIcon('image', 24, 'currentColor')}
+                      <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
+                        ${getCommonIcon(iconName, 28, iconColor)}
                       </div>
                     </div>
                     <div class="article-card-body">
@@ -3275,7 +3317,10 @@ function loadBlogPage() {
                       </h3>
                       <p class="article-card-excerpt">${post.excerpt}</p>
                       <div class="article-card-footer">
-                        <span class="read-time">${post.readTime}</span>
+                        <div class="article-author">
+                          <div class="author-avatar-small">${(post.author || 'ApexRune Team').charAt(0)}</div>
+                          <span class="author-name-small">${(post.author || 'ApexRune Team').split(' ')[0]}</span>
+                        </div>
                         <a href="/blog/${post.id}" class="read-article-link">
                           Read
                           ${getCommonIcon('arrow-right', 16, 'currentColor')}
@@ -3283,7 +3328,26 @@ function loadBlogPage() {
                       </div>
                     </div>
                   </article>
-                `).join('')}
+                `}).join('')}
+              </div>
+              <div class="load-more-container">
+                <button class="load-more-btn">
+                  ${getCommonIcon('star', 16, 'currentColor')}
+                  Load More Articles
+                </button>
+              </div>
+            </section>
+
+            <section class="blog-cta-section">
+              <div class="blog-cta-layout">
+                <div class="blog-cta-text">
+                  <h2 class="blog-cta-title">Stay ahead of the release cycle.</h2>
+                  <p class="blog-cta-description">Get our monthly technical digest: no fluff, just actionable code snippets, architecture patterns, and release notes analysis.</p>
+                </div>
+                <form class="blog-cta-form" netlify>
+                  <input type="email" class="blog-cta-input" placeholder="architect@company.com" required>
+                  <button type="submit" class="blog-cta-button">Subscribe</button>
+                </form>
               </div>
             </section>
           </div>
@@ -3316,64 +3380,95 @@ function loadBlogPostPage(postId) {
       }
 
       const app = document.querySelector('#app');
-      const relatedPosts = blogPosts.filter(p => p.id !== postId && p.category === post.category).slice(0, 2);
+      
+      // Extract headings from content for table of contents
+      const headingRegex = /<h2>(.*?)<\/h2>/g;
+      const headings = [];
+      let match;
+      while ((match = headingRegex.exec(post.content)) !== null) {
+        const text = match[1].replace(/<[^>]*>/g, ''); // Strip any HTML tags
+        const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        headings.push({ text, id });
+      }
+      
+      // Add IDs to headings in content
+      let processedContent = post.content;
+      headings.forEach(({ text, id }) => {
+        processedContent = processedContent.replace(
+          `<h2>${text}</h2>`,
+          `<h2 id="${id}">${text}</h2>`
+        );
+      });
+
+      // Get author initials
+      const authorName = post.author || 'ApexRune Team';
+      const authorInitials = authorName.split(' ').map(n => n[0]).join('').substring(0, 2);
+      
+      // Tags from category
+      const tags = ['#Salesforce', '#' + post.category.replace(/\s+/g, ''), '#BestPractices'];
       
       app.innerHTML = `
         ${getHeaderHTML(getCommonIcon)}
 
         <main class="blog-post-page">
           <article class="blog-article">
-            <div class="article-nav">
-              <a href="/blog" class="back-btn">
-                ${getCommonIcon('chevron-left', 16, 'currentColor')}
-                <span>Back to Blog</span>
-              </a>
+            <header class="article-hero">
+              <div class="article-hero-inner">
+                <div class="article-breadcrumb">
+                  <span class="breadcrumb-item">${post.category.toUpperCase()}</span>
+                  <span class="breadcrumb-sep">›</span>
+                  <span class="breadcrumb-item">SALESFORCE</span>
             </div>
-            <header class="article-header">
-              <div class="article-header-inner">
-                <span class="category-tag category-tag--large">${post.category}</span>
-                <h1 class="article-main-title">${post.title}</h1>
-                <p class="article-lead">${post.excerpt}</p>
-                <div class="article-meta-bar">
-                  <span class="meta-item">
-                    ${getCommonIcon('calendar', 16, 'currentColor')}
-                    ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                  </span>
-                  <span class="meta-item">
-                    ${getCommonIcon('clock', 16, 'currentColor')}
-                    ${post.readTime}
-                  </span>
+                <h1 class="article-hero-title">${post.title}</h1>
+                <div class="article-author-info">
+                  <div class="author-avatar-large">${authorInitials}</div>
+                  <div class="author-details">
+                    <span class="author-name-large">${authorName}</span>
+                    <span class="author-role">Principal Technical Architect</span>
+                  </div>
                 </div>
               </div>
             </header>
             
-            <div class="article-body">
-              <div class="article-content">
-                ${post.content}
+            <div class="article-layout">
+              <aside class="article-toc">
+                <div class="toc-sticky">
+                  <h3 class="toc-title">On This Page</h3>
+                  <nav class="toc-nav">
+                    <a href="#introduction" class="toc-link active">Introduction</a>
+                    ${headings.map((h, i) => `
+                      <a href="#${h.id}" class="toc-link">${i + 1}. ${h.text}</a>
+                    `).join('')}
+                  </nav>
+                  
+                  <div class="toc-share">
+                    <span class="share-label">Share</span>
+                    <div class="share-icons">
+                      <a href="mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(window.location.origin + '/blog/' + post.id)}" class="share-icon" title="Share via Email">${getCommonIcon('mail', 18, 'currentColor')}</a>
+                      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin + '/blog/' + post.id)}" target="_blank" rel="noopener noreferrer" class="share-icon" title="Share on LinkedIn">${getCommonIcon('linkedin', 18, 'currentColor')}</a>
+                      <button class="share-icon copy-link-btn" title="Copy link">${getCommonIcon('link', 18, 'currentColor')}</button>
               </div>
+                  </div>
+                </div>
+              </aside>
               
-              <aside class="article-sidebar">
-                <div class="sidebar-card">
-                  <h4 class="sidebar-title">Need Expert Help?</h4>
-                  <p class="sidebar-text">Our certified Salesforce experts can help you implement these best practices.</p>
-                  <a href="/contact" class="sidebar-cta">
-                    Get in Touch
-                    ${getCommonIcon('arrow-right', 16, 'currentColor')}
-                  </a>
+              <div class="article-main">
+                <div class="article-content" id="introduction">
+                  ${processedContent}
                 </div>
                 
-                ${relatedPosts.length > 0 ? `
-                <div class="sidebar-card sidebar-related">
-                  <h4 class="sidebar-title">Related Articles</h4>
-                  ${relatedPosts.map(relatedPost => `
-                    <a href="/blog/${relatedPost.id}" class="related-link">
-                      <span class="related-category">${relatedPost.category}</span>
-                      <span class="related-title">${relatedPost.title}</span>
-                    </a>
-                  `).join('')}
+                <div class="article-tags">
+                  ${tags.map(tag => `<span class="article-tag">${tag}</span>`).join('')}
                 </div>
-                ` : ''}
-              </aside>
+                
+                <div class="article-author-bio">
+                  <div class="author-bio-avatar">${authorInitials}</div>
+                  <div class="author-bio-content">
+                    <h4 class="author-bio-title">About ${authorName}</h4>
+                    <p class="author-bio-text">Principal Technical Architect at ApexRune. ${authorName.split(' ')[0]} has over 12 years of experience in the ecosystem and specializes in enterprise-scale architecture and integration solutions.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </article>
         </main>
@@ -3382,8 +3477,119 @@ function loadBlogPostPage(postId) {
       `;
 
       addBlogPostPageStyles();
+      
+      // Add scroll spy functionality
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, behavior: 'instant' });
+        
+        // Hide header on scroll
+        let lastScroll = 0;
+        const header = document.querySelector('.site-header');
+        const logoImg = header.querySelector('.logo-icon');
+        const originalLogoSrc = '/logo.png';
+        const whiteLogoSrc = '/logo-v2.png';
+        
+        // Set white logo initially for blog post page
+        if (logoImg) {
+          logoImg.src = whiteLogoSrc;
+        }
+        
+        // Get TOC element for sticky behavior
+        const toc = document.querySelector('.article-toc');
+        const tocSticky = document.querySelector('.toc-sticky');
+        const articleLayout = document.querySelector('.article-layout');
+        
+        const handleScroll = () => {
+          const currentScroll = window.scrollY;
+          
+          // Add scrolled class when past the hero section
+          if (currentScroll > 100) {
+            header.classList.add('header-scrolled');
+            if (logoImg) logoImg.src = originalLogoSrc;
+          } else {
+            header.classList.remove('header-scrolled');
+            if (logoImg) logoImg.src = whiteLogoSrc;
+          }
+          
+          // Hide header when scrolling down past 300px
+          if (currentScroll > 300) {
+            header.classList.add('header-hidden');
+          } else {
+            header.classList.remove('header-hidden');
+          }
+          
+          // Make TOC fixed when scrolling
+          if (toc && tocSticky && articleLayout) {
+            const layoutRect = articleLayout.getBoundingClientRect();
+            const tocRect = toc.getBoundingClientRect();
+            const layoutTop = layoutRect.top + window.scrollY;
+            
+            if (currentScroll > layoutTop - 30) {
+              tocSticky.classList.add('is-fixed');
+              // Calculate left position based on the TOC container
+              const leftPos = articleLayout.getBoundingClientRect().left + 32; // 32px = 2rem padding
+              tocSticky.style.left = leftPos + 'px';
+            } else {
+              tocSticky.classList.remove('is-fixed');
+              tocSticky.style.left = '';
+            }
+          }
+          
+          lastScroll = currentScroll;
+          
+          // Update active TOC link
+          const tocLinks = document.querySelectorAll('.toc-link');
+          const headingElements = document.querySelectorAll('.article-content h2[id], .article-content[id]');
+          
+          let activeId = 'introduction';
+          headingElements.forEach(el => {
+            if (el.getBoundingClientRect().top <= 150) {
+              activeId = el.id;
+            }
+          });
+          
+          tocLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + activeId) {
+              link.classList.add('active');
+            }
+          });
+        };
+        
+        window.addEventListener('scroll', handleScroll);
+        
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-link').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+              const offset = 100;
+              const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+              window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+            }
+          });
+        });
+        
+        // Copy link functionality
+        const copyLinkBtn = document.querySelector('.copy-link-btn');
+        if (copyLinkBtn) {
+          copyLinkBtn.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(window.location.href);
+              // Show feedback
+              copyLinkBtn.classList.add('copied');
+              copyLinkBtn.setAttribute('title', 'Copied!');
+              setTimeout(() => {
+                copyLinkBtn.classList.remove('copied');
+                copyLinkBtn.setAttribute('title', 'Copy link');
+              }, 2000);
+            } catch (err) {
+              console.error('Failed to copy:', err);
+            }
+          });
+        }
       });
       
       // Initialize mobile menu and dropdowns
@@ -3406,9 +3612,9 @@ function addBlogPageStyles() {
   style.textContent = `
     .blog-page {
       padding: 0;
-      padding-top: 120px;
+      padding-top: 100px;
+      min-height: calc(100vh - 100px);
       background: linear-gradient(to bottom, #F0F9FF, var(--white) 250px);
-      min-height: calc(100vh - 200px);
     }
 
     .blog-container {
@@ -3432,13 +3638,11 @@ function addBlogPageStyles() {
       font-weight: 800;
       color: var(--dark-blue);
       margin-bottom: 1rem;
-      letter-spacing: -0.02em;
     }
 
     .blog-page-subtitle {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: var(--text-light);
-      max-width: 600px;
       line-height: 1.6;
     }
 
@@ -3447,14 +3651,35 @@ function addBlogPageStyles() {
       margin-bottom: 4rem;
     }
 
+    .featured-section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .featured-section-header svg {
+      color: #F59E0B;
+    }
+
+    .featured-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 0;
+    }
+
     .featured-article {
       display: grid;
-      grid-template-columns: 1fr 380px;
-      background: linear-gradient(135deg, var(--dark-blue) 0%, #1E3A8A 100%);
+      grid-template-columns: 1fr auto;
+      background: linear-gradient(135deg, #2563EB 0%, #1E40AF 60%, #1E3A8A 100%);
       border-radius: 16px;
       overflow: hidden;
       text-decoration: none;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
     }
 
     .featured-article:hover {
@@ -3462,18 +3687,49 @@ function addBlogPageStyles() {
       box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3);
     }
 
+    .featured-decoration {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      color: rgba(255, 255, 255, 0.15);
+    }
+
+    .featured-decoration svg {
+      width: 100px;
+      height: 100px;
+    }
+
     .featured-content {
       display: flex;
       flex-direction: column;
-      padding: 2.5rem;
+      padding: 3rem;
       color: var(--white);
     }
 
+    .featured-top-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
     .featured-content .category-tag {
-      align-self: flex-start;
       background: rgba(255, 255, 255, 0.2);
       color: var(--white);
-      margin-bottom: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .featured-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.85rem;
+    }
+
+    .featured-date svg {
+      opacity: 0.7;
     }
 
     .featured-title {
@@ -3494,27 +3750,56 @@ function addBlogPageStyles() {
     .featured-footer {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      padding-top: 1.5rem;
+      justify-content: space-between;
+      padding-top: 2rem;
+      margin-top: auto;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    .featured-footer .post-date,
-    .featured-footer .read-time {
+    .featured-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .author-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .author-name {
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .author-title {
       color: rgba(255, 255, 255, 0.7);
       font-size: 0.85rem;
     }
 
-    .featured-image-area {
-      background: rgba(255, 255, 255, 0.05);
+    .featured-read-time {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
     }
 
-    .featured-placeholder {
-      color: rgba(255, 255, 255, 0.2);
-    }
 
     .category-tag {
       display: inline-block;
@@ -3530,9 +3815,11 @@ function addBlogPageStyles() {
 
     .category-tag--small {
       font-size: 0.65rem;
-      padding: 0.25rem 0.5rem;
+      padding: 0.25rem 0.6rem;
       background: #EFF6FF;
-      color: var(--dark-blue);
+      color: var(--bright-blue);
+      font-weight: 700;
+      border-radius: 4px;
     }
 
     .meta-divider {
@@ -3567,32 +3854,98 @@ function addBlogPageStyles() {
 
     /* Articles Section */
     .articles-section {
-      margin-top: 3rem;
+      margin-top: 4rem;
+    }
+
+    .articles-filters {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.6rem 1.25rem;
+      border-radius: 24px;
+      border: 1px solid #E5E7EB;
+      background: var(--white);
+      color: var(--text-dark);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--bright-blue);
+      color: var(--bright-blue);
+    }
+
+    .filter-btn.active {
+      background: var(--bright-blue);
+      color: var(--white);
+      border-color: var(--bright-blue);
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border: 1px solid #E5E7EB;
+      border-radius: 24px;
+      background: #F9FAFB;
+      max-width: 200px;
+      max-width: 300px;
+    }
+
+    .search-container svg {
+      color: var(--text-light);
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      background: transparent;
+    }
+
+    .search-input::placeholder {
+      color: #9CA3AF;
     }
 
     .articles-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #E5E7EB;
+      margin-bottom: 1.5rem;
     }
 
     .articles-title {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.25rem;
+      font-weight: 600;
       color: var(--dark-blue);
     }
 
     .articles-count {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--text-light);
     }
 
     .articles-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
 
@@ -3600,22 +3953,64 @@ function addBlogPageStyles() {
       background: var(--white);
       border: 1px solid #E5E7EB;
       border-radius: 12px;
-      padding: 1.5rem;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      height: 100%;
     }
 
     .article-card:hover {
       border-color: var(--bright-blue);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .article-card-image {
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      background: #F3F4F6;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9CA3AF;
+    }
+
+    .image-placeholder--small {
+      height: 180px;
+    }
+
+    .card-icon-placeholder {
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #E5E7EB;
+    }
+
+    .card-icon-placeholder svg {
+      opacity: 0.8;
+    }
+
+    .article-card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1.25rem 1.5rem 1.5rem;
     }
 
     .article-card-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .article-card-date {
@@ -3624,11 +4019,11 @@ function addBlogPageStyles() {
     }
 
     .article-card-title {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--dark-blue);
       line-height: 1.4;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     .article-card-title a {
@@ -3643,14 +4038,15 @@ function addBlogPageStyles() {
 
     .article-card-excerpt {
       color: var(--text-light);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       line-height: 1.6;
       flex: 1;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
+      min-height: 4rem;
     }
 
     .article-card-footer {
@@ -3658,30 +4054,186 @@ function addBlogPageStyles() {
       align-items: center;
       justify-content: space-between;
       padding-top: 1rem;
+      margin-top: 1rem;
       border-top: 1px solid #E5E7EB;
+    }
+
+    .article-author {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .author-avatar-small {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #E5E7EB;
+      color: var(--dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .author-name-small {
+      color: var(--text-dark);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .load-more-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+
+    .load-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border: 1px solid #E5E7EB;
+      border-radius: 24px;
+      background: var(--white);
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .load-more-btn:hover {
+      border-color: var(--bright-blue);
+      color: var(--bright-blue);
+    }
+
+    .load-more-btn svg {
+      color: var(--bright-blue);
+    }
+
+    .blog-cta-section {
+      margin-top: 5rem;
+      padding: 3.5rem 4rem;
+      background: linear-gradient(135deg, #2563EB 0%, #1E40AF 60%, #1E3A8A 100%);
+      border-radius: 16px;
+      color: var(--white);
+    }
+
+    .blog-cta-layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+
+    .blog-cta-text {
+      flex: 1;
+    }
+
+    .blog-cta-title {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-cta-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    .blog-cta-form {
+      display: flex;
+      gap: 0;
+      flex-shrink: 0;
+    }
+
+    .blog-cta-input {
+      padding: 0.875rem 1.25rem;
+      border: none;
+      border-radius: 8px 0 0 8px;
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--white);
+      font-size: 0.95rem;
+      outline: none;
+      width: 220px;
+    }
+
+    .blog-cta-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .blog-cta-input:focus {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .blog-cta-button {
+      padding: 0.875rem 1.5rem;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      background: var(--white);
+      color: var(--dark-blue);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .blog-cta-button:hover {
+      background: #F3F4F6;
     }
 
     @media (max-width: 900px) {
       .featured-article {
-        grid-template-columns: 1fr;
+        display: block;
       }
 
-      .featured-image-area {
+      .featured-decoration {
         display: none;
+      }
+
+      .blog-cta-layout {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .blog-cta-form {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .blog-cta-input {
+        flex: 1;
+        width: auto;
       }
     }
 
     @media (max-width: 768px) {
       .blog-page {
-        padding-top: 100px;
+        padding: 0;
+        padding-top: 70px;
       }
 
       .blog-container {
         padding: 2rem 1.25rem 4rem;
       }
 
+      .blog-header {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+      }
+
       .blog-page-title {
         font-size: 2.5rem;
+      }
+
+      .blog-page-subtitle {
+        font-size: 1rem;
       }
 
       .featured-content {
@@ -3695,6 +4247,47 @@ function addBlogPageStyles() {
       .articles-grid {
         grid-template-columns: 1fr;
       }
+
+      .articles-filters {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .filter-buttons {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .filter-buttons::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .search-container {
+        max-width: 100%;
+      }
+
+      .blog-cta-section {
+        padding: 3rem 1.5rem;
+        margin-top: 3rem;
+      }
+
+      .blog-cta-title {
+        font-size: 1.5rem;
+      }
+
+      .blog-cta-description {
+        font-size: 1rem;
+      }
+
+      .blog-cta-form {
+        flex-direction: column;
+      }
+
+      .blog-cta-button {
+        width: 100%;
+      }
     }
   `;
   document.head.appendChild(style);
@@ -3706,124 +4299,303 @@ function addBlogPostPageStyles() {
   const style = document.createElement('style');
   style.id = 'blog-post-page-styles';
   style.textContent = `
+    /* Header hide on scroll */
+    .site-header.header-hidden {
+      transform: translateY(-100%);
+    }
+
+    .site-header {
+      transition: transform 0.3s ease;
+    }
+
+    /* Header styling for blog post page - transparent with white text */
+    .blog-post-page ~ .site-header,
+    .site-header:has(~ .blog-post-page),
+    body:has(.blog-post-page) .site-header {
+      background: transparent;
+      border-bottom: none;
+    }
+
+    body:has(.blog-post-page) .site-header .nav-link {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    body:has(.blog-post-page) .site-header .nav-link:hover {
+      color: var(--white);
+    }
+
+    body:has(.blog-post-page) .site-header .nav-link svg {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    body:has(.blog-post-page) .site-header .contact-btn {
+      background: var(--white);
+      color: var(--dark-blue);
+    }
+
+    body:has(.blog-post-page) .site-header .contact-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    body:has(.blog-post-page) .site-header .mobile-menu-btn {
+      color: var(--white);
+    }
+
+    /* When header is scrolled and hidden starts showing again, use solid bg */
+    body:has(.blog-post-page) .site-header.header-scrolled {
+      background: var(--white);
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .nav-link {
+      color: var(--text-dark);
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .nav-link:hover {
+      color: var(--bright-blue);
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .nav-link svg {
+      color: var(--text-dark);
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .contact-btn {
+      background: var(--bright-blue);
+      color: var(--white);
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .contact-btn:hover {
+      background: var(--dark-blue);
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .mobile-menu-btn {
+      color: var(--text-dark);
+    }
+
+    /* Blog Post Page */
     .blog-post-page {
       padding: 0;
-      padding-top: 120px;
-      background: linear-gradient(to bottom, #F0F9FF, var(--white) 150px);
+      background: var(--white);
       min-height: calc(100vh - 200px);
-    }
-    
-    @media (max-width: 768px) {
-      .blog-post-page {
-        padding-top: 100px;
-      }
+      margin-top: -90px;
+      padding-top: 0;
     }
 
     .blog-article {
       max-width: 100%;
     }
 
-    /* Article Navigation */
-    .article-nav {
-      padding: 1.5rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      border-bottom: 1px solid #E5E7EB;
+    /* Article Hero */
+    .article-hero {
+      background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 50%, #2563EB 100%);
+      padding: calc(90px + 8rem) 2rem 4rem;
+      color: var(--white);
     }
 
-    .back-btn {
-      display: inline-flex;
+    .article-hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .article-breadcrumb {
+      display: flex;
       align-items: center;
-      gap: 0.35rem;
-      color: var(--bright-blue);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: gap 0.2s ease;
-    }
-
-    .back-btn:hover {
-      gap: 0.5rem;
-    }
-
-    .back-btn svg {
-      transition: transform 0.2s ease;
-    }
-
-    .back-btn:hover svg {
-      transform: translateX(-2px);
-    }
-
-    /* Article Header */
-    .article-header {
-      background: linear-gradient(135deg, var(--dark-blue) 0%, #1E3A8A 100%);
-      padding: 4rem 2rem;
-      color: var(--white);
-    }
-
-    .article-header-inner {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .category-tag--large {
-      background: rgba(255, 255, 255, 0.2);
-      color: var(--white);
-      font-size: 0.75rem;
-      padding: 0.5rem 1rem;
+      gap: 0.75rem;
       margin-bottom: 1.5rem;
     }
 
-    .article-main-title {
+    .breadcrumb-item {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .breadcrumb-sep {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .article-hero-title {
       font-size: 2.75rem;
       font-weight: 800;
       color: var(--white);
       line-height: 1.2;
-      margin-bottom: 1.25rem;
-      letter-spacing: -0.02em;
-    }
-
-    .article-lead {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.6;
       margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+      max-width: 800px;
     }
 
-    .article-meta-bar {
+    .article-author-info {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      gap: 1rem;
     }
 
-    .meta-item {
-      display: inline-flex;
+    .author-avatar-large {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.75);
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
     }
 
-    .meta-item svg {
-      opacity: 0.7;
+    .author-details {
+      text-align: left;
     }
 
-    /* Article Body */
-    .article-body {
-      display: grid;
-      grid-template-columns: 1fr 300px;
+    .author-name-large {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .author-role {
+      display: block;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Article Layout */
+    .article-layout {
+      display: flex;
+      align-items: flex-start;
       gap: 4rem;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 4rem 2rem;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* Table of Contents */
+    .article-toc {
+      width: 220px;
+      flex-shrink: 0;
+    }
+
+    .toc-sticky {
+      /* Container for TOC content */
+      transition: none;
+    }
+    
+    .toc-sticky.is-fixed {
+      position: fixed;
+      top: 30px;
+      width: 200px;
+      max-height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    .toc-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .toc-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .toc-link {
+      display: block;
+      padding: 0.5rem 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      padding-left: 1rem;
+      margin-left: -1rem;
+      transition: all 0.2s;
+      line-height: 1.4;
+    }
+
+    .toc-link:hover {
+      color: var(--dark-blue);
+    }
+
+    .toc-link.active {
+      color: var(--dark-blue);
+      font-weight: 600;
+      border-left-color: var(--bright-blue);
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0.08), transparent);
+    }
+
+    .toc-share {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    .share-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 1rem;
+    }
+
+    .share-icons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .share-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid #E5E7EB;
+      color: var(--text-light);
+      background: var(--white);
+      transition: all 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .share-icon:hover {
+      color: var(--bright-blue);
+      border-color: var(--bright-blue);
+      background: #EFF6FF;
+    }
+    
+    .share-icon.copied {
+      color: #10B981;
+      border-color: #10B981;
+      background: #ECFDF5;
+    }
+
+    /* Article Main Content */
+    .article-main {
+      flex: 1;
+      max-width: 720px;
+      min-width: 0;
     }
 
     .article-content {
       font-size: 1.1rem;
-      line-height: 1.85;
+      line-height: 1.9;
       color: var(--text-dark);
+    }
+
+    .article-content > p:first-child {
+      font-size: 1.2rem;
+      color: var(--text-light);
+      line-height: 1.8;
     }
 
     .article-content p {
@@ -3831,16 +4603,17 @@ function addBlogPostPageStyles() {
     }
 
     .article-content h2 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--dark-blue);
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       margin-bottom: 1rem;
       letter-spacing: -0.01em;
+      scroll-margin-top: 100px;
     }
 
     .article-content h3 {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: var(--dark-blue);
       margin-top: 2rem;
@@ -3850,23 +4623,47 @@ function addBlogPostPageStyles() {
     .article-content ul,
     .article-content ol {
       margin: 1.25rem 0;
-      padding-left: 1.5rem;
+      padding-left: 0;
+      list-style: none;
     }
 
     .article-content li {
-      margin-bottom: 0.6rem;
+      position: relative;
+      margin-bottom: 0.75rem;
       line-height: 1.7;
+      padding-left: 1.5rem;
+    }
+
+    .article-content ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--bright-blue);
+      font-weight: 600;
+    }
+
+    .article-content ol {
+      counter-reset: item;
+    }
+
+    .article-content ol li::before {
+      content: counter(item) '.';
+      counter-increment: item;
+      position: absolute;
+      left: 0;
+      color: var(--bright-blue);
+      font-weight: 600;
     }
 
     .article-content a {
       color: var(--bright-blue);
       text-decoration: none;
-      border-bottom: 1px solid currentColor;
-      transition: border-color 0.2s;
+      font-weight: 500;
+      transition: color 0.2s;
     }
 
     .article-content a:hover {
-      border-color: transparent;
+      text-decoration: underline;
     }
 
     .article-content strong {
@@ -4055,151 +4852,196 @@ function addBlogPostPageStyles() {
       background: #565f89;
     }
 
-    /* Sidebar */
-    .article-sidebar {
-      position: sticky;
-      top: 2rem;
-      height: fit-content;
-    }
-
-    .sidebar-card {
-      background: #FAFBFC;
-      border: 1px solid #E5E7EB;
+    /* Code Block Header */
+    .code-block {
+      background: #1F2937;
       border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin: 1.5rem 0;
+      overflow: hidden;
     }
 
-    .sidebar-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--dark-blue);
-      margin-bottom: 0.75rem;
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: #374151;
+      border-bottom: 1px solid #4B5563;
     }
 
-    .sidebar-text {
-      font-size: 0.9rem;
-      color: var(--text-light);
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
+    .code-filename {
+      font-size: 0.8rem;
+      color: #9CA3AF;
+      font-family: 'SF Mono', monospace;
     }
 
-    .sidebar-cta {
-      display: inline-flex;
+    .code-badge {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.5rem;
+      background: rgba(239, 68, 68, 0.2);
+      color: #FCA5A5;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .code-content {
+      padding: 1.25rem;
+    }
+
+    .code-content code {
+      background: none;
+      padding: 0;
+      color: #E5E7EB;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    .code-comment {
+      color: #6B7280;
+    }
+
+    .code-string {
+      color: #34D399;
+    }
+
+    .code-keyword {
+      color: #F472B6;
+    }
+
+    /* Callout Box */
+    .callout {
+      background: #F0F9FF;
+      border-left: 4px solid var(--bright-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .callout-title {
+      display: flex;
       align-items: center;
       gap: 0.5rem;
-      color: var(--bright-blue);
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: gap 0.2s;
-    }
-
-    .sidebar-cta:hover {
-      gap: 0.75rem;
-    }
-
-    .sidebar-related {
-      background: var(--white);
-    }
-
-    .related-link {
-      display: block;
-      padding: 1rem 0;
-      border-bottom: 1px solid #E5E7EB;
-      text-decoration: none;
-      transition: transform 0.2s;
-    }
-
-    .related-link:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .related-link:first-of-type {
-      padding-top: 0.5rem;
-    }
-
-    .related-link:hover {
-      transform: translateX(4px);
-    }
-
-    .related-category {
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--bright-blue);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.25rem;
-    }
-
-    .related-title {
-      display: block;
-      font-size: 0.9rem;
       font-weight: 600;
       color: var(--dark-blue);
-      line-height: 1.4;
+      margin-bottom: 0.5rem;
     }
 
-    @media (max-width: 1024px) {
-      .article-body {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
+    .callout-text {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+      margin: 0;
+    }
 
-      .article-sidebar {
-        position: relative;
-        top: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Article Tags */
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    .article-tag {
+      padding: 0.5rem 1rem;
+      background: #F3F4F6;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    /* Author Bio */
+    .article-author-bio {
+      display: flex;
         gap: 1.5rem;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #F9FAFB;
+      border-radius: 12px;
+      border: 1px solid #E5E7EB;
+    }
+
+    .author-bio-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .author-bio-content {
+      flex: 1;
+    }
+
+    .author-bio-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .author-bio-text {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .article-layout {
+        flex-direction: column;
+        gap: 2rem;
       }
 
-      .sidebar-card {
-        margin-bottom: 0;
+      .article-toc {
+        display: none;
+      }
+
+      .article-main {
+        max-width: 100%;
+        width: 100%;
       }
     }
 
     @media (max-width: 768px) {
-      .article-nav {
-        padding: 0.75rem 1.25rem;
+      .blog-post-page {
+        margin-top: -60px;
+        padding-top: 60px;
       }
 
-      .back-btn {
-        font-size: 0.85rem;
-        padding: 0.4rem 0.75rem;
+      .article-hero {
+        padding: calc(70px + 4rem) 1.25rem 2.5rem;
       }
 
-      .article-header {
-        padding: 2.5rem 1.25rem;
-      }
-
-      .article-main-title {
+      .article-hero-title {
         font-size: 1.85rem;
-      }
-
-      .article-lead {
-        font-size: 1.05rem;
         margin-bottom: 1.5rem;
       }
 
-      .article-meta-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-      }
-
-      .article-body {
-        padding: 2rem 1.25rem;
+      .article-layout {
+        padding: 2rem 1.25rem 3rem;
       }
 
       .article-content {
         font-size: 1rem;
       }
 
+      .article-content > p:first-child {
+        font-size: 1.05rem;
+      }
+
       .article-content h2 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        margin-top: 2rem;
       }
 
       .article-content h3 {
@@ -4208,6 +5050,13 @@ function addBlogPostPageStyles() {
 
       .article-sidebar {
         grid-template-columns: 1fr;
+      }
+
+      .article-author-bio {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 1.5rem;
       }
 
       /* Mobile code blocks */
@@ -4274,4 +5123,5 @@ function addBlogPostPageStyles() {
   `;
   document.head.appendChild(style);
 }
+
 
