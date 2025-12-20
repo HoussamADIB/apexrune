@@ -4472,6 +4472,7 @@ function addBlogPostPageStyles() {
     .article-toc {
       width: 220px;
       flex-shrink: 0;
+      position: relative;
     }
 
     .toc-sticky {
@@ -4485,6 +4486,13 @@ function addBlogPostPageStyles() {
       width: 200px;
       max-height: calc(100vh - 60px);
       overflow-y: auto;
+      z-index: 10;
+    }
+
+    /* Footer z-index to ensure it stays above TOC */
+    .footer {
+      position: relative;
+      z-index: 50;
     }
 
     .toc-title {
