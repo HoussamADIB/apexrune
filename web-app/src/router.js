@@ -1,4 +1,14 @@
 // Simple router for handling page navigation
+// NOTE: This file is being refactored into modular structure
+// See router/ directory for new modular components
+
+// Import modular components
+import { getHeaderHTML } from './router/components/header.js';
+import { getFooterHTML } from './router/components/footer.js';
+import { initMobileMenu } from './router/ui/mobile-menu.js';
+import { initDropdownMenus, cleanupDropdownMenus } from './router/ui/dropdowns.js';
+import { loadServicePage, setHandleRoute } from './router/pages/services.js';
+
 let updateMetaTags = null;
 let iconsModule = null;
 
@@ -7,7 +17,7 @@ import('./icons.js').then((module) => {
   iconsModule = module;
 });
 
-// Logo SVG component - matches home page logo
+// Logo SVG component - matches home page logo (deprecated - use router/components/logo.js)
 function getLogoHTML() {
   return `
     <div class="logo-square">
@@ -40,8 +50,9 @@ function getLogoHTML() {
   `;
 }
 
-// Helper function to get header HTML with dropdown menus
-function getHeaderHTML(getCommonIcon) {
+// Helper function to get header HTML with dropdown menus (deprecated - use router/components/header.js)
+// Keeping for backward compatibility during migration
+function getHeaderHTML_OLD(getCommonIcon) {
   return `
     <header class="header site-header">
       <div class="header-content">
@@ -138,8 +149,9 @@ function getHeaderHTML(getCommonIcon) {
   `;
 }
 
-// Helper function to get footer HTML with Lucide icons
-function getFooterHTML(getCommonIcon) {
+// Helper function to get footer HTML with Lucide icons (deprecated - use router/components/footer.js)
+// Keeping for backward compatibility during migration
+function getFooterHTML_OLD(getCommonIcon) {
   return `
     <footer class="footer">
       <div class="container">
@@ -275,7 +287,7 @@ function handleRoute() {
     // If already on home page, do nothing
     return;
   } else if (path.startsWith('/service/')) {
-    // Load service detail page
+    // Load service detail page - using modular version
     const serviceKey = path.split('/service/')[1];
     loadServicePage(serviceKey);
     if (updateMetaTags) updateMetaTags(path);
@@ -321,7 +333,12 @@ function handleRoute() {
   });
 }
 
-function loadServicePage(serviceKey) {
+// Set handleRoute reference for services page module
+setHandleRoute(handleRoute);
+
+// Load service page (deprecated - use router/pages/services.js)
+// Keeping for backward compatibility - this function is now imported from router/pages/services.js
+function loadServicePage_OLD(serviceKey) {
   Promise.all([
     import('./services.js'),
     import('./icons.js')
@@ -586,8 +603,9 @@ function loadServicePage(serviceKey) {
   });
 }
 
-// Initialize mobile menu functionality
-function initMobileMenu() {
+// Initialize mobile menu functionality (deprecated - use router/ui/mobile-menu.js)
+// Keeping for backward compatibility during migration
+function initMobileMenu_OLD() {
   const toggle = document.querySelector('.mobile-menu-toggle');
   const closeBtn = document.querySelector('.mobile-menu-close');
   const mobileMenu = document.querySelector('.mobile-menu');
@@ -625,14 +643,15 @@ function initMobileMenu() {
   });
 }
 
-// Global dropdown state management to prevent conflicts
-const dropdownState = {
+// Global dropdown state management to prevent conflicts (deprecated - use router/ui/dropdowns.js)
+// Keeping for backward compatibility during migration
+const dropdownState_OLD = {
   handlers: new Map(), // Store handlers for cleanup
   initialized: false
 };
 
-// Initialize dropdown menus with robust state management and cleanup
-function initDropdownMenus() {
+// Initialize dropdown menus with robust state management and cleanup (deprecated)
+function initDropdownMenus_OLD() {
   const nav = document.querySelector('.nav');
   if (!nav) return;
   
@@ -785,8 +804,8 @@ function initDropdownMenus() {
   dropdownState.initialized = true;
 }
 
-// Clean up dropdown event listeners
-function cleanupDropdownMenus() {
+// Clean up dropdown event listeners (deprecated - use router/ui/dropdowns.js)
+function cleanupDropdownMenus_OLD() {
   // Remove document click handler
   if (dropdownState.documentClickHandler) {
     document.removeEventListener('click', dropdownState.documentClickHandler, true);
