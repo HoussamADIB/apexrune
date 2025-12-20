@@ -247,8 +247,10 @@ export function initRouter() {
   });
 }
 
-// Export handleRoute for use in other modules
+// Export handleRoute and initDropdownMenus for use in other modules
 window.handleRoute = handleRoute;
+window.initDropdownMenus = initDropdownMenus;
+window.cleanupDropdownMenus = cleanupDropdownMenus;
 
 function handleRoute() {
   const path = window.location.pathname || '/';
@@ -305,6 +307,9 @@ function handleRoute() {
     window.history.replaceState({}, '', '/');
     handleRoute();
   }
+  
+  // Clean up old dropdown handlers before initializing new ones
+  cleanupDropdownMenus();
   
   // Initialize mobile menu and dropdowns after page load
   requestAnimationFrame(() => {
@@ -575,6 +580,7 @@ function loadServicePage(serviceKey) {
       initContactForm();
     });
     
+    cleanupDropdownMenus();
     initMobileMenu();
     initDropdownMenus();
   });
@@ -592,12 +598,22 @@ function initMobileMenu() {
     if (mobileMenu) mobileMenu.classList.add('active');
     if (overlay) overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    // Hide toggle button when menu is open
+    if (toggle) {
+      toggle.style.opacity = '0';
+      toggle.style.pointerEvents = 'none';
+    }
   }
 
   function closeMenu() {
     if (mobileMenu) mobileMenu.classList.remove('active');
     if (overlay) overlay.classList.remove('active');
     document.body.style.overflow = '';
+    // Show toggle button when menu is closed
+    if (toggle) {
+      toggle.style.opacity = '1';
+      toggle.style.pointerEvents = 'auto';
+    }
   }
 
   if (toggle) toggle.addEventListener('click', openMenu);
@@ -609,47 +625,208 @@ function initMobileMenu() {
   });
 }
 
-// Initialize dropdown menus with hover delay to prevent gap issues
+// Global dropdown state management to prevent conflicts
+const dropdownState = {
+  handlers: new Map(), // Store handlers for cleanup
+  initialized: false
+};
+
+// Initialize dropdown menus with robust state management and cleanup
 function initDropdownMenus() {
   const nav = document.querySelector('.nav');
   if (!nav) return;
+  
+  // Clean up any existing handlers first
+  cleanupDropdownMenus();
   
   // Add class to disable CSS hover (JavaScript will handle it)
   nav.classList.add('js-dropdown-enabled');
   
   const dropdowns = document.querySelectorAll('.nav-dropdown');
   
-  dropdowns.forEach(dropdown => {
+  dropdowns.forEach((dropdown, index) => {
     const menu = dropdown.querySelector('.nav-dropdown-menu');
     if (!menu) return;
     
-    let hideTimeout;
+    // Initialize menu state
+    menu.style.opacity = '0';
+    menu.style.visibility = 'hidden';
+    menu.style.pointerEvents = 'none';
+    
+    let hideTimeout = null;
     let isVisible = false;
+    let isHovering = false;
     
-    function showMenu() {
+    const showMenu = () => {
+      if (hideTimeout) {
       clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
+      
+      isHovering = true;
       isVisible = true;
-      menu.style.setProperty('opacity', '1', 'important');
-      menu.style.setProperty('visibility', 'visible', 'important');
-      menu.style.setProperty('pointer-events', 'auto', 'important');
-    }
-    
-    function hideMenu() {
-      isVisible = false;
-      hideTimeout = setTimeout(() => {
-        if (!isVisible) {
-          menu.style.setProperty('opacity', '0', 'important');
-          menu.style.setProperty('visibility', 'hidden', 'important');
-          menu.style.setProperty('pointer-events', 'none', 'important');
+      
+      // Use requestAnimationFrame for smooth transitions
+      requestAnimationFrame(() => {
+        if (isHovering) {
+          menu.style.opacity = '1';
+          menu.style.visibility = 'visible';
+          menu.style.pointerEvents = 'auto';
+          menu.style.transition = 'opacity 0.15s ease, visibility 0.15s ease';
         }
-      }, 200);
-    }
+      });
+    };
     
-    dropdown.addEventListener('mouseenter', showMenu);
-    dropdown.addEventListener('mouseleave', hideMenu);
-    menu.addEventListener('mouseenter', showMenu);
-    menu.addEventListener('mouseleave', hideMenu);
+    const hideMenu = () => {
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+      }
+      
+      hideTimeout = setTimeout(() => {
+        // Only hide if we're still not hovering
+        if (!isHovering) {
+          isVisible = false;
+          menu.style.opacity = '0';
+          menu.style.visibility = 'hidden';
+          menu.style.pointerEvents = 'none';
+        }
+      }, 150); // Slightly reduced delay for better responsiveness
+    };
+    
+    const handleMouseEnter = (e) => {
+      isHovering = true;
+      isVisible = true;
+      showMenu();
+    };
+    
+    const handleMouseLeave = (e) => {
+      // Check if we're moving to a child element
+      const relatedTarget = e.relatedTarget;
+      if (relatedTarget && (dropdown.contains(relatedTarget) || menu.contains(relatedTarget))) {
+        return; // Still within dropdown area
+      }
+      isHovering = false;
+      hideMenu();
+    };
+    
+    // Add event listeners
+    dropdown.addEventListener('mouseenter', handleMouseEnter);
+    dropdown.addEventListener('mouseleave', handleMouseLeave);
+    menu.addEventListener('mouseenter', handleMouseEnter);
+    menu.addEventListener('mouseleave', handleMouseLeave);
+    
+    // Also handle focus for accessibility
+    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    if (trigger) {
+      const handleFocus = () => {
+        isHovering = true;
+        isVisible = true;
+        showMenu();
+      };
+      
+      const handleBlur = (e) => {
+        // Delay to allow clicking on menu items
+        setTimeout(() => {
+          if (!dropdown.contains(document.activeElement)) {
+            isHovering = false;
+            hideMenu();
+          }
+        }, 100);
+      };
+      
+      trigger.addEventListener('focus', handleFocus);
+      trigger.addEventListener('blur', handleBlur);
+      
+      // Store handlers for cleanup
+      dropdownState.handlers.set(dropdown, {
+        mouseenter: handleMouseEnter,
+        mouseleave: handleMouseLeave,
+        focus: handleFocus,
+        blur: handleBlur,
+        menu: menu,
+        trigger: trigger,
+        hideMenu: hideMenu,
+        isHovering: () => isHovering,
+        setIsHovering: (val) => { isHovering = val; }
+      });
+    } else {
+      dropdownState.handlers.set(dropdown, {
+        mouseenter: handleMouseEnter,
+        mouseleave: handleMouseLeave,
+        menu: menu,
+        hideMenu: hideMenu,
+        isHovering: () => isHovering,
+        setIsHovering: (val) => { isHovering = val; }
+      });
+    }
   });
+  
+  // Global click handler to close dropdowns when clicking outside
+  // Set up after handlers are stored
+  const handleDocumentClick = (e) => {
+    dropdowns.forEach(dropdown => {
+      const menu = dropdown.querySelector('.nav-dropdown-menu');
+      if (!menu) return;
+      
+      // If click is outside the dropdown, close it
+      if (!dropdown.contains(e.target) && !menu.contains(e.target)) {
+        const handlers = dropdownState.handlers.get(dropdown);
+        if (handlers && handlers.hideMenu) {
+          handlers.hideMenu();
+        }
+      }
+    });
+  };
+  
+  // Add document click listener (will be cleaned up on next init)
+  document.addEventListener('click', handleDocumentClick, true);
+  dropdownState.documentClickHandler = handleDocumentClick;
+  
+  dropdownState.initialized = true;
+}
+
+// Clean up dropdown event listeners
+function cleanupDropdownMenus() {
+  // Remove document click handler
+  if (dropdownState.documentClickHandler) {
+    document.removeEventListener('click', dropdownState.documentClickHandler, true);
+    dropdownState.documentClickHandler = null;
+  }
+  
+  dropdownState.handlers.forEach((handlers, dropdown) => {
+    if (handlers.mouseenter) {
+      dropdown.removeEventListener('mouseenter', handlers.mouseenter);
+    }
+    if (handlers.mouseleave) {
+      dropdown.removeEventListener('mouseleave', handlers.mouseleave);
+    }
+    if (handlers.menu) {
+      const menu = handlers.menu;
+      if (handlers.mouseenter) {
+        menu.removeEventListener('mouseenter', handlers.mouseenter);
+      }
+      if (handlers.mouseleave) {
+        menu.removeEventListener('mouseleave', handlers.mouseleave);
+      }
+    }
+    if (handlers.trigger) {
+      if (handlers.focus) {
+        handlers.trigger.removeEventListener('focus', handlers.focus);
+      }
+      if (handlers.blur) {
+        handlers.trigger.removeEventListener('blur', handlers.blur);
+      }
+    }
+  });
+  
+  dropdownState.handlers.clear();
+  dropdownState.initialized = false;
+  
+  // Remove the js-dropdown-enabled class
+  const nav = document.querySelector('.nav');
+  if (nav) {
+    nav.classList.remove('js-dropdown-enabled');
+  }
 }
 
 function addServiceDetailStyles() {
@@ -663,12 +840,27 @@ function addServiceDetailStyles() {
       padding-top: 120px;
       min-height: calc(100vh - 100px);
       background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+      width: 100%;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    .service-detail-page .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     @media (max-width: 768px) {
       .service-detail-page {
         padding: 1.5rem 1rem 3rem;
         padding-top: 100px;
+      }
+
+      .service-detail-page .container {
+        padding: 0 1.25rem;
       }
     }
 
@@ -786,15 +978,39 @@ function addServiceDetailStyles() {
     /* Main Layout */
     .service-detail-layout {
       display: grid;
-      grid-template-columns: 1fr 380px;
+      grid-template-columns: 1fr;
       gap: 3rem;
       align-items: start;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      margin-top: 0;
+    }
+
+    @media (min-width: 1025px) {
+      .service-detail-layout {
+        grid-template-columns: 1fr 320px;
+        gap: 3rem;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .service-detail-layout {
+        grid-template-columns: 1fr 380px;
+      }
     }
 
     .service-detail-main {
       display: flex;
       flex-direction: column;
       gap: 3rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      margin-top: 0;
+      padding-top: 0;
     }
 
     /* Sections */
@@ -1088,10 +1304,17 @@ function addServiceDetailStyles() {
     /* Sidebar */
     .service-sidebar {
       position: sticky;
-      top: 120px;
+      top: 0;
+      align-self: start;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      margin-top: 0;
+      padding-top: 0;
     }
 
     .service-sidebar-card {
@@ -1102,6 +1325,11 @@ function addServiceDetailStyles() {
       flex-direction: column;
       gap: 1rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      word-wrap: break-word;
     }
 
     .service-sidebar-card.cta-card {
@@ -1259,7 +1487,9 @@ function addServiceDetailStyles() {
     /* Responsive */
     @media (max-width: 1024px) {
       .service-detail-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 2rem;
+        overflow-x: hidden;
       }
 
       .service-sidebar {
@@ -1267,6 +1497,16 @@ function addServiceDetailStyles() {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .service-sidebar-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
       }
 
       .service-sidebar-card.cta-card {
@@ -1293,6 +1533,13 @@ function addServiceDetailStyles() {
     }
 
     @media (max-width: 768px) {
+      .service-detail-layout {
+        gap: 1.5rem;
+        overflow-x: hidden;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
       .service-hero {
         padding: 1.75rem;
       }
@@ -1312,6 +1559,9 @@ function addServiceDetailStyles() {
 
       .service-section {
         padding: 1.5rem;
+        overflow-x: hidden;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .service-section-title {
@@ -1324,6 +1574,34 @@ function addServiceDetailStyles() {
 
       .service-sidebar {
         grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .service-sidebar-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 1.5rem;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .sidebar-title,
+      .sidebar-subtitle,
+      .sidebar-description,
+      .sidebar-text {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+
+      .sidebar-cta-button,
+      .sidebar-email-link {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
       }
 
       .feature-description {
@@ -1457,6 +1735,7 @@ function loadPrivacyPolicyPage() {
     });
     
     // Initialize mobile menu and dropdowns
+    cleanupDropdownMenus();
     initMobileMenu();
     initDropdownMenus();
   });
@@ -1584,6 +1863,7 @@ function loadTermsOfServicePage() {
     });
     
     // Initialize mobile menu and dropdowns
+    cleanupDropdownMenus();
     initMobileMenu();
     initDropdownMenus();
   });
@@ -1645,6 +1925,7 @@ function loadContactPage() {
     });
     
     // Initialize mobile menu and dropdowns
+    cleanupDropdownMenus();
     initMobileMenu();
     initDropdownMenus();
   });
@@ -1852,6 +2133,7 @@ function loadCaseStudiesPage() {
     });
     
     // Initialize mobile menu and dropdowns
+    cleanupDropdownMenus();
     initMobileMenu();
     initDropdownMenus();
   });
@@ -2098,6 +2380,7 @@ function loadCaseStudyDetailPage(caseStudyId) {
     });
     
     // Initialize mobile menu and dropdowns
+    cleanupDropdownMenus();
     initMobileMenu();
     initDropdownMenus();
   });
@@ -2118,9 +2401,8 @@ function addCaseStudyDetailPageStyles() {
 
     @media (max-width: 768px) {
       .case-study-detail-page {
+        padding: 1.5rem 1rem 3rem;
         padding-top: 100px;
-        padding-left: 1rem;
-        padding-right: 1rem;
       }
     }
 
@@ -2138,6 +2420,7 @@ function addCaseStudyDetailPageStyles() {
       color: var(--bright-blue);
       text-decoration: none;
       margin-bottom: 0;
+      margin-top: 0;
       font-weight: 600;
     }
 
@@ -2481,12 +2764,6 @@ function addCaseStudyDetailPageStyles() {
     }
 
     @media (max-width: 768px) {
-      .case-study-detail-page {
-        padding: 1.5rem 1rem 3rem;
-        margin-top: -60px;
-        padding-top: calc(1.5rem + 60px);
-      }
-
       .case-study-detail-page .back-link {
         padding: 0 0 1rem 0;
       }
@@ -3000,6 +3277,47 @@ function addContactPageStyles() {
       .contact-info-link {
         font-size: 0.9375rem;
       }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.875rem;
+        font-size: 1rem;
+        min-height: 48px;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .form-group textarea {
+        min-height: 120px;
+      }
+
+      .contact-form-submit {
+        padding: 1rem 1.5rem;
+        min-height: 48px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-page-container {
+        padding: 1.25rem 0.875rem;
+      }
+
+      .contact-info-panel {
+        padding: 1.75rem 1.25rem;
+      }
+
+      .contact-form-panel {
+        padding: 1.75rem 1.25rem;
+      }
+
+      .contact-info-title {
+        font-size: 1.75rem;
+      }
+
+      .contact-info-description {
+        font-size: 0.9375rem;
+      }
     }
   `;
   document.head.appendChild(style);
@@ -3362,6 +3680,7 @@ function loadBlogPage() {
       });
       
       // Initialize mobile menu and dropdowns
+      cleanupDropdownMenus();
       initMobileMenu();
       initDropdownMenus();
     });
@@ -3369,6 +3688,12 @@ function loadBlogPage() {
 }
 
 function loadBlogPostPage(postId) {
+  // Clean up any existing scroll handler from previous blog post
+  if (window._blogPostScrollHandler) {
+    window.removeEventListener('scroll', window._blogPostScrollHandler);
+    window._blogPostScrollHandler = null;
+  }
+  
   import('./blog.js').then(({ blogPosts, getPostById }) => {
     import('./icons.js').then(({ getCommonIcon }) => {
       const post = getPostById(postId);
@@ -3518,20 +3843,116 @@ function loadBlogPostPage(postId) {
             header.classList.remove('header-hidden');
           }
           
-          // Make TOC fixed when scrolling
+          // Make TOC fixed when scrolling, but prevent overlap with footer - DYNAMIC VERSION
           if (toc && tocSticky && articleLayout) {
             const layoutRect = articleLayout.getBoundingClientRect();
-            const tocRect = toc.getBoundingClientRect();
             const layoutTop = layoutRect.top + window.scrollY;
+            const footer = document.querySelector('.footer');
             
+            // Only make TOC fixed if scrolled past the layout top
             if (currentScroll > layoutTop - 30) {
-              tocSticky.classList.add('is-fixed');
-              // Calculate left position based on the TOC container
-              const leftPos = articleLayout.getBoundingClientRect().left + 32; // 32px = 2rem padding
-              tocSticky.style.left = leftPos + 'px';
+              // Get all dimensions dynamically for current viewport
+              const viewportHeight = window.innerHeight;
+              const viewportWidth = window.innerWidth;
+              const scrollBottom = viewportHeight + window.scrollY;
+              const documentHeight = document.documentElement.scrollHeight;
+              
+              // Get actual TOC dimensions - force reflow to get accurate measurements
+              const tocRect = tocSticky.getBoundingClientRect();
+              const tocHeight = tocRect.height || tocSticky.scrollHeight || tocSticky.offsetHeight || 400;
+              const tocWidth = 200; // Match CSS width
+              
+              // Calculate left position dynamically
+              const layoutLeft = articleLayout.getBoundingClientRect().left;
+              const leftPos = layoutLeft + 32; // 32px = 2rem padding
+              const maxLeft = viewportWidth - tocWidth - 16; // 16px margin from edge
+              const finalLeft = Math.min(leftPos, maxLeft);
+              
+              // Default positioning
+              let shouldBeFixed = true;
+              let topPosition = 30; // Default top offset
+              const minTop = 30; // Minimum top position
+              const buffer = 40; // Buffer between TOC and footer
+              
+              // Check footer overlap dynamically
+              if (footer) {
+                const footerRect = footer.getBoundingClientRect();
+                const footerTop = footerRect.top; // Viewport-relative position
+                const footerHeight = footerRect.height;
+                
+                // Calculate available space above footer
+                const availableSpace = footerTop - minTop;
+                
+                // Check if TOC would fit in available space
+                if (availableSpace < tocHeight + buffer) {
+                  // Not enough space - remove fixed positioning
+                  shouldBeFixed = false;
+                } else {
+                  // Calculate where TOC bottom would be at default position
+                  const tocBottomAtDefault = minTop + tocHeight;
+                  
+                  // If TOC would extend into footer area
+                  if (tocBottomAtDefault > footerTop - buffer) {
+                    // Calculate maximum safe top position
+                    const maxSafeTop = footerTop - tocHeight - buffer;
+                    
+                    if (maxSafeTop >= minTop) {
+                      // Adjust top position to fit above footer
+                      topPosition = maxSafeTop;
+                      
+                      // Verify the adjusted position works
+                      const adjustedTocBottom = topPosition + tocHeight;
+                      if (adjustedTocBottom > footerTop - buffer) {
+                        // Still doesn't fit, remove fixed positioning
+                        shouldBeFixed = false;
+                      }
+                    } else {
+                      // Even at minimum top, TOC would overlap - remove fixed positioning
+                      shouldBeFixed = false;
+                    }
+                  }
+                  
+                  // Additional check: if we're very close to bottom of page
+                  const distanceFromBottom = documentHeight - scrollBottom;
+                  if (distanceFromBottom < 100) {
+                    // Re-check footer position
+                    const currentFooterTop = footer.getBoundingClientRect().top;
+                    const tocBottomAtCurrent = topPosition + tocHeight;
+                    
+                    if (tocBottomAtCurrent > currentFooterTop - buffer) {
+                      const maxTop = currentFooterTop - tocHeight - buffer;
+                      if (maxTop >= minTop) {
+                        topPosition = maxTop;
+                      } else {
+                        shouldBeFixed = false;
+                      }
+                    }
+                  }
+                }
+              }
+              
+              // Apply or remove fixed positioning
+              if (shouldBeFixed) {
+                tocSticky.classList.add('is-fixed');
+                tocSticky.style.left = finalLeft + 'px';
+                tocSticky.style.top = topPosition + 'px';
+                tocSticky.style.maxWidth = tocWidth + 'px';
+                tocSticky.style.maxHeight = (viewportHeight - topPosition - 20) + 'px';
+              } else {
+                // Remove fixed positioning completely
+                tocSticky.classList.remove('is-fixed');
+                tocSticky.style.left = '';
+                tocSticky.style.top = '';
+                tocSticky.style.maxWidth = '';
+                tocSticky.style.maxHeight = '';
+              }
             } else {
+              // Not scrolled past layout top - remove fixed positioning
               tocSticky.classList.remove('is-fixed');
               tocSticky.style.left = '';
+              tocSticky.style.top = '';
+              tocSticky.style.maxWidth = '';
+              tocSticky.style.maxHeight = '';
             }
           }
           
@@ -3556,6 +3977,13 @@ function loadBlogPostPage(postId) {
           });
         };
         
+        // Clean up any existing scroll handler
+        if (window._blogPostScrollHandler) {
+          window.removeEventListener('scroll', window._blogPostScrollHandler);
+        }
+        
+        // Store handler reference for cleanup
+        window._blogPostScrollHandler = handleScroll;
         window.addEventListener('scroll', handleScroll);
         
         // Smooth scroll for TOC links
@@ -3593,6 +4021,7 @@ function loadBlogPostPage(postId) {
       });
       
       // Initialize mobile menu and dropdowns
+      cleanupDropdownMenus();
       initMobileMenu();
       initDropdownMenus();
       
@@ -4466,6 +4895,9 @@ function addBlogPostPageStyles() {
       max-width: 1200px;
       margin: 0 auto;
       padding: 3rem 2rem 5rem;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     /* Table of Contents */
@@ -4473,6 +4905,7 @@ function addBlogPostPageStyles() {
       width: 220px;
       flex-shrink: 0;
       position: relative;
+      min-width: 0;
     }
 
     .toc-sticky {
@@ -4484,9 +4917,12 @@ function addBlogPostPageStyles() {
       position: fixed;
       top: 30px;
       width: 200px;
+      max-width: 200px;
       max-height: calc(100vh - 60px);
       overflow-y: auto;
+      overflow-x: hidden;
       z-index: 10;
+      box-sizing: border-box;
     }
 
     /* Footer z-index to ensure it stays above TOC */
@@ -4589,12 +5025,18 @@ function addBlogPostPageStyles() {
       flex: 1;
       max-width: 720px;
       min-width: 0;
+      overflow-x: hidden;
+      word-wrap: break-word;
+      box-sizing: border-box;
     }
 
     .article-content {
       font-size: 1.1rem;
       line-height: 1.9;
       color: var(--text-dark);
+      overflow-x: hidden;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .article-content > p:first-child {
@@ -4800,12 +5242,16 @@ function addBlogPostPageStyles() {
     /* Tables */
     .article-content table {
       width: 100%;
+      max-width: 100%;
       border-collapse: collapse;
       margin: 1.75rem 0;
       font-size: 0.95rem;
       border-radius: 12px;
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      display: block;
+      box-sizing: border-box;
     }
 
     .article-content table thead tr {
@@ -5056,10 +5502,34 @@ function addBlogPostPageStyles() {
     }
 
     /* Responsive */
+    @media (max-width: 1024px) {
+      .article-layout {
+        gap: 3rem;
+        padding: 3rem 1.5rem 5rem;
+        overflow-x: hidden;
+      }
+
+      .article-toc {
+        width: 200px;
+        flex-shrink: 0;
+      }
+
+      .article-main {
+        overflow-x: hidden;
+        max-width: calc(100% - 200px - 3rem);
+      }
+
+      .toc-sticky.is-fixed {
+        width: 180px;
+        max-width: 180px;
+      }
+    }
+
     @media (max-width: 900px) {
       .article-layout {
         flex-direction: column;
         gap: 2rem;
+        padding: 2.5rem 1.5rem 4rem;
       }
 
       .article-toc {
@@ -5089,6 +5559,24 @@ function addBlogPostPageStyles() {
 
       .article-layout {
         padding: 2rem 1.25rem 3rem;
+        gap: 0;
+        overflow-x: hidden;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .article-main {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
+
+      .article-content {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
       }
 
       .article-content {
@@ -5177,5 +5665,6 @@ function addBlogPostPageStyles() {
   `;
   document.head.appendChild(style);
 }
+
 
 

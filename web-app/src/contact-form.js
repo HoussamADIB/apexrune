@@ -545,19 +545,73 @@ function addContactFormStyles() {
 
     @media (max-width: 768px) {
       .contact-modal {
-        padding: 1rem;
+        padding: 0.5rem;
+        align-items: flex-end;
+      }
+
+      .contact-modal-content {
+        max-height: 95vh;
+        border-radius: 16px 16px 0 0;
       }
 
       .contact-form-container {
-        padding: 2rem 1.5rem 1.5rem;
+        padding: 1.75rem 1.25rem 1.5rem;
       }
 
       .contact-form-title {
         font-size: 1.5rem;
+        line-height: 1.3;
+      }
+
+      .contact-form-subtitle {
+        font-size: 0.9375rem;
       }
 
       .form-row {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 0.875rem;
+        font-size: 1rem;
+        min-height: 48px;
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 8px;
+      }
+
+      .form-group textarea {
+        min-height: 120px;
+      }
+
+      .contact-form-submit {
+        padding: 1rem 1.5rem;
+        min-height: 48px;
+        font-size: 1rem;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-modal {
+        padding: 0;
+      }
+
+      .contact-form-container {
+        padding: 1.5rem 1rem 1.25rem;
+      }
+
+      .contact-form-title {
+        font-size: 1.375rem;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 0.8125rem;
       }
     }
   `;

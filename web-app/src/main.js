@@ -618,20 +618,30 @@ function initMobileMenu() {
   const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
   function openMenu() {
-    mobileMenu.classList.add('active');
-    overlay.classList.add('active');
+    if (mobileMenu) mobileMenu.classList.add('active');
+    if (overlay) overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    // Hide toggle button when menu is open
+    if (toggle) {
+      toggle.style.opacity = '0';
+      toggle.style.pointerEvents = 'none';
+    }
   }
 
   function closeMenu() {
-    mobileMenu.classList.remove('active');
-    overlay.classList.remove('active');
+    if (mobileMenu) mobileMenu.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
     document.body.style.overflow = '';
+    // Show toggle button when menu is closed
+    if (toggle) {
+      toggle.style.opacity = '1';
+      toggle.style.pointerEvents = 'auto';
+    }
   }
 
-  toggle?.addEventListener('click', openMenu);
-  closeBtn?.addEventListener('click', closeMenu);
-  overlay?.addEventListener('click', closeMenu);
+  if (toggle) toggle.addEventListener('click', openMenu);
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if (overlay) overlay.addEventListener('click', closeMenu);
   
   // Close menu when clicking on a nav link
   mobileNavLinks.forEach(link => {
@@ -697,36 +707,20 @@ function initNewsletterForm() {
   });
 }
 
-// Initialize dropdown menus with hover delay to prevent gap issues
+// Dropdown menus initialization - use router's implementation when available
 function initDropdownMenus() {
-  const dropdowns = document.querySelectorAll('.nav-dropdown');
-  
-  dropdowns.forEach(dropdown => {
-    const menu = dropdown.querySelector('.nav-dropdown-menu');
-    if (!menu) return;
-    
-    let hideTimeout;
-    
-    function showMenu() {
-      clearTimeout(hideTimeout);
-      menu.style.opacity = '1';
-      menu.style.visibility = 'visible';
-      menu.style.pointerEvents = 'auto';
-    }
-    
-    function hideMenu() {
-      hideTimeout = setTimeout(() => {
-        menu.style.opacity = '0';
-        menu.style.visibility = 'hidden';
-        menu.style.pointerEvents = 'none';
-      }, 100); // Small delay before hiding
-    }
-    
-    dropdown.addEventListener('mouseenter', showMenu);
-    dropdown.addEventListener('mouseleave', hideMenu);
-    menu.addEventListener('mouseenter', showMenu);
-    menu.addEventListener('mouseleave', hideMenu);
-  });
+  // Use router's implementation if available, otherwise wait
+  if (window.initDropdownMenus && typeof window.initDropdownMenus === 'function') {
+    window.initDropdownMenus();
+  } else {
+    // Router not loaded yet, will be initialized when router loads
+    // This is fine for initial page load
+    setTimeout(() => {
+      if (window.initDropdownMenus && typeof window.initDropdownMenus === 'function') {
+        window.initDropdownMenus();
+      }
+    }, 200);
+  }
 }
 
 // Initialize service tabs and router after DOM is ready
