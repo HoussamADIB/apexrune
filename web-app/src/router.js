@@ -2191,6 +2191,51 @@ function loadCaseStudyDetailPage(caseStudyId) {
         '0 CPU Timeout Errors',
         '100% Scalability Restored'
       ],
+      overallPerformanceGain: 23.05,
+      performanceResults: [
+        {
+          testMethod: 'Test_AccountTrigger.testBulkAccountInsertion()',
+          before: { try1: 28.874, try2: 31.572, try3: 27.921, average: 29.456 },
+          after: { try1: 19.542, try2: 23.236, try3: 24.968, average: 22.582 },
+          improvement: 23.34
+        },
+        {
+          testMethod: 'Test_AccountTrigger.testCreateEntitlement()',
+          before: { try1: 4.015, try2: 3.944, try3: 5.146, average: 4.368 },
+          after: { try1: 2.981, try2: 2.994, try3: 3.438, average: 3.138 },
+          improvement: 28.17
+        },
+        {
+          testMethod: 'Test_AccountTrigger.testSetAccountSubSegmentationInsert()',
+          before: { try1: 6.389, try2: 7.001, try3: 6.978, average: 6.789 },
+          after: { try1: 4.299, try2: 3.949, try3: 4.337, average: 4.195 },
+          improvement: 38.21
+        },
+        {
+          testMethod: 'Test_AccountTrigger.testSetAccountSubSegmentationUpdate()',
+          before: { try1: 16.220, try2: 13.996, try3: 16.744, average: 15.653 },
+          after: { try1: 11.481, try2: 10.974, try3: 10.921, average: 11.125 },
+          improvement: 28.93
+        },
+        {
+          testMethod: 'Test_AccountTrigger.testUpdateAccountsInfo()',
+          before: { try1: 3.664, try2: 3.927, try3: 4.103, average: 3.898 },
+          after: { try1: 2.715, try2: 4.411, try3: 3.137, average: 3.421 },
+          improvement: 12.24
+        },
+        {
+          testMethod: 'Test_AccountTrigger.testUpdateRecordsType()',
+          before: { try1: 6.134, try2: 5.518, try3: 7.511, average: 6.388 },
+          after: { try1: 4.459, try2: 7.125, try3: 4.576, average: 5.387 },
+          improvement: 15.67
+        },
+        {
+          testMethod: 'Test_AccountTrigger.testupdateRelatedContactAddresses()',
+          before: { try1: 12.805, try2: 12.383, try3: 12.467, average: 12.552 },
+          after: { try1: 9.631, try2: 11.211, try3: 11.234, average: 10.692 },
+          improvement: 14.82
+        }
+      ],
       testimonial: 'The client\'s sales and operations teams no longer fear the \'Save\' button. The platform works silently and instantly in the background, allowing them to focus on revenue, not troubleshooting.',
       technicalDetails: 'We performed comprehensive profiling and refactoring of trigger handlers, implementing a clean architecture pattern that separates concerns and optimizes database operations.'
     },
@@ -2322,9 +2367,62 @@ function loadCaseStudyDetailPage(caseStudyId) {
                     </div>
                   `).join('')}
                 </div>
+                
+                ${caseStudy.performanceResults && caseStudy.performanceResults.length > 0 ? `
+                  <div class="benchmark-table-card" onclick="openPreviewModal()">
+                    <div class="benchmark-table-header">
+                      <div class="benchmark-file-path">
+                        <span class="file-dots">
+                          <span class="file-dot red"></span>
+                          <span class="file-dot yellow"></span>
+                          <span class="file-dot green"></span>
+                        </span>
+                        <span class="file-path-text">logs/benchmark_results.csv</span>
+                      </div>
+                    </div>
+                    <div class="benchmark-table-wrapper">
+                      <table class="benchmark-table">
+                        <thead>
+                          <tr>
+                            <th>TEST METHOD</th>
+                            <th>BEFORE (avg)</th>
+                            <th>AFTER (avg)</th>
+                            <th>IMPROVEMENT</th>
+                            <th>STATUS</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          ${caseStudy.performanceResults.slice(0, 3).map(result => `
+                            <tr>
+                              <td class="metric-name">${result.testMethod.replace('Test_AccountTrigger.', '').replace('()', '')}</td>
+                              <td class="metric-before">${result.before.average.toFixed(3)}s</td>
+                              <td class="metric-after">${result.after.average.toFixed(3)}s</td>
+                              <td class="metric-improvement">${result.improvement.toFixed(2)}%</td>
+                              <td class="metric-status">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </td>
+                            </tr>
+                          `).join('')}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="benchmark-hover-overlay">
+                      <span>View Full Benchmark</span>
+                    </div>
+                  </div>
+                ` : ''}
+                
                 ${caseStudy.testimonial ? `
                   <div class="case-study-testimonial">
                     <p>"${caseStudy.testimonial}"</p>
+                    <button class="preview-details-button" onclick="openPreviewModal()">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 2V10M10 10V18M10 10H18M10 10H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                      View Preview Details
+                    </button>
                   </div>
                 ` : ''}
               </section>
@@ -2374,6 +2472,8 @@ function loadCaseStudyDetailPage(caseStudyId) {
     ${getFooterHTML(getCommonIcon)}
   `;
 
+    // Create preview modal
+    createPreviewModal();
     addCaseStudyDetailPageStyles();
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -2383,6 +2483,184 @@ function loadCaseStudyDetailPage(caseStudyId) {
     cleanupDropdownMenus();
     initMobileMenu();
     initDropdownMenus();
+  });
+}
+
+// Make openPreviewModal available globally
+window.openPreviewModal = function() {
+  const modal = document.getElementById('preview-sheet-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Get case study ID from URL
+    const caseStudyId = window.location.pathname.split('/').pop();
+    
+    // Get case study data
+    const caseStudies = {
+      'platform-paralysis': {
+        overallPerformanceGain: 23.05,
+        performanceResults: [
+          {
+            testMethod: 'Test_AccountTrigger.testBulkAccountInsertion()',
+            before: { try1: 28.874, try2: 31.572, try3: 27.921, average: 29.456 },
+            after: { try1: 19.542, try2: 23.236, try3: 24.968, average: 22.582 },
+            improvement: 23.34
+          },
+          {
+            testMethod: 'Test_AccountTrigger.testCreateEntitlement()',
+            before: { try1: 4.015, try2: 3.944, try3: 5.146, average: 4.368 },
+            after: { try1: 2.981, try2: 2.994, try3: 3.438, average: 3.138 },
+            improvement: 28.17
+          },
+          {
+            testMethod: 'Test_AccountTrigger.testSetAccountSubSegmentationInsert()',
+            before: { try1: 6.389, try2: 7.001, try3: 6.978, average: 6.789 },
+            after: { try1: 4.299, try2: 3.949, try3: 4.337, average: 4.195 },
+            improvement: 38.21
+          },
+          {
+            testMethod: 'Test_AccountTrigger.testSetAccountSubSegmentationUpdate()',
+            before: { try1: 16.220, try2: 13.996, try3: 16.744, average: 15.653 },
+            after: { try1: 11.481, try2: 10.974, try3: 10.921, average: 11.125 },
+            improvement: 28.93
+          },
+          {
+            testMethod: 'Test_AccountTrigger.testUpdateAccountsInfo()',
+            before: { try1: 3.664, try2: 3.927, try3: 4.103, average: 3.898 },
+            after: { try1: 2.715, try2: 4.411, try3: 3.137, average: 3.421 },
+            improvement: 12.24
+          },
+          {
+            testMethod: 'Test_AccountTrigger.testUpdateRecordsType()',
+            before: { try1: 6.134, try2: 5.518, try3: 7.511, average: 6.388 },
+            after: { try1: 4.459, try2: 7.125, try3: 4.576, average: 5.387 },
+            improvement: 15.67
+          },
+          {
+            testMethod: 'Test_AccountTrigger.testupdateRelatedContactAddresses()',
+            before: { try1: 12.805, try2: 12.383, try3: 12.467, average: 12.552 },
+            after: { try1: 9.631, try2: 11.211, try3: 11.234, average: 10.692 },
+            improvement: 14.82
+          }
+        ]
+      }
+    };
+    
+    const caseStudy = caseStudies[caseStudyId];
+    
+    // Populate full benchmark table with actual performance metrics
+    const fullTableBody = document.getElementById('full-benchmark-table-body');
+    const overallGainValue = document.getElementById('overall-gain-value');
+    
+    if (fullTableBody && caseStudy && caseStudy.performanceResults) {
+      fullTableBody.innerHTML = caseStudy.performanceResults.map(result => `
+        <tr>
+          <td class="test-method-cell">${result.testMethod.replace('Test_AccountTrigger.', '')}</td>
+          <td>${result.before.try1.toFixed(3)}</td>
+          <td>${result.before.try2.toFixed(3)}</td>
+          <td>${result.before.try3.toFixed(3)}</td>
+          <td class="average-cell before-avg">${result.before.average.toFixed(3)}</td>
+          <td>${result.after.try1.toFixed(3)}</td>
+          <td>${result.after.try2.toFixed(3)}</td>
+          <td>${result.after.try3.toFixed(3)}</td>
+          <td class="average-cell after-avg">${result.after.average.toFixed(3)}</td>
+          <td class="improvement-cell">${result.improvement.toFixed(2)}%</td>
+        </tr>
+      `).join('');
+      
+      if (overallGainValue && caseStudy.overallPerformanceGain) {
+        overallGainValue.textContent = `${caseStudy.overallPerformanceGain.toFixed(2)}%`;
+      }
+    }
+  }
+};
+
+window.closePreviewModal = function() {
+  const modal = document.getElementById('preview-sheet-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+
+function createPreviewModal() {
+  // Check if modal already exists
+  if (document.getElementById('preview-sheet-modal')) return;
+
+  const modalHTML = `
+    <div id="preview-sheet-modal" class="preview-sheet-modal" style="display: none;">
+      <div class="preview-sheet-modal-overlay" onclick="closePreviewModal()"></div>
+      <div class="preview-sheet-modal-content">
+        <button class="preview-sheet-modal-close" onclick="closePreviewModal()" aria-label="Close preview">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+        </button>
+        
+        <div class="preview-sheet-container">
+          <div class="preview-sheet-content" id="preview-sheet-content">
+            <div class="benchmark-results-card">
+              <div class="benchmark-header">
+                <span class="benchmark-tab">BENCHMARK RESULTS</span>
+                  </div>
+              
+              <div class="benchmark-content">
+                <div class="benchmark-table-wrapper">
+                  <table class="benchmark-table full-benchmark-table">
+                        <thead>
+                          <tr>
+                            <th class="test-method-col">Test Method</th>
+                            <th colspan="4" class="before-header">Before</th>
+                            <th colspan="4" class="after-header">After</th>
+                            <th class="improvement-col">Improvement %</th>
+                          </tr>
+                          <tr class="sub-header">
+                            <th></th>
+                        <th>1st Try<br><span class="time-label">(Time in seconds)</span></th>
+                        <th>2nd Try<br><span class="time-label">(Time in seconds)</span></th>
+                        <th>3rd Try<br><span class="time-label">(Time in seconds)</span></th>
+                            <th>Average</th>
+                        <th>1st Try<br><span class="time-label">(Time in seconds)</span></th>
+                        <th>2nd Try<br><span class="time-label">(Time in seconds)</span></th>
+                        <th>3rd Try<br><span class="time-label">(Time in seconds)</span></th>
+                            <th>Average</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                    <tbody id="full-benchmark-table-body">
+                      <!-- Will be populated dynamically -->
+                        </tbody>
+                        <tfoot>
+                          <tr class="overall-gain-row">
+                            <td colspan="9" class="overall-gain-label">OVERALL PERFORMANCE GAIN</td>
+                        <td class="overall-gain-value" id="overall-gain-value">23.05%</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                  </div>
+      </div>
+        </div>
+                  </div>
+      </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('preview-sheet-modal');
+      if (modal && modal.style.display !== 'none') {
+        closePreviewModal();
+      }
+    }
   });
 }
 
@@ -2647,6 +2925,159 @@ function addCaseStudyDetailPageStyles() {
       text-align: center;
     }
 
+    /* Clickable Benchmark Table Card */
+    .benchmark-table-card {
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .benchmark-table-card:hover {
+      border-color: var(--bright-blue);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .benchmark-table-card:hover .benchmark-hover-overlay {
+      opacity: 1;
+    }
+
+    .benchmark-table-header {
+      margin-bottom: 1rem;
+    }
+
+    .benchmark-hover-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(59, 130, 246, 0.95);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.125rem;
+    }
+
+    .benchmark-table-card .benchmark-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .benchmark-table-card .benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .benchmark-table-card .benchmark-table thead {
+      background: #F9FAFB;
+    }
+
+    .benchmark-table-card .benchmark-table th {
+      padding: 0.75rem 0.5rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #E5E7EB;
+    }
+
+    .benchmark-table-card .benchmark-table th:first-child {
+      padding-left: 0;
+    }
+
+    .benchmark-table-card .benchmark-table tbody tr {
+      border-bottom: 1px solid #F3F4F6;
+    }
+
+    .benchmark-table-card .benchmark-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .benchmark-table-card .benchmark-table td {
+      padding: 1rem 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .benchmark-table-card .benchmark-table td:first-child {
+      padding-left: 0;
+    }
+
+    .benchmark-table-card .metric-name {
+      font-weight: 600;
+      font-family: 'Courier New', 'SF Mono', monospace;
+      font-size: 0.8125rem;
+    }
+
+    .benchmark-table-card .metric-before {
+      color: #DC2626;
+      font-weight: 600;
+    }
+
+    .benchmark-table-card .metric-after {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .benchmark-table-card .metric-improvement {
+      color: var(--green);
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .benchmark-table-card .metric-status {
+      text-align: center;
+    }
+
+    .benchmark-table-card .benchmark-file-path {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    .benchmark-table-card .file-dots {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .benchmark-table-card .file-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .benchmark-table-card .file-dot.red {
+      background: #EF4444;
+    }
+
+    .benchmark-table-card .file-dot.yellow {
+      background: #F59E0B;
+    }
+
+    .benchmark-table-card .file-dot.green {
+      background: var(--green);
+    }
+
+    .benchmark-table-card .file-path-text {
+      font-family: 'Courier New', 'SF Mono', monospace;
+    }
+
     /* Testimonial */
     .case-study-testimonial {
       background: #EFF6FF;
@@ -2660,8 +3091,536 @@ function addCaseStudyDetailPageStyles() {
       font-size: 1.125rem;
       color: var(--text-dark);
       line-height: 1.7;
-      margin: 0;
+      margin: 0 0 1rem 0;
       font-style: italic;
+    }
+
+    .preview-details-button {
+      background: var(--bright-blue);
+      color: var(--white);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      margin-top: 1rem;
+    }
+
+    .preview-details-button:hover {
+      background: var(--primary-blue);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+    }
+
+    .preview-details-button:active {
+      transform: translateY(0);
+    }
+
+    .preview-details-button svg {
+      flex-shrink: 0;
+    }
+
+    /* Preview Sheet Modal */
+    .preview-sheet-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .preview-sheet-modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .preview-sheet-modal-content {
+      position: relative;
+      background: var(--white);
+      border-radius: 16px;
+      max-width: 1400px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      animation: slideUp 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .preview-sheet-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-light);
+      transition: color 0.2s;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-sheet-modal-close:hover {
+      color: var(--text-dark);
+    }
+
+    .preview-sheet-container {
+      padding: 2rem 2rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .preview-sheet-content {
+      color: var(--text-dark);
+      line-height: 1.7;
+    }
+
+    .preview-sheet-placeholder {
+      text-align: center;
+      color: var(--text-light);
+      font-style: italic;
+      padding: 2rem;
+    }
+
+    /* Benchmark Results Card */
+    .benchmark-results-card {
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .benchmark-header {
+      position: relative;
+      padding-top: 1rem;
+    }
+
+    .benchmark-tab {
+      display: inline-block;
+      background: var(--bright-blue);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-left: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .benchmark-tab::before {
+      content: '>_';
+      font-family: 'Courier New', monospace;
+    }
+
+    .benchmark-content {
+      display: block;
+      padding: 2rem;
+    }
+
+    .benchmark-section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin-bottom: 1rem;
+    }
+
+    .benchmark-description {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .benchmark-metric {
+      margin-bottom: 2rem;
+    }
+
+    .benchmark-metric-label {
+        font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .benchmark-progress-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .benchmark-progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #E5E7EB;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .benchmark-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green) 0%, #34D399 100%);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .benchmark-improvement {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    .benchmark-report-button {
+      background: var(--white);
+      color: var(--bright-blue);
+      border: 2px solid var(--bright-blue);
+      padding: 0.875rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .benchmark-report-button:hover {
+      background: var(--bright-blue);
+      color: var(--white);
+    }
+
+
+    .benchmark-file-path {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    .file-dots {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .file-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .file-dot.red {
+      background: #EF4444;
+    }
+
+    .file-dot.yellow {
+      background: #F59E0B;
+    }
+
+    .file-dot.green {
+      background: var(--green);
+    }
+
+    .file-path-text {
+      font-family: 'Courier New', 'SF Mono', monospace;
+    }
+
+    .benchmark-table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+    
+    .benchmark-results-card .benchmark-table-wrapper {
+      margin-bottom: 0;
+    }
+
+    .benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .benchmark-table thead {
+      background: #F9FAFB;
+    }
+
+    .benchmark-table th {
+      padding: 0.75rem 0.5rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #E5E7EB;
+    }
+
+    .benchmark-table th:first-child {
+      padding-left: 0;
+    }
+
+    .benchmark-table tbody tr {
+      border-bottom: 1px solid #F3F4F6;
+    }
+
+    .benchmark-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .benchmark-table td {
+      padding: 1rem 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .benchmark-table td:first-child {
+      padding-left: 0;
+    }
+
+    .metric-name {
+      font-weight: 600;
+      font-family: 'Courier New', 'SF Mono', monospace;
+      font-size: 0.8125rem;
+    }
+
+    .metric-before {
+      color: #DC2626;
+      font-weight: 600;
+    }
+
+    .metric-after {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .metric-status {
+      text-align: center;
+    }
+
+    .benchmark-view-button {
+      background: var(--bright-blue);
+      color: var(--white);
+      border: none;
+      padding: 0.875rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .benchmark-view-button:hover {
+      background: var(--primary-blue);
+    }
+
+    /* Full Benchmark Table Styles */
+    .full-benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      min-width: 100%;
+      table-layout: auto;
+    }
+
+    .full-benchmark-table thead {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    }
+
+    .full-benchmark-table th {
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      color: var(--dark-blue);
+      border-bottom: 2px solid #E5E7EB;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .full-benchmark-table th.test-method-col {
+      text-align: left;
+      padding-left: 1rem;
+      min-width: 300px;
+    }
+
+    .full-benchmark-table th.before-header,
+    .full-benchmark-table th.after-header {
+      background: rgba(251, 191, 36, 0.2);
+      font-weight: 700;
+    }
+
+    .full-benchmark-table th.improvement-col {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+      font-weight: 700;
+    }
+
+    .full-benchmark-table .sub-header th {
+      font-weight: 500;
+      font-size: 0.75rem;
+      padding: 0.5rem 0.5rem;
+      border-bottom: 1px solid #E5E7EB;
+      background: #FEF3C7;
+    }
+
+    .full-benchmark-table .time-label {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--text-light);
+      display: block;
+      margin-top: 0.25rem;
+    }
+
+    .full-benchmark-table tbody tr {
+      border-bottom: 1px solid #F3F4F6;
+      transition: background 0.2s;
+    }
+
+    .full-benchmark-table tbody tr:hover {
+      background: #F9FAFB;
+    }
+
+    .full-benchmark-table td {
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      color: var(--text-dark);
+      font-size: 0.875rem;
+    }
+
+    .full-benchmark-table td.test-method-cell {
+      text-align: left;
+      padding-left: 1rem;
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .full-benchmark-table td.average-cell {
+      font-weight: 600;
+      background: #F9FAFB;
+    }
+
+    .full-benchmark-table td.before-avg {
+      color: #DC2626;
+    }
+
+    .full-benchmark-table td.after-avg {
+      color: #059669;
+    }
+
+    .full-benchmark-table td.improvement-cell {
+      font-weight: 700;
+      color: #059669;
+      background: rgba(16, 185, 129, 0.1);
+      font-size: 0.9rem;
+    }
+
+    .full-benchmark-table tfoot {
+      background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+    }
+
+    .full-benchmark-table tfoot tr.overall-gain-row {
+      border-bottom: none;
+    }
+
+    .full-benchmark-table tfoot td {
+      padding: 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .full-benchmark-table tfoot td.overall-gain-label {
+      text-align: right;
+      color: var(--dark-blue);
+      padding-right: 1rem;
+    }
+
+    .full-benchmark-table tfoot td.overall-gain-value {
+      text-align: center;
+      color: #059669;
+      font-size: 1.25rem;
+      background: rgba(16, 185, 129, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .benchmark-content {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .preview-sheet-modal {
+        padding: 0.5rem;
+        align-items: flex-end;
+      }
+
+      .preview-sheet-modal-content {
+        max-height: 95vh;
+        border-radius: 16px 16px 0 0;
+      }
+
+      .preview-sheet-container {
+        padding: 1.75rem 1.25rem 1.5rem;
+      }
+
+      .preview-details-button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.875rem 1.5rem;
+      }
     }
 
     /* Sidebar */
@@ -3648,7 +4607,7 @@ function loadBlogPage() {
                     </div>
                         </a>
                 `}).join('')}
-                      </div>
+                    </div>
             </section>
 
             <section class="blog-cta-section">
@@ -4033,15 +4992,15 @@ function loadBlogPostPage(postId) {
               
               // Apply or remove fixed positioning
               if (shouldBeFixed) {
-                tocSticky.classList.add('is-fixed');
+              tocSticky.classList.add('is-fixed');
                 tocSticky.style.left = finalLeft + 'px';
                 tocSticky.style.top = topPosition + 'px';
                 tocSticky.style.maxWidth = tocWidth + 'px';
                 tocSticky.style.maxHeight = (viewportHeight - topPosition - 20) + 'px';
-              } else {
+            } else {
                 // Remove fixed positioning completely
-                tocSticky.classList.remove('is-fixed');
-                tocSticky.style.left = '';
+              tocSticky.classList.remove('is-fixed');
+              tocSticky.style.left = '';
                 tocSticky.style.top = '';
                 tocSticky.style.maxWidth = '';
                 tocSticky.style.maxHeight = '';
