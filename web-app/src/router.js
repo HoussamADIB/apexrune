@@ -3534,9 +3534,11 @@ function loadBlogPage() {
   import('./blog.js').then(({ blogPosts, getAllCategories }) => {
     import('./icons.js').then(({ getCommonIcon }) => {
       const app = document.querySelector('#app');
-      const categories = getAllCategories();
       const featuredPost = blogPosts.find(post => post.featured);
       const otherPosts = blogPosts.filter(post => !post.featured || post !== featuredPost);
+      
+      // Get categories that actually have articles in the displayed list
+      const categoriesWithPosts = [...new Set(otherPosts.map(post => post.category))].filter(Boolean);
       
       app.innerHTML = `
         ${getHeaderHTML(getCommonIcon)}
@@ -3590,28 +3592,27 @@ function loadBlogPage() {
             <section class="articles-section">
               <div class="articles-filters">
                 <div class="filter-buttons">
-                  <button class="filter-btn active">All Articles</button>
-                  <button class="filter-btn">Apex</button>
-                  <button class="filter-btn">LWC</button>
-                  <button class="filter-btn">Automation</button>
-                  <button class="filter-btn">Integrations</button>
+                  <button class="filter-btn active" data-category="all">All Articles</button>
+                  ${categoriesWithPosts.map(cat => `
+                    <button class="filter-btn" data-category="${cat}">${cat}</button>
+                  `).join('')}
                 </div>
                 <div class="search-container">
                   ${getCommonIcon('search', 18, 'currentColor')}
-                  <input type="text" class="search-input" placeholder="Search by topic...">
+                  <input type="text" class="search-input" placeholder="Search articles..." id="blog-search-input">
                 </div>
               </div>
               <div class="articles-header">
                 <h2 class="articles-title">Latest Articles</h2>
-                <span class="articles-count">Showing ${otherPosts.length} of ${blogPosts.length}</span>
+                <span class="articles-count" id="articles-count">Showing ${otherPosts.length} of ${blogPosts.length}</span>
               </div>
-              <div class="articles-grid">
+              <div class="articles-grid" id="articles-grid">
                 ${otherPosts.map((post, index) => {
                   const categoryIcons = {
-                    'Automation': 'zap',
+                    'Performance': 'activity',
+                    'Architecture': 'layers',
                     'Integration': 'git-merge',
-                    'Security': 'shield',
-                    'Optimization': 'trending-up',
+                    'Development': 'code',
                     'Migration': 'refresh-cw',
                     'default': 'code'
                   };
@@ -3619,7 +3620,7 @@ function loadBlogPage() {
                   const iconColors = ['#3B82F6', '#F59E0B', '#8B5CF6', '#10B981', '#EF4444'];
                   const iconColor = iconColors[index % iconColors.length];
                   return `
-                  <a href="/blog/${post.id}" class="article-card">
+                  <a href="/blog/${post.id}" class="article-card" data-category="${post.category}" data-title="${post.title.toLowerCase()}" data-excerpt="${post.excerpt.toLowerCase()}">
                     <div class="article-card-image">
                       <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
                         ${getCommonIcon(iconName, 28, iconColor)}
@@ -3648,12 +3649,6 @@ function loadBlogPage() {
                         </a>
                 `}).join('')}
                       </div>
-              <div class="load-more-container">
-                <button class="load-more-btn">
-                  ${getCommonIcon('star', 16, 'currentColor')}
-                  Load More Articles
-                </button>
-                    </div>
             </section>
 
             <section class="blog-cta-section">
@@ -3679,12 +3674,117 @@ function loadBlogPage() {
         window.scrollTo({ top: 0, behavior: 'instant' });
       });
       
+      // Initialize blog filters and search
+      initBlogFilters(blogPosts, otherPosts, getAllCategories);
+      
       // Initialize mobile menu and dropdowns
       cleanupDropdownMenus();
       initMobileMenu();
       initDropdownMenus();
     });
   });
+}
+
+// Initialize blog filters and search functionality
+function initBlogFilters(allPosts, initialPosts, getAllCategories) {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const searchInput = document.getElementById('blog-search-input');
+  const articlesGrid = document.getElementById('articles-grid');
+  const articlesCount = document.getElementById('articles-count');
+  
+  let currentCategory = 'all';
+  let currentSearch = '';
+  
+  // Filter by category
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update active state
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      currentCategory = btn.dataset.category || 'all';
+      filterArticles();
+    });
+  });
+  
+  // Search functionality
+  if (searchInput) {
+    let searchTimeout;
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      currentSearch = e.target.value.toLowerCase().trim();
+      
+      // Debounce search
+      searchTimeout = setTimeout(() => {
+        filterArticles();
+      }, 300);
+    });
+  }
+  
+  function filterArticles() {
+    // Get all article cards (excluding featured)
+    const allCards = Array.from(document.querySelectorAll('.article-card'));
+    
+    // Filter by category
+    let filteredCards = allCards;
+    if (currentCategory !== 'all') {
+      filteredCards = filteredCards.filter(card => 
+        card.dataset.category === currentCategory
+      );
+    }
+    
+    // Filter by search term
+    if (currentSearch) {
+      filteredCards = filteredCards.filter(card => {
+        const title = card.dataset.title || '';
+        const excerpt = card.dataset.excerpt || '';
+        return title.includes(currentSearch) || excerpt.includes(currentSearch);
+      });
+    }
+    
+    // Hide all cards
+    allCards.forEach(card => {
+      card.style.display = 'none';
+    });
+    
+    // Show filtered cards
+    filteredCards.forEach(card => {
+      card.style.display = 'block';
+    });
+    
+    // Update count
+    const totalPosts = allPosts.length;
+    const featuredPost = allPosts.find(post => post.featured);
+    const totalNonFeatured = totalPosts - (featuredPost ? 1 : 0);
+    const showingCount = filteredCards.length;
+    
+    if (articlesCount) {
+      if (currentCategory === 'all' && !currentSearch) {
+        articlesCount.textContent = `Showing ${totalNonFeatured} of ${totalPosts}`;
+      } else {
+        articlesCount.textContent = `Showing ${showingCount} ${showingCount === 1 ? 'article' : 'articles'}`;
+      }
+    }
+    
+    // Show/hide empty state
+    const emptyState = document.querySelector('.articles-empty-state');
+    if (filteredCards.length === 0) {
+      if (!emptyState) {
+        const emptyHtml = `
+          <div class="articles-empty-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+            <h3 style="font-size: 1.5rem; color: var(--dark-blue); margin-bottom: 0.5rem;">No articles found</h3>
+            <p style="color: var(--text-light);">Try adjusting your filters or search terms.</p>
+          </div>
+        `;
+        articlesGrid.insertAdjacentHTML('beforeend', emptyHtml);
+      }
+    } else {
+      if (emptyState) {
+        emptyState.remove();
+      }
+    }
+  }
 }
 
 function loadBlogPostPage(postId) {
