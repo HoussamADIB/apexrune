@@ -4,6 +4,7 @@
   publish = "dist"
 
 # Redirect all routes to index.html for SPA routing
+# Note: POST requests (form submissions) are automatically handled by Netlify Forms
 [[redirects]]
   from = "/*"
   to = "/index.html"

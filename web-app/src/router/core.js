@@ -15,14 +15,19 @@ let pageLoaders = {
 
 // Initialize page loaders
 Promise.all([
-  import('./pages/contact.js').then(m => { pageLoaders.loadContactPage = m.loadContactPage; }),
+  import('./pages/contact.js').then(m => { 
+    pageLoaders.loadContactPage = m.loadContactPage;
+  }),
   import('./pages/case-studies.js').then(m => { 
     pageLoaders.loadCaseStudiesPage = m.loadCaseStudiesPage;
     pageLoaders.loadCaseStudyDetailPage = m.loadCaseStudyDetailPage;
+    m.setHandleRoute(handleRoute);
   }),
   import('./pages/blog.js').then(m => {
     pageLoaders.loadBlogPage = m.loadBlogPage;
     pageLoaders.loadBlogPostPage = m.loadBlogPostPage;
+    m.setLoadBlogPage(m.loadBlogPage);
+    m.setHandleRoute(handleRoute);
   }),
   import('./pages/legal.js').then(m => {
     pageLoaders.loadPrivacyPolicyPage = m.loadPrivacyPolicyPage;

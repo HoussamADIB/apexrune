@@ -96,7 +96,10 @@
     <!-- Hidden form for Netlify Forms detection (required for JavaScript-rendered forms) -->
     <form name="contact" netlify netlify-honeypot="bot-field" hidden>
       <input type="hidden" name="form-name" value="contact" />
+      <!-- Support both single name field and firstName/lastName fields -->
       <input type="text" name="name" />
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
       <input type="email" name="email" />
       <input type="text" name="company" />
       <select name="serviceInterest">
@@ -108,6 +111,11 @@
         <option value="other"></option>
       </select>
       <textarea name="message"></textarea>
+      <select name="urgency">
+        <option value="not-urgent"></option>
+        <option value="soon"></option>
+        <option value="urgent"></option>
+      </select>
       <input type="text" name="bot-field" />
     </form>
     <script type="module" src="/src/main.js"></script>

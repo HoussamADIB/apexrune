@@ -301,19 +301,34 @@ async function handleFormSubmit(e) {
       formData.set('form-name', 'contact');
     }
     
+    // Log form data for debugging (remove in production if needed)
+    console.log('Submitting form with data:', Object.fromEntries(formData));
+    
     // Submit to Netlify Forms
-    const response = await fetch('/', {
+    // Use the current pathname to avoid redirect issues in SPAs
+    const submitPath = window.location.pathname === '/' ? '/' : window.location.pathname;
+    const response = await fetch(submitPath, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
-      body: new URLSearchParams(formData).toString()
+      body: new URLSearchParams(formData).toString(),
+      redirect: 'follow' // Explicitly follow redirects
+    });
+    
+    console.log('Form submission response:', {
+      status: response.status,
+      statusText: response.statusText,
+      url: response.url,
+      redirected: response.redirected,
+      type: response.type
     });
     
     // Netlify Forms returns 200 on successful submission
     // According to Netlify docs, successful AJAX submissions return 200
-    if (response.ok && response.status === 200) {
+    // Also handle 302/301/303 redirects which Netlify sometimes returns
+    if (response.ok || [200, 301, 302, 303].includes(response.status)) {
       // Show success message
       form.style.display = 'none';
       if (successDiv) successDiv.style.display = 'block';
@@ -323,10 +338,39 @@ async function handleFormSubmit(e) {
         closeModal();
       }, 3000);
     } else {
-      throw new Error(`Form submission failed: ${response.status}`);
+      // Try to get error message from response
+      const status = response.status;
+      let errorMessage = `Form submission failed with status ${status}`;
+      
+      try {
+        const responseText = await response.text();
+        if (responseText) {
+          console.error('Netlify form error response:', responseText);
+          if (status === 422) {
+            errorMessage = 'Please check your form fields and try again.';
+          } else if (status === 404) {
+            errorMessage = 'Form endpoint not found. Please contact us directly.';
+          }
+        }
+      } catch (e) {
+        console.error('Could not read error response:', e);
+      }
+      
+      throw new Error(errorMessage);
     }
   } catch (error) {
     console.error('Form submission error:', error);
+    
+    // Determine if it's a network error
+    const isNetworkError = error.message.includes('Failed to fetch') || 
+                          error.message.includes('NetworkError') ||
+                          error.name === 'TypeError';
+    
+    // Update error message text if available
+    const errorMessageEl = errorDiv?.querySelector('p');
+    if (errorMessageEl && isNetworkError) {
+      errorMessageEl.textContent = 'Network error. Please check your connection and try again.';
+    }
     
     // Show error message
     form.style.display = 'none';
@@ -342,7 +386,7 @@ async function handleFormSubmit(e) {
       
       // Show form again
       form.style.display = 'flex';
-      errorDiv.style.display = 'none';
+      if (errorDiv) errorDiv.style.display = 'none';
     }, 5000);
   }
 }
