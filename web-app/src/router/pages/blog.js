@@ -96,28 +96,38 @@ export function loadBlogPage() {
               </div>
               <div class="articles-grid" id="articles-grid">
                 ${initialPosts.map((post, index) => {
-                  const categoryIcons = {
-                    'Performance': 'activity',
-                    'Architecture': 'layers',
-                    'Integration': 'git-merge',
-                    'Development': 'code',
-                    'Migration': 'refresh-cw',
-                    'Security': 'shield',
-                    'default': 'code'
-                  };
-                  const iconName = categoryIcons[post.category] || categoryIcons['default'];
-                  const iconColors = ['#3B82F6', '#F59E0B', '#8B5CF6', '#10B981', '#EF4444'];
-                  const iconColor = iconColors[index % iconColors.length];
+                  // Generate short title (max 4 words)
+                  const shortTitle = post.title.split(' ').slice(0, 4).join(' ');
+                  
+                  // Generate gradient backgrounds using soft color palette
+                  const backgroundColors = [
+                    'linear-gradient(135deg, #FFFFFF 0%, #DBEAFE 100%)', // Soft Periwinkle
+                    'linear-gradient(135deg, #FFFFFF 0%, #E0F2FE 100%)', // Ice Blue
+                    'linear-gradient(135deg, #FFFFFF 0%, #FEF3C7 100%)', // Butter Yellow
+                    'linear-gradient(135deg, #FFFFFF 0%, #F3F4F6 100%)', // Cloud Grey
+                    'linear-gradient(135deg, #FFFFFF 0%, #DCFCE7 100%)', // Mint Green
+                    'linear-gradient(135deg, #FFFFFF 0%, #FEE2E2 100%)', // Soft Rose
+                    'linear-gradient(135deg, #FFFFFF 0%, #EDE9FE 100%)', // Lavender Mist
+                    'linear-gradient(135deg, #FFFFFF 0%, #FFEDD5 100%)', // Pale Peach
+                    'linear-gradient(135deg, #FFFFFF 0%, #CCFBF1 100%)', // Aqua Foam
+                    'linear-gradient(135deg, #FFFFFF 0%, #FAE8FF 100%)', // Light Lilac
+                    'linear-gradient(135deg, #FFFFFF 0%, #E5E7EB 100%)', // Cool Silver
+                    'linear-gradient(135deg, #FFFFFF 0%, #FEF9C3 100%)', // Cream
+                    'linear-gradient(135deg, #FFFFFF 0%, #D1FAE5 100%)', // Sage Wash
+                    'linear-gradient(135deg, #FFFFFF 0%, #E0E7FF 100%)', // Indigo Wash
+                    'linear-gradient(135deg, #FFFFFF 0%, #FCE7F3 100%)', // Blush Pink
+                    'linear-gradient(135deg, #FFFFFF 0%, #ECFCCB 100%)', // Lime Sorbet
+                    'linear-gradient(135deg, #FFFFFF 0%, #CFFAFE 100%)', // Sky Blue
+                    'linear-gradient(135deg, #FFFFFF 0%, #F5F5F4 100%)'  // Warm Stone
+                  ];
+                  const bgColor = backgroundColors[index % backgroundColors.length];
+                  
                   return `
                   <a href="/blog/${post.id}" class="article-card" data-category="${post.category}" data-title="${post.title.toLowerCase()}" data-excerpt="${post.excerpt.toLowerCase()}">
                     <div class="article-card-image">
-                      ${post.image ? `
-                        <img src="${post.image}" alt="${post.title}" class="article-card-img" />
-                      ` : `
-                        <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
-                          ${getCommonIcon(iconName, 28, iconColor)}
-                        </div>
-                      `}
+                      <div class="article-card-bg" style="background: ${bgColor}">
+                        <h4 class="article-card-bg-title">${shortTitle}</h4>
+                      </div>
                     </div>
                     <div class="article-card-body">
                       <div class="article-card-meta">
@@ -217,17 +227,40 @@ function initLoadMore(remainingPosts, postsPerPage, getCommonIcon, allPosts) {
       return;
     }
     
+    // Generate gradient backgrounds using soft color palette
+    const backgroundColors = [
+      'linear-gradient(135deg, #FFFFFF 0%, #DBEAFE 100%)', // Soft Periwinkle
+      'linear-gradient(135deg, #FFFFFF 0%, #E0F2FE 100%)', // Ice Blue
+      'linear-gradient(135deg, #FFFFFF 0%, #FEF3C7 100%)', // Butter Yellow
+      'linear-gradient(135deg, #FFFFFF 0%, #F3F4F6 100%)', // Cloud Grey
+      'linear-gradient(135deg, #FFFFFF 0%, #DCFCE7 100%)', // Mint Green
+      'linear-gradient(135deg, #FFFFFF 0%, #FEE2E2 100%)', // Soft Rose
+      'linear-gradient(135deg, #FFFFFF 0%, #EDE9FE 100%)', // Lavender Mist
+      'linear-gradient(135deg, #FFFFFF 0%, #FFEDD5 100%)', // Pale Peach
+      'linear-gradient(135deg, #FFFFFF 0%, #CCFBF1 100%)', // Aqua Foam
+      'linear-gradient(135deg, #FFFFFF 0%, #FAE8FF 100%)', // Light Lilac
+      'linear-gradient(135deg, #FFFFFF 0%, #E5E7EB 100%)', // Cool Silver
+      'linear-gradient(135deg, #FFFFFF 0%, #FEF9C3 100%)', // Cream
+      'linear-gradient(135deg, #FFFFFF 0%, #D1FAE5 100%)', // Sage Wash
+      'linear-gradient(135deg, #FFFFFF 0%, #E0E7FF 100%)', // Indigo Wash
+      'linear-gradient(135deg, #FFFFFF 0%, #FCE7F3 100%)', // Blush Pink
+      'linear-gradient(135deg, #FFFFFF 0%, #ECFCCB 100%)', // Lime Sorbet
+      'linear-gradient(135deg, #FFFFFF 0%, #CFFAFE 100%)', // Sky Blue
+      'linear-gradient(135deg, #FFFFFF 0%, #F5F5F4 100%)'  // Warm Stone
+    ];
+    
     // Create HTML for new posts
     const newPostsHTML = nextBatch.map((post, batchIndex) => {
       const globalIndex = currentIndex + batchIndex + 6; // +6 because we already showed 6
-      const iconName = categoryIcons[post.category] || categoryIcons['default'];
-      const iconColor = iconColors[globalIndex % iconColors.length];
+      // Generate short title (max 4 words)
+      const shortTitle = post.title.split(' ').slice(0, 4).join(' ');
+      const bgColor = backgroundColors[globalIndex % backgroundColors.length];
       
       return `
         <a href="/blog/${post.id}" class="article-card" data-category="${post.category}" data-title="${post.title.toLowerCase()}" data-excerpt="${post.excerpt.toLowerCase()}">
           <div class="article-card-image">
-            <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
-              ${getCommonIcon(iconName, 28, iconColor)}
+            <div class="article-card-bg" style="background: ${bgColor}">
+              <h4 class="article-card-bg-title">${shortTitle}</h4>
             </div>
           </div>
           <div class="article-card-body">
@@ -1141,6 +1174,29 @@ function addBlogPageStyles() {
       height: 180px;
     }
 
+    .article-card-bg {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-card-bg-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2D3748;
+      text-align: center;
+      line-height: 1.3;
+      margin: 0;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+      z-index: 1;
+    }
+
     .card-icon-placeholder {
       width: 100%;
       height: 120px;
@@ -1402,6 +1458,14 @@ function addBlogPageStyles() {
 
       .article-card-img {
         height: 180px;
+      }
+
+      .article-card-bg {
+        height: 160px;
+      }
+
+      .article-card-bg-title {
+        font-size: 1.1rem;
       }
 
       .articles-filters {
