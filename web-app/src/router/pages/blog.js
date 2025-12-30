@@ -20,6 +20,11 @@ export function loadBlogPage() {
       const featuredPost = blogPosts.find(post => post.featured);
       const otherPosts = blogPosts.filter(post => !post.featured || post !== featuredPost);
       
+      // Show only first 6 posts initially
+      const POSTS_PER_PAGE = 6;
+      const initialPosts = otherPosts.slice(0, POSTS_PER_PAGE);
+      const remainingPosts = otherPosts.slice(POSTS_PER_PAGE);
+      
       // Get categories that actually have articles in the displayed list
       const categoriesWithPosts = [...new Set(otherPosts.map(post => post.category))].filter(Boolean);
       
@@ -87,16 +92,17 @@ export function loadBlogPage() {
               </div>
               <div class="articles-header">
                 <h2 class="articles-title">Latest Articles</h2>
-                <span class="articles-count" id="articles-count">Showing ${otherPosts.length} of ${blogPosts.length}</span>
+                <span class="articles-count" id="articles-count">Showing ${initialPosts.length} of ${otherPosts.length}</span>
               </div>
               <div class="articles-grid" id="articles-grid">
-                ${otherPosts.map((post, index) => {
+                ${initialPosts.map((post, index) => {
                   const categoryIcons = {
                     'Performance': 'activity',
                     'Architecture': 'layers',
                     'Integration': 'git-merge',
                     'Development': 'code',
                     'Migration': 'refresh-cw',
+                    'Security': 'shield',
                     'default': 'code'
                   };
                   const iconName = categoryIcons[post.category] || categoryIcons['default'];
@@ -129,9 +135,17 @@ export function loadBlogPage() {
                         </span>
                       </div>
                     </div>
-                        </a>
+                  </a>
                 `}).join('')}
-                    </div>
+              </div>
+              ${remainingPosts.length > 0 ? `
+              <div class="load-more-container">
+                <button class="load-more-btn" id="load-more-btn">
+                  Load More Articles
+                  ${getCommonIcon('chevron-down', 18, 'currentColor')}
+                </button>
+              </div>
+              ` : ''}
             </section>
 
             <section class="blog-cta-section">
@@ -157,6 +171,9 @@ export function loadBlogPage() {
         window.scrollTo({ top: 0, behavior: 'instant' });
       });
       
+      // Initialize load more functionality
+      initLoadMore(remainingPosts, POSTS_PER_PAGE, getCommonIcon, otherPosts);
+      
       // Initialize blog filters and search
       initBlogFilters(blogPosts, otherPosts, getAllCategories);
       
@@ -167,6 +184,96 @@ export function loadBlogPage() {
     });
   });
 }
+
+function initLoadMore(remainingPosts, postsPerPage, getCommonIcon, allPosts) {
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const articlesGrid = document.getElementById('articles-grid');
+  const articlesCount = document.getElementById('articles-count');
+  
+  if (!loadMoreBtn || remainingPosts.length === 0) return;
+  
+  let currentIndex = 0;
+  const categoryIcons = {
+    'Performance': 'activity',
+    'Architecture': 'layers',
+    'Integration': 'git-merge',
+    'Development': 'code',
+    'Migration': 'refresh-cw',
+    'Security': 'shield',
+    'default': 'code'
+  };
+  const iconColors = ['#3B82F6', '#F59E0B', '#8B5CF6', '#10B981', '#EF4444'];
+  
+  loadMoreBtn.addEventListener('click', () => {
+    // Get next batch of posts
+    const nextBatch = remainingPosts.slice(currentIndex, currentIndex + postsPerPage);
+    
+    if (nextBatch.length === 0) {
+      loadMoreBtn.style.display = 'none';
+      return;
+    }
+    
+    // Create HTML for new posts
+    const newPostsHTML = nextBatch.map((post, batchIndex) => {
+      const globalIndex = currentIndex + batchIndex + 6; // +6 because we already showed 6
+      const iconName = categoryIcons[post.category] || categoryIcons['default'];
+      const iconColor = iconColors[globalIndex % iconColors.length];
+      
+      return `
+        <a href="/blog/${post.id}" class="article-card" data-category="${post.category}" data-title="${post.title.toLowerCase()}" data-excerpt="${post.excerpt.toLowerCase()}">
+          <div class="article-card-image">
+            <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
+              ${getCommonIcon(iconName, 28, iconColor)}
+            </div>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="category-tag category-tag--small">${post.category}</span>
+              <span class="article-card-date">${new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+            </div>
+            <h3 class="article-card-title">
+              ${post.title}
+            </h3>
+            <p class="article-card-excerpt">${post.excerpt}</p>
+            <div class="article-card-footer">
+              <div class="article-author">
+                <div class="author-avatar-small">${(post.author || 'ApexRune Team').charAt(0)}</div>
+                <span class="author-name-small">${(post.author || 'ApexRune Team').split(' ')[0]}</span>
+              </div>
+              <span class="read-article-link">
+                Read
+                ${getCommonIcon('arrow-right', 16, 'currentColor')}
+              </span>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+    
+    // Insert new posts directly into the articles grid to maintain layout
+    articlesGrid.insertAdjacentHTML('beforeend', newPostsHTML);
+    
+    // Update current index
+    currentIndex += nextBatch.length;
+    
+    // Update count
+    const totalShown = 6 + currentIndex; // Initial 6 + loaded posts
+    if (articlesCount) {
+      articlesCount.textContent = `Showing ${totalShown} of ${allPosts.length}`;
+    }
+    
+    // Hide button if no more posts
+    if (currentIndex >= remainingPosts.length) {
+      loadMoreBtn.style.display = 'none';
+    }
+    
+    // Smooth scroll to newly loaded content
+    setTimeout(() => {
+      loadMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  });
+}
+
 export function initBlogFilters(allPosts, initialPosts, getAllCategories) {
   const filterButtons = document.querySelectorAll('.filter-btn');
   const searchInput = document.getElementById('blog-search-input');
@@ -237,11 +344,25 @@ export function initBlogFilters(allPosts, initialPosts, getAllCategories) {
     const totalPosts = allPosts.length;
     const featuredPost = allPosts.find(post => post.featured);
     const totalNonFeatured = totalPosts - (featuredPost ? 1 : 0);
-    const showingCount = filteredCards.length;
+    const showingCount = filteredCards.filter(card => card.style.display !== 'none').length;
+    
+    // Show/hide load more button based on filters
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (loadMoreBtn) {
+      if (currentCategory === 'all' && !currentSearch) {
+        loadMoreBtn.style.display = '';
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
     
     if (articlesCount) {
       if (currentCategory === 'all' && !currentSearch) {
-        articlesCount.textContent = `Showing ${totalNonFeatured} of ${totalPosts}`;
+        // Count visible cards (including loaded ones)
+        const visibleCards = Array.from(document.querySelectorAll('.article-card')).filter(card => 
+          card.style.display !== 'none'
+        ).length;
+        articlesCount.textContent = `Showing ${visibleCards} of ${totalNonFeatured}`;
       } else {
         articlesCount.textContent = `Showing ${showingCount} ${showingCount === 1 ? 'article' : 'articles'}`;
       }

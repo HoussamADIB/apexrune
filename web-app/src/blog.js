@@ -1425,6 +1425,1130 @@ Concurrency Mode: Parallel (unless updating the same records)</code></pre>
     category: 'Migration',
     readTime: '15 min read',
     featured: false
+  },
+  {
+    id: 'todo-salesforce-security-best-practices',
+    title: 'Salesforce Security Best Practices: Protecting Your Org from Common Vulnerabilities',
+    excerpt: 'Security isn\'t optional. Learn the essential security practices every Salesforce org needs—from field-level security to Apex injection prevention.',
+    content: `
+      <p>Salesforce holds your most sensitive business data: customer information, financial records, proprietary processes. A security breach isn't just a technical issue—it's a business disaster that can destroy trust and result in regulatory fines.</p>
+      
+      <p>After auditing hundreds of Salesforce orgs, we've seen the same security gaps repeated over and over. This guide covers the essential security practices that every org should implement, regardless of size or industry.</p>
+      
+      <h2>The Security Model: Understanding the Layers</h2>
+      <p>Salesforce security operates in layers, each protecting different aspects of your data:</p>
+      
+      <ul>
+        <li><strong>Organization-level:</strong> Login IP restrictions, password policies, session settings</li>
+        <li><strong>Object-level:</strong> Which objects users can access</li>
+        <li><strong>Field-level:</strong> Which fields users can see or edit</li>
+        <li><strong>Record-level:</strong> Which specific records users can access (sharing rules, profiles)</li>
+      </ul>
+      
+      <h2>Common Security Vulnerabilities We Find</h2>
+      
+      <h3>1. Overly Permissive Profiles</h3>
+      <p>Too many orgs use "System Administrator" as a default profile for users who don't need that level of access. This violates the principle of least privilege.</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">Security Audit Checklist</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Review profile permissions quarterly
+// Questions to ask:
+// 1. Does this user need "Modify All" on this object?
+// 2. Can we use a permission set instead of profile changes?
+// 3. Are we using field-level security appropriately?</code></pre>
+        </div>
+      </div>
+      
+      <h3>2. SOQL Injection Vulnerabilities</h3>
+      <p>Dynamic SOQL queries built from user input are a major security risk. Always use bind variables.</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountController.cls</span>
+          <span class="code-badge">Vulnerable</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// NEVER DO THIS
+String searchTerm = ApexPages.currentPage().getParameters().get('search');
+String query = 'SELECT Id, Name FROM Account WHERE Name LIKE \\'%' + searchTerm + '%\\'';
+List&lt;Account&gt; accounts = Database.query(query);</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountController.cls</span>
+          <span class="code-badge good">Secure</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// ALWAYS USE BIND VARIABLES
+String searchTerm = String.escapeSingleQuotes(
+    ApexPages.currentPage().getParameters().get('search')
+);
+String query = 'SELECT Id, Name FROM Account WHERE Name LIKE :searchTerm';
+List&lt;Account&gt; accounts = Database.query(query);</code></pre>
+        </div>
+      </div>
+      
+      <h3>3. Missing Field-Level Security</h3>
+      <p>Sensitive fields like Social Security Numbers, credit card numbers, or salary information should be protected at the field level, not just object level.</p>
+      
+      <h2>Implementing Field-Level Security</h2>
+      <p>Field-level security (FLS) is your second line of defense. Even if a user can access an Account record, they shouldn't necessarily see all fields.</p>
+      
+      <h2>Record-Level Security: Sharing Rules and Manual Sharing</h2>
+      <p>Understanding when to use sharing rules vs. manual sharing vs. Apex managed sharing is critical for maintaining security while enabling collaboration.</p>
+      
+      <h2>API Security: Protecting Your Integrations</h2>
+      <p>When exposing data via REST or SOAP APIs, implement proper authentication, rate limiting, and input validation.</p>
+      
+      <h2>Security Audit Checklist</h2>
+      <ul>
+        <li>☑️ Review all profiles quarterly</li>
+        <li>☑️ Audit all Apex classes for SOQL injection</li>
+        <li>☑️ Enable field-level security on sensitive fields</li>
+        <li>☑️ Review sharing rules and OWD settings</li>
+        <li>☑️ Enable login IP restrictions for admin users</li>
+        <li>☑️ Implement two-factor authentication</li>
+        <li>☑️ Review connected app OAuth settings</li>
+        <li>☑️ Audit API access and usage</li>
+      </ul>
+      
+      <p><strong>Need a security audit?</strong> Our health checks include comprehensive security reviews. <a href="/contact">Contact us</a> to schedule an assessment.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-01-15',
+    category: 'Security',
+    readTime: '14 min read',
+    featured: false
+  },
+  {
+    id: 'todo-salesforce-testing-strategies',
+    title: 'Salesforce Testing Strategies: Beyond Code Coverage Requirements',
+    excerpt: '85% code coverage is just the beginning. Learn how to write tests that actually catch bugs, prevent regressions, and document your code\'s behavior.',
+    content: `
+      <p>Every Salesforce developer knows the rule: 75% code coverage minimum for deployment. But hitting that number doesn't mean your code is tested—it just means you've written enough lines to satisfy the platform.</p>
+      
+      <p>We've seen orgs with 90%+ coverage that still break in production because tests don't validate business logic, edge cases, or integration points. Here's how to write tests that actually matter.</p>
+      
+      <h2>The Testing Pyramid</h2>
+      <p>Effective testing follows a pyramid structure:</p>
+      
+      <ul>
+        <li><strong>Unit Tests (70%):</strong> Fast, isolated tests of individual methods</li>
+        <li><strong>Integration Tests (20%):</strong> Tests that verify components work together</li>
+        <li><strong>End-to-End Tests (10%):</strong> Full user workflow tests</li>
+      </ul>
+      
+      <h2>Writing Meaningful Unit Tests</h2>
+      
+      <h3>Test the Business Logic, Not Just the Code</h3>
+      <p>Your tests should verify that your code does what it's supposed to do, not just that it runs without errors.</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountTriggerHandler.cls</span>
+          <span class="code-badge">Production Code</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class AccountTriggerHandler {
+    public static void calculateAnnualRevenue(List&lt;Account&gt; accounts) {
+        for (Account acc : accounts) {
+            if (acc.NumberOfEmployees &gt; 100) {
+                acc.AnnualRevenue = acc.AnnualRevenue * 1.1; // 10% boost
+            }
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountTriggerHandlerTest.cls</span>
+          <span class="code-badge good">Good Test</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">@isTest
+private class AccountTriggerHandlerTest {
+    @isTest
+    static void testCalculateAnnualRevenue_LargeCompany() {
+        // Given: Account with 150 employees and $1M revenue
+        Account acc = new Account(
+            Name = 'Test Corp',
+            NumberOfEmployees = 150,
+            AnnualRevenue = 1000000
+        );
+        
+        // When: Calculate revenue
+        AccountTriggerHandler.calculateAnnualRevenue(new List&lt;Account&gt;{acc});
+        
+        // Then: Revenue should be increased by 10%
+        System.assertEquals(1100000, acc.AnnualRevenue, 
+            'Large companies should get 10% revenue boost');
+    }
+    
+    @isTest
+    static void testCalculateAnnualRevenue_SmallCompany() {
+        // Given: Account with 50 employees
+        Account acc = new Account(
+            Name = 'Small Corp',
+            NumberOfEmployees = 50,
+            AnnualRevenue = 1000000
+        );
+        
+        // When: Calculate revenue
+        AccountTriggerHandler.calculateAnnualRevenue(new List&lt;Account&gt;{acc});
+        
+        // Then: Revenue should remain unchanged
+        System.assertEquals(1000000, acc.AnnualRevenue,
+            'Small companies should not get revenue boost');
+    }
+}</code></pre>
+        </div>
+      </div>
+      
+      <h2>Testing Edge Cases</h2>
+      <p>Don't just test the happy path. Test what happens when:</p>
+      <ul>
+        <li>Null values are passed</li>
+        <li>Empty lists are processed</li>
+        <li>Governor limits are approached</li>
+        <li>Related records don't exist</li>
+        <li>Validation rules should prevent the operation</li>
+      </ul>
+      
+      <h2>Testing Bulk Operations</h2>
+      <p>Salesforce processes records in batches. Your tests should verify bulkification works correctly.</p>
+      
+      <h2>Mocking External Dependencies</h2>
+      <p>When testing code that makes callouts or queries external data, use test classes and mock responses.</p>
+      
+      <h2>Test Data Management</h2>
+      <p>Use @TestSetup to create test data once, then reference it in multiple test methods. This improves performance and maintainability.</p>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ One assertion per test method (when possible)</li>
+        <li>✅ Use descriptive test method names: <code>testMethodName_Scenario_ExpectedResult</code></li>
+        <li>✅ Test both positive and negative cases</li>
+        <li>✅ Verify governor limit usage in tests</li>
+        <li>✅ Test with realistic data volumes</li>
+        <li>✅ Keep tests fast—they should run in seconds, not minutes</li>
+      </ul>
+      
+      <p><strong>Struggling with test coverage or quality?</strong> We can help you build a comprehensive testing strategy. <a href="/contact">Get in touch</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-01-20',
+    category: 'Development',
+    readTime: '12 min read',
+    featured: false
+  },
+  {
+    id: 'todo-salesforce-ci-cd-pipeline',
+    title: 'Building a CI/CD Pipeline for Salesforce: From Code to Production',
+    excerpt: 'Manual deployments are error-prone and slow. Learn how to set up automated CI/CD pipelines that catch bugs early and deploy with confidence.',
+    content: `
+      <p>Deploying Salesforce changes manually is risky. You might forget to include a dependent class, miss a test failure, or deploy to production without proper review. One mistake can bring down your entire org.</p>
+      
+      <p>Continuous Integration and Continuous Deployment (CI/CD) automates the entire process: testing, code review, validation, and deployment. Here's how we set up CI/CD pipelines that catch issues before they reach production.</p>
+      
+      <h2>Why CI/CD Matters for Salesforce</h2>
+      <p>Manual deployments lead to:</p>
+      <ul>
+        <li>Human error (forgetting files, wrong org, missing dependencies)</li>
+        <li>Inconsistent environments (sandbox drift from production)</li>
+        <li>Slow feedback loops (bugs discovered days or weeks after coding)</li>
+        <li>Deployment anxiety (fear of breaking production)</li>
+      </ul>
+      
+      <p>CI/CD solves these problems by automating every step and providing immediate feedback.</p>
+      
+      <h2>The CI/CD Pipeline Architecture</h2>
+      <p>A typical Salesforce CI/CD pipeline includes:</p>
+      
+      <ol>
+        <li><strong>Source Control:</strong> Git repository (GitHub, GitLab, Bitbucket)</li>
+        <li><strong>Build Server:</strong> GitHub Actions, GitLab CI, Jenkins, or CircleCI</li>
+        <li><strong>Salesforce CLI:</strong> For deployments and validation</li>
+        <li><strong>Testing:</strong> Automated test execution</li>
+        <li><strong>Code Quality:</strong> Linting, static analysis</li>
+        <li><strong>Deployment:</strong> Automated or manual approval gates</li>
+      </ol>
+      
+      <h2>Setting Up Salesforce DX</h2>
+      <p>Salesforce DX is the foundation of modern CI/CD. It provides:</p>
+      <ul>
+        <li>Source format for version control</li>
+        <li>CLI tools for automation</li>
+        <li>Scratch orgs for isolated development</li>
+        <li>Package-based development</li>
+      </ul>
+      
+      <h2>Example GitHub Actions Workflow</h2>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">.github/workflows/deploy.yml</span>
+          <span class="code-badge good">CI/CD Pipeline</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-yaml">name: Deploy to Salesforce
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Salesforce CLI
+        uses: salesforce-actions/setup-sfdx@v1
+      
+      - name: Authenticate to Sandbox
+        run: |
+          echo $\\{\\{ secrets.SF_AUTH_URL \\}\\} | sfdx auth:sfdxurl:store -f -
+      
+      - name: Run Apex Tests
+        run: |
+          sfdx force:apex:test:run --code-coverage --resultformat human --wait 10
+      
+      - name: Validate Deployment
+        run: |
+          sfdx force:source:deploy --checkonly --testlevel RunLocalTests</code></pre>
+        </div>
+      </div>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Always validate before deploying</li>
+        <li>✅ Run all tests, not just local tests</li>
+        <li>✅ Use separate pipelines for different environments</li>
+        <li>✅ Implement approval gates for production</li>
+        <li>✅ Monitor deployment success/failure</li>
+        <li>✅ Keep deployment logs for audit</li>
+      </ul>
+      
+      <h2>Common Pitfalls</h2>
+      <ul>
+        <li>❌ Not testing in a sandbox first</li>
+        <li>❌ Skipping test execution to save time</li>
+        <li>❌ Deploying directly to production</li>
+        <li>❌ Not handling deployment failures gracefully</li>
+      </ul>
+      
+      <p><strong>Need help setting up CI/CD?</strong> We can configure a complete pipeline for your team. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-01-25',
+    category: 'Development',
+    readTime: '11 min read',
+    featured: false
+  },
+  {
+    id: 'todo-custom-metadata-types',
+    title: 'Custom Metadata Types: The Modern Alternative to Custom Settings',
+    excerpt: 'Custom Metadata Types let you configure your Apex code without code changes. Learn when and how to use them effectively.',
+    content: `
+      <p>Custom Settings were revolutionary when they launched—finally, a way to configure Apex without hardcoding values. But Custom Metadata Types (CMT) are the modern evolution, offering better version control, deployment, and testing capabilities.</p>
+      
+      <p>If you're still using Custom Settings for configuration that doesn't need to vary by user or profile, you're missing out on a powerful tool.</p>
+      
+      <h2>Custom Settings vs. Custom Metadata Types</h2>
+      
+      <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+        <thead>
+          <tr style="background: #f1f5f9;">
+            <th style="padding: 0.75rem; text-align: left; border: 1px solid #e2e8f0;">Feature</th>
+            <th style="padding: 0.75rem; text-align: left; border: 1px solid #e2e8f0;">Custom Settings</th>
+            <th style="padding: 0.75rem; text-align: left; border: 1px solid #e2e8f0;">Custom Metadata Types</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Version Control</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">❌ Not tracked</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">✅ Tracked in source</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Deployment</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Manual or data loader</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Deployed with code</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Test Access</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Requires SeeAllData=true</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Available in tests</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Runtime Updates</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">✅ Yes</td>
+            <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">❌ Requires deployment</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h2>When to Use Custom Metadata Types</h2>
+      <p>Use CMT when:</p>
+      <ul>
+        <li>Configuration values are set during development/deployment</li>
+        <li>You want configuration tracked in version control</li>
+        <li>Values don't need to change at runtime</li>
+        <li>You need configuration available in test contexts</li>
+      </ul>
+      
+      <h2>Example: API Configuration</h2>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">API_Config__mdt</span>
+          <span class="code-badge good">Custom Metadata Type</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Custom Metadata Type: API_Config__mdt
+// Fields:
+// - DeveloperName (Text)
+// - Endpoint_URL__c (URL)
+// - API_Key__c (Text, Protected)
+// - Timeout_Seconds__c (Number)
+
+// Usage in Apex:
+API_Config__mdt config = API_Config__mdt.getInstance('Production');
+String endpoint = config.Endpoint_URL__c;
+String apiKey = config.API_Key__c;</code></pre>
+        </div>
+      </div>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Use DeveloperName for lookups (not IDs)</li>
+        <li>✅ Create a helper class to access CMT values</li>
+        <li>✅ Use protected fields for sensitive data</li>
+        <li>✅ Document each metadata record's purpose</li>
+        <li>✅ Version control your metadata records</li>
+      </ul>
+      
+      <p><strong>Need help migrating from Custom Settings to CMT?</strong> We can help you modernize your configuration management. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-01-30',
+    category: 'Architecture',
+    readTime: '9 min read',
+    featured: false
+  },
+  {
+    id: 'todo-governor-limits-mastery',
+    title: 'Salesforce Governor Limits: Understanding and Working Within the Boundaries',
+    excerpt: 'Governor limits aren\'t restrictions—they\'re guardrails that force you to write efficient code. Master them to build scalable solutions.',
+    content: `
+      <p>Every Salesforce developer has hit a governor limit at some point. "Apex CPU time limit exceeded." "Too many SOQL queries." "List has more than 10,000 rows."</p>
+      
+      <p>These errors aren't bugs—they're Salesforce's way of ensuring one transaction doesn't monopolize shared resources. Understanding limits isn't just about avoiding errors; it's about writing code that scales.</p>
+      
+      <h2>The Most Common Limits</h2>
+      
+      <h3>SOQL Queries: 100 per transaction</h3>
+      <p>This is the limit most developers hit first. The solution: bulkify your queries.</p>
+      
+      <h3>DML Statements: 150 per transaction</h3>
+      <p>Batch your DML operations. Don't update records one at a time.</p>
+      
+      <h3>CPU Time: 10,000ms (10 seconds)</h3>
+      <p>Optimize loops, avoid nested queries, cache expensive operations.</p>
+      
+      <h3>Heap Size: 6MB synchronous, 12MB asynchronous</h3>
+      <p>Don't load more data than you need. Use SOQL filters.</p>
+      
+      <h2>Monitoring Limits in Real-Time</h2>
+      <p>Use the Limits class to check your consumption:</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">LimitMonitor.cls</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">// Check limits before expensive operations
+if (Limits.getQueries() &gt; 90) {
+    // Log warning or switch to async processing
+}
+
+// Monitor CPU time
+Integer cpuTime = Limits.getCpuTime();
+if (cpuTime &gt; 8000) {
+    // Consider deferring work to async</code></pre>
+        </div>
+      </div>
+      
+      <h2>Strategies for Working Within Limits</h2>
+      
+      <h3>1. Bulkification</h3>
+      <p>Always design code to handle 200 records (the trigger batch size).</p>
+      
+      <h3>2. Query Optimization</h3>
+      <p>Select only fields you need. Use WHERE clauses. Avoid SELECT *.</p>
+      
+      <h3>3. Async Processing</h3>
+      <p>Move heavy processing to @future, Queueable, or Batch Apex.</p>
+      
+      <h3>4. Caching</h3>
+      <p>Cache expensive operations like describe calls or metadata queries.</p>
+      
+      <h2>Common Patterns</h2>
+      <ul>
+        <li>✅ Collect IDs in a Set, then query once</li>
+        <li>✅ Use Maps for lookups instead of nested loops</li>
+        <li>✅ Process in batches for large datasets</li>
+        <li>✅ Defer non-critical work to async</li>
+      </ul>
+      
+      <p><strong>Hitting governor limits frequently?</strong> Our health checks include limit analysis. <a href="/contact">Schedule an audit</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-02-05',
+    category: 'Performance',
+    readTime: '10 min read',
+    featured: false
+  },
+  {
+    id: 'todo-lwc-best-practices',
+    title: 'Lightning Web Components Best Practices: Building Performant, Maintainable UI',
+    excerpt: 'LWC is powerful, but poor patterns lead to slow, buggy components. Learn the patterns that separate good components from great ones.',
+    content: `
+      <p>Lightning Web Components represent the future of Salesforce UI development. Built on web standards, they're fast, modern, and powerful. But with great power comes the responsibility to use it correctly.</p>
+      
+      <p>We've seen LWCs that load in milliseconds and others that take seconds. The difference? Following best practices from the start.</p>
+      
+      <h2>Performance Best Practices</h2>
+      
+      <h3>1. Minimize Wire Service Calls</h3>
+      <p>Every @wire call triggers a server round-trip. Batch related data fetches.</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">accountCard.js</span>
+          <span class="code-badge">Inefficient</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-javascript">// DON'T: Multiple wire calls
+@wire(getAccount, { accountId: '$recordId' })
+account;
+
+@wire(getContacts, { accountId: '$recordId' })
+contacts;
+
+@wire(getOpportunities, { accountId: '$recordId' })
+opportunities;</code></pre>
+        </div>
+      </div>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">accountCard.js</span>
+          <span class="code-badge good">Efficient</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-javascript">// DO: Single wire call that returns all data
+@wire(getAccountDetails, { accountId: '$recordId' })
+accountDetails({ error, data }) {
+    if (data) {
+        this.account = data.account;
+        this.contacts = data.contacts;
+        this.opportunities = data.opportunities;
+    }
+}</code></pre>
+        </div>
+      </div>
+      
+      <h3>2. Use @api Properties Wisely</h3>
+      <p>@api properties trigger re-renders. Only expose what parent components need to control.</p>
+      
+      <h3>3. Lazy Load Heavy Components</h3>
+      <p>Use conditional rendering to load expensive components only when needed.</p>
+      
+      <h2>Code Organization</h2>
+      <ul>
+        <li>✅ Keep components focused (single responsibility)</li>
+        <li>✅ Extract reusable logic to service classes</li>
+        <li>✅ Use composition over complex components</li>
+        <li>✅ Follow naming conventions consistently</li>
+      </ul>
+      
+      <h2>Error Handling</h2>
+      <p>Always handle errors gracefully. Show user-friendly messages, not stack traces.</p>
+      
+      <h2>Testing LWCs</h2>
+      <p>Write Jest tests for your components. Test user interactions, not just rendering.</p>
+      
+      <p><strong>Building LWCs?</strong> We can review your components for performance and best practices. <a href="/contact">Get in touch</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-02-10',
+    category: 'Development',
+    readTime: '11 min read',
+    featured: false
+  },
+  {
+    id: 'todo-debugging-techniques',
+    title: 'Advanced Debugging Techniques: Finding and Fixing Bugs Faster',
+    excerpt: 'Debug logs are just the beginning. Learn advanced techniques for diagnosing complex issues in Salesforce.',
+    content: `
+      <p>Every developer debugs, but great developers debug efficiently. Instead of adding console.log statements everywhere and hoping, they use systematic approaches to isolate issues quickly.</p>
+      
+      <p>After debugging thousands of Salesforce issues, we've developed a methodology that finds root causes faster.</p>
+      
+      <h2>The Debugging Process</h2>
+      
+      <h3>1. Reproduce the Issue</h3>
+      <p>Can't fix what you can't see. Create a reliable reproduction path.</p>
+      
+      <h3>2. Enable Appropriate Debug Logs</h3>
+      <p>Set log levels based on what you're investigating:</p>
+      <ul>
+        <li><strong>Apex Code:</strong> FINEST for method entry/exit</li>
+        <li><strong>Profiling:</strong> FINE for CPU time analysis</li>
+        <li><strong>Database:</strong> FINE for SOQL query details</li>
+        <li><strong>Workflow:</strong> DEBUG for automation debugging</li>
+      </ul>
+      
+      <h3>3. Use the Developer Console</h3>
+      <p>The Developer Console provides powerful debugging tools:</p>
+      <ul>
+        <li>Execution Tree: See method call hierarchy</li>
+        <li>Execution Log: Step through execution</li>
+        <li>Checkpoints: Pause execution at specific points</li>
+        <li>SOQL Query Plan: Analyze query performance</li>
+      </ul>
+      
+      <h2>Common Debugging Scenarios</h2>
+      
+      <h3>Trigger Not Firing</h3>
+      <p>Check: Is the trigger active? Are the conditions met? Is automation bypassed?</p>
+      
+      <h3>Data Not Saving</h3>
+      <p>Check: Validation rules, required fields, field-level security, sharing rules.</p>
+      
+      <h3>Performance Issues</h3>
+      <p>Use the Execution Tree to find slow methods. Look for SOQL in loops.</p>
+      
+      <h2>Remote Debugging</h2>
+      <p>For complex issues, use VS Code with the Salesforce Debugger extension to set breakpoints and step through code.</p>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Start with broad logs, narrow down as you isolate</li>
+        <li>✅ Use checkpoints strategically</li>
+        <li>✅ Document your debugging process</li>
+        <li>✅ Clean up debug statements before committing</li>
+      </ul>
+      
+      <p><strong>Stuck on a bug?</strong> We offer debugging support. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-02-15',
+    category: 'Development',
+    readTime: '9 min read',
+    featured: false
+  },
+  {
+    id: 'todo-code-review-checklist',
+    title: 'Salesforce Code Review Checklist: What to Look For Before Merging',
+    excerpt: 'Code reviews catch bugs before production. Use this comprehensive checklist to ensure code quality and maintainability.',
+    content: `
+      <p>Code reviews are your last line of defense before code reaches production. A thorough review catches bugs, improves code quality, and shares knowledge across your team.</p>
+      
+      <p>But what should you actually look for? Here's a comprehensive checklist we use for every code review.</p>
+      
+      <h2>Security Review</h2>
+      <ul>
+        <li>☑️ No SOQL injection vulnerabilities</li>
+        <li>☑️ Proper field-level security checks</li>
+        <li>☑️ No hardcoded credentials or sensitive data</li>
+        <li>☑️ Proper sharing model implementation</li>
+        <li>☑️ Input validation on user-provided data</li>
+      </ul>
+      
+      <h2>Performance Review</h2>
+      <ul>
+        <li>☑️ No SOQL queries in loops</li>
+        <li>☑️ Code handles bulk operations (200+ records)</li>
+        <li>☑️ Efficient use of collections (Maps, Sets)</li>
+        <li>☑️ No unnecessary describe calls</li>
+        <li>☑️ Governor limits monitored</li>
+      </ul>
+      
+      <h2>Code Quality</h2>
+      <ul>
+        <li>☑️ Follows naming conventions</li>
+        <li>☑️ Methods are focused and single-purpose</li>
+        <li>☑️ Code is well-commented (where needed)</li>
+        <li>☑️ No duplicate code</li>
+        <li>☑️ Error handling is appropriate</li>
+      </ul>
+      
+      <h2>Testing</h2>
+      <ul>
+        <li>☑️ Test coverage meets requirements</li>
+        <li>☑️ Tests cover edge cases</li>
+        <li>☑️ Tests verify business logic, not just coverage</li>
+        <li>☑️ Tests don't use @SeeAllData unnecessarily</li>
+        <li>☑️ Tests are maintainable</li>
+      </ul>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Review in small chunks (200-400 lines)</li>
+        <li>✅ Be constructive, not critical</li>
+        <li>✅ Explain why, not just what</li>
+        <li>✅ Approve when standards are met</li>
+      </ul>
+      
+      <p><strong>Need help establishing code review standards?</strong> We can help set up review processes. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-02-20',
+    category: 'Development',
+    readTime: '8 min read',
+    featured: false
+  },
+  {
+    id: 'todo-deployment-strategies',
+    title: 'Salesforce Deployment Strategies: Change Sets, CLI, and Metadata API',
+    excerpt: 'Choose the right deployment method for your team. Each has pros and cons—learn when to use which.',
+    content: `
+      <p>Deploying Salesforce changes isn't one-size-fits-all. Change Sets work for small teams, but as you scale, you need more sophisticated approaches.</p>
+      
+      <p>We've deployed thousands of changes across hundreds of orgs. Here's when to use each method.</p>
+      
+      <h2>Change Sets</h2>
+      <p><strong>Best for:</strong> Small teams, occasional deployments, simple changes</p>
+      
+      <p><strong>Pros:</strong></p>
+      <ul>
+        <li>No technical setup required</li>
+        <li>Visual interface</li>
+        <li>Built into Salesforce</li>
+      </ul>
+      
+      <p><strong>Cons:</strong></p>
+      <ul>
+        <li>Manual process</li>
+        <li>No version control integration</li>
+        <li>Can't deploy everything</li>
+        <li>Error-prone for complex changes</li>
+      </ul>
+      
+      <h2>Salesforce CLI (sfdx)</h2>
+      <p><strong>Best for:</strong> Teams using source control, CI/CD pipelines, Salesforce DX</p>
+      
+      <p><strong>Pros:</strong></p>
+      <ul>
+        <li>Scriptable and automatable</li>
+        <li>Works with version control</li>
+        <li>Supports all metadata types</li>
+        <li>Enables CI/CD</li>
+      </ul>
+      
+      <p><strong>Cons:</strong></p>
+      <ul>
+        <li>Requires technical knowledge</li>
+        <li>Command-line interface</li>
+        <li>Setup overhead</li>
+      </ul>
+      
+      <h2>Metadata API</h2>
+      <p><strong>Best for:</strong> Custom tools, complex automation, enterprise deployments</p>
+      
+      <p><strong>Pros:</strong></p>
+      <ul>
+        <li>Full programmatic control</li>
+        <li>Can build custom tools</li>
+        <li>Most flexible option</li>
+      </ul>
+      
+      <p><strong>Cons:</strong></p>
+      <ul>
+        <li>Most complex to implement</li>
+        <li>Requires significant development</li>
+      </ul>
+      
+      <h2>Deployment Best Practices</h2>
+      <ul>
+        <li>✅ Always deploy to sandbox first</li>
+        <li>✅ Validate before deploying</li>
+        <li>✅ Run all tests</li>
+        <li>✅ Deploy during maintenance windows when possible</li>
+        <li>✅ Have a rollback plan</li>
+        <li>✅ Document what's being deployed</li>
+      </ul>
+      
+      <p><strong>Need help setting up deployment processes?</strong> We can configure the right approach for your team. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-02-25',
+    category: 'Development',
+    readTime: '10 min read',
+    featured: false
+  },
+  {
+    id: 'todo-api-integration-patterns',
+    title: 'API Integration Patterns: REST, SOAP, and When to Use Each',
+    excerpt: 'Integrating Salesforce with external systems? Learn the patterns that make integrations reliable, maintainable, and scalable.',
+    content: `
+      <p>Salesforce doesn't exist in a vacuum. It needs to talk to your ERP, marketing automation platform, accounting software, and custom applications.</p>
+      
+      <p>But integrations fail. APIs timeout. Data gets out of sync. Errors go unnoticed for days. Here are the patterns that prevent these problems.</p>
+      
+      <h2>REST vs. SOAP: When to Use Which</h2>
+      
+      <h3>REST APIs</h3>
+      <p><strong>Use when:</strong></p>
+      <ul>
+        <li>Modern systems support REST</li>
+        <li>You need simple, lightweight integration</li>
+        <li>JSON data format is acceptable</li>
+        <li>Stateless operations</li>
+      </ul>
+      
+      <h3>SOAP APIs</h3>
+      <p><strong>Use when:</strong></p>
+      <ul>
+        <li>Legacy systems require SOAP</li>
+        <li>You need strong typing and contracts</li>
+        <li>WS-Security is required</li>
+        <li>Complex operations with multiple steps</li>
+      </ul>
+      
+      <h2>Integration Patterns</h2>
+      
+      <h3>1. Request-Response (Synchronous)</h3>
+      <p>Call external API, wait for response, process result. Simple but blocks execution.</p>
+      
+      <h3>2. Fire-and-Forget (Asynchronous)</h3>
+      <p>Send request, don't wait. Use @future or Queueable for non-blocking calls.</p>
+      
+      <h3>3. Webhook (Event-Driven)</h3>
+      <p>External system calls your Salesforce endpoint when events occur. More efficient than polling.</p>
+      
+      <h3>4. Polling</h3>
+      <p>Scheduled job checks external system for changes. Less efficient but reliable.</p>
+      
+      <h2>Error Handling Patterns</h2>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">APIClient.cls</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class APIClient {
+    public static HttpResponse callExternalAPI(String endpoint) {
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endpoint);
+        req.setMethod('GET');
+        req.setTimeout(12000); // 12 second timeout
+        
+        Http http = new Http();
+        HttpResponse res;
+        
+        try {
+            res = http.send(req);
+            
+            // Handle different status codes
+            if (res.getStatusCode() == 200) {
+                return res;
+            } else if (res.getStatusCode() == 429) {
+                // Rate limited - retry with backoff
+                throw new APIException('Rate limited');
+            } else {
+                throw new APIException('API error: ' + res.getStatusCode());
+            }
+        } catch (Exception e) {
+            // Log error
+            // Create platform event for monitoring
+            throw new APIException('Callout failed: ' + e.getMessage());
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Implement retry logic with exponential backoff</li>
+        <li>✅ Set appropriate timeouts</li>
+        <li>✅ Log all API calls for debugging</li>
+        <li>✅ Use named credentials for authentication</li>
+        <li>✅ Handle rate limiting gracefully</li>
+        <li>✅ Monitor integration health</li>
+      </ul>
+      
+      <p><strong>Building integrations?</strong> We can help design and implement reliable API integrations. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-03-01',
+    category: 'Integration',
+    readTime: '13 min read',
+    featured: false
+  },
+  {
+    id: 'todo-error-handling-patterns',
+    title: 'Error Handling Patterns in Apex: Building Resilient Code',
+    excerpt: 'Errors happen. Great code handles them gracefully. Learn patterns for error handling that improve user experience and make debugging easier.',
+    content: `
+      <p>Your code will fail. Users will enter invalid data. External APIs will timeout. Database constraints will be violated. The question isn't whether errors will occur—it's how your code handles them.</p>
+      
+      <p>Poor error handling leads to cryptic error messages, lost data, and frustrated users. Good error handling provides clear feedback, preserves data integrity, and makes debugging easier.</p>
+      
+      <h2>Exception Types in Apex</h2>
+      <p>Understanding exception types helps you catch the right errors:</p>
+      
+      <ul>
+        <li><strong>DmlException:</strong> Database operation failures</li>
+        <li><strong>QueryException:</strong> SOQL query errors</li>
+        <li><strong>CalloutException:</strong> HTTP callout failures</li>
+        <li><strong>LimitException:</strong> Governor limit exceeded</li>
+        <li><strong>Custom Exceptions:</strong> Your own exception classes</li>
+      </ul>
+      
+      <h2>Error Handling Patterns</h2>
+      
+      <h3>1. Try-Catch Blocks</h3>
+      <p>Always wrap risky operations in try-catch blocks.</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">AccountService.cls</span>
+          <span class="code-badge good">Best Practice</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class AccountService {
+    public static void updateAccounts(List&lt;Account&gt; accounts) {
+        List&lt;Database.SaveResult&gt; results = Database.update(accounts, false);
+        
+        for (Integer i = 0; i &lt; results.size(); i++) {
+            Database.SaveResult result = results[i];
+            if (!result.isSuccess()) {
+                for (Database.Error error : result.getErrors()) {
+                    // Log specific error for this record
+                    System.debug('Account ' + accounts[i].Id + 
+                        ' failed: ' + error.getMessage());
+                }
+            }
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+      
+      <h3>2. Partial Success Handling</h3>
+      <p>Use Database methods with <code>allOrNone=false</code> to allow partial success.</p>
+      
+      <h3>3. Custom Exception Classes</h3>
+      <p>Create domain-specific exceptions for better error handling.</p>
+      
+      <h2>Error Logging</h2>
+      <p>Log errors with context: user, record, operation, timestamp. Consider using Platform Events for error tracking.</p>
+      
+      <h2>User-Friendly Error Messages</h2>
+      <p>Don't show stack traces to users. Provide actionable error messages.</p>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Catch specific exceptions when possible</li>
+        <li>✅ Log errors with sufficient context</li>
+        <li>✅ Provide user-friendly error messages</li>
+        <li>✅ Handle partial success scenarios</li>
+        <li>✅ Don't swallow exceptions silently</li>
+      </ul>
+      
+      <p><strong>Need help improving error handling?</strong> We can review your code and suggest improvements. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-03-05',
+    category: 'Development',
+    readTime: '10 min read',
+    featured: false
+  },
+  {
+    id: 'todo-performance-monitoring',
+    title: 'Performance Monitoring in Salesforce: Tools and Techniques',
+    excerpt: 'You can\'t improve what you don\'t measure. Learn how to monitor Salesforce performance and identify bottlenecks before users complain.',
+    content: `
+      <p>Performance problems are insidious. They start small—a page that takes 2 seconds instead of 1. Then it gets worse. Before you know it, users are complaining and adoption is dropping.</p>
+      
+      <p>Proactive performance monitoring catches issues early, before they impact users. Here's how to set up effective monitoring.</p>
+      
+      <h2>Built-in Monitoring Tools</h2>
+      
+      <h3>1. Debug Logs</h3>
+      <p>Enable profiling in debug logs to see CPU time per method.</p>
+      
+      <h3>2. Developer Console</h3>
+      <p>Use the Execution Tree to identify slow operations.</p>
+      
+      <h3>3. Setup Audit Trail</h3>
+      <p>Track configuration changes that might impact performance.</p>
+      
+      <h2>Custom Monitoring</h2>
+      
+      <h3>Platform Events for Performance Tracking</h3>
+      <p>Emit platform events when operations exceed thresholds:</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">PerformanceMonitor.cls</span>
+          <span class="code-badge good">Monitoring Pattern</span>
+        </div>
+        <div class="code-content">
+          <pre><code class="language-java">public class PerformanceMonitor {
+    public static void logSlowOperation(String operation, Integer duration) {
+        if (duration &gt; 5000) { // 5 seconds
+            Performance_Event__e event = new Performance_Event__e(
+                Operation__c = operation,
+                Duration__c = duration,
+                User__c = UserInfo.getUserId()
+            );
+            EventBus.publish(event);
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+      
+      <h2>Key Metrics to Monitor</h2>
+      <ul>
+        <li>Page load times</li>
+        <li>SOQL query execution time</li>
+        <li>CPU time per transaction</li>
+        <li>API callout response times</li>
+        <li>DML operation duration</li>
+      </ul>
+      
+      <h2>Setting Up Dashboards</h2>
+      <p>Create reports and dashboards to visualize performance trends over time.</p>
+      
+      <h2>Alerting</h2>
+      <p>Set up alerts when performance degrades beyond acceptable thresholds.</p>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Monitor continuously, not just when issues arise</li>
+        <li>✅ Establish baseline performance metrics</li>
+        <li>✅ Set up automated alerts</li>
+        <li>✅ Review performance trends regularly</li>
+        <li>✅ Document performance improvements</li>
+      </ul>
+      
+      <p><strong>Need help setting up performance monitoring?</strong> Our health checks include performance analysis. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-03-10',
+    category: 'Performance',
+    readTime: '9 min read',
+    featured: false
+  },
+  {
+    id: 'todo-data-quality-management',
+    title: 'Data Quality Management: Keeping Your Salesforce Org Clean',
+    excerpt: 'Bad data leads to bad decisions. Learn strategies for maintaining data quality in Salesforce—from prevention to cleanup.',
+    content: `
+      <p>Garbage in, garbage out. No matter how well-designed your Salesforce org is, bad data will undermine everything.</p>
+      
+      <p>Duplicate accounts. Invalid email addresses. Inconsistent naming conventions. Missing required fields. These problems compound over time, making your CRM less valuable every day.</p>
+      
+      <p>Here's how to prevent bad data from entering your org and clean up what's already there.</p>
+      
+      <h2>Prevention: Validation Rules</h2>
+      <p>Validation rules are your first line of defense. They prevent bad data at the point of entry.</p>
+      
+      <h2>Data Quality Tools</h2>
+      
+      <h3>1. Duplicate Management</h3>
+      <p>Use Salesforce's duplicate management features to prevent and find duplicates.</p>
+      
+      <h3>2. Data.com Clean</h3>
+      <p>Automatically verify and enrich contact and account data.</p>
+      
+      <h3>3. Third-Party Tools</h3>
+      <p>Tools like DemandTools, Cloudingo, or custom Apex can help with bulk cleanup.</p>
+      
+      <h2>Data Quality Metrics</h2>
+      <p>Track these metrics to measure data quality:</p>
+      <ul>
+        <li>Duplicate rate</li>
+        <li>Email bounce rate</li>
+        <li>Completeness (required fields)</li>
+        <li>Accuracy (valid formats)</li>
+      </ul>
+      
+      <h2>Cleanup Strategies</h2>
+      
+      <h3>1. Identify Issues</h3>
+      <p>Run reports to find data quality problems.</p>
+      
+      <h3>2. Prioritize</h3>
+      <p>Focus on high-impact records first (key accounts, active opportunities).</p>
+      
+      <h3>3. Clean in Batches</h3>
+      <p>Don't try to fix everything at once. Work in manageable batches.</p>
+      
+      <h3>4. Prevent Recurrence</h3>
+      <p>After cleanup, implement prevention measures.</p>
+      
+      <h2>Best Practices</h2>
+      <ul>
+        <li>✅ Set up validation rules early</li>
+        <li>✅ Train users on data entry standards</li>
+        <li>✅ Regular data quality audits</li>
+        <li>✅ Use picklists instead of text fields when possible</li>
+        <li>✅ Automate data enrichment where possible</li>
+      </ul>
+      
+      <p><strong>Data quality issues?</strong> We can help audit and clean your data. <a href="/contact">Contact us</a>.</p>
+      
+      <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; color: var(--text-light); font-size: 0.9rem;">#TBR</p>
+    `,
+    author: 'ApexRune Team',
+    date: '2025-03-15',
+    category: 'Migration',
+    readTime: '11 min read',
+    featured: false
   }
 ];
 
