@@ -3,8 +3,25 @@ export function getHeaderHTML(getCommonIcon) {
   return `
     <header class="header site-header">
       <div class="header-content">
-        <a href="/" class="logo-container">
-          <img src="/logo.png" alt="ApexRune Logo" class="logo-icon">
+        <a href="/" class="logo-container group" aria-label="ApexRune Home" style="text-decoration: none; display: flex; align-items: center;">
+          <div class="logo-square logo-icon-wrapper">
+            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-sm logo-svg" style="width: 100%; height: 100%;">
+              <defs>
+                <linearGradient id="headerCloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#00A1E0;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+                </linearGradient>
+                <mask id="headerBoltCut">
+                  <rect x="0" y="0" width="100" height="100" fill="white"/>
+                  <!-- The Bolt Cutout Shape -->
+                  <path d="M58 28 L42 52 L54 52 L42 75" fill="black" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                </mask>
+              </defs>
+              <!-- The Cloud Shape with Mask Applied -->
+              <path d="M25 65 Q 15 65 15 55 Q 15 40 30 40 Q 35 25 55 25 Q 70 25 75 40 Q 85 40 85 55 Q 85 65 75 65 Z" fill="url(#headerCloudGrad)" mask="url(#headerBoltCut)" />
+            </svg>
+          </div>
+          <span class="logo-text"><span class="logo-apex">Apex</span><span class="logo-rune">Rune</span></span>
         </a>
         <nav class="nav">
           <a href="/" class="nav-link">Home</a>

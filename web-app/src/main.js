@@ -9,8 +9,25 @@ import { getCommonIcon, getServiceCardIcon } from './icons.js'
 document.querySelector('#app').innerHTML = `
   <header class="header">
     <div class="header-content">
-      <a href="/" class="logo-container">
-        <img src="/logo.png" alt="ApexRune Logo" class="logo-icon">
+      <a href="/" class="logo-container group" aria-label="ApexRune Home" style="text-decoration: none; display: flex; align-items: center;">
+        <div class="logo-square logo-icon-wrapper">
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-sm logo-svg" style="width: 100%; height: 100%;">
+            <defs>
+              <linearGradient id="headerCloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#00A1E0;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+              </linearGradient>
+              <mask id="headerBoltCut">
+                <rect x="0" y="0" width="100" height="100" fill="white"/>
+                <!-- The Bolt Cutout Shape -->
+                <path d="M58 28 L42 52 L54 52 L42 75" fill="black" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+              </mask>
+            </defs>
+            <!-- The Cloud Shape with Mask Applied -->
+            <path d="M25 65 Q 15 65 15 55 Q 15 40 30 40 Q 35 25 55 25 Q 70 25 75 40 Q 85 40 85 55 Q 85 65 75 65 Z" fill="url(#headerCloudGrad)" mask="url(#headerBoltCut)" />
+          </svg>
+        </div>
+        <span class="logo-text"><span class="logo-apex">Apex</span><span class="logo-rune">Rune</span></span>
       </a>
       <nav class="nav">
         <a href="/" class="nav-link">Home</a>
@@ -528,9 +545,22 @@ document.querySelector('#app').innerHTML = `
       <div class="container">
         <div class="footer-content">
           <div class="footer-column">
-            <div class="footer-logo">
-              <img src="/logo-v2.png" alt="ApexRune Logo" class="logo-icon" style="height: 40px; width: auto;">
-            </div>
+            <a href="/" class="footer-logo" aria-label="ApexRune Home" style="text-decoration: none;">
+              <div class="logo-square">
+                <svg viewBox="0 0 100 100" class="w-full h-full" style="width: 100%; height: 100%;">
+                  <defs>
+                    <mask id="footerBoltCut">
+                      <rect x="0" y="0" width="100" height="100" fill="white"/>
+                      <!-- The Bolt Cutout Shape -->
+                      <path d="M58 28 L42 52 L54 52 L42 75" fill="black" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                    </mask>
+                  </defs>
+                  <!-- The Cloud Shape with Solid Fill -->
+                  <path d="M25 65 Q 15 65 15 55 Q 15 40 30 40 Q 35 25 55 25 Q 70 25 75 40 Q 85 40 85 55 Q 85 65 75 65 Z" fill="#00A1E0" mask="url(#footerBoltCut)" />
+                </svg>
+              </div>
+              <span class="logo-text"><span class="logo-apex logo-apex-footer">Apex</span><span class="logo-rune">Rune</span></span>
+            </a>
             <p class="footer-description">Demystifying Salesforce and making it an engine for growth for ambitious businesses.</p>
             <div class="social-icons">
               <a href="https://www.linkedin.com/company/apexrune/" target="_blank" rel="noopener noreferrer" class="social-icon">

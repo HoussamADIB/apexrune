@@ -205,7 +205,7 @@ main {
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 6px; /* 6px gap between SVG and text */
   text-decoration: none;
   align-self: center;
   flex-shrink: 0;
@@ -220,25 +220,83 @@ main {
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.logo-container:hover .logo-icon {
-  opacity: 0.85;
-  transform: scale(1.02);
-}
-
 .logo-square {
-  width: 40px;
-  height: 40px;
+  width: 54px; /* increased by 4px again */
+  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   background: transparent;
+  flex-shrink: 0;
+}
+
+.logo-square svg {
+  transform: translateY(2px); /* move cloud SVG 2px down on y-axis */
+}
+
+.logo-icon-wrapper {
+  transition: transform 0.2s ease;
+}
+
+.logo-container.group:hover .logo-icon-wrapper {
+  transform: scale(1.05);
+}
+
+.logo-svg {
+  transition: transform 0.2s ease;
 }
 
 .logo-text {
-  font-size: 24px;
+  font-size: 26px; /* increased by 4px */
   font-weight: 600;
   color: var(--dark-blue);
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  letter-spacing: -0.025em; /* tracking-tight */
+  line-height: 1; /* tight leading */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  padding-top: 0.125rem; /* pt-0.5 micro-adjustment */
+}
+
+.logo-apex {
+  font-weight: 700; /* font-bold */
+  color: #0f172a; /* text-slate-900 */
+}
+
+.logo-rune {
+  font-weight: 600;
+  color: #00A1E0;
+  transition: color 0.2s ease;
+}
+
+.logo-container.group:hover .logo-rune {
+  color: #22d3ee; /* text-cyan-400 */
+}
+
+/* Desktop sizing - ensure w-10 h-10 and text-xl */
+@media (min-width: 768px) {
+  .logo-square {
+    width: 54px; /* increased by 4px again */
+    height: 54px;
+  }
+
+  .logo-text {
+    font-size: 26px; /* increased by 4px */
+  }
+
+  .footer-logo .logo-square {
+    width: 54px; /* increased by 4px again */
+    height: 54px;
+  }
+
+  .footer-logo .logo-text {
+    font-size: 26px; /* increased by 4px */
+  }
 }
 
 .nav {
@@ -1887,15 +1945,36 @@ main {
 .footer-logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 6px; /* 6px gap between SVG and text */
   margin-bottom: 1.5rem;
   color: var(--white);
   font-size: 1.5rem;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-logo .logo-square {
+  width: 54px; /* increased by 4px again */
+  height: 54px;
 }
 
 .footer-logo .logo-text {
   color: var(--white);
+  font-size: 26px; /* increased by 4px */
+  line-height: 1; /* tight leading */
+  letter-spacing: -0.025em; /* tracking-tight */
+  display: flex;
+  align-items: center;
+  padding-top: 0.125rem; /* pt-0.5 micro-adjustment */
+}
+
+.footer-logo .logo-apex-footer {
+  font-weight: 700; /* font-bold */
+  color: rgba(255, 255, 255, 0.95); /* white for footer */
+}
+
+.footer-logo .logo-rune {
+  color: #00A1E0;
 }
 
 .footer-description {
@@ -2198,7 +2277,7 @@ main {
   }
 
   .logo-text {
-    font-size: 20px;
+    font-size: 23px; /* increased by 4px on mobile */
   }
 
   .logo-icon {
@@ -2206,8 +2285,25 @@ main {
   }
 
   .logo-square {
-    width: 36px;
-    height: 36px;
+    width: 46px; /* increased by 4px again on mobile */
+    height: 46px;
+  }
+
+  .logo-container {
+    gap: 0.5rem; /* 8px on mobile */
+  }
+
+  .footer-logo {
+    gap: 0.5rem; /* 8px on mobile */
+  }
+
+  .footer-logo .logo-square {
+    width: 46px; /* increased by 4px again on mobile */
+    height: 46px;
+  }
+
+  .footer-logo .logo-text {
+    font-size: 23px; /* increased by 4px on mobile */
   }
 
   .hero-section {
