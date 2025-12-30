@@ -13,7 +13,7 @@ export function loadPrivacyPolicyPage() {
       <div class="container">
         <div class="legal-content">
           <h1 class="legal-title">Privacy Policy</h1>
-          <p class="legal-last-updated">Last Updated: January 2025</p>
+          <p class="legal-last-updated">Last Updated: January 2026</p>
           
           <section class="legal-section">
             <h2>1. Introduction</h2>
@@ -109,8 +109,6 @@ export function loadPrivacyPolicyPage() {
             <p>If you have any questions about this Privacy Policy, please contact us:</p>
             <ul>
               <li>Email: contact@apexrune.com</li>
-              <li>Phone: +1 (563) 123-4567</li>
-              <li>Address: 123 Tech Boulevard, Innovation City, ST 84000</li>
             </ul>
           </section>
         </div>
@@ -142,7 +140,7 @@ export function loadTermsOfServicePage() {
       <div class="container">
         <div class="legal-content">
           <h1 class="legal-title">Terms of Service</h1>
-          <p class="legal-last-updated">Last Updated: January 2025</p>
+          <p class="legal-last-updated">Last Updated: January 2026</p>
           
           <section class="legal-section">
             <h2>1. Acceptance of Terms</h2>
@@ -237,8 +235,6 @@ export function loadTermsOfServicePage() {
             <p>If you have any questions about these Terms of Service, please contact us:</p>
             <ul>
               <li>Email: contact@apexrune.com</li>
-              <li>Phone: +1 (563) 123-4567</li>
-              <li>Address: 123 Tech Boulevard, Innovation City, ST 84000</li>
             </ul>
           </section>
         </div>

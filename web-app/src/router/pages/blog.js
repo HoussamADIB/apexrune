@@ -111,9 +111,13 @@ export function loadBlogPage() {
                   return `
                   <a href="/blog/${post.id}" class="article-card" data-category="${post.category}" data-title="${post.title.toLowerCase()}" data-excerpt="${post.excerpt.toLowerCase()}">
                     <div class="article-card-image">
-                      <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
-                        ${getCommonIcon(iconName, 28, iconColor)}
-                      </div>
+                      ${post.image ? `
+                        <img src="${post.image}" alt="${post.title}" class="article-card-img" />
+                      ` : `
+                        <div class="card-icon-placeholder" style="--icon-color: ${iconColor}">
+                          ${getCommonIcon(iconName, 28, iconColor)}
+                        </div>
+                      `}
                     </div>
                     <div class="article-card-body">
                       <div class="article-card-meta">
@@ -456,6 +460,13 @@ export function loadBlogPostPage(postId) {
                 </div>
               </div>
             </header>
+            
+            <div class="article-back-nav">
+              <a href="/blog" class="back-to-articles">
+                ${getCommonIcon('chevron-left', 20, 'currentColor')}
+                <span>Back to Articles</span>
+              </a>
+            </div>
             
             <div class="article-layout">
               <aside class="article-toc">
@@ -1100,7 +1111,20 @@ function addBlogPageStyles() {
     }
 
     .article-card-image {
-      padding: 1.5rem 1.5rem 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .article-card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+
+    .article-card:hover .article-card-img {
+      transform: scale(1.05);
     }
 
     .image-placeholder {
@@ -1376,6 +1400,10 @@ function addBlogPageStyles() {
         grid-template-columns: 1fr;
       }
 
+      .article-card-img {
+        height: 180px;
+      }
+
       .articles-filters {
         flex-direction: column;
         align-items: stretch;
@@ -1523,6 +1551,52 @@ function addBlogPostPageStyles() {
     .article-hero-inner {
       max-width: 1100px;
       margin: 0 auto;
+    }
+
+    /* Back to Articles Navigation */
+    .article-back-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 2rem 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .back-to-articles {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-dark);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 0.625rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .back-to-articles:hover {
+      color: var(--bright-blue);
+      border-color: var(--bright-blue);
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.15);
+      transform: translateX(-2px);
+    }
+
+    .back-to-articles:focus {
+      outline: 2px solid var(--bright-blue);
+      outline-offset: 2px;
+    }
+
+    .back-to-articles svg {
+      transition: transform 0.2s ease;
+    }
+
+    .back-to-articles:hover svg {
+      transform: translateX(-2px);
     }
 
     .article-breadcrumb {
@@ -2205,6 +2279,11 @@ function addBlogPostPageStyles() {
 
     /* Responsive */
     @media (max-width: 1024px) {
+      .article-back-nav {
+        padding: 2rem 1.5rem 0;
+        max-width: 100%;
+      }
+
       .article-layout {
         gap: 3rem;
         padding: 3rem 1.5rem 5rem;
@@ -2257,6 +2336,30 @@ function addBlogPostPageStyles() {
       .article-hero-title {
         font-size: 1.85rem;
         margin-bottom: 1.5rem;
+      }
+
+      .article-back-nav {
+        padding: 1.5rem 1.25rem 0;
+        max-width: 100%;
+      }
+
+      .article-hero-image {
+        padding: 0 1.25rem;
+        margin-top: -1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .article-hero-image img {
+        max-height: 300px;
+      }
+
+      .article-image-wrapper {
+        margin: 2rem 0;
+      }
+
+      .back-to-articles {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.875rem;
       }
 
       .article-layout {

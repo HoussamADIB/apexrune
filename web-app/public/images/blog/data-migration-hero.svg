@@ -1,0 +1,26 @@
+<svg width="1200" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="migrationGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="500" fill="url(#migrationGradient)"/>
+  <text x="600" y="220" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">Data Migration Strategy</text>
+  <text x="600" y="270" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">Zero Data Loss Methodology</text>
+  <rect x="300" y="320" width="120" height="100" rx="8" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  <text x="360" y="375" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Source</text>
+  <path d="M 420 370 L 480 370" stroke="white" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <rect x="480" y="320" width="120" height="100" rx="8" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  <text x="540" y="375" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Transform</text>
+  <path d="M 600 370 L 660 370" stroke="white" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <rect x="660" y="320" width="120" height="100" rx="8" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  <text x="720" y="375" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Salesforce</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="white"/>
+    </marker>
+  </defs>
+</svg>
+
+

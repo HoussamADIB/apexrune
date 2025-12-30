@@ -4,6 +4,7 @@ export const blogPosts = [
     id: 'apex-cpu-timeout-troubleshooting',
     title: 'Fixing "Apex CPU Time Limit Exceeded": A Developer\'s Troubleshooting Guide',
     excerpt: 'That dreaded CPU timeout error can halt your business operations. Here\'s exactly how we diagnose and fix it—with real code examples from client projects.',
+    image: '/images/blog/apex-cpu-hero.svg',
     content: `
       <p>If you've seen the error "Apex CPU time limit exceeded" in your Salesforce org, you know the frustration. Transactions fail, users can't save records, and your business grinds to a halt. We've fixed this issue dozens of times for clients, and here's exactly how we approach it.</p>
       
@@ -229,7 +230,7 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
       <p><strong>Struggling with CPU timeout errors?</strong> <a href="/contact">Reach out to us</a>—we'll diagnose the issue and implement a permanent fix. Our health checks include comprehensive performance analysis.</p>
     `,
     author: 'ApexRune Team',
-    date: '2025-01-10',
+    date: '2026-01-10',
     category: 'Performance',
     readTime: '12 min read',
     featured: true
@@ -238,6 +239,7 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
     id: 'salesforce-flow-vs-apex-decision-guide',
     title: 'Flow vs. Apex: A Decision Framework for Salesforce Architects',
     excerpt: 'Should you build that automation in Flow or Apex? After implementing hundreds of automations, here\'s the framework we use to decide.',
+    image: '/images/blog/flow-vs-apex-hero.svg',
     content: `
       <p>One of the most common questions we get: "Should I build this in Flow or write Apex?" The answer isn't always obvious, and the wrong choice can lead to maintenance nightmares or performance issues down the road.</p>
       
@@ -433,7 +435,7 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
       <p><strong>Need help deciding?</strong> We offer architecture reviews where we assess your automation landscape and recommend the optimal approach for each use case. <a href="/service/process-automation">Learn more about our automation services</a>.</p>
     `,
     author: 'ApexRune Team',
-    date: '2025-01-05',
+    date: '2026-01-05',
     category: 'Architecture',
     readTime: '10 min read',
     featured: true
@@ -442,6 +444,7 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
     id: 'salesforce-integration-error-handling',
     title: 'Building Bulletproof Salesforce Integrations: Error Handling That Actually Works',
     excerpt: 'Most Salesforce integrations work fine—until they don\'t. Here\'s how we build integrations that fail gracefully and recover automatically.',
+    image: '/images/blog/integration-hero.svg',
     content: `
       <p>We've audited hundreds of Salesforce integrations, and they almost always have the same problem: they work perfectly in testing but fail mysteriously in production. The culprit? Inadequate error handling.</p>
       
@@ -787,6 +790,7 @@ public class IntegrationLogger {
     id: 'salesforce-lwc-performance-optimization',
     title: 'Lightning Web Components Performance: From Sluggish to Snappy',
     excerpt: 'Your LWC is slow and users are complaining. Here\'s how we diagnose and fix Lightning component performance issues.',
+    image: '/images/blog/lwc-performance-hero.svg',
     content: `
       <p>Lightning Web Components are powerful, but it's easy to build components that frustrate users with slow rendering and laggy interactions. We've optimized dozens of LWCs, and here are the techniques that make the biggest difference.</p>
       
@@ -1147,6 +1151,7 @@ get items() {
     id: 'salesforce-data-migration-strategy',
     title: 'Salesforce Data Migration: A Battle-Tested Strategy for Zero Data Loss',
     excerpt: 'Migrating data into Salesforce is high-stakes work. One mistake can corrupt your entire database. Here\'s the methodology we use for flawless migrations.',
+    image: '/images/blog/data-migration-hero.svg',
     content: `
       <p>Data migration is one of the highest-risk activities in a Salesforce implementation. Get it wrong, and you're dealing with corrupted records, broken relationships, and angry users. Get it right, and nobody even notices—which is exactly how it should be.</p>
       
