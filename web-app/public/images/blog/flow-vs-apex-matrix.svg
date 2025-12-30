@@ -1,0 +1,19 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2" rx="8"/>
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1E40AF" text-anchor="middle">Decision Matrix</text>
+  <rect x="100" y="80" width="600" height="280" fill="#F9FAFB" rx="4" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="150" y="110" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E40AF">Scenario</text>
+  <text x="550" y="110" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E40AF">Recommendation</text>
+  <line x1="100" y1="130" x2="700" y2="130" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="150" y="160" font-family="Arial, sans-serif" font-size="12" fill="#374151">Simple field updates</text>
+  <text x="550" y="160" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#10B981">Flow</text>
+  <text x="150" y="190" font-family="Arial, sans-serif" font-size="12" fill="#374151">Complex calculations</text>
+  <text x="550" y="190" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#3B82F6">Apex</text>
+  <text x="150" y="220" font-family="Arial, sans-serif" font-size="12" fill="#374151">External API callouts</text>
+  <text x="550" y="220" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#3B82F6">Apex</text>
+  <text x="150" y="250" font-family="Arial, sans-serif" font-size="12" fill="#374151">10,000+ records</text>
+  <text x="550" y="250" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#3B82F6">Apex Batch</text>
+  <text x="150" y="280" font-family="Arial, sans-serif" font-size="12" fill="#374151">User-facing screens</text>
+  <text x="550" y="280" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#10B981">Screen Flow</text>
+</svg>
+

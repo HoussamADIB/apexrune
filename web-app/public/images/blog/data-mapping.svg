@@ -1,0 +1,21 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2" rx="8"/>
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1E40AF" text-anchor="middle">Data Mapping Example</text>
+  <rect x="100" y="100" width="200" height="200" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2" rx="4"/>
+  <text x="200" y="130" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E40AF" text-anchor="middle">Source</text>
+  <text x="120" y="160" font-family="Arial, sans-serif" font-size="12" fill="#374151">customer_name</text>
+  <text x="120" y="185" font-family="Arial, sans-serif" font-size="12" fill="#374151">cust_type</text>
+  <text x="120" y="210" font-family="Arial, sans-serif" font-size="12" fill="#374151">created_date</text>
+  <path d="M 300 200 L 500 200" stroke="#3B82F6" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <rect x="500" y="100" width="200" height="200" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2" rx="4"/>
+  <text x="600" y="130" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E40AF" text-anchor="middle">Target</text>
+  <text x="520" y="160" font-family="Arial, sans-serif" font-size="12" fill="#374151">Account.Name</text>
+  <text x="520" y="185" font-family="Arial, sans-serif" font-size="12" fill="#374151">Account.Type</text>
+  <text x="520" y="210" font-family="Arial, sans-serif" font-size="12" fill="#374151">Account.CreatedDate</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3B82F6"/>
+    </marker>
+  </defs>
+</svg>
+

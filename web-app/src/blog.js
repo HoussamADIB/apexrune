@@ -4,6 +4,24 @@ export const blogPosts = [
     id: 'apex-cpu-timeout-troubleshooting',
     title: 'Fixing "Apex CPU Time Limit Exceeded": A Developer\'s Troubleshooting Guide',
     excerpt: 'That dreaded CPU timeout error can halt your business operations. Here\'s exactly how we diagnose and fix it—with real code examples from client projects.',
+    image: '/images/blog/apex-cpu-hero.svg',
+    images: [
+      {
+        src: '/images/blog/cpu-debug-log.svg',
+        alt: 'Debug log showing CPU usage breakdown',
+        caption: 'CPU usage breakdown in debug logs showing cumulative limit usage'
+      },
+      {
+        src: '/images/blog/cpu-before-after-chart.svg',
+        alt: 'Before and after CPU optimization chart',
+        caption: 'CPU time reduced from 9,700ms to 1,200ms'
+      },
+      {
+        src: '/images/blog/trigger-architecture-diagram.svg',
+        alt: 'Trigger architecture comparison',
+        caption: 'Bad: Multiple triggers vs Good: Single trigger handler pattern'
+      }
+    ],
     content: `
       <p>If you've seen the error "Apex CPU time limit exceeded" in your Salesforce org, you know the frustration. Transactions fail, users can't save records, and your business grinds to a halt. We've fixed this issue dozens of times for clients, and here's exactly how we approach it.</p>
       
@@ -238,6 +256,19 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
     id: 'salesforce-flow-vs-apex-decision-guide',
     title: 'Flow vs. Apex: A Decision Framework for Salesforce Architects',
     excerpt: 'Should you build that automation in Flow or Apex? After implementing hundreds of automations, here\'s the framework we use to decide.',
+    image: '/images/blog/flow-vs-apex-hero.svg',
+    images: [
+      {
+        src: '/images/blog/flow-vs-apex-matrix.svg',
+        alt: 'Flow vs Apex decision matrix',
+        caption: 'Quick decision matrix for choosing between Flow and Apex'
+      },
+      {
+        src: '/images/blog/performance-comparison.svg',
+        alt: 'Flow vs Apex performance comparison',
+        caption: 'Performance comparison: Flow (~180ms) vs Apex (~45ms) for 200 records'
+      }
+    ],
     content: `
       <p>One of the most common questions we get: "Should I build this in Flow or write Apex?" The answer isn't always obvious, and the wrong choice can lead to maintenance nightmares or performance issues down the road.</p>
       
@@ -442,6 +473,19 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
     id: 'salesforce-integration-error-handling',
     title: 'Building Bulletproof Salesforce Integrations: Error Handling That Actually Works',
     excerpt: 'Most Salesforce integrations work fine—until they don\'t. Here\'s how we build integrations that fail gracefully and recover automatically.',
+    image: '/images/blog/integration-hero.svg',
+    images: [
+      {
+        src: '/images/blog/integration-flowchart.svg',
+        alt: 'Error handling flowchart',
+        caption: 'Comprehensive error handling flow with retry logic and circuit breaker'
+      },
+      {
+        src: '/images/blog/integration-architecture.svg',
+        alt: 'Integration architecture diagram',
+        caption: 'Salesforce integration architecture with error handling layers'
+      }
+    ],
     content: `
       <p>We've audited hundreds of Salesforce integrations, and they almost always have the same problem: they work perfectly in testing but fail mysteriously in production. The culprit? Inadequate error handling.</p>
       
@@ -787,6 +831,19 @@ public class IntegrationLogger {
     id: 'salesforce-lwc-performance-optimization',
     title: 'Lightning Web Components Performance: From Sluggish to Snappy',
     excerpt: 'Your LWC is slow and users are complaining. Here\'s how we diagnose and fix Lightning component performance issues.',
+    image: '/images/blog/lwc-performance-hero.svg',
+    images: [
+      {
+        src: '/images/blog/devtools-performance.svg',
+        alt: 'Chrome DevTools performance analysis',
+        caption: 'Using Chrome DevTools Performance tab to identify bottlenecks'
+      },
+      {
+        src: '/images/blog/performance-improvement.svg',
+        alt: 'Performance improvement chart',
+        caption: 'Load time improved from 4.2 seconds to 0.8 seconds (80% faster)'
+      }
+    ],
     content: `
       <p>Lightning Web Components are powerful, but it's easy to build components that frustrate users with slow rendering and laggy interactions. We've optimized dozens of LWCs, and here are the techniques that make the biggest difference.</p>
       
@@ -1147,6 +1204,19 @@ get items() {
     id: 'salesforce-data-migration-strategy',
     title: 'Salesforce Data Migration: A Battle-Tested Strategy for Zero Data Loss',
     excerpt: 'Migrating data into Salesforce is high-stakes work. One mistake can corrupt your entire database. Here\'s the methodology we use for flawless migrations.',
+    image: '/images/blog/data-migration-hero.svg',
+    images: [
+      {
+        src: '/images/blog/migration-pipeline.svg',
+        alt: 'Data migration pipeline',
+        caption: 'Complete migration pipeline: Discovery → Preparation → Migration → Validation'
+      },
+      {
+        src: '/images/blog/data-mapping.svg',
+        alt: 'Data mapping example',
+        caption: 'Source to target field mapping with transformation rules'
+      }
+    ],
     content: `
       <p>Data migration is one of the highest-risk activities in a Salesforce implementation. Get it wrong, and you're dealing with corrupted records, broken relationships, and angry users. Get it right, and nobody even notices—which is exactly how it should be.</p>
       

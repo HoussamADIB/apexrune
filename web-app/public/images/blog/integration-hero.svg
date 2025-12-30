@@ -1,0 +1,18 @@
+<svg width="1200" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="integrationGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="500" fill="url(#integrationGradient)"/>
+  <text x="600" y="220" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">Bulletproof Integrations</text>
+  <text x="600" y="270" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">Error Handling That Actually Works</text>
+  <circle cx="300" cy="350" r="60" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+  <text x="300" y="360" font-family="Arial, sans-serif" font-size="18" fill="white" text-anchor="middle">SF</text>
+  <circle cx="900" cy="350" r="60" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+  <text x="900" y="360" font-family="Arial, sans-serif" font-size="18" fill="white" text-anchor="middle">API</text>
+  <path d="M 360 350 Q 600 250, 840 350" stroke="rgba(255,255,255,0.5)" stroke-width="4" fill="none" stroke-dasharray="10,5"/>
+  <circle cx="600" cy="250" r="8" fill="white"/>
+</svg>
+

@@ -1,0 +1,20 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2" rx="8"/>
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1E40AF" text-anchor="middle">Error Handling Flow</text>
+  <rect x="300" y="80" width="200" height="60" fill="#3B82F6" rx="8"/>
+  <text x="400" y="115" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">API Call</text>
+  <path d="M 400 140 L 400 180" stroke="#6B7280" stroke-width="2" fill="none" marker-end="url(#arrowDown)"/>
+  <rect x="250" y="180" width="100" height="50" fill="#10B981" rx="4"/>
+  <text x="300" y="210" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Success</text>
+  <rect x="450" y="180" width="100" height="50" fill="#EF4444" rx="4"/>
+  <text x="500" y="210" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Error</text>
+  <path d="M 500 230 L 500 270" stroke="#6B7280" stroke-width="2" fill="none" marker-end="url(#arrowDown)"/>
+  <rect x="400" y="270" width="200" height="50" fill="#F59E0B" rx="4"/>
+  <text x="500" y="300" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Retry Logic</text>
+  <defs>
+    <marker id="arrowDown" markerWidth="10" markerHeight="10" refX="5" refY="9" orient="auto">
+      <polygon points="0 0, 10 0, 5 10" fill="#6B7280"/>
+    </marker>
+  </defs>
+</svg>
+

@@ -1,0 +1,19 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2" rx="8"/>
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1E40AF" text-anchor="middle">Performance Improvement</text>
+  <text x="200" y="100" font-family="Arial, sans-serif" font-size="16" fill="#EF4444" text-anchor="middle">Before</text>
+  <rect x="150" y="120" width="100" height="200" fill="#EF4444" rx="4"/>
+  <text x="200" y="340" font-family="Arial, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">4.2s</text>
+  <text x="600" y="100" font-family="Arial, sans-serif" font-size="16" fill="#10B981" text-anchor="middle">After</text>
+  <rect x="550" y="320" width="100" height="0" fill="#10B981" rx="4"/>
+  <rect x="550" y="320" width="100" height="20" fill="#10B981" rx="4"/>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">0.8s</text>
+  <path d="M 250 220 L 550 330" stroke="#3B82F6" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <text x="400" y="270" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#3B82F6" text-anchor="middle">80% Faster</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3B82F6"/>
+    </marker>
+  </defs>
+</svg>
+
