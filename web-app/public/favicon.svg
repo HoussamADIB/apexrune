@@ -1,29 +1,15 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="faviconShadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.3"/>
-    </filter>
+    <linearGradient id="faviconCloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00A1E0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+    </linearGradient>
+    <mask id="faviconBoltCut">
+      <rect x="0" y="0" width="100" height="100" fill="white"/>
+      <!-- The Bolt Cutout Shape -->
+      <path d="M58 28 L42 52 L54 52 L42 75" fill="black" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+    </mask>
   </defs>
-  <!-- Blue rounded square background with shadow -->
-  <rect width="32" height="32" rx="6" fill="#1E40AF" filter="url(#faviconShadow)"/>
-  
-  <!-- Modern automation icon: Connected workflow nodes -->
-  <g stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Workflow nodes -->
-    <circle cx="11" cy="11" r="2.5" fill="white"/>
-    <circle cx="21" cy="11" r="2.5" fill="white"/>
-    <circle cx="16" cy="21" r="2.5" fill="white"/>
-    
-    <!-- Connecting lines showing automation flow -->
-    <path d="M13.5 11L18.5 11" stroke-width="1.5"/>
-    <path d="M14 13L15.5 18.5" stroke-width="1.5"/>
-    <path d="M18 13L16.5 18.5" stroke-width="1.5"/>
-    
-    <!-- Arrow indicating automation direction -->
-    <path d="M19 11L21 11M20 10L21 11M20 12L21 11" stroke-width="1.5"/>
-  </g>
+  <!-- The Cloud Shape with Mask Applied -->
+  <path d="M25 65 Q 15 65 15 55 Q 15 40 30 40 Q 35 25 55 25 Q 70 25 75 40 Q 85 40 85 55 Q 85 65 75 65 Z" fill="url(#faviconCloudGrad)" mask="url(#faviconBoltCut)" />
 </svg>
-
-
-
-
