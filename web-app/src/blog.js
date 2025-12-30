@@ -230,7 +230,7 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
       <p><strong>Struggling with CPU timeout errors?</strong> <a href="/contact">Reach out to us</a>—we'll diagnose the issue and implement a permanent fix. Our health checks include comprehensive performance analysis.</p>
     `,
     author: 'ApexRune Team',
-    date: '2025-01-10',
+    date: '2026-01-10',
     category: 'Performance',
     readTime: '12 min read',
     featured: true
@@ -435,7 +435,7 @@ public static Map&lt;String, My_Setting__mdt&gt; getSettings() {
       <p><strong>Need help deciding?</strong> We offer architecture reviews where we assess your automation landscape and recommend the optimal approach for each use case. <a href="/service/process-automation">Learn more about our automation services</a>.</p>
     `,
     author: 'ApexRune Team',
-    date: '2025-01-05',
+    date: '2026-01-05',
     category: 'Architecture',
     readTime: '10 min read',
     featured: true
