@@ -1,0 +1,170 @@
+/**
+ * Centralized Color System
+ * All colors used across the website should be defined here
+ */
+
+:root {
+  /* ============================================
+     PRIMARY BRAND COLORS
+     ============================================ */
+  --color-primary: #1E40AF;        /* Primary blue - main brand color */
+  --color-primary-light: #3B82F6;  /* Bright blue - CTAs, links */
+  --color-primary-dark: #1E3A8A;   /* Dark blue - headings, emphasis */
+  --color-primary-darker: #172554; /* Darkest blue - deep backgrounds */
+  
+  /* Primary Blue Scale (for backgrounds, borders, etc.) */
+  --color-blue-50: #EFF6FF;
+  --color-blue-100: #DBEAFE;
+  --color-blue-200: #BFDBFE;
+  --color-blue-300: #93C5FD;
+  --color-blue-400: #60A5FA;
+  --color-blue-500: #3B82F6;
+  --color-blue-600: #2563EB;
+  --color-blue-700: #1D4ED8;
+  --color-blue-800: #1E40AF;
+  --color-blue-900: #1E3A8A;
+  
+  /* Additional Blue Variants */
+  --color-blue-sky: #00A1E0;       /* Sky blue - accents */
+  --color-blue-cyan: #22D3EE;      /* Cyan - highlights */
+  --color-blue-gradient-start: #374B80;
+  --color-blue-gradient-mid: #2D3F6B;
+  --color-blue-gradient-end: #2D4A7C;
+  
+  /* ============================================
+     SECONDARY COLORS
+     ============================================ */
+  --color-green: #10B981;          /* Success, positive states */
+  --color-green-light: #6EE7B7;    /* Light green accents */
+  --color-green-bg: #ECFDF5;       /* Green background */
+  
+  --color-purple: #8B5CF6;         /* Purple accents */
+  --color-purple-bg: #F3E8FF;      /* Purple background */
+  
+  --color-yellow: #FBBF24;         /* Warning, highlights */
+  --color-yellow-bg: #FEF3C7;      /* Yellow background */
+  
+  /* ============================================
+     NEUTRAL COLORS (Grays)
+     ============================================ */
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1F2937;
+  --color-gray-900: #111827;
+  
+  /* Additional Gray Variants */
+  --color-gray-slate: #475569;
+  --color-gray-border: #E2E8F0;
+  --color-gray-border-light: #F1F5F9;
+  --color-gray-bg-light: #E8EEF8;
+  --color-gray-bg-subtle: #F0F9FF;
+  
+  /* ============================================
+     TEXT COLORS
+     ============================================ */
+  --color-text-primary: #1F2937;   /* Main text - dark */
+  --color-text-secondary: #6B7280;  /* Secondary text - medium */
+  --color-text-muted: #9CA3AF;     /* Muted text - light */
+  --color-text-light: #6B7280;     /* Light text (alias) */
+  --color-text-dark: #1F2937;     /* Dark text (alias) */
+  
+  /* ============================================
+     BACKGROUND COLORS
+     ============================================ */
+  --color-bg-white: #FFFFFF;
+  --color-bg-light: #F9FAFB;
+  --color-bg-subtle: #F0F9FF;
+  --color-bg-blue-light: #EFF6FF;
+  --color-bg-blue-lighter: #E0F2FE;
+  
+  /* ============================================
+     BORDER COLORS
+     ============================================ */
+  --color-border-default: #E5E7EB;
+  --color-border-light: #F3F4F6;
+  --color-border-subtle: #F1F5F9;
+  --color-border-blue: rgba(59, 130, 246, 0.2);
+  --color-border-blue-light: rgba(59, 130, 246, 0.15);
+  --color-border-white: rgba(255, 255, 255, 0.1);
+  --color-border-white-light: rgba(255, 255, 255, 0.15);
+  
+  /* ============================================
+     SHADOW COLORS (with opacity)
+     ============================================ */
+  --color-shadow-black: rgba(0, 0, 0, 0.1);
+  --color-shadow-black-light: rgba(0, 0, 0, 0.05);
+  --color-shadow-black-medium: rgba(0, 0, 0, 0.12);
+  --color-shadow-black-small: rgba(0, 0, 0, 0.06);
+  --color-shadow-black-overlay: rgba(0, 0, 0, 0.5);
+  
+  --color-shadow-blue: rgba(59, 130, 246, 0.15);
+  --color-shadow-blue-light: rgba(59, 130, 246, 0.1);
+  --color-shadow-blue-very-light: rgba(59, 130, 246, 0.05);
+  --color-shadow-blue-ultra-light: rgba(59, 130, 246, 0.02);
+  --color-shadow-blue-medium: rgba(59, 130, 246, 0.2);
+  --color-shadow-blue-strong: rgba(59, 130, 246, 0.3);
+  --color-shadow-blue-stronger: rgba(59, 130, 246, 0.35);
+  
+  --color-shadow-dark-blue: rgba(30, 64, 175, 0.15);
+  --color-shadow-dark-blue-light: rgba(30, 64, 175, 0.12);
+  --color-shadow-dark-blue-medium: rgba(30, 64, 175, 0.2);
+  --color-shadow-dark-blue-ultra-light: rgba(30, 64, 175, 0.06);
+  
+  /* ============================================
+     OPACITY COLORS (for backgrounds, borders)
+     ============================================ */
+  --color-blue-opacity-05: rgba(59, 130, 246, 0.05);
+  --color-blue-opacity-08: rgba(59, 130, 246, 0.08);
+  --color-blue-opacity-15: rgba(59, 130, 246, 0.15);
+  --color-blue-opacity-20: rgba(59, 130, 246, 0.2);
+  --color-blue-opacity-30: rgba(59, 130, 246, 0.3);
+  --color-blue-opacity-50: rgba(59, 130, 246, 0.5);
+  
+  --color-dark-blue-opacity-06: rgba(30, 64, 175, 0.06);
+  --color-dark-blue-opacity-12: rgba(30, 64, 175, 0.12);
+  
+  --color-white-opacity-08: rgba(255, 255, 255, 0.08);
+  --color-white-opacity-10: rgba(255, 255, 255, 0.1);
+  --color-white-opacity-12: rgba(255, 255, 255, 0.12);
+  --color-white-opacity-15: rgba(255, 255, 255, 0.15);
+  --color-white-opacity-20: rgba(255, 255, 255, 0.2);
+  --color-white-opacity-50: rgba(255, 255, 255, 0.5);
+  --color-white-opacity-60: rgba(255, 255, 255, 0.6);
+  --color-white-opacity-70: rgba(255, 255, 255, 0.7);
+  --color-white-opacity-80: rgba(255, 255, 255, 0.8);
+  --color-white-opacity-95: rgba(255, 255, 255, 0.95);
+  --color-white-opacity-100: rgba(255, 255, 255, 1);
+  
+  --color-green-opacity-20: rgba(16, 185, 129, 0.2);
+  --color-green-opacity-30: rgba(16, 185, 129, 0.3);
+  
+  /* ============================================
+     GRADIENT COLORS
+     ============================================ */
+  --gradient-primary: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  --gradient-primary-reverse: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+  --gradient-hero-bg: linear-gradient(135deg, #EEF4FF 0%, #E0EBFF 50%, #D4E4FF 100%);
+  --gradient-dark-blue: linear-gradient(to bottom, #374B80, #1E3A8A, #1E3A8A, #2D3F6B);
+  --gradient-dark-blue-alt: linear-gradient(to bottom, #2D4A7C, #1E3A8A, #172554);
+  --gradient-light-blue: linear-gradient(to bottom, #E8EEF8, #FFFFFF 150px, #FFFFFF);
+  --gradient-light-blue-alt: linear-gradient(to bottom, #FFFFFF, #F0F9FF, #E8F4FE);
+  
+  /* ============================================
+     LEGACY ALIASES (for backward compatibility)
+     ============================================ */
+  --primary-blue: var(--color-primary);
+  --bright-blue: var(--color-primary-light);
+  --dark-blue: var(--color-primary-dark);
+  --green: var(--color-green);
+  --text-dark: var(--color-text-primary);
+  --text-light: var(--color-text-secondary);
+  --white: var(--color-bg-white);
+  --bg-light: var(--color-bg-light);
+}
+
