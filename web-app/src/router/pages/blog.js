@@ -556,14 +556,6 @@ export function loadBlogPostPage(postId) {
         // Hide header on scroll
         let lastScroll = 0;
         const header = document.querySelector('.site-header');
-        const logoImg = header.querySelector('.logo-icon');
-        const originalLogoSrc = '/logo.png';
-        const whiteLogoSrc = '/logo-v2.png';
-        
-        // Set white logo initially for blog post page
-        if (logoImg) {
-          logoImg.src = whiteLogoSrc;
-        }
         
         // Get TOC element for sticky behavior
         const toc = document.querySelector('.article-toc');
@@ -576,10 +568,8 @@ export function loadBlogPostPage(postId) {
           // Add scrolled class when past the hero section
           if (currentScroll > 100) {
             header.classList.add('header-scrolled');
-            if (logoImg) logoImg.src = originalLogoSrc;
           } else {
             header.classList.remove('header-scrolled');
-            if (logoImg) logoImg.src = whiteLogoSrc;
           }
           
           // Hide header when scrolling down past 300px
@@ -1536,6 +1526,31 @@ function addBlogPostPageStyles() {
       border-bottom: none;
     }
 
+    /* Logo styling for blog post page - match footer logo style */
+    body:has(.blog-post-page) .site-header .logo-svg path {
+      fill: var(--color-blue-sky) !important;
+    }
+
+    body:has(.blog-post-page) .site-header .logo-apex {
+      color: var(--white) !important;
+    }
+
+    body:has(.blog-post-page) .site-header .logo-rune {
+      color: var(--color-blue-sky) !important;
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .logo-svg path {
+      fill: url(#headerCloudGrad) !important;
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .logo-apex {
+      color: var(--dark-blue) !important;
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .logo-rune {
+      color: var(--color-blue-sky) !important;
+    }
+
     body:has(.blog-post-page) .site-header .nav-link {
       color: rgba(255, 255, 255, 0.9);
     }
@@ -1840,7 +1855,7 @@ function addBlogPostPageStyles() {
       width: 36px;
       height: 36px;
       border-radius: 8px;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--color-border-default);
       color: var(--text-light);
       background: var(--white);
       transition: all 0.2s;
@@ -1851,13 +1866,13 @@ function addBlogPostPageStyles() {
     .share-icon:hover {
       color: var(--bright-blue);
       border-color: var(--bright-blue);
-      background: #EFF6FF;
+      background: var(--color-blue-50);
     }
     
     .share-icon.copied {
-      color: #10B981;
-      border-color: #10B981;
-      background: #ECFDF5;
+      color: var(--color-green);
+      border-color: var(--color-green);
+      background: var(--color-green-bg);
     }
 
     /* Article Main Content */
