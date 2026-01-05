@@ -266,9 +266,7 @@ main {
   transition: color 0.2s ease;
 }
 
-.logo-container.group:hover .logo-rune {
-  color: var(--color-blue-cyan);
-}
+/* Rune color stays the same on hover - removed color change */
 
 /* Desktop sizing - ensure w-10 h-10 and text-xl */
 @media (min-width: 768px) {

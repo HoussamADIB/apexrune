@@ -488,7 +488,6 @@ export function loadBlogPostPage(postId) {
                   <div class="author-avatar-large">${authorInitials}</div>
                   <div class="author-details">
                     <span class="author-name-large">${authorName}</span>
-                    <span class="author-role">Principal Technical Architect</span>
                   </div>
                 </div>
               </div>
@@ -536,7 +535,7 @@ export function loadBlogPostPage(postId) {
                   <div class="author-bio-avatar">${authorInitials}</div>
                   <div class="author-bio-content">
                     <h4 class="author-bio-title">About ${authorName}</h4>
-                    <p class="author-bio-text">Principal Technical Architect at ApexRune. ${authorName.split(' ')[0]} has over 12 years of experience in the ecosystem and specializes in enterprise-scale architecture and integration solutions.</p>
+                    <p class="author-bio-text">${authorName.split(' ')[0]} has over 12 years of experience in the ecosystem and specializes in enterprise-scale architecture and integration solutions.</p>
                   </div>
                 </div>
               </div>
@@ -1561,6 +1560,15 @@ function addBlogPostPageStyles() {
       color: var(--white);
     }
 
+    /* Dark logo for blog post pages */
+    body:has(.blog-post-page) .site-header .logo-apex {
+      color: var(--white);
+    }
+
+    body:has(.blog-post-page) .site-header .logo-rune {
+      color: #60A5FA; /* Lighter blue for visibility on dark background */
+    }
+
     /* When header is scrolled and hidden starts showing again, use solid bg */
     body:has(.blog-post-page) .site-header.header-scrolled {
       background: var(--white);
@@ -1590,6 +1598,15 @@ function addBlogPostPageStyles() {
 
     body:has(.blog-post-page) .site-header.header-scrolled .mobile-menu-btn {
       color: var(--text-dark);
+    }
+
+    /* Revert logo to normal colors when header is scrolled */
+    body:has(.blog-post-page) .site-header.header-scrolled .logo-apex {
+      color: var(--color-gray-900);
+    }
+
+    body:has(.blog-post-page) .site-header.header-scrolled .logo-rune {
+      color: var(--color-blue-sky);
     }
 
     /* Blog Post Page */
@@ -1631,22 +1648,31 @@ function addBlogPostPageStyles() {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: var(--text-dark);
+      color: var(--bright-blue);
       text-decoration: none;
       font-size: 0.9375rem;
       font-weight: 600;
-      padding: 0.625rem 1rem;
-      border-radius: 8px;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
       transition: all 0.2s ease;
       background: var(--white);
-      border: 1px solid #E5E7EB;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      border: 1.5px solid #E0E7FF;
+      box-shadow: 0 2px 4px rgba(59, 130, 246, 0.08);
     }
 
     .back-to-articles:hover {
-      color: var(--bright-blue);
+      color: var(--white);
+      background: var(--bright-blue);
       border-color: var(--bright-blue);
-      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.15);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .back-to-articles svg {
+      transition: transform 0.2s ease;
+    }
+
+    .back-to-articles:hover svg {
       transform: translateX(-2px);
     }
 
