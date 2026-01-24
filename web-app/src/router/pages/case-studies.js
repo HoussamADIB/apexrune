@@ -24,7 +24,42 @@ export function loadCaseStudiesPage() {
         </div>
 
         <div class="case-studies-grid">
-          <!-- Case Study 1: Platform Paralysis (MOST INTERESTING - High impact performance optimization) -->
+          <!-- Case Study 1: Account 360 Dashboard (HIGH INTEREST - Comprehensive unified view, high impact) -->
+          <a href="/case-study/account-360-dashboard" class="case-study-card">
+            <div class="case-study-image-wrapper">
+              <img src="/images/case-studies/account-360-dashboard.png" alt="Global Manufacturer" class="case-study-image" />
+              <div class="case-study-overlay">
+                <span class="read-full-story">Read Full Story</span>
+              </div>
+            </div>
+            <div class="case-study-content">
+              <div class="case-study-client">GLOBAL MANUFACTURER</div>
+              <h3 class="case-study-title">Account 360 Dashboard</h3>
+              <p class="case-study-challenge">Sales teams spent 2-3 hours per account researching product subscriptions, engagement history, and critical information before meetings.</p>
+              <div class="case-study-results">
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>70% reduction in research time</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>40% increase in productivity</span>
+                </div>
+                <div class="case-study-result">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>95% user adoption rate</span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Case Study 2: Platform Paralysis (MOST INTERESTING - High impact performance optimization) -->
           <a href="/case-study/platform-paralysis" class="case-study-card">
             <div class="case-study-image-wrapper">
               <img src="/images/case-studies/platform-paralysis.png" alt="Professional Services Firm" class="case-study-image" />
@@ -59,7 +94,7 @@ export function loadCaseStudiesPage() {
             </div>
           </a>
 
-          <!-- Case Study 2: Revenue Lifecycle Management (HIGH INTEREST - Advanced CPQ, sub-second pricing) -->
+          <!-- Case Study 3: Revenue Lifecycle Management (HIGH INTEREST - Advanced CPQ, sub-second pricing) -->
           <a href="/case-study/revenue-lifecycle-management" class="case-study-card">
             <div class="case-study-image-wrapper">
               <img src="/images/case-studies/revenue-lifecycle-management.png" alt="Industrial Manufacturer" class="case-study-image" />
@@ -89,41 +124,6 @@ export function loadCaseStudiesPage() {
                     <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   <span>60% faster quote generation</span>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <!-- Case Study 3: Account 360 Dashboard (HIGH INTEREST - Comprehensive unified view, high impact) -->
-          <a href="/case-study/account-360-dashboard" class="case-study-card">
-            <div class="case-study-image-wrapper">
-              <img src="/images/case-studies/account-360-dashboard.png" alt="Global Manufacturer" class="case-study-image" />
-              <div class="case-study-overlay">
-                <span class="read-full-story">Read Full Story</span>
-              </div>
-            </div>
-            <div class="case-study-content">
-              <div class="case-study-client">GLOBAL MANUFACTURER</div>
-              <h3 class="case-study-title">Account 360 Dashboard</h3>
-              <p class="case-study-challenge">Sales teams spent 2-3 hours per account researching product subscriptions, engagement history, and critical information before meetings.</p>
-              <div class="case-study-results">
-                <div class="case-study-result">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>70% reduction in research time</span>
-                </div>
-                <div class="case-study-result">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>40% increase in productivity</span>
-                </div>
-                <div class="case-study-result">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>95% user adoption rate</span>
                 </div>
               </div>
             </div>
@@ -223,11 +223,11 @@ export function loadCaseStudyDetailPage(caseStudyId) {
       client: 'GLOBAL MANUFACTURER',
       title: 'Account 360 Dashboard: Transforming Account Management with Unified Intelligence',
       heroImage: '/images/case-studies/account-360-dashboard.png',
-      clientDescription: 'A global manufacturer with complex product portfolios spanning multiple subscription tiers (Access, Light, Standard, Advanced) across 10+ product lines, requiring comprehensive account intelligence for field sales teams.',
+      clientDescription: 'A global manufacturer with complex product portfolios spanning multiple subscription tiers (Tier 1, Tier 2, Tier 3, Tier 4) across 10+ product lines, requiring comprehensive account intelligence for field sales teams.',
       challenge: 'Sales representatives spent an average of 2-3 hours per account researching product subscriptions, engagement history, and critical attention points before important meetings. With data scattered across subscription records, activities, and custom objects, reps struggled to get a complete picture, leading to missed upsell opportunities and unprepared client conversations.',
       solution: 'We designed and implemented a comprehensive Account 360 dashboard that consolidates account intelligence into a single, unified view. The solution combines visual account flags, real-time activity scorecards, and intelligent attention points—all optimized for mobile field sales.',
       solutionSteps: [
-        'Visual Flag System: 10+ product subscription indicators with priority logic (Advanced > Standard > Light) derived from subscription records, showing active/expired status at-a-glance',
+        'Visual Flag System: 10+ product subscription indicators with priority logic (Tier 4 > Tier 3 > Tier 2 > Tier 1) derived from subscription records, showing active/expired status at-a-glance',
         'Activity Scorecard: Real-time engagement metrics tracking tasks completed, calls logged, emails sent, events, and 12-month activity trends with locale-aware formatting',
         'Intelligent Attention Points: Metadata-driven system that dynamically queries and displays critical account information with relevance scoring and configurable field mappings',
         'Mobile-Responsive Architecture: Container component with 5/7 column split on desktop, full-width on mobile, optimized for tablets during field visits'
@@ -238,7 +238,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         '95% user adoption rate within 3 months'
       ],
       technologies: ['Lightning Web Components', 'Wire Decorators', 'Custom Metadata', 'Schema API', 'Cacheable Methods'],
-      technicalDetails: 'Container component orchestrating child components for flags, activity scorecards, and attention points. Flags derived from subscription records with level-based logic (inactive/active/expired). Dynamic attention points using Schema API for field label resolution and relationship handling. Cacheable methods with bulk queries for performance optimization.',
+      technicalDetails: 'The dashboard combines three main features: visual flags showing subscription status, an activity scorecard tracking engagement, and intelligent attention points that automatically surface critical account information. All data is optimized for fast loading and works seamlessly across devices.',
       projectMeta: {
         duration: '3 months',
         teamSize: '2 Salesforce Developers, 1 Technical Architect',
@@ -248,10 +248,44 @@ export function loadCaseStudyDetailPage(caseStudyId) {
       },
       keyInsight: 'The breakthrough wasn\'t the technology—it was understanding that sales reps needed answers, not data dumps. By surfacing critical information automatically through visual flags and intelligent attention points, we eliminated the "analysis paralysis" that was killing productivity. The visual flag system alone reduced cognitive load by 60%.',
       lessonsLearned: [
-        'Metadata-driven attention points eliminated hardcoded queries—business users can now add new attention points without developer involvement',
-        'Mobile-first design was critical—60% of users access the dashboard on tablets during client visits',
-        'Caching strategy was essential: cacheable methods reduced page load time from 4.2s to 1.1s for accounts with 100+ related records'
-      ]
+        'Configurable attention points mean business users can add new information displays without waiting for developers—changes happen in minutes, not weeks',
+        'Mobile-first design was critical—60% of users access the dashboard on tablets during client visits, so it had to work perfectly on smaller screens',
+        'Performance optimization was essential: the dashboard loads 73% faster than traditional approaches, even for accounts with 100+ related records'
+      ],
+      // New sections for Account 360
+      hasVisualElements: true,
+      components: [
+        {
+          name: 'Visual Flag System',
+          description: 'At-a-glance subscription status indicators',
+          role: 'Sales reps instantly see which products each account has, eliminating time spent searching through records'
+        },
+        {
+          name: 'Activity Scorecard',
+          description: 'Real-time engagement tracking',
+          role: 'See all account interactions—calls, emails, meetings—in one place, helping reps prepare better for client conversations'
+        },
+        {
+          name: 'Intelligent Attention Points',
+          description: 'Automatically surfaces critical information',
+          role: 'Highlights important account details like upcoming renewals, outstanding issues, or opportunities—no manual searching required'
+        }
+      ],
+      userJourney: {
+        before: [
+          { step: 1, action: 'Open Account record', time: '5 seconds' },
+          { step: 2, action: 'Navigate to Subscriptions tab', time: '30 seconds' },
+          { step: 3, action: 'Check each subscription manually', time: '2-3 minutes' },
+          { step: 4, action: 'Navigate to Activities tab', time: '30 seconds' },
+          { step: 5, action: 'Review activity history', time: '1-2 minutes' },
+          { step: 6, action: 'Check custom objects for attention points', time: '1-2 minutes' }
+        ],
+        after: [
+          { step: 1, action: 'Open Account record', time: '5 seconds' },
+          { step: 2, action: 'View Account 360 dashboard (all information visible)', time: '5 seconds' }
+        ],
+        timeSaved: '95% reduction (from 5-8 minutes to 5 seconds)'
+      }
     },
     'revenue-lifecycle-management': {
       client: 'INDUSTRIAL MANUFACTURER',
@@ -451,12 +485,12 @@ export function loadCaseStudyDetailPage(caseStudyId) {
     <main class="case-study-detail-page">
       <div class="container">
         <div class="case-study-back-nav">
-        <a href="/case-studies" class="back-link">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <a href="/case-studies" class="back-link">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             <span>Back to Case Studies</span>
-        </a>
+          </a>
         </div>
         
         <article class="case-study-detail">
@@ -539,6 +573,359 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                     `).join('')}
                   </ol>
                 ` : ''}
+              </section>
+
+              ${caseStudy.hasVisualElements && caseStudyId === 'account-360-dashboard' ? `
+                <!-- How It Works Section -->
+                <section class="case-study-content-section architecture-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon architecture-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                        <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                        <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                        <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">How It Works</h2>
+                  </div>
+                  <p class="case-study-section-text">The dashboard brings together three key features that work seamlessly to give your sales team everything they need in one place. The interface adapts perfectly to any device—desktop, tablet, or mobile—so your team can access critical account information whether they're in the office or visiting clients.</p>
+                  
+                  <!-- Component Breakdown -->
+                  ${caseStudy.components ? `
+                  <div class="components-grid">
+                    <div class="component-card" style="animation-delay: 0s">
+                      <div class="component-card-header">
+                        <div class="component-icon">1</div>
+                        <h3 class="component-name">Visual Flag System</h3>
+                      </div>
+                      <p class="component-description">At-a-glance subscription status indicators</p>
+                      <div class="component-benefit">
+                        <span class="benefit-text">Sales reps instantly see which products each account has, eliminating time spent searching through records</span>
+                      </div>
+                    </div>
+                    
+                    <div class="component-card" style="animation-delay: 0.1s">
+                      <div class="component-card-header">
+                        <div class="component-icon">2</div>
+                        <h3 class="component-name">Activity Scorecard</h3>
+                      </div>
+                      <p class="component-description">Real-time engagement tracking</p>
+                      <div class="component-benefit">
+                        <span class="benefit-text">See all account interactions—calls, emails, meetings—in one place, helping reps prepare better for client conversations</span>
+                      </div>
+                    </div>
+                    
+                    <div class="component-card" style="animation-delay: 0.2s">
+                      <div class="component-card-header">
+                        <div class="component-icon">3</div>
+                        <h3 class="component-name">Intelligent Attention Points</h3>
+                      </div>
+                      <p class="component-description">Automatically surfaces critical information</p>
+                      <div class="component-benefit">
+                        <span class="benefit-text">Highlights important account details like upcoming renewals, outstanding issues, or opportunities—no manual searching required</span>
+                      </div>
+                    </div>
+                  </div>
+                  ` : ''}
+                  
+                  <!-- Simple Visual Flow -->
+                  <div class="simple-flow-diagram compact">
+                    <div class="flow-step">
+                      <div class="flow-icon-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                          <path d="M9 9H15M9 12H15M9 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </div>
+                      <h4>Multiple Data Sources</h4>
+                      <p>Subscription records, activities, and account information</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="flow-icon-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                      <h4>Smart Processing</h4>
+                      <p>Data is organized and optimized for fast loading</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="flow-icon-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                          <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                          <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                      <h4>Unified Dashboard</h4>
+                      <p>Everything your team needs in one view</p>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Screenshot Placeholders -->
+                <section class="case-study-content-section screenshots-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon screenshot-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">Dashboard Visualizations</h2>
+                  </div>
+                  <p class="case-study-section-text">Visual representations of the Account 360 dashboard showing the unified interface and component structure.</p>
+                  
+                  <div class="screenshots-grid">
+                    <!-- Main Dashboard Screenshot -->
+                    <div class="screenshot-card screenshot-card-full">
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/2026-01-24_13-38-44.png', 'Complete Dashboard View')">
+                        <img src="/images/case-studies/screenshots/2026-01-24_13-38-44.png" alt="Account 360 Dashboard - Full View" class="screenshot-image" />
+                        <div class="screenshot-overlay-hint">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2.458 12C3.732 7.943 7.523 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.523 19 3.732 16.057 2.458 12Z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                          <span>Click to view full size</span>
+                        </div>
+                      </div>
+                      <div class="screenshot-info">
+                        <h4 class="screenshot-title">Complete Dashboard View</h4>
+                        <p class="screenshot-description">The full Account 360 dashboard showing all components working together—profiling metrics, flag system, news feed, and activity tracking in a unified interface</p>
+                        <div class="screenshot-tags">
+                          <span class="screenshot-tag">Unified Interface</span>
+                          <span class="screenshot-tag">Complete View</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Account 360 Profiling Screenshot -->
+                    <div class="screenshot-card">
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.21.05.png', 'Account 360 Profiling')">
+                        <img src="/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.21.05.png" alt="Account 360 Profiling Component" class="screenshot-image" />
+                        <div class="screenshot-overlay-hint">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2.458 12C3.732 7.943 7.523 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.523 19 3.732 16.057 2.458 12Z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="screenshot-info">
+                        <h4 class="screenshot-title">Account 360 Profiling</h4>
+                        <p class="screenshot-description">Comprehensive account metrics including open cases, contacts, sales performance (YTD and R12), leads, opportunities, and invoice tracking</p>
+                        <div class="screenshot-tags">
+                          <span class="screenshot-tag">Key Metrics</span>
+                          <span class="screenshot-tag">Performance Tracking</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Flag System Screenshot -->
+                    <div class="screenshot-card">
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/2026-01-24_14-12-04.png', 'Flag System Detail')">
+                        <img src="/images/case-studies/screenshots/2026-01-24_14-12-04.png" alt="Account 360 Flags Component" class="screenshot-image" />
+                        <div class="screenshot-overlay-hint">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2.458 12C3.732 7.943 7.523 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.523 19 3.732 16.057 2.458 12Z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="screenshot-info">
+                        <h4 class="screenshot-title">Flag System Detail</h4>
+                        <p class="screenshot-description">Visual indicators showing subscription status at-a-glance—green for active, red for expired, white for none</p>
+                        <div class="screenshot-tags">
+                          <span class="screenshot-tag">Instant Recognition</span>
+                          <span class="screenshot-tag">Color-Coded</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Account News Screenshot -->
+                    <div class="screenshot-card">
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/2026-01-24_14-13-23.png', 'Account News Feed')">
+                        <img src="/images/case-studies/screenshots/2026-01-24_14-13-23.png" alt="Account News Component" class="screenshot-image" />
+                        <div class="screenshot-overlay-hint">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2.458 12C3.732 7.943 7.523 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.523 19 3.732 16.057 2.458 12Z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="screenshot-info">
+                        <h4 class="screenshot-title">Account News Feed</h4>
+                        <p class="screenshot-description">Intelligent attention points and account updates—surfaces critical information like recently closed cases, product line changes, and important dates</p>
+                        <div class="screenshot-tags">
+                          <span class="screenshot-tag">Attention Points</span>
+                          <span class="screenshot-tag">Smart Updates</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Activity Scorecard Screenshot -->
+                    <div class="screenshot-card">
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.20.34.png', 'Activity Scorecard')">
+                        <img src="/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.20.34.png" alt="Activity Scorecard Component" class="screenshot-image" />
+                        <div class="screenshot-overlay-hint">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2.458 12C3.732 7.943 7.523 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.523 19 3.732 16.057 2.458 12Z" stroke="currentColor" stroke-width="2"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="screenshot-info">
+                        <h4 class="screenshot-title">Activity Scorecard</h4>
+                        <p class="screenshot-description">See all account interactions in one place—calls made, emails sent, meetings scheduled—helping reps prepare for conversations</p>
+                        <div class="screenshot-tags">
+                          <span class="screenshot-tag">Engagement History</span>
+                          <span class="screenshot-tag">Real-time Updates</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Screenshot Modal -->
+                  <div id="screenshot-modal" class="screenshot-modal" onclick="closeScreenshotModal(event)">
+                    <button class="screenshot-modal-close" onclick="closeScreenshotModal(event)" aria-label="Close">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <div class="screenshot-modal-content" onclick="event.stopPropagation()">
+                      <img id="screenshot-modal-image" src="" alt="" class="screenshot-modal-img" />
+                      <div class="screenshot-modal-title" id="screenshot-modal-title"></div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Configurable Attention Points -->
+                <section class="case-study-content-section metadata-flow-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon metadata-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">Configurable Without Code</h2>
+                  </div>
+                  <p class="case-study-section-text">One of the biggest advantages: your business team can add new attention points or change what information is displayed—without waiting for developers or code deployments.</p>
+                  
+                  <div class="config-flow-visual">
+                    <div class="config-step">
+                      <div class="config-number">1</div>
+                      <div class="config-content">
+                        <h4>Business User Defines</h4>
+                        <p>"Show me accounts with contracts expiring in 30 days"</p>
+                      </div>
+                    </div>
+                    <div class="config-arrow">→</div>
+                    <div class="config-step">
+                      <div class="config-number">2</div>
+                      <div class="config-content">
+                        <h4>System Configures</h4>
+                        <p>Dashboard automatically finds and displays matching accounts</p>
+                      </div>
+                    </div>
+                    <div class="config-arrow">→</div>
+                    <div class="config-step">
+                      <div class="config-number">3</div>
+                      <div class="config-content">
+                        <h4>Sales Team Sees It</h4>
+                        <p>New attention point appears immediately—no downtime</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="metadata-benefits">
+                    <h4 class="benefits-title">Why This Matters</h4>
+                    <ul class="benefits-list">
+                      <li><strong>Faster changes:</strong> Add new attention points in minutes, not weeks</li>
+                      <li><strong>No IT dependency:</strong> Business users control what information is shown</li>
+                      <li><strong>Always relevant:</strong> Most important information automatically surfaces first</li>
+                      <li><strong>Cost savings:</strong> Fewer developer hours needed for routine updates</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <!-- User Journey Comparison -->
+                ${caseStudy.userJourney ? `
+                <section class="case-study-content-section user-journey-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon journey-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">User Journey Comparison</h2>
+                  </div>
+                  
+                  <div class="journey-comparison">
+                    <div class="journey-column before-journey">
+                      <div class="journey-header">
+                        <h3 class="journey-title">Before</h3>
+                        <span class="journey-time">5-8 minutes</span>
+                      </div>
+                      <div class="journey-steps">
+                        ${caseStudy.userJourney.before.map((step, idx) => `
+                          <div class="journey-step">
+                            <div class="step-number-badge">${step.step}</div>
+                            <div class="step-content">
+                              <p class="step-action">${step.action}</p>
+                              <span class="step-time">${step.time}</span>
+                            </div>
+                          </div>
+                        `).join('')}
+                      </div>
+                    </div>
+                    
+                    <div class="journey-arrow">
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    
+                    <div class="journey-column after-journey">
+                      <div class="journey-header">
+                        <h3 class="journey-title">After</h3>
+                        <span class="journey-time">5 seconds</span>
+                      </div>
+                      <div class="journey-steps">
+                        ${caseStudy.userJourney.after.map((step, idx) => `
+                          <div class="journey-step">
+                            <div class="step-number-badge">${step.step}</div>
+                            <div class="step-content">
+                              <p class="step-action">${step.action}</p>
+                              <span class="step-time">${step.time}</span>
+                            </div>
+                          </div>
+                        `).join('')}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="journey-savings">
+                    <div class="savings-badge">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span>${caseStudy.userJourney.timeSaved}</span>
+                    </div>
+                  </div>
+                </section>
+                ` : ''}
+
+              ` : ''}
+
               </section>
 
               <section class="case-study-content-section proof-section">
@@ -716,6 +1103,69 @@ export function loadCaseStudyDetailPage(caseStudyId) {
     // Create preview modal
     createPreviewModal();
     addCaseStudyDetailPageStyles();
+    
+    // Initialize screenshot modal functions
+    if (!window.openScreenshotModal) {
+      window.openScreenshotModal = function(imageSrc, title) {
+        const modal = document.getElementById('screenshot-modal');
+        const modalImage = document.getElementById('screenshot-modal-image');
+        const modalTitle = document.getElementById('screenshot-modal-title');
+        
+        if (modal && modalImage && modalTitle) {
+          modalImage.src = imageSrc;
+          modalImage.alt = title;
+          modalTitle.textContent = title;
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      };
+    }
+
+    if (!window.closeScreenshotModal) {
+      window.closeScreenshotModal = function(event) {
+        if (event) {
+          event.stopPropagation();
+        }
+        const modal = document.getElementById('screenshot-modal');
+        if (modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      };
+      
+      // Close screenshot modal on Escape key (only add once)
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const modal = document.getElementById('screenshot-modal');
+          if (modal && modal.style.display === 'flex') {
+            window.closeScreenshotModal();
+          }
+        }
+      });
+    }
+    
+    // Animate components on scroll
+    if (caseStudy.hasVisualElements && caseStudyId === 'account-360-dashboard') {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+      
+      // Observe component cards
+      setTimeout(() => {
+        document.querySelectorAll('.component-card').forEach(card => {
+          observer.observe(card);
+        });
+      }, 100);
+    }
     
     // Add layout switcher function
     requestAnimationFrame(() => {
@@ -925,60 +1375,119 @@ function addCaseStudyDetailPageStyles() {
     }
 
     .case-study-detail-page .container {
-      max-width: 1280px;
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 0;
+      padding: 0 3rem;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 1024px) {
+      .case-study-detail-page .container {
+        padding: 0 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .case-study-detail-page .container {
+        padding: 0 1.5rem;
+      }
     }
 
     .case-study-back-nav {
-      padding: 2rem 2rem 1.5rem;
+      position: sticky;
+      top: 80px;
+      z-index: 100;
+      padding: 1rem 0 0.5rem 0;
+      margin-bottom: 0;
+      background: linear-gradient(to bottom, rgba(250, 251, 252, 0.95) 0%, rgba(250, 251, 252, 0.8) 80%, transparent 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      margin-top: 2rem;
+      padding-top: 2rem;
     }
 
     @media (max-width: 768px) {
       .case-study-back-nav {
-        padding: 1.5rem 1.5rem 1.25rem;
+        top: 70px;
+        padding: 0.75rem 0 0.375rem 0;
+        margin-bottom: 0;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
       }
     }
 
     .case-study-detail-page .back-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      color: var(--bright-blue);
+      gap: 0.625rem;
+      color: var(--white);
       text-decoration: none;
       font-size: 0.9375rem;
       font-weight: 600;
-      padding: 0.75rem 1.25rem;
-      border-radius: 10px;
-      transition: all 0.2s ease;
-      background: var(--white);
-      border: 1.5px solid #E0E7FF;
-      box-shadow: 0 2px 4px rgba(59, 130, 246, 0.08);
+      padding: 0.625rem 1.125rem 0.625rem 0.75rem;
+      border-radius: 8px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      background: var(--bright-blue);
+      border: none;
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+      position: relative;
+    }
+
+    .case-study-detail-page .back-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--primary-blue);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .case-study-detail-page .back-link:hover::before {
+      opacity: 1;
+    }
+
+    .case-study-detail-page .back-link:hover {
+      color: var(--white);
+      background: var(--primary-blue);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      transform: translateX(-2px);
+    }
+
+    .case-study-detail-page .back-link:active {
+      transform: translateX(-1px) scale(0.98);
+    }
+
+    .case-study-detail-page .back-link svg {
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--white);
+      opacity: 1;
+    }
+
+    .case-study-detail-page .back-link:hover svg {
+      transform: translateX(-3px);
+      opacity: 1;
+    }
+
+    .case-study-detail-page .back-link span {
+      position: relative;
+      z-index: 1;
     }
 
     @media (max-width: 768px) {
       .case-study-detail-page .back-link {
         font-size: 0.875rem;
-        padding: 0.5rem 0.875rem;
+        padding: 0.5625rem 1rem 0.5625rem 0.625rem;
+        gap: 0.5rem;
       }
-    }
 
-    .case-study-detail-page .back-link:hover {
-      color: var(--white);
-      background: var(--bright-blue);
-      border-color: var(--bright-blue);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
-      transform: translateY(-1px);
-    }
-
-    .case-study-detail-page .back-link svg {
-      transition: transform 0.2s ease;
-      width: 20px;
-      height: 20px;
-    }
-
-    .case-study-detail-page .back-link:hover svg {
-      transform: translateX(-2px);
+      .case-study-detail-page .back-link svg {
+        width: 16px;
+        height: 16px;
+      }
     }
 
     .case-study-detail {
@@ -1018,7 +1527,7 @@ function addCaseStudyDetailPageStyles() {
     .case-study-hero {
       background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
       color: var(--white);
-      padding: 3rem 2rem 2.5rem;
+      padding: 3.5rem 2.5rem 3rem;
       margin-bottom: 0;
       position: relative;
     }
@@ -1127,26 +1636,26 @@ function addCaseStudyDetailPageStyles() {
     /* Two Column Layout */
     .case-study-layout {
       display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 3rem;
+      grid-template-columns: 1fr 360px;
+      gap: 4rem;
       align-items: start;
       margin-top: 0;
-      padding: 3rem 2rem 4rem;
-      max-width: 1280px;
-      margin: 0 auto;
+      padding: 3rem 0 4rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     @media (max-width: 1024px) {
       .case-study-layout {
         grid-template-columns: 1fr;
         gap: 2.5rem;
-        padding: 2.5rem 2rem 3.5rem;
+        padding: 2.5rem 0 3.5rem;
       }
     }
 
     @media (max-width: 768px) {
       .case-study-layout {
-        padding: 2rem 1.5rem 3rem;
+        padding: 2rem 0 3rem;
         gap: 2rem;
       }
     }
@@ -1162,44 +1671,54 @@ function addCaseStudyDetailPageStyles() {
     .case-study-content-section {
       background: var(--white);
       border-radius: 0;
-      padding: 2.5rem 0;
+      padding: 3rem 2.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
       margin: 0;
+      margin-bottom: 2rem;
       width: 100%;
       box-sizing: border-box;
       border-bottom: 1px solid #F1F5F9;
     }
 
+    @media (max-width: 1024px) {
+      .case-study-content-section {
+        padding: 2.5rem 2rem;
+        margin-bottom: 1.75rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .case-study-content-section {
+        padding: 2rem 1.5rem;
+        margin-bottom: 1.5rem;
+        gap: 1.25rem;
+      }
+    }
+
     .case-study-content-section:first-of-type {
       padding-top: 0;
+      margin-top: 0;
     }
 
     .case-study-content-section:last-of-type {
       border-bottom: none;
       padding-bottom: 0;
+      margin-bottom: 0;
     }
 
     .lessons-learned-section:last-of-type {
-      padding-bottom: 2rem;
+      padding-bottom: 2.5rem;
       margin-bottom: 0;
     }
 
     .challenge-section {
       background: linear-gradient(135deg, #FEF7F0 0%, #FFF5ED 100%);
       border-left: 3px solid #F97316;
-      padding: 2rem;
-      margin: 0;
       border-radius: 8px;
       border-bottom: 1px solid #F1F5F9;
       box-shadow: 0 1px 3px rgba(249, 115, 22, 0.08);
-    }
-
-    @media (max-width: 768px) {
-      .challenge-section {
-        padding: 1.5rem;
-      }
     }
 
     .proof-section {
@@ -1210,7 +1729,7 @@ function addCaseStudyDetailPageStyles() {
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 0.875rem;
+      margin-bottom: 1.25rem;
     }
 
     .case-study-section-icon {
@@ -1276,7 +1795,7 @@ function addCaseStudyDetailPageStyles() {
     .case-study-solution-steps {
       list-style: none;
       padding: 0;
-      margin: 1.25rem 0 0 0;
+      margin: 1.5rem 0 0 0;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -1334,7 +1853,8 @@ function addCaseStudyDetailPageStyles() {
     .case-study-results-grid-new {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      gap: 2rem;
+      margin-top: 1.5rem;
       margin: 1.5rem 0;
     }
 
@@ -1717,7 +2237,7 @@ function addCaseStudyDetailPageStyles() {
     .lessons-learned-list {
       list-style: none;
       padding: 0;
-      margin: 1.25rem 0 0 0;
+      margin: 1.5rem 0 0 0;
       display: flex;
       flex-direction: column;
       gap: 0.875rem;
@@ -2277,7 +2797,7 @@ function addCaseStudyDetailPageStyles() {
     .case-study-sidebar {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 2rem;
       position: sticky;
       top: 1.5rem;
     }
@@ -2286,7 +2806,7 @@ function addCaseStudyDetailPageStyles() {
       background: var(--white);
       border: 1px solid #E5E7EB;
       border-radius: 12px;
-      padding: 1.75rem;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -2421,7 +2941,7 @@ function addCaseStudyDetailPageStyles() {
       }
 
       .case-study-content-section {
-        padding: 2rem 0;
+        padding: 2rem 1.5rem;
       }
 
       .case-study-layout {
@@ -2447,6 +2967,1119 @@ function addCaseStudyDetailPageStyles() {
       .meta-value {
         max-width: 100%;
         text-align: left;
+      }
+    }
+
+    /* New Visual Elements Styles */
+    
+    /* Architecture Section */
+    .architecture-section {
+      background: linear-gradient(135deg, #F0F9FF 0%, #EFF6FF 100%);
+      border-left: 3px solid var(--bright-blue);
+      border-radius: 8px;
+    }
+
+    .architecture-icon {
+      background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+      color: var(--bright-blue);
+    }
+
+    /* Diagram Container - Removed complex SVG diagrams */
+    .diagram-container {
+      display: none;
+    }
+
+    /* Components Grid */
+    .components-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .component-card {
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .component-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+      border-color: var(--bright-blue);
+    }
+
+    .component-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .component-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--bright-blue) 0%, #2563EB 100%);
+      color: var(--white);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+      flex-shrink: 0;
+    }
+
+    .component-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+    }
+
+    .component-description {
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .component-benefit {
+      padding-top: 0.75rem;
+      border-top: 1px solid #F1F5F9;
+    }
+
+    .benefit-text {
+      font-size: 0.875rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Simple Flow Diagram */
+    .simple-flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .simple-flow-diagram.compact {
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .flow-step {
+      flex: 1;
+      min-width: 200px;
+      max-width: 280px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .simple-flow-diagram.compact .flow-step {
+      min-width: 150px;
+      max-width: 220px;
+      gap: 0.75rem;
+    }
+
+    .flow-icon-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      border: 3px solid var(--bright-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-blue);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    }
+
+    .simple-flow-diagram.compact .flow-icon-circle {
+      width: 56px;
+      height: 56px;
+      border-width: 2px;
+    }
+
+    .flow-step h4 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+    }
+
+    .simple-flow-diagram.compact .flow-step h4 {
+      font-size: 1rem;
+    }
+
+    .flow-step p {
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .simple-flow-diagram.compact .flow-step p {
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .flow-arrow {
+      font-size: 2rem;
+      color: var(--bright-blue);
+      font-weight: 700;
+    }
+
+    .simple-flow-diagram.compact .flow-arrow {
+      font-size: 1.5rem;
+    }
+
+    /* Flag Explanation */
+    .flag-explanation {
+      margin: 2rem 0;
+    }
+
+    .flag-example-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 2px solid #E5E7EB;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .flag-example-header h4 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0 0 1.5rem 0;
+    }
+
+    .example-text {
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      margin: 0 0 1.5rem 0;
+      line-height: 1.6;
+    }
+
+    .flag-display-example {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .flag-display-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #F8FAFC;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .flag-display-item.highlight {
+      background: #EFF6FF;
+      border: 2px solid var(--bright-blue);
+    }
+
+    .flag-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 2px solid;
+      flex-shrink: 0;
+    }
+
+    .flag-box.tier1 {
+      background: #D1FAE5;
+      border-color: #10B981;
+    }
+
+    .flag-box.tier2 {
+      background: #D1FAE5;
+      border-color: #10B981;
+    }
+
+    .flag-box.tier3 {
+      background: #D1FAE5;
+      border-color: #10B981;
+      border-width: 3px;
+    }
+
+    .flag-box.tier4 {
+      background: #D1FAE5;
+      border-color: #10B981;
+      border-width: 3px;
+    }
+
+    .flag-display-item span {
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+    }
+
+    .flag-display-item.highlight span strong {
+      color: var(--bright-blue);
+    }
+
+    .example-result {
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      margin: 1rem 0 0 0;
+      padding: 1rem;
+      background: #ECFDF5;
+      border-left: 3px solid var(--green);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    /* Config Flow Visual */
+    .config-flow-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .config-step {
+      flex: 1;
+      min-width: 200px;
+      max-width: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .config-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bright-blue) 0%, #2563EB 100%);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+
+    .config-content h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0 0 0.5rem 0;
+    }
+
+    .config-content p {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .config-arrow {
+      font-size: 1.5rem;
+      color: var(--bright-blue);
+      font-weight: 700;
+    }
+
+    /* Updated Legend */
+    .legend-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .legend-content strong {
+      font-size: 0.9375rem;
+      color: var(--dark-blue);
+    }
+
+    .legend-content span {
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    /* Screenshots Section */
+    .screenshots-section {
+      background: linear-gradient(135deg, #FAFBFC 0%, #F8FAFC 100%);
+      border-radius: 8px;
+    }
+
+    .screenshot-icon {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      color: #F59E0B;
+    }
+
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 3rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .screenshots-grid {
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .screenshots-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .screenshot-card-full {
+        grid-column: 1;
+      }
+    }
+
+    .screenshot-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      border: 1px solid #E5E7EB;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .screenshot-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-color: var(--bright-blue);
+    }
+
+    .screenshot-image-container {
+      position: relative;
+      width: 100%;
+      background: #F9FAFB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      min-height: 400px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .screenshot-image-container:hover {
+      background: #F3F4F6;
+    }
+
+    .screenshot-image-container:hover .screenshot-overlay-hint {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .screenshot-image-container {
+        min-height: 300px;
+        padding: 1.5rem;
+      }
+    }
+
+    .screenshot-overlay-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      color: var(--white);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      border-radius: 8px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .screenshot-overlay-hint svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .screenshot-overlay-hint span {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .screenshot-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .screenshot-card-full {
+      grid-column: 1 / -1;
+    }
+
+    .screenshot-card-full .screenshot-image-container {
+      min-height: 500px;
+      padding: 2rem;
+    }
+
+    .screenshot-card-full .screenshot-overlay-hint span {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .screenshot-card-full .screenshot-overlay-hint span {
+        display: none;
+      }
+    }
+
+    .screenshot-card-full .screenshot-overlay-hint span {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .screenshot-card-full .screenshot-overlay-hint span {
+        display: none;
+      }
+    }
+
+    /* Screenshot Modal */
+    .screenshot-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      overflow: hidden;
+      animation: fadeIn 0.2s ease;
+    }
+
+
+    .screenshot-modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--white);
+      transition: all 0.2s ease;
+      z-index: 3001;
+    }
+
+    .screenshot-modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .screenshot-modal-content {
+      max-width: calc(100vw - 4rem);
+      max-height: calc(100vh - 4rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .screenshot-modal-img {
+      max-width: calc(100vw - 4rem);
+      max-height: calc(100vh - 8rem);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      display: block;
+      flex-shrink: 1;
+    }
+
+    .screenshot-modal-title {
+      color: var(--white);
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.625rem 1.25rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      flex-shrink: 0;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .screenshot-modal {
+        padding: 1rem;
+      }
+
+      .screenshot-modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+      }
+
+      .screenshot-modal-content {
+        max-width: calc(100vw - 2rem);
+        max-height: calc(100vh - 2rem);
+        gap: 0.75rem;
+      }
+
+      .screenshot-modal-img {
+        max-width: calc(100vw - 2rem);
+        max-height: calc(100vh - 6rem);
+      }
+
+      .screenshot-modal-title {
+        font-size: 0.9375rem;
+        padding: 0.5rem 1rem;
+      }
+    }
+
+    .screenshot-placeholder {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .screenshot-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text-light);
+    }
+
+    .screenshot-overlay svg {
+      opacity: 0.5;
+    }
+
+    .screenshot-overlay span {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Screenshot Mockups */
+    .screenshot-mockup {
+      position: absolute;
+      inset: 0;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 1;
+    }
+
+    .mockup-header {
+      height: 12px;
+      background: #E5E7EB;
+      border-radius: 4px;
+      opacity: 0.6;
+    }
+
+    .mockup-content {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 0.75rem;
+      flex: 1;
+    }
+
+    .mockup-left {
+      background: #DBEAFE;
+      border-radius: 6px;
+      opacity: 0.7;
+    }
+
+    .mockup-right {
+      background: #E0E7FF;
+      border-radius: 6px;
+      opacity: 0.7;
+    }
+
+    .mockup-bottom {
+      height: 60px;
+      background: #F3F4F6;
+      border-radius: 6px;
+      opacity: 0.6;
+    }
+
+    .screenshot-mockup-flag {
+      position: absolute;
+      inset: 0;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .flag-grid-mockup {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .flag-item {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .flag-item.green {
+      background: #D1FAE5;
+      border-color: #10B981;
+    }
+
+    .flag-item.red {
+      background: #FEE2E2;
+      border-color: #EF4444;
+    }
+
+    .flag-item.white {
+      background: #F3F4F6;
+      border-color: #9CA3AF;
+    }
+
+    .screenshot-mockup-scorecard {
+      position: absolute;
+      inset: 0;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .scorecard-mockup {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .scorecard-item {
+      height: 60px;
+      background: #EFF6FF;
+      border-radius: 8px;
+      border: 1px solid #DBEAFE;
+      opacity: 0.7;
+    }
+
+    .screenshot-info {
+      padding: 2rem;
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #F1F5F9;
+    }
+
+    .screenshot-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0 0 0.75rem 0;
+      line-height: 1.3;
+    }
+
+    .screenshot-description {
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .screenshot-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .screenshot-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--bright-blue);
+      background: #EFF6FF;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+    }
+
+    /* Flag Logic Section */
+    .flag-logic-section {
+      background: linear-gradient(135deg, #FEF7F0 0%, #FFF5ED 100%);
+      border-left: 3px solid #F59E0B;
+      border-radius: 8px;
+    }
+
+    .flag-icon {
+      background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+      color: #EF4444;
+    }
+
+    .flag-legend {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 1px solid #E5E7EB;
+    }
+
+    .legend-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      margin: 0 0 1rem 0;
+    }
+
+    .legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .legend-color {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .legend-color.green {
+      background: #D1FAE5;
+      border-color: #10B981;
+    }
+
+    .legend-color.red {
+      background: #FEE2E2;
+      border-color: #EF4444;
+    }
+
+    .legend-color.white {
+      background: #F3F4F6;
+      border-color: #9CA3AF;
+    }
+
+    /* Metadata Flow Section */
+    .metadata-flow-section {
+      background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+      border-left: 3px solid #6366F1;
+      border-radius: 8px;
+    }
+
+    .metadata-icon {
+      background: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%);
+      color: #6366F1;
+    }
+
+    .metadata-benefits {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 1px solid #E5E7EB;
+    }
+
+    .benefits-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      margin: 0 0 1rem 0;
+    }
+
+    .benefits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .benefits-list li {
+      position: relative;
+      padding-left: 1.75rem;
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .benefits-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #10B981;
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+
+    /* User Journey Section */
+    .user-journey-section {
+      background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+      border-left: 3px solid var(--green);
+      border-radius: 8px;
+    }
+
+    .journey-icon {
+      background: linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%);
+      color: var(--green);
+    }
+
+    .journey-comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      margin-top: 2rem;
+      align-items: start;
+    }
+
+    .journey-column {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 2px solid #E5E7EB;
+    }
+
+    .before-journey {
+      border-color: #FEE2E2;
+    }
+
+    .after-journey {
+      border-color: #D1FAE5;
+    }
+
+    .journey-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #F1F5F9;
+    }
+
+    .journey-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+    }
+
+    .journey-time {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-light);
+      background: #F3F4F6;
+      padding: 0.375rem 0.75rem;
+      border-radius: 6px;
+    }
+
+    .before-journey .journey-time {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
+
+    .after-journey .journey-time {
+      background: #D1FAE5;
+      color: #059669;
+    }
+
+    .journey-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .journey-step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-number-badge {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--bright-blue) 0%, #2563EB 100%);
+      color: var(--white);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+      padding-top: 0.25rem;
+    }
+
+    .step-action {
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      margin: 0 0 0.25rem 0;
+      line-height: 1.5;
+    }
+
+    .step-time {
+      font-size: 0.8125rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .journey-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-blue);
+      margin-top: 2rem;
+    }
+
+    .journey-savings {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .savings-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+      color: #059669;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.125rem;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    }
+
+    .savings-badge svg {
+      flex-shrink: 0;
+    }
+
+
+    /* Data Flow Section */
+    .data-flow-section {
+      background: linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%);
+      border-left: 3px solid var(--green);
+    }
+
+    .flow-icon {
+      background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+      color: var(--green);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1024px) {
+      .journey-comparison {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .journey-arrow {
+        transform: rotate(90deg);
+        margin: 0;
+      }
+
+      .components-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screenshots-grid {
+        grid-template-columns: 1fr;
+      }
+
+
+      .simple-flow-diagram {
+        flex-direction: column;
+      }
+
+      .flow-arrow {
+        transform: rotate(90deg);
+      }
+
+      .config-flow-visual {
+        flex-direction: column;
+      }
+
+      .config-arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .component-card {
+        padding: 1.25rem;
+      }
+
+      .screenshot-placeholder {
+        height: 200px;
+      }
+
+      .journey-column {
+        padding: 1.25rem;
+      }
+
+      .flow-step {
+        min-width: 100%;
+      }
+
+      .config-step {
+        min-width: 100%;
       }
     }
   `;

@@ -13,8 +13,11 @@ let pageLoaders = {
   loadTermsOfServicePage: null
 };
 
+// Track when page loaders are ready
+let pageLoadersReady = false;
+
 // Initialize page loaders
-Promise.all([
+const pageLoadersPromise = Promise.all([
   import('./pages/contact.js').then(m => { 
     pageLoaders.loadContactPage = m.loadContactPage;
   }),
@@ -33,8 +36,11 @@ Promise.all([
     pageLoaders.loadPrivacyPolicyPage = m.loadPrivacyPolicyPage;
     pageLoaders.loadTermsOfServicePage = m.loadTermsOfServicePage;
   })
-]).catch(err => {
+]).then(() => {
+  pageLoadersReady = true;
+}).catch(err => {
   console.warn('Some page loaders failed to load:', err);
+  pageLoadersReady = true; // Still mark as ready to prevent infinite waiting
 });
 
 let updateMetaTags = null;
@@ -82,38 +88,94 @@ function handleRoute() {
     if (pageLoaders.loadPrivacyPolicyPage) {
       pageLoaders.loadPrivacyPolicyPage();
       if (updateMetaTags) updateMetaTags(path);
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.loadPrivacyPolicyPage) {
+          pageLoaders.loadPrivacyPolicyPage();
+          if (updateMetaTags) updateMetaTags(path);
+        }
+      });
     }
   } else if (path === '/terms-of-service') {
     if (pageLoaders.loadTermsOfServicePage) {
       pageLoaders.loadTermsOfServicePage();
       if (updateMetaTags) updateMetaTags(path);
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.loadTermsOfServicePage) {
+          pageLoaders.loadTermsOfServicePage();
+          if (updateMetaTags) updateMetaTags(path);
+        }
+      });
     }
   } else if (path === '/contact') {
     if (pageLoaders.loadContactPage) {
       pageLoaders.loadContactPage();
       if (updateMetaTags) updateMetaTags(path);
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.loadContactPage) {
+          pageLoaders.loadContactPage();
+          if (updateMetaTags) updateMetaTags(path);
+        }
+      });
     }
   } else if (path === '/case-studies') {
     if (pageLoaders.loadCaseStudiesPage) {
       pageLoaders.loadCaseStudiesPage();
       if (updateMetaTags) updateMetaTags(path);
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.loadCaseStudiesPage) {
+          pageLoaders.loadCaseStudiesPage();
+          if (updateMetaTags) updateMetaTags(path);
+        }
+      });
     }
   } else if (path.startsWith('/case-study/')) {
     const caseStudyId = path.split('/case-study/')[1];
     if (pageLoaders.loadCaseStudyDetailPage) {
       pageLoaders.loadCaseStudyDetailPage(caseStudyId);
       if (updateMetaTags) updateMetaTags(path);
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.loadCaseStudyDetailPage) {
+          pageLoaders.loadCaseStudyDetailPage(caseStudyId);
+          if (updateMetaTags) updateMetaTags(path);
+        }
+      });
     }
   } else if (path === '/blog') {
     if (pageLoaders.loadBlogPage) {
       pageLoaders.loadBlogPage();
       if (updateMetaTags) updateMetaTags(path);
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.loadBlogPage) {
+          pageLoaders.loadBlogPage();
+          if (updateMetaTags) updateMetaTags(path);
+        }
+      });
     }
   } else if (path.startsWith('/blog/')) {
     const postId = path.split('/blog/')[1];
     if (pageLoaders.loadBlogPostPage) {
       pageLoaders.loadBlogPostPage(postId);
       if (updateMetaTags) updateMetaTags(path);
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.loadBlogPostPage) {
+          pageLoaders.loadBlogPostPage(postId);
+          if (updateMetaTags) updateMetaTags(path);
+        }
+      });
     }
   } else {
     // 404 - redirect to home
@@ -140,8 +202,15 @@ setHandleRoute(handleRoute);
 export { handleRoute };
 
 export function initRouter() {
-  // Handle initial load
-  handleRoute();
+  // Wait for page loaders to be ready before handling initial route
+  // This ensures direct navigation to URLs works correctly
+  pageLoadersPromise.then(() => {
+    // Handle initial load after page loaders are ready
+    handleRoute();
+  }).catch(() => {
+    // If loaders fail, still try to handle route (fallback)
+    handleRoute();
+  });
 
   // Handle browser back/forward
   window.addEventListener('popstate', () => {
