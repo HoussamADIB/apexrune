@@ -519,11 +519,6 @@ export function loadCaseStudyDetailPage(caseStudyId) {
           <div class="case-study-layout">
             <!-- Main Content Column -->
             <div class="case-study-main">
-              ${caseStudy.heroImage ? `
-                <div class="case-study-hero-image">
-                  <img src="${caseStudy.heroImage}" alt="${caseStudy.client}" />
-                </div>
-              ` : ''}
               ${caseStudy.clientDescription ? `
                 <section class="case-study-content-section">
                   <div class="case-study-section-header">
@@ -684,8 +679,8 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                   <div class="screenshots-grid">
                     <!-- Main Dashboard Screenshot -->
                     <div class="screenshot-card screenshot-card-full">
-                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/2026-01-24_13-38-44.png', 'Complete Dashboard View')">
-                        <img src="/images/case-studies/screenshots/2026-01-24_13-38-44.png" alt="Account 360 Dashboard - Full View" class="screenshot-image" />
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/account-360-complete-dashboard.png', 'Complete Dashboard View')">
+                        <img src="/images/case-studies/screenshots/account-360-complete-dashboard.png" alt="Account 360 Dashboard - Full View" class="screenshot-image" />
                         <div class="screenshot-overlay-hint">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
@@ -706,8 +701,8 @@ export function loadCaseStudyDetailPage(caseStudyId) {
 
                     <!-- Account 360 Profiling Screenshot -->
                     <div class="screenshot-card">
-                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.21.05.png', 'Account 360 Profiling')">
-                        <img src="/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.21.05.png" alt="Account 360 Profiling Component" class="screenshot-image" />
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/account-360-profiling.png', 'Account 360 Profiling')">
+                        <img src="/images/case-studies/screenshots/account-360-profiling.png" alt="Account 360 Profiling Component" class="screenshot-image" />
                         <div class="screenshot-overlay-hint">
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
@@ -727,8 +722,8 @@ export function loadCaseStudyDetailPage(caseStudyId) {
 
                     <!-- Flag System Screenshot -->
                     <div class="screenshot-card">
-                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/2026-01-24_14-12-04.png', 'Flag System Detail')">
-                        <img src="/images/case-studies/screenshots/2026-01-24_14-12-04.png" alt="Account 360 Flags Component" class="screenshot-image" />
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/account-360-flag-system.png', 'Flag System Detail')">
+                        <img src="/images/case-studies/screenshots/account-360-flag-system.png" alt="Account 360 Flags Component" class="screenshot-image" />
                         <div class="screenshot-overlay-hint">
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
@@ -748,8 +743,8 @@ export function loadCaseStudyDetailPage(caseStudyId) {
 
                     <!-- Account News Screenshot -->
                     <div class="screenshot-card">
-                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/2026-01-24_14-13-23.png', 'Account News Feed')">
-                        <img src="/images/case-studies/screenshots/2026-01-24_14-13-23.png" alt="Account News Component" class="screenshot-image" />
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/account-360-news-feed.png', 'Account News Feed')">
+                        <img src="/images/case-studies/screenshots/account-360-news-feed.png" alt="Account News Component" class="screenshot-image" />
                         <div class="screenshot-overlay-hint">
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
@@ -769,8 +764,8 @@ export function loadCaseStudyDetailPage(caseStudyId) {
 
                     <!-- Activity Scorecard Screenshot -->
                     <div class="screenshot-card">
-                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.20.34.png', 'Activity Scorecard')">
-                        <img src="/images/case-studies/screenshots/Screenshot 2026-01-24 at 14.20.34.png" alt="Activity Scorecard Component" class="screenshot-image" />
+                      <div class="screenshot-image-container" onclick="openScreenshotModal('/images/case-studies/screenshots/account-360-activity-scorecard.png', 'Activity Scorecard')">
+                        <img src="/images/case-studies/screenshots/account-360-activity-scorecard.png" alt="Activity Scorecard Component" class="screenshot-image" />
                         <div class="screenshot-overlay-hint">
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
@@ -1361,6 +1356,10 @@ function addCaseStudyDetailPageStyles() {
   const style = document.createElement('style');
   style.id = 'case-study-detail-page-styles';
   style.textContent = `
+    /* ============================================
+       MODERN CASE STUDY DETAIL PAGE - FROM SCRATCH
+       ============================================ */
+    
     .case-study-detail-page {
       padding: 0;
       padding-top: 80px;
@@ -1375,21 +1374,21 @@ function addCaseStudyDetailPageStyles() {
     }
 
     .case-study-detail-page .container {
-      max-width: 1440px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 3rem;
+      padding: 0 4rem;
       box-sizing: border-box;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1200px) {
       .case-study-detail-page .container {
-        padding: 0 2rem;
+        padding: 0 3rem;
       }
     }
 
     @media (max-width: 768px) {
       .case-study-detail-page .container {
-        padding: 0 1.5rem;
+        padding: 0 2rem;
       }
     }
 
@@ -1495,32 +1494,6 @@ function addCaseStudyDetailPageStyles() {
       margin: 0;
       background: var(--white);
       overflow: visible;
-    }
-
-    /* Hero Image Inside Content */
-    .case-study-main .case-study-hero-image {
-      position: relative;
-      width: 100%;
-      height: 380px;
-      overflow: hidden;
-      border-radius: 12px;
-      margin-bottom: 3rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .case-study-main .case-study-hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-    }
-
-    @media (max-width: 768px) {
-      .case-study-main .case-study-hero-image {
-        height: 240px;
-        margin-bottom: 2rem;
-        border-radius: 8px;
-      }
     }
 
     /* Hero Section */
