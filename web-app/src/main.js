@@ -45,14 +45,14 @@ document.querySelector('#app').innerHTML = `
               </div>
             </a>
             <a href="/service/system-integration" class="dropdown-item">
-              ${getCommonIcon('git-merge', 18, 'currentColor')}
+              ${getCommonIcon('plug', 18, 'currentColor')}
               <div class="dropdown-item-content">
                 <span class="dropdown-item-title">System Integration</span>
                 <span class="dropdown-item-desc">Connect your essential tools</span>
               </div>
             </a>
             <a href="/service/health-checks" class="dropdown-item">
-              ${getCommonIcon('activity', 18, 'currentColor')}
+              ${getCommonIcon('stethoscope', 18, 'currentColor')}
               <div class="dropdown-item-content">
                 <span class="dropdown-item-title">Health Checks</span>
                 <span class="dropdown-item-desc">Audit & optimize your org</span>
