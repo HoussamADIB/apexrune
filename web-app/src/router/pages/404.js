@@ -26,10 +26,10 @@ export function load404Page() {
             </p>
             
             <div class="error-404-actions">
-              <a href="/" class="error-404-btn-primary">
+              <button class="error-404-btn-primary" onclick="window.location.href='/'">
                 ${getCommonIcon('home', 20, 'currentColor')}
                 Back to Home
-              </a>
+              </button>
               <a href="/contact" class="error-404-btn-secondary">
                 ${getCommonIcon('mail', 20, 'currentColor')}
                 Contact Support
@@ -168,6 +168,8 @@ function add404PageStyles() {
       background: var(--color-primary);
       color: white;
       box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.3);
+      border: none;
+      cursor: pointer;
     }
 
     .error-404-btn-primary:hover {

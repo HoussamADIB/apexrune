@@ -48,7 +48,7 @@ export function loadBlogPage() {
               <a href="/blog/${featuredPost.id}" class="featured-article">
                 <div class="featured-content">
                   <div class="featured-top-meta">
-                  <span class="category-tag" data-category="${featuredPost.category.toLowerCase().replace(/\s+/g, '-')}">${featuredPost.category}</span>
+                  <span class="category-tag">${featuredPost.category}</span>
                     <span class="featured-date">
                       ${getCommonIcon('calendar', 14, 'currentColor')}
                       ${new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
@@ -131,7 +131,7 @@ export function loadBlogPage() {
                     </div>
                     <div class="article-card-body">
                       <div class="article-card-meta">
-                        <span class="category-tag category-tag--small" data-category="${post.category.toLowerCase().replace(/\s+/g, '-')}">${post.category}</span>
+                        <span class="category-tag category-tag--small">${post.category}</span>
                         <span class="article-card-date">${new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                       </div>
                       <h3 class="article-card-title">
@@ -764,71 +764,7 @@ export function loadBlogPostPage(postId) {
       if (typeof Prism !== 'undefined') {
         Prism.highlightAll();
       }
-      
-      // Add copy buttons to code blocks
-      addCopyButtonsToCodeBlocks();
     });
-  });
-}
-
-// Add copy buttons to all code blocks
-function addCopyButtonsToCodeBlocks() {
-  const codeBlocks = document.querySelectorAll('pre[class*="language-"]');
-  
-  codeBlocks.forEach((pre) => {
-    // Skip if button already exists
-    if (pre.querySelector('.copy-code-button')) return;
-    
-    // Create wrapper if not exists
-    if (!pre.parentElement.classList.contains('code-block-wrapper')) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'code-block-wrapper';
-      pre.parentNode.insertBefore(wrapper, pre);
-      wrapper.appendChild(pre);
-    }
-    
-    // Create copy button
-    const button = document.createElement('button');
-    button.className = 'copy-code-button';
-    button.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-      <span>Copy</span>
-    `;
-    button.title = 'Copy code';
-    
-    button.addEventListener('click', async () => {
-      const code = pre.querySelector('code');
-      const text = code ? code.textContent : pre.textContent;
-      
-      try {
-        await navigator.clipboard.writeText(text);
-        button.innerHTML = `
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
-          <span>Copied!</span>
-        `;
-        button.classList.add('copied');
-        
-        setTimeout(() => {
-          button.innerHTML = `
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            <span>Copy</span>
-          `;
-          button.classList.remove('copied');
-        }, 2000);
-      } catch (err) {
-        console.error('Failed to copy code:', err);
-      }
-    });
-    
-    pre.parentElement.appendChild(button);
   });
 }
 
@@ -1041,39 +977,6 @@ function addBlogPageStyles() {
       letter-spacing: 0.5px;
     }
 
-    /* Category-specific colors */
-    .category-tag[data-category="architecture"] {
-      background: #8B5CF6;
-    }
-
-    .category-tag[data-category="performance"] {
-      background: #EF4444;
-    }
-
-    .category-tag[data-category="integration"] {
-      background: #10B981;
-    }
-
-    .category-tag[data-category="automation"] {
-      background: #F59E0B;
-    }
-
-    .category-tag[data-category="best-practices"] {
-      background: #3B82F6;
-    }
-
-    .category-tag[data-category="lwc"] {
-      background: #06B6D4;
-    }
-
-    .category-tag[data-category="apex"] {
-      background: #EC4899;
-    }
-
-    .category-tag[data-category="data"] {
-      background: #14B8A6;
-    }
-
     .category-tag--small {
       font-size: 0.65rem;
       padding: 0.25rem 0.6rem;
@@ -1081,47 +984,6 @@ function addBlogPageStyles() {
       color: var(--bright-blue);
       font-weight: 700;
       border-radius: 4px;
-    }
-
-    /* Category-specific colors for small tags */
-    .category-tag--small[data-category="architecture"] {
-      background: #F3E8FF;
-      color: #7C3AED;
-    }
-
-    .category-tag--small[data-category="performance"] {
-      background: #FEF2F2;
-      color: #DC2626;
-    }
-
-    .category-tag--small[data-category="integration"] {
-      background: #D1FAE5;
-      color: #059669;
-    }
-
-    .category-tag--small[data-category="automation"] {
-      background: #FEF3C7;
-      color: #D97706;
-    }
-
-    .category-tag--small[data-category="best-practices"] {
-      background: #DBEAFE;
-      color: #2563EB;
-    }
-
-    .category-tag--small[data-category="lwc"] {
-      background: #CFFAFE;
-      color: #0891B2;
-    }
-
-    .category-tag--small[data-category="apex"] {
-      background: #FCE7F3;
-      color: #DB2777;
-    }
-
-    .category-tag--small[data-category="data"] {
-      background: #CCFBF1;
-      color: #0F766E;
     }
 
     .meta-divider {
@@ -2138,49 +2000,6 @@ function addBlogPostPageStyles() {
     }
 
     /* Code Blocks - Prism.js Override */
-    .code-block-wrapper {
-      position: relative;
-      margin: 2rem 0;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #1e1e1e;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .copy-code-button {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 0.75rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      z-index: 10;
-    }
-
-    .copy-code-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .copy-code-button.copied {
-      background: #10B981;
-      border-color: #10B981;
-      color: white;
-    }
-
-    .copy-code-button svg {
-      flex-shrink: 0;
-    }
-
     .article-content pre[class*="language-"] {
       background: transparent !important;
       border-radius: 0;

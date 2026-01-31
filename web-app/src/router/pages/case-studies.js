@@ -4304,9 +4304,8 @@ function addCaseStudyDetailPageStyles() {
 
     .screenshot-modal-zoom-controls {
       position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 1.5rem;
+      left: 1.5rem;
       display: flex;
       gap: 0.5rem;
       background: rgba(0, 0, 0, 0.8);
@@ -4388,6 +4387,18 @@ function addCaseStudyDetailPageStyles() {
         right: 1rem;
         width: 40px;
         height: 40px;
+      }
+
+      .screenshot-modal-zoom-controls {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.375rem;
+        gap: 0.375rem;
+      }
+
+      .zoom-btn {
+        width: 36px;
+        height: 36px;
       }
 
       .screenshot-modal-content {
