@@ -223,14 +223,14 @@ export function loadCaseStudyDetailPage(caseStudyId) {
       client: 'GLOBAL MANUFACTURER',
       title: 'Account 360 Dashboard: Transforming Account Management with Unified Intelligence',
       heroImage: '/images/case-studies/account-360-dashboard.png',
-      clientDescription: 'A global manufacturer with complex product portfolios spanning multiple subscription tiers (Tier 1, Tier 2, Tier 3, Tier 4) across 10+ product lines, requiring comprehensive account intelligence for field sales teams.',
-      challenge: 'Sales representatives spent an average of 2-3 hours per account researching product subscriptions, engagement history, and critical attention points before important meetings. With data scattered across subscription records, activities, and custom objects, reps struggled to get a complete picture, leading to missed upsell opportunities and unprepared client conversations.',
-      solution: 'We designed and implemented a comprehensive Account 360 dashboard that consolidates account intelligence into a single, unified view. The solution combines visual account flags, real-time activity scorecards, and intelligent attention points—all optimized for mobile field sales.',
+      clientDescription: 'A global manufacturer with complex product portfolios spanning **multiple subscription tiers** (Tier 1, Tier 2, Tier 3, Tier 4) across **10+ product lines**, requiring comprehensive account intelligence for field sales teams.',
+      challenge: 'Sales representatives spent an average of **2-3 hours per account** researching product subscriptions, engagement history, and critical attention points before important meetings. With data **scattered across** subscription records, activities, and custom objects, reps struggled to get a complete picture, leading to **missed upsell opportunities** and unprepared client conversations.',
+      solution: 'We designed and implemented a comprehensive **Account 360 dashboard** that consolidates account intelligence into a **single, unified view**. The solution combines **visual account flags**, **real-time activity scorecards**, and **intelligent attention points**—all optimized for mobile field sales.',
       solutionSteps: [
-        'Visual Flag System: 10+ product subscription indicators with priority logic (Tier 4 > Tier 3 > Tier 2 > Tier 1) derived from subscription records, showing active/expired status at-a-glance',
-        'Activity Scorecard: Real-time engagement metrics tracking tasks completed, calls logged, emails sent, events, and 12-month activity trends with locale-aware formatting',
-        'Intelligent Attention Points: Metadata-driven system that dynamically queries and displays critical account information with relevance scoring and configurable field mappings',
-        'Mobile-Responsive Architecture: Container component with 5/7 column split on desktop, full-width on mobile, optimized for tablets during field visits'
+        '**Visual Flag System:** 10+ product subscription indicators with **priority logic** (Tier 4 > Tier 3 > Tier 2 > Tier 1) derived from subscription records, showing **active/expired status at-a-glance**',
+        '**Activity Scorecard:** Real-time engagement metrics tracking tasks completed, calls logged, emails sent, events, and **12-month activity trends** with locale-aware formatting',
+        '**Intelligent Attention Points:** Metadata-driven system that **dynamically queries** and displays critical account information with **relevance scoring** and configurable field mappings',
+        '**Mobile-Responsive Architecture:** Container component with **5/7 column split** on desktop, full-width on mobile, optimized for tablets during field visits'
       ],
       results: [
         '70% reduction in account research time',
@@ -246,11 +246,11 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         companySize: 'Enterprise (5000+ employees)',
         region: 'Global'
       },
-      keyInsight: 'The breakthrough wasn\'t the technology—it was understanding that sales reps needed answers, not data dumps. By surfacing critical information automatically through visual flags and intelligent attention points, we eliminated the "analysis paralysis" that was killing productivity. The visual flag system alone reduced cognitive load by 60%.',
+      keyInsight: 'The breakthrough wasn\'t the technology—it was understanding that **sales reps needed answers, not data dumps**. By surfacing critical information automatically through visual flags and intelligent attention points, we eliminated the **"analysis paralysis"** that was killing productivity. The visual flag system alone **reduced cognitive load by 60%**.',
       lessonsLearned: [
-        'Configurable attention points mean business users can add new information displays without waiting for developers—changes happen in minutes, not weeks',
-        'Mobile-first design was critical—60% of users access the dashboard on tablets during client visits, so it had to work perfectly on smaller screens',
-        'Performance optimization was essential: the dashboard loads 73% faster than traditional approaches, even for accounts with 100+ related records'
+        '**Configurable attention points** mean business users can add new information displays **without waiting for developers**—changes happen in **minutes, not weeks**',
+        '**Mobile-first design was critical**—**60% of users** access the dashboard on tablets during client visits, so it had to work perfectly on smaller screens',
+        '**Performance optimization was essential:** the dashboard loads **73% faster** than traditional approaches, even for accounts with **100+ related records**'
       ],
       // New sections for Account 360
       hasVisualElements: true,
@@ -291,8 +291,8 @@ export function loadCaseStudyDetailPage(caseStudyId) {
       client: 'INDUSTRIAL MANUFACTURER',
       title: 'Revenue Lifecycle Management: Real-Time ERP Pricing That Closes Deals',
       heroImage: '/images/case-studies/revenue-lifecycle-management.png',
-      clientDescription: 'An industrial manufacturer with 50,000+ products requiring real-time pricing from their ERP system during quote and order creation.',
-      challenge: 'Sales teams were losing deals during customer meetings—reps couldn\'t provide accurate quotes without manual ERP lookups. By the time they called customers back, competitors had already closed the deal. Pricing errors led to order rejections, costing 5% in annual revenue leakage.',
+      clientDescription: 'An industrial manufacturer with **50,000+ products** requiring **real-time pricing** from their ERP system during quote and order creation.',
+      challenge: 'Sales teams were **losing deals during customer meetings**—reps couldn\'t provide accurate quotes without manual ERP lookups. By the time they called customers back, **competitors had already closed the deal**. Pricing errors led to order rejections, costing **5% in annual revenue leakage**.',
       problemMetrics: {
         before: [
           '30% of quotes contained pricing errors',
@@ -305,13 +305,13 @@ export function loadCaseStudyDetailPage(caseStudyId) {
           '40% reduction in errors possible with automation'
         ]
       },
-      solution: 'We implemented a Revenue Lifecycle Management solution that makes ERP pricing invisible to users. Sales teams can now provide accurate, customer-specific pricing in real-time during meetings—all happening seamlessly in the background. The solution leverages Salesforce Industries CPQ with prehook processing, intercepting transactions before commit to inject real-time ERP pricing and inventory data.',
+      solution: 'We implemented a Revenue Lifecycle Management solution that makes **ERP pricing invisible to users**. Sales teams can now provide **accurate, customer-specific pricing in real-time** during meetings—all happening seamlessly in the background. The solution leverages **Salesforce Industries CPQ with prehook processing**, intercepting transactions before commit to inject real-time ERP pricing and inventory data.',
       solutionSteps: [
-        'Prehook Processing Engine: Intercepts transactions before commit, enabling seamless ERP pricing injection—users see pricing appear instantly',
-        'Customer-Specific Pricing: Returns three pricing tiers (base, retail, customer-specific) enabling dynamic pricing strategies',
-        'Combined Pricing + Inventory: Single ERP callout returns both pricing and availability, preventing quotes for unavailable products',
-        'Smart Optimization: Prevents duplicate pricing calls (saves 40% API costs) and optimizes bulk processing',
-        'Unified Transaction Management Component: Single component dynamically handles all Orders and Quotes with intelligent transaction type detection'
+        '**Prehook Processing Engine:** Intercepts transactions before commit, enabling **seamless ERP pricing injection**—users see pricing appear **instantly**',
+        '**Customer-Specific Pricing:** Returns **three pricing tiers** (base, retail, customer-specific) enabling dynamic pricing strategies',
+        '**Combined Pricing + Inventory:** **Single ERP callout** returns both pricing and availability, **preventing quotes for unavailable products**',
+        '**Smart Optimization:** Prevents duplicate pricing calls (saves **40% API costs**) and optimizes bulk processing',
+        '**Unified Transaction Management Component:** Single component dynamically handles **all Orders and Quotes** with intelligent transaction type detection'
       ],
       hasVisualElements: true,
       rlmFlow: {
@@ -383,12 +383,12 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         companySize: 'Enterprise (3000+ employees)',
         region: 'North America'
       },
-      keyInsight: 'The breakthrough was making ERP pricing invisible to users. Sales reps can now provide accurate, customer-specific pricing during meetings without knowing an ERP callout is happening. This eliminated pricing delays, reduced errors by 40%, and recovered 5% in annual revenue.',
+      keyInsight: 'The breakthrough was **making ERP pricing invisible to users**. Sales reps can now provide accurate, customer-specific pricing during meetings **without knowing an ERP callout is happening**. This eliminated pricing delays, **reduced errors by 40%**, and **recovered 5% in annual revenue**.',
       lessonsLearned: [
-        'Smart filtering prevented 40% of unnecessary ERP calls, reducing API costs and improving performance',
-        'Customer-specific pricing became the key differentiator—enabling dynamic pricing strategies competitors couldn\'t match',
-        'Unified component architecture reduced maintenance overhead by 60% while ensuring consistent user experience',
-        'Combined pricing + inventory in single callout eliminated order rejections and improved customer satisfaction'
+        '**Smart filtering prevented 40% of unnecessary ERP calls**, reducing API costs and improving performance',
+        '**Customer-specific pricing became the key differentiator**—enabling dynamic pricing strategies competitors couldn\'t match',
+        '**Unified component architecture** reduced maintenance overhead by **60%** while ensuring consistent user experience',
+        '**Combined pricing + inventory in single callout** eliminated order rejections and improved customer satisfaction'
       ],
       screenshotPlaceholders: [
         {
@@ -415,14 +415,14 @@ export function loadCaseStudyDetailPage(caseStudyId) {
       client: 'MARKETING ORGANIZATION',
       title: 'Event Management Dashboard: Data Quality Assurance Through Platform Events',
       heroImage: '/images/case-studies/event-management-dashboard.png',
-      clientDescription: 'A marketing organization managing 1,000+ events annually with Cvent integration, synchronizing event data and attendee information to Salesforce for lead generation and campaign tracking.',
-      challenge: 'Manual audits were time-consuming, and data quality problems were discovered weeks after events, making remediation difficult. Orphaned attendee records (unmatched to contacts or leads) and field mismatches between staging and production records created reporting inaccuracies and missed lead generation opportunities. The team had no visibility into data quality until post-event analysis.',
-      solution: 'We developed a comprehensive event management dashboard featuring real-time audit processing with Platform Events, automated health score calculation, field-level mismatch detection across 6 mapped fields, and bulk orphan reprocessing capabilities.',
+      clientDescription: 'A marketing organization managing **1,000+ events annually** with Cvent integration, synchronizing event data and attendee information to Salesforce for lead generation and campaign tracking.',
+      challenge: 'Manual audits were time-consuming, and data quality problems were **discovered weeks after events**, making remediation difficult. **Orphaned attendee records** (unmatched to contacts or leads) and field mismatches between staging and production records created **reporting inaccuracies** and **missed lead generation opportunities**. The team had **no visibility into data quality** until post-event analysis.',
+      solution: 'We developed a comprehensive **event management dashboard** featuring **real-time audit processing** with Platform Events, **automated health score calculation**, field-level mismatch detection across **6 mapped fields**, and bulk orphan reprocessing capabilities.',
       solutionSteps: [
-        'Real-Time Audit with Platform Events: Events published during batch processing provide live UI updates via subscription, eliminating the "wait and see" problem',
-        'Health Score Calculation: Automated scoring formula ((contacts + leads) / totalRecords * 100) with color-coded indicators (Green: 80-100%, Orange: 50-80%, Red: <50% or >100% indicating duplicates)',
-        'Field-Level Mismatch Detection: Batch audit compares 6 critical fields between staging and production records',
-        'Orphan Reprocessing & Duplicate Cleanup: Bulk reprocessing of unmatched attendees with intelligent matching, plus automated duplicate cleanup'
+        '**Real-Time Audit with Platform Events:** Events published during batch processing provide **live UI updates** via subscription, eliminating the **"wait and see" problem**',
+        '**Health Score Calculation:** Automated scoring formula `((contacts + leads) / totalRecords * 100)` with **color-coded indicators** (🟢 Green: 80-100%, 🟠 Orange: 50-80%, 🔴 Red: <50% or >100% indicating duplicates)',
+        '**Field-Level Mismatch Detection:** Batch audit compares **6 critical fields** between staging and production records',
+        '**Orphan Reprocessing & Duplicate Cleanup:** Bulk reprocessing of unmatched attendees with **intelligent matching**, plus automated duplicate cleanup'
       ],
       results: [
         '90% reduction in data quality issues',
@@ -438,25 +438,25 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         companySize: 'Enterprise (2000+ employees)',
         region: 'Global'
       },
-      keyInsight: 'Platform Events enabled "live auditing"—we could show data quality issues as they occurred during batch processing, not days later. This real-time feedback loop transformed data quality from reactive to proactive. The team could now fix issues during events, not weeks after.',
+      keyInsight: '**Platform Events enabled "live auditing"**—we could show data quality issues **as they occurred** during batch processing, not days later. This **real-time feedback loop** transformed data quality from **reactive to proactive**. The team could now **fix issues during events, not weeks after**.',
       lessonsLearned: [
-        'Platform Events require careful deduplication logic due to at-least-once delivery guarantees—we used set-based deduplication to prevent duplicate mismatch display',
-        'Health score calculation needed to account for edge cases (e.g., >100% indicating duplicates)—this became a critical early warning system',
-        'Batch processing with stateful implementation was essential for session tracking across 50,000+ attendee records while maintaining audit context'
+        '**Platform Events require careful deduplication logic** due to **at-least-once delivery guarantees**—we used set-based deduplication to prevent duplicate mismatch display',
+        '**Health score calculation** needed to account for edge cases (e.g., **>100% indicating duplicates**)—this became a **critical early warning system**',
+        '**Batch processing with stateful implementation** was essential for session tracking across **50,000+ attendee records** while maintaining audit context'
       ]
     },
     'platform-paralysis': {
       client: 'PROFESSIONAL SERVICES FIRM',
       title: 'Eliminating Platform Paralysis: How We Optimized Core Architecture to Boost Speed by 23%',
       heroImage: '/images/case-studies/platform-paralysis.png',
-      clientDescription: 'A professional services firm relying on Salesforce for high-volume account management with complex trigger logic accumulated over years of development.',
-      challenge: 'The Salesforce Account object was overloaded with complex triggers and workflows, causing frequent "Apex CPU Time Limit Exceeded" exceptions during bulk operations. This led to lost data during integrations, operational drag for users, and an inability to scale. The platform was becoming a bottleneck rather than an enabler—what should have taken seconds was timing out.',
-      solution: 'We identified that the Account Trigger was suffering from years of technical debt—redundant processing paths, inefficient SOQL queries, and non-bulkified logic. Our approach was systematic and data-driven:',
+      clientDescription: 'A professional services firm relying on Salesforce for **high-volume account management** with complex trigger logic accumulated over years of development.',
+      challenge: 'The Salesforce Account object was **overloaded with complex triggers and workflows**, causing frequent **"Apex CPU Time Limit Exceeded" exceptions** during bulk operations. This led to **lost data during integrations**, operational drag for users, and an **inability to scale**. The platform was becoming a **bottleneck rather than an enabler**—what should have taken seconds was timing out.',
+      solution: 'We identified that the Account Trigger was suffering from **years of technical debt**—redundant processing paths, inefficient SOQL queries, and non-bulkified logic. Our approach was **systematic and data-driven:**',
       solutionSteps: [
-        'Deep-Dive Profiling: Analyzed every trigger handler, workflow, and process builder firing on Account updates using debug logs and performance benchmarking across 7 test scenarios',
-        'Consolidation & Refactoring: Merged redundant logic, eliminated duplicate processing paths, and removed 40% of unnecessary processing discovered through profiling',
-        'Architecture Redesign: Rebuilt trigger using Handler/Helper pattern with bulkification, efficient SOQL queries with relationship queries, and proper governor limit management',
-        'Comprehensive Testing: Benchmarked performance across bulk operations (200 records), measuring CPU time improvements with 3 trials per test method'
+        '**Deep-Dive Profiling:** Analyzed every trigger handler, workflow, and process builder firing on Account updates using debug logs and **performance benchmarking across 7 test scenarios**',
+        '**Consolidation & Refactoring:** Merged redundant logic, eliminated duplicate processing paths, and **removed 40% of unnecessary processing** discovered through profiling',
+        '**Architecture Redesign:** Rebuilt trigger using **Handler/Helper pattern** with bulkification, **efficient SOQL queries** with relationship queries, and proper governor limit management',
+        '**Comprehensive Testing:** Benchmarked performance across bulk operations (**200 records**), measuring CPU time improvements with **3 trials per test method**'
       ],
       results: [
         '+23% Performance Gain',
@@ -517,25 +517,25 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         companySize: 'Enterprise (1000+ employees)',
         region: 'Europe'
       },
-      keyInsight: 'The real problem wasn\'t the triggers themselves—it was years of accumulated technical debt creating cascading performance issues. Systematic profiling revealed redundant processing paths that weren\'t visible in code reviews. The data doesn\'t lie: 40% of processing was completely unnecessary.',
+      keyInsight: 'The real problem wasn\'t the triggers themselves—it was **years of accumulated technical debt** creating cascading performance issues. **Systematic profiling revealed redundant processing paths** that weren\'t visible in code reviews. **The data doesn\'t lie: 40% of processing was completely unnecessary**.',
       lessonsLearned: [
-        'Comprehensive profiling with realistic data volumes (200 records) before refactoring is essential—unit tests with 1-5 records missed the real performance issues',
-        'Bulkification patterns must be enforced at the architecture level through Handler/Helper separation, not just hoped for in individual methods',
-        'Multiple test trials (3 per scenario) revealed performance variance—single runs can be misleading due to Salesforce\'s multi-tenant caching'
+        '**Comprehensive profiling** with realistic data volumes (**200 records**) before refactoring is essential—unit tests with 1-5 records **missed the real performance issues**',
+        '**Bulkification patterns must be enforced at the architecture level** through Handler/Helper separation, not just hoped for in individual methods',
+        '**Multiple test trials (3 per scenario)** revealed performance variance—single runs can be misleading due to Salesforce\'s multi-tenant caching'
       ]
     },
     'ux-ui-modernization': {
       client: 'MEDICAL DEVICE MANUFACTURER',
       title: 'From "Spaghetti Logic" to a Seamless Sales Wizard',
       heroImage: '/images/case-studies/ux-ui-modernization.png',
-      clientDescription: 'A medical device manufacturer with a complex portfolio spanning multiple product categories, requiring sophisticated lead qualification and territory-based owner assignment across 50+ countries.',
-      challenge: 'Visual tools are great—until they aren\'t. The client\'s "New Lead" process had grown into a massive, unmanageable Salesforce Flow with hundreds of decision nodes, undocumented loops, and legacy Aura components. What started as simple logic had mutated into a maintenance nightmare. The cost of this complexity was paralyzing the IT team: "What should take 2 hours was taking 2 days." User errors were rampant due to confusing single-screen forms.',
-      solution: 'We didn\'t just patch the Flow; we launched a complete modernization initiative. We replaced the monolithic backend process with a modular Lightning Web Component architecture featuring progressive disclosure, modern UI patterns, and intelligent territory-based owner suggestions.',
+      clientDescription: 'A medical device manufacturer with a complex portfolio spanning **multiple product categories**, requiring sophisticated **lead qualification** and **territory-based owner assignment** across **50+ countries**.',
+      challenge: 'Visual tools are great—until they aren\'t. The client\'s "New Lead" process had grown into a **massive, unmanageable Salesforce Flow** with **hundreds of decision nodes**, undocumented loops, and legacy Aura components. What started as simple logic had mutated into a **maintenance nightmare**. The cost of this complexity was paralyzing the IT team: **"What should take 2 hours was taking 2 days."** User errors were rampant due to confusing single-screen forms.',
+      solution: 'We didn\'t just patch the Flow; we launched a **complete modernization initiative**. We replaced the monolithic backend process with a **modular Lightning Web Component architecture** featuring **progressive disclosure**, **modern UI patterns**, and **intelligent territory-based owner suggestions**.',
       solutionSteps: [
-        '3-Step Progressive Disclosure Wizard: Broke the process into intuitive stages (Product Interest → Fulfillment & Ownership → Review & Confirm), reducing cognitive load and user errors by 60%',
-        'Modern UI Patterns: Replaced standard dropdowns with visual "Pill Selectors" and "Card Layouts" for faster data entry, plus country-based category/brand filtering via custom metadata',
-        'Territory-Based Owner Suggestions: Integrated Team Map Modal showing top 3 suggested owners based on account territory, category, and brand context',
-        'Client-Side Validation: Real-time validation prevents errors before server submission, with comprehensive field validation and country-specific dealer requirements'
+        '**3-Step Progressive Disclosure Wizard:** Broke the process into intuitive stages (📋 Product Interest → 👤 Fulfillment & Ownership → ✅ Review & Confirm), reducing cognitive load and user errors by **60%**',
+        '**Modern UI Patterns:** Replaced standard dropdowns with visual **"Pill Selectors"** and **"Card Layouts"** for faster data entry, plus **country-based category/brand filtering** via custom metadata',
+        '**Territory-Based Owner Suggestions:** Integrated **Team Map Modal** showing **top 3 suggested owners** based on account territory, category, and brand context',
+        '**Client-Side Validation:** **Real-time validation** prevents errors before server submission, with comprehensive field validation and country-specific dealer requirements'
       ],
       results: [
         '70% Maint. Time Cut',
@@ -551,11 +551,11 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         companySize: 'Enterprise (5000+ employees)',
         region: 'Europe'
       },
-      keyInsight: 'The "spaghetti Flow" wasn\'t just a technical problem—it was a user experience problem. By breaking it into intuitive steps with modern UI patterns and intelligent owner suggestions, we didn\'t just fix the code, we transformed how users interact with the system. Maintenance time dropped 70% because the code finally made sense.',
+      keyInsight: 'The "spaghetti Flow" wasn\'t just a technical problem—it was a **user experience problem**. By breaking it into intuitive steps with modern UI patterns and intelligent owner suggestions, we didn\'t just fix the code, we **transformed how users interact with the system**. Maintenance time dropped **70%** because **the code finally made sense**.',
       lessonsLearned: [
-        'Progressive disclosure (3-step wizard) reduced user errors by 60% compared to single-screen forms—cognitive load matters more than we thought',
-        'Territory-based owner suggestions eliminated the "who should own this?" question that was slowing down lead creation by 40%',
-        'Modular LWC architecture made future enhancements 3x faster—adding a new field to the wizard now takes minutes, not days'
+        '**Progressive disclosure (3-step wizard)** reduced user errors by **60%** compared to single-screen forms—**cognitive load matters more than we thought**',
+        '**Territory-based owner suggestions** eliminated the **"who should own this?" question** that was slowing down lead creation by **40%**',
+        '**Modular LWC architecture** made future enhancements **3x faster**—adding a new field to the wizard now takes **minutes, not days**'
       ]
     }
   };
@@ -566,6 +566,13 @@ export function loadCaseStudyDetailPage(caseStudyId) {
     handleRoute();
     return;
   }
+
+  // Helper function to convert markdown-style bold to HTML
+  const formatText = (text) => {
+    if (!text) return '';
+    // Convert **text** to <strong>text</strong>
+    return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  };
 
   import('../../icons.js').then(({ getCommonIcon }) => {
     const app = document.querySelector('#app');
@@ -638,7 +645,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                     </div>
                     <h2 class="case-study-section-title">The Client</h2>
                   </div>
-                  <p class="case-study-section-text">${caseStudy.clientDescription}</p>
+                  <p class="case-study-section-text">${formatText(caseStudy.clientDescription)}</p>
                 </section>
               ` : ''}
 
@@ -739,7 +746,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                   </div>
                   <h2 class="case-study-section-title">The Challenge</h2>
                 </div>
-                <p class="case-study-section-text">${caseStudy.challenge}</p>
+                <p class="case-study-section-text">${formatText(caseStudy.challenge)}</p>
                 
                 ${caseStudy.problemMetrics ? `
                   <div class="problem-metrics-section">
@@ -786,13 +793,13 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                   </div>
                   <h2 class="case-study-section-title">Our Solution</h2>
                 </div>
-                <p class="case-study-section-text">${caseStudy.solution || caseStudy.fullStory}</p>
+                <p class="case-study-section-text">${formatText(caseStudy.solution || caseStudy.fullStory)}</p>
                 ${caseStudy.solutionSteps ? `
                   <ol class="case-study-solution-steps">
                     ${caseStudy.solutionSteps.map((step, index) => `
                       <li>
                         <span class="step-number">${index + 1}</span>
-                        <span class="step-text">${step}</span>
+                        <span class="step-text">${formatText(step)}</span>
                       </li>
                     `).join('')}
                   </ol>
@@ -813,7 +820,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                     </div>
                     <h2 class="case-study-section-title">How It Works</h2>
                   </div>
-                  <p class="case-study-section-text">The prehook processor intercepts transactions seamlessly, making ERP pricing completely invisible to users. Here's how the 8-step Product Discovery Flow works behind the scenes:</p>
+                  <p class="case-study-section-text">${formatText('The prehook processor **intercepts transactions seamlessly**, making **ERP pricing completely invisible to users**. Here\'s how the **8-step Product Discovery Flow** works behind the scenes:')}</p>
                   
                   ${caseStudy.rlmFlow ? `
                   <div class="rlm-flow-diagram">
@@ -1391,7 +1398,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                       </svg>
                       <span>Key Insight</span>
                     </div>
-                    <p class="key-insight-quote">"${caseStudy.keyInsight}"</p>
+                    <p class="key-insight-quote">"${formatText(caseStudy.keyInsight)}"</p>
                   </div>
                 ` : ''}
               </section>
@@ -1410,7 +1417,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                   </div>
                   <ul class="lessons-learned-list">
                     ${caseStudy.lessonsLearned.map(lesson => `
-                      <li>${lesson}</li>
+                      <li>${formatText(lesson)}</li>
                     `).join('')}
                   </ul>
                 </section>
