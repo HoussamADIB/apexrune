@@ -1497,9 +1497,19 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         const modalTitle = document.getElementById('screenshot-modal-title');
         
         if (modal && modalImage && modalTitle) {
+          // Reset zoom and pan state
+          screenshotZoom = 1;
+          screenshotPanX = 0;
+          screenshotPanY = 0;
+          
           modalImage.src = imageSrc;
           modalImage.alt = title;
           modalTitle.textContent = title;
+          
+          // Apply reset zoom state to image
+          modalImage.style.transform = 'scale(1) translate(0px, 0px)';
+          modalImage.style.cursor = 'default';
+          
           modal.style.display = 'flex';
           document.body.style.overflow = 'hidden';
         }
