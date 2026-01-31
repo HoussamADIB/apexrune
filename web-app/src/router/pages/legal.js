@@ -17,8 +17,7 @@ export function loadPrivacyPolicyPage() {
           
           <section class="legal-section">
             <h2>1. Introduction</h2>
-            <p>Welcome to ApexRune. We are a remote Salesforce consulting practice currently in our early stages. We are committed to being transparent about how we handle your information. This Privacy Policy explains what information we collect through our website and how we use it.</p>
-            <p><strong>Please note:</strong> We are currently building our service offerings and do not yet have active client engagements. This policy primarily covers information collected through our website.</p>
+            <p>Welcome to ApexRune. We are a remote Salesforce consulting practice committed to protecting your privacy. This Privacy Policy explains what information we collect through our website and how we use it.</p>
           </section>
 
           <section class="legal-section">
@@ -33,10 +32,10 @@ export function loadPrivacyPolicyPage() {
               <li>Message content</li>
               <li>Urgency level (optional)</li>
             </ul>
-            <p>This information is collected via Netlify Forms and stored securely on Netlify's servers. We use it solely to respond to your inquiry.</p>
+            <p>This information is stored securely and used solely to respond to your inquiry.</p>
 
             <h3>2.2 Automatically Collected Information</h3>
-            <p>We currently do not use analytics tools, tracking pixels, or cookies on our website. Standard server logs maintained by Netlify (our hosting provider) may capture basic information such as IP addresses and browser information for security and performance purposes.</p>
+            <p>Our hosting provider may collect standard server logs including IP addresses, browser type, and access times for security and performance purposes.</p>
           </section>
 
           <section class="legal-section">
@@ -46,15 +45,20 @@ export function loadPrivacyPolicyPage() {
               <li>Respond to your inquiry via email</li>
               <li>Understand your service needs</li>
               <li>Schedule consultation calls if requested</li>
+              <li>Maintain records of business communications</li>
             </ul>
-            <p>We do not currently send marketing emails, newsletters, or promotional communications. If we introduce these in the future, we will obtain your explicit consent first.</p>
+            <p>We will only send you marketing communications with your explicit consent.</p>
           </section>
 
           <section class="legal-section">
             <h2>4. Information Sharing</h2>
-            <p>We do not sell, trade, or rent your personal information to anyone. Period.</p>
-            <p>Your contact form data is stored on Netlify's secure servers (our website hosting provider). Netlify's privacy practices are governed by their own privacy policy.</p>
-            <p>We may disclose information only if legally required to do so (e.g., court order, subpoena).</p>
+            <p>We do not sell, trade, or rent your personal information to third parties.</p>
+            <p>We may share your information only in the following circumstances:</p>
+            <ul>
+              <li><strong>Service Providers:</strong> Third-party service providers who assist in operating our website and services, bound by confidentiality obligations</li>
+              <li><strong>Legal Requirements:</strong> When required by law, court order, or other legal process</li>
+              <li><strong>Business Protection:</strong> To protect our rights, property, or safety, or that of our users</li>
+            </ul>
           </section>
 
           <section class="legal-section">
@@ -77,13 +81,13 @@ export function loadPrivacyPolicyPage() {
 
           <section class="legal-section">
             <h2>7. Cookies and Tracking</h2>
-            <p>We currently do not use cookies, analytics tools, or tracking technologies on our website. If we introduce these in the future, we will update this policy and, if required, implement a cookie consent banner.</p>
+            <p>We may use cookies and similar tracking technologies to enhance your browsing experience and analyze website usage. You can control cookie settings through your browser preferences.</p>
           </section>
 
           <section class="legal-section">
             <h2>8. Third-Party Services</h2>
-            <p><strong>Netlify:</strong> Our website is hosted on Netlify, and contact form data is processed through Netlify Forms. Netlify may collect standard server logs for security and performance. Review Netlify's privacy policy at https://www.netlify.com/privacy/</p>
-            <p><strong>External Links:</strong> Our website may link to LinkedIn, email providers, and other external services. We are not responsible for their privacy practices.</p>
+            <p>We use third-party service providers to operate our website and deliver our services. These providers may collect and process data on our behalf, subject to their own privacy policies.</p>
+            <p>Our website may contain links to external websites. We are not responsible for the privacy practices or content of these external sites.</p>
           </section>
 
           <section class="legal-section">
@@ -92,8 +96,8 @@ export function loadPrivacyPolicyPage() {
           </section>
 
           <section class="legal-section">
-            <h2>10. Business Status</h2>
-            <p>ApexRune is currently in its formation stage. We are building our service offerings and have not yet established a formal business entity. As we grow and formalize our business structure, we will update this policy accordingly.</p>
+            <h2>10. Data Security</h2>
+            <p>We implement appropriate technical and organizational measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
           </section>
 
           <section class="legal-section">
@@ -140,15 +144,15 @@ export function loadTermsOfServicePage() {
           <p class="legal-last-updated">Last Updated: January 31, 2026</p>
           
           <section class="legal-section">
-            <h2>1. About These Terms</h2>
-            <p>These Terms of Service govern your use of the ApexRune website. By accessing or using our website, you agree to these terms.</p>
-            <p><strong>Important Note:</strong> ApexRune is currently in its early stages. We are actively building our service offerings and do not yet have formal client engagements. When we begin offering services, specific projects will be governed by separate service agreements that will detail scope, deliverables, timelines, and payment terms.</p>
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using the ApexRune website and services, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website or services.</p>
           </section>
 
           <section class="legal-section">
-            <h2>2. Who We Are</h2>
+            <h2>2. Description of Services</h2>
             <p>ApexRune is a remote Salesforce consulting practice specializing in custom development, system integration, health checks, process automation, and optimization services.</p>
-            <p>We are currently operating in a pre-formation stage and working toward establishing a formal business entity. The case studies and work examples on our website represent anonymized projects completed in previous corporate settings, used here to demonstrate our technical capabilities.</p>
+            <p>Specific service engagements are governed by separate service agreements that detail scope, deliverables, timelines, and payment terms for each project.</p>
+            <p>The case studies on our website represent anonymized client projects used to demonstrate our technical capabilities, with all proprietary and confidential information removed.</p>
           </section>
 
           <section class="legal-section">
@@ -171,32 +175,33 @@ export function loadTermsOfServicePage() {
           </section>
 
           <section class="legal-section">
-            <h2>5. Future Services</h2>
-            <p>When we begin offering services to clients, each engagement will be governed by:</p>
+            <h2>5. Service Agreements</h2>
+            <p>Client service engagements are governed by separate service agreements or statements of work that include:</p>
             <ul>
-              <li>A separate service agreement or statement of work</li>
-              <li>Clear scope, deliverables, and timelines</li>
-              <li>Agreed payment terms and methods</li>
-              <li>Confidentiality provisions</li>
+              <li>Defined scope, deliverables, and timelines</li>
+              <li>Payment terms and pricing</li>
+              <li>Confidentiality and non-disclosure provisions</li>
+              <li>Intellectual property ownership</li>
+              <li>Liability limitations and indemnification</li>
             </ul>
-            <p>Payment terms, pricing, and engagement structures are still being finalized and will be discussed on a case-by-case basis with prospective clients.</p>
+            <p>These Terms of Service apply to website use; service agreements govern actual consulting engagements.</p>
           </section>
 
           <section class="legal-section">
-            <h2>6. No Warranties</h2>
-            <p>Our website is provided "as is" without warranties of any kind. We make no guarantees that:</p>
-            <ul>
-              <li>The website will always be available or uninterrupted</li>
-              <li>All information is completely accurate or up-to-date</li>
-              <li>The website will be free from errors or security vulnerabilities</li>
-            </ul>
-            <p>We are continuously improving our website and services, and some information may change as we grow.</p>
+            <h2>6. Disclaimers</h2>
+            <p>Our website and information are provided "as is" without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+            <p>We do not guarantee that our website will be uninterrupted, secure, or error-free, or that all information will be completely accurate or up-to-date.</p>
           </section>
 
           <section class="legal-section">
             <h2>7. Limitation of Liability</h2>
-            <p>To the maximum extent permitted by law, ApexRune will not be liable for any indirect, incidental, or consequential damages arising from your use of our website or any information on it.</p>
-            <p>Since we do not currently have active service engagements, this limitation primarily applies to website use and information provided through our contact form.</p>
+            <p>To the maximum extent permitted by law, ApexRune shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from:</p>
+            <ul>
+              <li>Your use of or inability to use our website</li>
+              <li>Any unauthorized access to or use of our servers</li>
+              <li>Any interruption or cessation of transmission to or from our website</li>
+              <li>Any bugs, viruses, or other harmful code</li>
+            </ul>
           </section>
 
           <section class="legal-section">
@@ -211,14 +216,13 @@ export function loadTermsOfServicePage() {
 
           <section class="legal-section">
             <h2>10. Changes to These Terms</h2>
-            <p>As we grow and formalize our business structure, we may update these Terms of Service. Material changes will be reflected with an updated "Last Updated" date at the top of this page.</p>
-            <p>When we establish our formal business entity (LLC or other structure), we will update these terms with our official business information, jurisdiction, and formalized policies.</p>
+            <p>We reserve the right to modify these Terms of Service at any time. Material changes will be posted on this page with an updated "Last Updated" date. Your continued use of our website after changes constitutes acceptance of the modified terms.</p>
           </section>
 
           <section class="legal-section">
-            <h2>11. Dispute Resolution</h2>
-            <p>If you have any concerns or disputes regarding our website or these terms, please contact us first at contact@apexrune.com so we can try to resolve it informally.</p>
-            <p>Formal dispute resolution procedures will be established once we formalize our business structure.</p>
+            <h2>11. Governing Law and Disputes</h2>
+            <p>These Terms of Service shall be governed by and construed in accordance with applicable law. Any disputes arising from these terms or your use of our website shall be resolved through good faith negotiation.</p>
+            <p>If you have concerns or disputes, please contact us at contact@apexrune.com to resolve the matter informally before pursuing formal action.</p>
           </section>
 
           <section class="legal-section">
