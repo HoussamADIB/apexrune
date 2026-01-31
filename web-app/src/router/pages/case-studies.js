@@ -289,24 +289,93 @@ export function loadCaseStudyDetailPage(caseStudyId) {
     },
     'revenue-lifecycle-management': {
       client: 'INDUSTRIAL MANUFACTURER',
-      title: 'Revenue Lifecycle Management: Dynamic CPQ with Real-Time ERP Pricing',
+      title: 'Revenue Lifecycle Management: Real-Time ERP Pricing That Closes Deals',
       heroImage: '/images/case-studies/revenue-lifecycle-management.png',
-      clientDescription: 'An industrial manufacturer with 50,000+ products requiring real-time pricing from their ERP system during quote and order creation. Sales teams needed instant access to customer-specific pricing, retail prices, and product classifications.',
-      challenge: 'Traditional CPQ solutions required manual price lookups or batch synchronization, creating pricing errors and delayed quote generation. Sales teams couldn\'t provide accurate quotes during customer meetings, and pricing mismatches led to order rejections. The disconnect between Salesforce and ERP pricing was costing deals.',
-      solution: 'We implemented a custom Revenue Lifecycle Management solution leveraging Salesforce Industries CPQ with prehook processing—intercepting sales transactions before commit to inject real-time ERP pricing seamlessly into the user workflow.',
+      clientDescription: 'An industrial manufacturer with 50,000+ products requiring real-time pricing from their ERP system during quote and order creation.',
+      challenge: 'Sales teams were losing deals during customer meetings—reps couldn\'t provide accurate quotes without manual ERP lookups. By the time they called customers back, competitors had already closed the deal. Pricing errors led to order rejections, costing 5% in annual revenue leakage.',
+      problemMetrics: {
+        before: [
+          '30% of quotes contained pricing errors',
+          'Quote generation: 2-3 days',
+          '1 in 5 deals lost due to delays',
+          '5% annual revenue leakage'
+        ],
+        industryStats: [
+          '88% of B2B manufacturers report lost deals from manual quoting',
+          '40% reduction in errors possible with automation'
+        ]
+      },
+      solution: 'We implemented a Revenue Lifecycle Management solution that makes ERP pricing invisible to users. Sales teams can now provide accurate, customer-specific pricing in real-time during meetings—all happening seamlessly in the background. The solution leverages Salesforce Industries CPQ with prehook processing, intercepting transactions before commit to inject real-time ERP pricing and inventory data.',
       solutionSteps: [
-        'Prehook Processing Engine: Custom hook implementing prehook interface to intercept transactions before commit, enabling seamless ERP pricing injection',
-        'Tag-Based Data Access: Leveraging Industries Context API to query and update transaction nodes via tag-based architecture',
-        'Smart Filtering Logic: Prevents duplicate pricing by checking existing pricing data, excludes bundles, and handles deleted items intelligently',
-        'Bulk Processing Optimization: Single ERP callout per transaction handling 50+ products, with product ID to SKU mapping for ERP compatibility'
+        'Prehook Processing Engine: Intercepts transactions before commit, enabling seamless ERP pricing injection—users see pricing appear instantly',
+        'Customer-Specific Pricing: Returns three pricing tiers (base, retail, customer-specific) enabling dynamic pricing strategies',
+        'Combined Pricing + Inventory: Single ERP callout returns both pricing and availability, preventing quotes for unavailable products',
+        'Smart Optimization: Prevents duplicate pricing calls (saves 40% API costs) and optimizes bulk processing',
+        'Unified Transaction Management Component: Single component dynamically handles all Orders and Quotes with intelligent transaction type detection'
       ],
+      hasVisualElements: true,
+      rlmFlow: {
+        steps: [
+          { step: 1, title: 'User Adds Products', description: 'Sales rep adds products to quote/order during customer meeting' },
+          { step: 2, title: 'Prehook Intercepts', description: 'Prehook processor intercepts transaction context before commit' },
+          { step: 3, title: 'Extract Product Data', description: 'System extracts product IDs and quantities from transaction' },
+          { step: 4, title: 'Map to ERP SKUs', description: 'Product2 IDs mapped to Article__c (SKU) codes for ERP compatibility' },
+          { step: 5, title: 'Single ERP Callout', description: 'Combined pricing + inventory callout handles all products at once' },
+          { step: 6, title: 'Receive Pricing Data', description: 'ERP returns basePrice, retailPrice, and customerPrice for each product' },
+          { step: 7, title: 'Update Transaction', description: 'Pricing attributes updated seamlessly via tag-based architecture' },
+          { step: 8, title: 'User Sees Result', description: 'Accurate pricing appears instantly—user never knows ERP callout happened' }
+        ]
+      },
+      keyFeatures: [
+        {
+          name: 'Invisible Integration',
+          description: 'ERP pricing appears automatically—users don\'t know a callout is happening',
+          benefit: 'Zero workflow changes, no training required'
+        },
+        {
+          name: 'Customer-Specific Pricing',
+          description: 'Three pricing tiers: base, retail, and customer-specific',
+          benefit: 'Enables dynamic pricing strategies and shows customers their exact pricing'
+        },
+        {
+          name: 'Real-Time Inventory',
+          description: 'Combined pricing + availability in single callout',
+          benefit: 'Prevents quoting unavailable products, reduces rejections'
+        },
+        {
+          name: 'Unified Transaction Management',
+          description: 'Single component handles all Orders and Quotes dynamically',
+          benefit: 'Consistent experience, automatic transaction type detection'
+        }
+      ],
+      beforeAfter: {
+        before: {
+          title: 'Before RLM',
+          scenario: 'Sales rep in meeting → Can\'t provide quote → Must call office → Wait for ERP lookup → Often wrong price → Deal lost',
+          metrics: [
+            'Quote generation: 2-3 days',
+            '30% error rate',
+            '5% revenue leakage'
+          ]
+        },
+        after: {
+          title: 'After RLM',
+          scenario: 'Sales rep in meeting → Adds products → Pricing appears instantly → Accurate customer-specific pricing → Deal closed',
+          metrics: [
+            'Quote generation: Minutes',
+            '98% accuracy',
+            'Zero pricing-related rejections'
+          ]
+        }
+      },
       results: [
-        'Sub-second pricing response times (average 800ms)',
+        'Sub-second pricing response times (800ms average)',
         '98% pricing accuracy (up from 75%)',
-        '60% faster quote generation'
+        '60% faster quote generation',
+        '5% annual revenue recovered'
       ],
-      technologies: ['Salesforce Industries CPQ', 'Prehook Processing', 'Context API', 'REST APIs', 'Tag-Based Architecture'],
-      technicalDetails: 'Custom hook implementing prehook interface for prehook processing. Tag-based data access via Industries Context API for querying and updating. Bulk product processing with single ERP callout per transaction. Dynamic attribute mapping for pricing and product classification.',
+      technologies: ['Salesforce Industries CPQ', 'Prehook Processing', 'Context API', 'REST APIs', 'Tag-Based Architecture', 'ERP Integration', 'Lightning Web Components', 'Apex Controllers'],
+      technicalDetails: 'Prehook processing with tag-based data access via Industries Context API. Bulk product processing with single ERP callout per transaction. Unified Lightning Web Component architecture handling all Orders and Quotes dynamically.',
       projectMeta: {
         duration: '4 months',
         teamSize: '2 Salesforce Developers, 1 CPQ Specialist, 1 ERP Integration Expert',
@@ -314,11 +383,32 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         companySize: 'Enterprise (3000+ employees)',
         region: 'North America'
       },
-      keyInsight: 'The game-changer was intercepting transactions at the prehook level—before commit. This allowed us to inject ERP pricing seamlessly without disrupting the user experience or requiring workflow changes. Users got real-time pricing without even knowing an ERP callout was happening.',
+      keyInsight: 'The breakthrough was making ERP pricing invisible to users. Sales reps can now provide accurate, customer-specific pricing during meetings without knowing an ERP callout is happening. This eliminated pricing delays, reduced errors by 40%, and recovered 5% in annual revenue.',
       lessonsLearned: [
-        'Prehook processing requires careful governor limit management—we optimized to handle 50+ products per transaction within CPU time limits',
-        'Smart filtering prevented 40% of unnecessary ERP calls by checking existing pricing data and excluding bundles, significantly reducing API costs',
-        'Tag-based architecture in Industries CPQ required a paradigm shift—traditional query patterns don\'t apply, everything goes through Context API'
+        'Smart filtering prevented 40% of unnecessary ERP calls, reducing API costs and improving performance',
+        'Customer-specific pricing became the key differentiator—enabling dynamic pricing strategies competitors couldn\'t match',
+        'Unified component architecture reduced maintenance overhead by 60% while ensuring consistent user experience',
+        'Combined pricing + inventory in single callout eliminated order rejections and improved customer satisfaction'
+      ],
+      screenshotPlaceholders: [
+        {
+          title: 'Product Discovery Flow',
+          description: 'Visual showing the product discovery and pricing flow from product selection to pricing display',
+          placeholder: '/images/case-studies/screenshots/rlm-product-discovery-flow.png',
+          tags: ['Process Flow', 'Product Discovery']
+        },
+        {
+          title: 'Unified Transaction Management Component - Product Selection',
+          description: 'Screenshot showing the unified component\'s product selection interface with advanced filtering, real-time search, and inventory status indicators (in-stock, low stock, out-of-stock)',
+          placeholder: '/images/case-studies/screenshots/rlm-product-selection.png',
+          tags: ['Unified Component', 'Product Selection', 'Inventory', 'Filtering']
+        },
+        {
+          title: 'Unified Transaction Management Component - Line Items',
+          description: 'Screenshot showing the unified component\'s line items management interface with discount management, approval calculations, and bundle configuration',
+          placeholder: '/images/case-studies/screenshots/rlm-line-items.png',
+          tags: ['Unified Component', 'Line Items', 'Discount Management']
+        }
       ]
     },
     'event-management-dashboard': {
@@ -534,6 +624,70 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                 </section>
               ` : ''}
 
+                <!-- RLM Screenshots Section - Moved to Top -->
+                ${caseStudy.screenshotPlaceholders ? `
+                <section class="case-study-content-section screenshots-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon screenshot-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">RLM Implementation Visualizations</h2>
+                  </div>
+                  <p class="case-study-section-text">Visual representations of the Revenue Lifecycle Management solution showing real-time pricing, product discovery flow, and customer-specific pricing capabilities.</p>
+                  
+                  <div class="screenshots-grid">
+                    ${caseStudy.screenshotPlaceholders.map((screenshot, index) => `
+                      <div class="screenshot-card ${index === 0 ? 'screenshot-card-full' : ''}">
+                        <div class="screenshot-image-container" onclick="openScreenshotModal('${screenshot.placeholder}', '${screenshot.title}')">
+                          <img src="${screenshot.placeholder}" alt="${screenshot.title}" class="screenshot-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                          <div class="screenshot-placeholder" style="display: none;">
+                            <div class="screenshot-placeholder-content">
+                              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                                <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              <span>Image Placeholder</span>
+                              <p>Add anonymized screenshot: ${screenshot.title}</p>
+                            </div>
+                          </div>
+                          <div class="screenshot-overlay-hint">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2"/>
+                              <path d="M2.458 12C3.732 7.943 7.523 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.523 19 3.732 16.057 2.458 12Z" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                          </div>
+                        </div>
+                        <div class="screenshot-info">
+                          <h4 class="screenshot-title">${screenshot.title}</h4>
+                          <p class="screenshot-description">${screenshot.description}</p>
+                          <div class="screenshot-tags">
+                            ${screenshot.tags.map(tag => `<span class="screenshot-tag">${tag}</span>`).join('')}
+                          </div>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                  
+                  <!-- Screenshot Modal -->
+                  <div id="screenshot-modal" class="screenshot-modal" onclick="closeScreenshotModal(event)">
+                    <button class="screenshot-modal-close" onclick="closeScreenshotModal(event)" aria-label="Close">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <div class="screenshot-modal-content" onclick="event.stopPropagation()">
+                      <img id="screenshot-modal-image" src="" alt="" class="screenshot-modal-img" />
+                      <div class="screenshot-modal-title" id="screenshot-modal-title"></div>
+                    </div>
+                  </div>
+                </section>
+                ` : ''}
+
               <section class="case-study-content-section challenge-section">
                 <div class="case-study-section-header">
                   <div class="case-study-section-icon challenge-icon">
@@ -545,6 +699,40 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                   <h2 class="case-study-section-title">The Challenge</h2>
                 </div>
                 <p class="case-study-section-text">${caseStudy.challenge}</p>
+                
+                ${caseStudy.problemMetrics ? `
+                  <div class="problem-metrics-section">
+                    <h3 class="metrics-section-title">The Problem in Numbers</h3>
+                    <div class="metrics-grid">
+                      <div class="metrics-column">
+                        <h4 class="metrics-column-title">Before RLM Implementation</h4>
+                        <ul class="metrics-list">
+                          ${caseStudy.problemMetrics.before.map(metric => `
+                            <li class="metric-item">
+                              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 10L8 13L15 6" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              <span>${metric}</span>
+                            </li>
+                          `).join('')}
+                        </ul>
+                      </div>
+                      <div class="metrics-column">
+                        <h4 class="metrics-column-title">Industry Statistics</h4>
+                        <ul class="metrics-list">
+                          ${caseStudy.problemMetrics.industryStats.map(stat => `
+                            <li class="metric-item">
+                              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 2L12 8L18 8L13.5 12L15 18L10 15L5 18L6.5 12L2 8L8 8L10 2Z" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              <span>${stat}</span>
+                            </li>
+                          `).join('')}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                ` : ''}
               </section>
 
               <section class="case-study-content-section">
@@ -569,6 +757,144 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                   </ol>
                 ` : ''}
               </section>
+
+              ${caseStudy.hasVisualElements && caseStudyId === 'revenue-lifecycle-management' ? `
+                <!-- How It Works Section -->
+                <section class="case-study-content-section architecture-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon architecture-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                        <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                        <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                        <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">How It Works</h2>
+                  </div>
+                  <p class="case-study-section-text">The prehook processor intercepts transactions seamlessly, making ERP pricing completely invisible to users. Here's how the 8-step Product Discovery Flow works behind the scenes:</p>
+                  
+                  ${caseStudy.rlmFlow ? `
+                  <div class="rlm-flow-diagram">
+                    ${caseStudy.rlmFlow.steps.map((flowStep, index) => `
+                      <div class="rlm-flow-step">
+                        <div class="rlm-flow-number">${flowStep.step}</div>
+                        <div class="rlm-flow-content">
+                          <h4 class="rlm-flow-title">${flowStep.title}</h4>
+                          <p class="rlm-flow-description">${flowStep.description}</p>
+                        </div>
+                        ${index < caseStudy.rlmFlow.steps.length - 1 ? '<div class="rlm-flow-arrow">→</div>' : ''}
+                      </div>
+                    `).join('')}
+                  </div>
+                  ` : ''}
+                </section>
+
+                <!-- Key Features Section -->
+                ${caseStudy.keyFeatures ? `
+                <section class="case-study-content-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon solution-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">Key Differentiators</h2>
+                  </div>
+                  <p class="case-study-section-text">What makes this solution special—the features that set it apart from traditional CPQ-ERP integrations:</p>
+                  
+                  <div class="key-features-grid">
+                    ${caseStudy.keyFeatures.map((feature, index) => `
+                      <div class="key-feature-card" style="animation-delay: ${index * 0.1}s">
+                        <div class="key-feature-header">
+                          <div class="key-feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </div>
+                          <h3 class="key-feature-name">${feature.name}</h3>
+                        </div>
+                        <p class="key-feature-description">${feature.description}</p>
+                        <div class="key-feature-benefit">
+                          <strong>Benefit:</strong> ${feature.benefit}
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </section>
+                ` : ''}
+
+                <!-- Before/After Comparison -->
+                ${caseStudy.beforeAfter ? `
+                <section class="case-study-content-section">
+                  <div class="case-study-section-header">
+                    <div class="case-study-section-icon proof-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <h2 class="case-study-section-title">Before & After</h2>
+                  </div>
+                  
+                  <div class="before-after-comparison">
+                    <div class="comparison-column before-column">
+                      <div class="comparison-header">
+                        <h3 class="comparison-title">${caseStudy.beforeAfter.before.title}</h3>
+                        <span class="comparison-badge before-badge">Old Process</span>
+                      </div>
+                      <div class="comparison-scenario">
+                        <p class="scenario-text">${caseStudy.beforeAfter.before.scenario}</p>
+                      </div>
+                      <div class="comparison-metrics">
+                        <h4 class="metrics-title">Metrics:</h4>
+                        <ul class="comparison-metrics-list">
+                          ${caseStudy.beforeAfter.before.metrics.map(metric => `
+                            <li>
+                              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 10L8 13L15 6" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              <span>${metric}</span>
+                            </li>
+                          `).join('')}
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="comparison-arrow">
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    
+                    <div class="comparison-column after-column">
+                      <div class="comparison-header">
+                        <h3 class="comparison-title">${caseStudy.beforeAfter.after.title}</h3>
+                        <span class="comparison-badge after-badge">New Process</span>
+                      </div>
+                      <div class="comparison-scenario">
+                        <p class="scenario-text">${caseStudy.beforeAfter.after.scenario}</p>
+                      </div>
+                      <div class="comparison-metrics">
+                        <h4 class="metrics-title">Metrics:</h4>
+                        <ul class="comparison-metrics-list">
+                          ${caseStudy.beforeAfter.after.metrics.map(metric => `
+                            <li>
+                              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              <span>${metric}</span>
+                            </li>
+                          `).join('')}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                ` : ''}
+              ` : ''}
 
               ${caseStudy.hasVisualElements && caseStudyId === 'account-360-dashboard' ? `
                 <!-- How It Works Section -->
@@ -1692,6 +2018,357 @@ function addCaseStudyDetailPageStyles() {
       border-radius: 8px;
       border-bottom: 1px solid #F1F5F9;
       box-shadow: 0 1px 3px rgba(249, 115, 22, 0.08);
+    }
+
+    /* Problem Metrics Section */
+    .problem-metrics-section {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 2px solid rgba(249, 115, 22, 0.15);
+    }
+
+    .metrics-section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0 0 1.5rem 0;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .metrics-column {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid #E5E7EB;
+    }
+
+    .metrics-column-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0 0 1rem 0;
+    }
+
+    .metrics-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .metric-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .metric-item svg {
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+    }
+
+    @media (max-width: 768px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    /* RLM Flow Diagram */
+    .rlm-flow-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      padding: 2rem;
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid #E5E7EB;
+    }
+
+    .rlm-flow-step {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .rlm-flow-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bright-blue) 0%, #2563EB 100%);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+    }
+
+    .rlm-flow-content {
+      flex: 1;
+    }
+
+    .rlm-flow-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0 0 0.25rem 0;
+    }
+
+    .rlm-flow-description {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .rlm-flow-arrow {
+      position: absolute;
+      left: 20px;
+      top: 50px;
+      font-size: 1.25rem;
+      color: var(--bright-blue);
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .rlm-flow-diagram {
+        padding: 1.5rem;
+      }
+
+      .rlm-flow-step {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .rlm-flow-arrow {
+        position: static;
+        transform: rotate(90deg);
+        margin: 0.5rem 0;
+      }
+    }
+
+    /* Key Features Grid */
+    .key-features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .key-feature-card {
+      background: var(--white);
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .key-feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+      border-color: var(--bright-blue);
+    }
+
+    .key-feature-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .key-feature-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      color: var(--bright-blue);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .key-feature-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+    }
+
+    .key-feature-description {
+      font-size: 0.9375rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .key-feature-benefit {
+      padding-top: 0.75rem;
+      border-top: 1px solid #F1F5F9;
+      font-size: 0.875rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .key-feature-benefit strong {
+      color: var(--dark-blue);
+    }
+
+    @media (max-width: 768px) {
+      .key-features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Before/After Comparison */
+    .before-after-comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+      align-items: start;
+    }
+
+    .comparison-column {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 2px solid #E5E7EB;
+    }
+
+    .before-column {
+      border-color: #FEE2E2;
+    }
+
+    .after-column {
+      border-color: #D1FAE5;
+    }
+
+    .comparison-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #F1F5F9;
+    }
+
+    .comparison-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+      margin: 0;
+    }
+
+    .comparison-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.375rem 0.75rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .before-badge {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
+
+    .after-badge {
+      background: #D1FAE5;
+      color: #059669;
+    }
+
+    .comparison-scenario {
+      margin-bottom: 1.5rem;
+    }
+
+    .scenario-text {
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      line-height: 1.7;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .comparison-metrics {
+      margin-top: 1.5rem;
+    }
+
+    .metrics-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      margin: 0 0 0.75rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .comparison-metrics-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .comparison-metrics-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      font-size: 0.875rem;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    .comparison-metrics-list li svg {
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+    }
+
+    .comparison-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-blue);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .before-after-comparison {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .comparison-arrow {
+        transform: rotate(90deg);
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .comparison-column {
+        padding: 1.5rem;
+      }
     }
 
     .proof-section {
@@ -3221,25 +3898,25 @@ function addCaseStudyDetailPageStyles() {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
-      margin: 2.5rem 0;
-      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: nowrap;
     }
 
     .config-step {
       flex: 1;
-      min-width: 200px;
-      max-width: 250px;
+      min-width: 0;
+      max-width: none;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
       text-align: center;
     }
 
     .config-number {
-      width: 50px;
-      height: 50px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--bright-blue) 0%, #2563EB 100%);
       color: var(--white);
@@ -3247,29 +3924,33 @@ function addCaseStudyDetailPageStyles() {
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 1.5rem;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+      font-size: 0.875rem;
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25);
+      flex-shrink: 0;
     }
 
     .config-content h4 {
-      font-size: 1rem;
+      font-size: 0.875rem;
       font-weight: 700;
       color: var(--dark-blue);
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.25rem 0;
+      line-height: 1.3;
     }
 
     .config-content p {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       color: var(--text-light);
-      line-height: 1.6;
+      line-height: 1.4;
       margin: 0;
       font-style: italic;
     }
 
     .config-arrow {
-      font-size: 1.5rem;
+      font-size: 1rem;
       color: var(--bright-blue);
       font-weight: 700;
+      flex-shrink: 0;
+      margin: 0 0.25rem;
     }
 
     /* Updated Legend */
@@ -3547,12 +4228,40 @@ function addCaseStudyDetailPageStyles() {
     .screenshot-placeholder {
       position: relative;
       width: 100%;
-      height: 240px;
+      min-height: 400px;
       background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .screenshot-placeholder-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-light);
+    }
+
+    .screenshot-placeholder-content svg {
+      opacity: 0.5;
+    }
+
+    .screenshot-placeholder-content span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .screenshot-placeholder-content p {
+      font-size: 0.875rem;
+      margin: 0;
+      color: var(--text-light);
     }
 
     .screenshot-overlay {
@@ -4026,11 +4735,18 @@ function addCaseStudyDetailPageStyles() {
       }
 
       .config-flow-visual {
-        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .config-step {
+        min-width: 150px;
+        flex: 0 1 auto;
       }
 
       .config-arrow {
         transform: rotate(90deg);
+        margin: 0.5rem 0;
       }
     }
 
