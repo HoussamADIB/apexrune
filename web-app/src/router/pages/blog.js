@@ -96,9 +96,6 @@ export function loadBlogPage() {
               </div>
               <div class="articles-grid" id="articles-grid">
                 ${initialPosts.map((post, index) => {
-                  // Generate short title (max 4 words)
-                  const shortTitle = post.title.split(' ').slice(0, 4).join(' ');
-                  
                   // Generate gradient backgrounds using soft color palette
                   const backgroundColors = [
                     'linear-gradient(135deg, #FFFFFF 0%, #DBEAFE 100%)', // Soft Periwinkle
@@ -122,11 +119,22 @@ export function loadBlogPage() {
                   ];
                   const bgColor = backgroundColors[index % backgroundColors.length];
                   
+                  // Category icons using site icon library
+                  const categoryIcons = {
+                    'Architecture': 'layers',
+                    'Integration': 'plug',
+                    'Development': 'code',
+                    'Migration': 'refresh-cw',
+                    'Security': 'shield',
+                    'Performance': 'activity'
+                  };
+                  const iconName = categoryIcons[post.category] || 'code';
+                  
                   return `
                   <a href="/blog/${post.id}" class="article-card" data-category="${post.category}" data-title="${post.title.toLowerCase()}" data-excerpt="${post.excerpt.toLowerCase()}">
                     <div class="article-card-image">
                       <div class="article-card-bg" style="background: ${bgColor}">
-                        <h4 class="article-card-bg-title">${shortTitle}</h4>
+                        ${getCommonIcon(iconName, 64, 'currentColor', 1.5)}
                       </div>
                     </div>
                     <div class="article-card-body">
@@ -252,15 +260,24 @@ function initLoadMore(remainingPosts, postsPerPage, getCommonIcon, allPosts) {
     // Create HTML for new posts
     const newPostsHTML = nextBatch.map((post, batchIndex) => {
       const globalIndex = currentIndex + batchIndex + 6; // +6 because we already showed 6
-      // Generate short title (max 4 words)
-      const shortTitle = post.title.split(' ').slice(0, 4).join(' ');
       const bgColor = backgroundColors[globalIndex % backgroundColors.length];
+      
+      // Category icons using site icon library
+      const categoryIcons = {
+        'Architecture': 'layers',
+        'Integration': 'plug',
+        'Development': 'code',
+        'Migration': 'refresh-cw',
+        'Security': 'shield',
+        'Performance': 'activity'
+      };
+      const iconName = categoryIcons[post.category] || 'code';
       
       return `
         <a href="/blog/${post.id}" class="article-card" data-category="${post.category}" data-title="${post.title.toLowerCase()}" data-excerpt="${post.excerpt.toLowerCase()}">
           <div class="article-card-image">
             <div class="article-card-bg" style="background: ${bgColor}">
-              <h4 class="article-card-bg-title">${shortTitle}</h4>
+              ${getCommonIcon(iconName, 64, 'currentColor', 1.5)}
             </div>
           </div>
           <div class="article-card-body">
@@ -1165,25 +1182,29 @@ function addBlogPageStyles() {
 
     .article-card-bg {
       width: 100%;
-      height: 180px;
+      height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
       border-radius: 0;
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
 
-    .article-card-bg-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #2D3748;
-      text-align: center;
-      line-height: 1.3;
-      margin: 0;
-      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
-      z-index: 1;
+    .article-card-bg svg {
+      opacity: 0.15;
+      color: #1E40AF;
+      transition: all 0.3s ease;
+    }
+
+    .article-card:hover .article-card-bg {
+      transform: scale(1.02);
+    }
+
+    .article-card:hover .article-card-bg svg {
+      opacity: 0.25;
+      transform: scale(1.1);
     }
 
     .card-icon-placeholder {
@@ -1450,11 +1471,7 @@ function addBlogPageStyles() {
       }
 
       .article-card-bg {
-        height: 160px;
-      }
-
-      .article-card-bg-title {
-        font-size: 1.1rem;
+        height: 120px;
       }
 
       .articles-filters {

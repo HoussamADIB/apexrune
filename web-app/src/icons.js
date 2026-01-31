@@ -33,7 +33,9 @@ import {
   Mail,
   Calendar,
   Linkedin,
-  Sparkles
+  Sparkles,
+  GitMerge,
+  Briefcase
 } from 'lucide';
 
 // Helper function to create SVG string from Lucide icon
@@ -74,7 +76,7 @@ export function getServiceIcon(serviceKey, size = 64, color = 'white') {
     'custom-development': Code2, // Code icon for custom development
     'system-integration': Plug, // Plug icon for integrations
     'health-checks': Stethoscope, // Stethoscope for health checks
-    'process-automation': Workflow, // Workflow icon for automation
+    'process-automation': Zap, // Zap icon for automation
     'salesforce-quick-start': Rocket // Rocket for quick start
   };
   
@@ -98,7 +100,7 @@ export function getServiceCardIcon(serviceKey, size = 32) {
     'custom-development': Code2,
     'system-integration': Plug,
     'health-checks': Stethoscope,
-    'process-automation': Workflow,
+    'process-automation': Zap,
     'salesforce-quick-start': Rocket
   };
   
@@ -152,13 +154,26 @@ export function getCommonIcon(iconName, size = 24, color = 'currentColor', strok
     'linkedin': Linkedin,
     'sparkles': Sparkles,
     'shield-check': Shield,
+    'shield': Shield,
     'trending-up': TrendingUpIcon,
     'database': Database,
     'file-text': FileText,
     'alert-circle': AlertCircle,
     'user-x': UserX,
     'rocket': Rocket,
-    'link': Link2
+    'link': Link2,
+    'code': Code2,
+    'plug': Plug,
+    'activity': Activity,
+    'workflow': Workflow,
+    'refresh-cw': RefreshCw,
+    'bar-chart-3': BarChart3,
+    'search': Database,
+    'layers': BarChart3,
+    'zap': Zap,
+    'git-merge': GitMerge,
+    'briefcase': Briefcase,
+    'stethoscope': Stethoscope
   };
   
   const iconData = iconMap[iconName];

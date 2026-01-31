@@ -1760,22 +1760,29 @@ main {
 
 /* Newsletter Section */
 .newsletter-section {
-  padding: 4rem 2rem;
-  background: var(--gradient-dark-blue-alt);
+  padding: 5rem 2rem;
+  background: linear-gradient(to bottom, #FAFBFC 0%, #F3F5F8 100%);
   position: relative;
-  overflow: hidden;
+  border-top: 1px solid var(--color-border-default);
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 .newsletter-section::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, var(--color-blue-opacity-15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, var(--color-shadow-blue-light) 0%, transparent 40%);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--color-blue-opacity-30) 20%, 
+    var(--bright-blue) 50%, 
+    var(--color-blue-opacity-30) 80%, 
+    transparent 100%
+  );
   pointer-events: none;
 }
 
@@ -1800,22 +1807,23 @@ main {
   justify-content: center;
   width: 56px;
   height: 56px;
-  background: var(--color-blue-opacity-20);
+  background: linear-gradient(135deg, var(--bright-blue), var(--color-blue-600));
   border-radius: 50%;
   margin-bottom: 1.5rem;
-  color: var(--color-blue-300);
+  color: var(--white);
+  box-shadow: 0 4px 12px var(--color-shadow-blue);
 }
 
 .newsletter-title {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--dark-blue);
   margin-bottom: 0.75rem;
 }
 
 .newsletter-description {
-  font-size: 1.1rem;
-  color: var(--color-white-opacity-70);
+  font-size: 1.05rem;
+  color: var(--text-light);
   max-width: 500px;
   line-height: 1.6;
 }
@@ -1828,17 +1836,17 @@ main {
 .newsletter-input-wrapper {
   display: flex;
   gap: 0.75rem;
-  background: var(--color-white-opacity-10);
+  background: var(--white);
   border-radius: 12px;
   padding: 6px;
-  border: 1px solid var(--color-white-opacity-15);
+  border: 2px solid var(--color-border-default);
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--color-shadow-black-light);
 }
 
 .newsletter-input-wrapper:focus-within {
-  background: var(--color-white-opacity-15);
-  border-color: var(--color-blue-opacity-50);
-  box-shadow: 0 0 0 3px var(--color-blue-opacity-20);
+  border-color: var(--bright-blue);
+  box-shadow: 0 4px 16px var(--color-shadow-blue-light), 0 0 0 3px var(--color-blue-opacity-15);
 }
 
 .newsletter-input {
@@ -1847,12 +1855,12 @@ main {
   border: none;
   padding: 0.875rem 1rem;
   font-size: 1rem;
-  color: var(--white);
+  color: var(--text-dark);
   outline: none;
 }
 
 .newsletter-input::placeholder {
-  color: var(--color-white-opacity-50);
+  color: var(--color-gray-400);
 }
 
 .newsletter-button {
@@ -1887,7 +1895,7 @@ main {
 .newsletter-disclaimer {
   margin-top: 1rem;
   font-size: 0.85rem;
-  color: var(--color-white-opacity-50);
+  color: var(--color-gray-500);
 }
 
 .newsletter-success {
@@ -1979,6 +1987,7 @@ main {
   background: var(--color-primary-darker);
   color: var(--white);
   padding: 4rem 2rem 2rem;
+  position: relative;
 }
 
 .footer-content {
@@ -2499,7 +2508,7 @@ main {
   }
 
   .newsletter-section {
-    padding: 3rem 1rem;
+    padding: 3.5rem 1rem;
   }
 
   .newsletter-title {
@@ -2684,7 +2693,7 @@ main {
     }
 
     .newsletter-section {
-      padding: 2.5rem 0.875rem;
+      padding: 3rem 0.875rem;
     }
 
     .newsletter-title {
