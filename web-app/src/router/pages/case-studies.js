@@ -1519,7 +1519,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
     // Social sharing functions
     if (!window.shareOnLinkedIn) {
       window.shareOnLinkedIn = function(caseStudyId, title) {
-        const url = `${window.location.origin}/case-studies/${caseStudyId}`;
+        const url = `${window.location.origin}/case-study/${caseStudyId}`;
         const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
         window.open(linkedInUrl, '_blank', 'width=600,height=600');
       };
@@ -1527,7 +1527,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
     
     if (!window.shareOnTwitter) {
       window.shareOnTwitter = function(caseStudyId, title) {
-        const url = `${window.location.origin}/case-studies/${caseStudyId}`;
+        const url = `${window.location.origin}/case-study/${caseStudyId}`;
         const text = decodeURIComponent(title) + ' - ApexRune Case Study';
         const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
         window.open(twitterUrl, '_blank', 'width=600,height=600');
@@ -1536,7 +1536,7 @@ export function loadCaseStudyDetailPage(caseStudyId) {
     
     if (!window.copyShareLink) {
       window.copyShareLink = function(caseStudyId) {
-        const url = `${window.location.origin}/case-studies/${caseStudyId}`;
+        const url = `${window.location.origin}/case-study/${caseStudyId}`;
         navigator.clipboard.writeText(url).then(() => {
           // Show temporary feedback
           const btn = event.target.closest('.share-copy');
@@ -1557,7 +1557,6 @@ export function loadCaseStudyDetailPage(caseStudyId) {
           }
         }).catch(err => {
           console.error('Failed to copy link:', err);
-          alert('Link copied: ' + url);
         });
       };
     }
