@@ -2,6 +2,29 @@ import { loadServicePage, setHandleRoute } from './pages/services.js';
 import { initMobileMenu } from './ui/mobile-menu.js';
 import { initDropdownMenus, cleanupDropdownMenus } from './ui/dropdowns.js';
 
+// Create and append loading indicator
+let loadingIndicator = null;
+function createLoadingIndicator() {
+  if (loadingIndicator) return loadingIndicator;
+  
+  loadingIndicator = document.createElement('div');
+  loadingIndicator.id = 'page-loading-indicator';
+  loadingIndicator.innerHTML = '<div class="loading-spinner"></div>';
+  document.body.appendChild(loadingIndicator);
+  return loadingIndicator;
+}
+
+function showLoadingIndicator() {
+  const indicator = createLoadingIndicator();
+  indicator.classList.add('show');
+}
+
+function hideLoadingIndicator() {
+  if (loadingIndicator) {
+    loadingIndicator.classList.remove('show');
+  }
+}
+
 // Page loaders - will be imported dynamically
 let pageLoaders = {
   loadContactPage: null,
@@ -10,7 +33,8 @@ let pageLoaders = {
   loadBlogPage: null,
   loadBlogPostPage: null,
   loadPrivacyPolicyPage: null,
-  loadTermsOfServicePage: null
+  loadTermsOfServicePage: null,
+  load404Page: null
 };
 
 // Track when page loaders are ready
@@ -35,6 +59,9 @@ const pageLoadersPromise = Promise.all([
   import('./pages/legal.js').then(m => {
     pageLoaders.loadPrivacyPolicyPage = m.loadPrivacyPolicyPage;
     pageLoaders.loadTermsOfServicePage = m.loadTermsOfServicePage;
+  }),
+  import('./pages/404.js').then(m => {
+    pageLoaders.load404Page = m.load404Page;
   })
 ]).then(() => {
   pageLoadersReady = true;
@@ -58,6 +85,8 @@ import('../seo.js').then((module) => {
 let handleRouteRef = null;
 
 function handleRoute() {
+  showLoadingIndicator();
+  
   const path = window.location.pathname || '/';
   const app = document.querySelector('#app');
 
@@ -178,9 +207,17 @@ function handleRoute() {
       });
     }
   } else {
-    // 404 - redirect to home
-    window.history.replaceState({}, '', '/');
-    handleRoute();
+    // 404 - show error page
+    if (pageLoaders.load404Page) {
+      pageLoaders.load404Page();
+    } else if (!pageLoadersReady) {
+      // Page loaders not ready yet, wait and retry
+      pageLoadersPromise.then(() => {
+        if (pageLoaders.load404Page) {
+          pageLoaders.load404Page();
+        }
+      });
+    }
   }
   
   // Clean up old dropdown handlers before initializing new ones
@@ -192,6 +229,7 @@ function handleRoute() {
     // Small delay to ensure DOM is fully ready
     setTimeout(() => {
       initDropdownMenus();
+      hideLoadingIndicator();
     }, 50);
   });
 }

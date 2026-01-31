@@ -56,7 +56,7 @@ export function getFooterHTML(getCommonIcon) {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 ApexRune. All rights reserved.</p>
+          <p>© ${new Date().getFullYear()} ApexRune. All rights reserved.</p>
           <div class="footer-bottom-links">
             <a href="/privacy-policy">Privacy Policy</a>
             <a href="/terms-of-service">Terms of Service</a>

@@ -535,6 +535,10 @@ document.querySelector('#app').innerHTML = `
               ${getCommonIcon('check-circle', 20, 'currentColor')}
               <span>You're in! Check your inbox for a confirmation.</span>
             </div>
+            <div class="newsletter-error">
+              ${getCommonIcon('alert-circle', 20, 'currentColor')}
+              <span>Oops! Something went wrong. Please try again.</span>
+            </div>
           </form>
         </div>
       </div>
@@ -596,7 +600,7 @@ document.querySelector('#app').innerHTML = `
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 ApexRune. All rights reserved.</p>
+          <p>© ${new Date().getFullYear()} ApexRune. All rights reserved.</p>
           <div class="footer-bottom-links">
             <a href="/privacy-policy">Privacy Policy</a>
             <a href="/terms-of-service">Terms of Service</a>
@@ -720,20 +724,37 @@ function initNewsletterForm() {
     const email = document.getElementById('newsletter-email').value;
     const button = form.querySelector('.newsletter-button');
     
+    // Reset states
+    form.classList.remove('submitted', 'error');
+    
     // Show loading state
     button.disabled = true;
     button.innerHTML = 'Subscribing...';
     
-    // Simulate API call (replace with actual Mailchimp/ConvertKit integration)
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Show success state
-    form.classList.add('submitted');
-    
-    // Optional: Send to your backend or email service
-    // await fetch('/api/newsletter', { method: 'POST', body: JSON.stringify({ email }) });
-    
-    console.log('Newsletter signup:', email);
+    try {
+      // Simulate API call (replace with actual Mailchimp/ConvertKit integration)
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // Simulate random success/failure for demo
+          // In production, this would be your actual API call
+          resolve();
+        }, 800);
+      });
+      
+      // Show success state
+      form.classList.add('submitted');
+      
+      // Optional: Send to your backend or email service
+      // await fetch('/api/newsletter', { method: 'POST', body: JSON.stringify({ email }) });
+      
+      console.log('Newsletter signup:', email);
+    } catch (error) {
+      // Show error state
+      form.classList.add('error');
+      button.disabled = false;
+      button.innerHTML = `Subscribe ${getCommonIcon('arrow-right', 18, 'currentColor')}`;
+      console.error('Newsletter signup failed:', error);
+    }
   });
 }
 

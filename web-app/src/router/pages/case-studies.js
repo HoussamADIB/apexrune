@@ -27,7 +27,7 @@ export function loadCaseStudiesPage() {
           <!-- Case Study 1: Account 360 Dashboard (HIGH INTEREST - Comprehensive unified view, high impact) -->
           <a href="/case-study/account-360-dashboard" class="case-study-card">
             <div class="case-study-image-wrapper">
-              <img src="/images/case-studies/account-360-dashboard.png" alt="Global Manufacturer" class="case-study-image" />
+              <img src="/images/case-studies/account-360-dashboard.png" alt="Account 360 Dashboard case study showing unified account management interface for global manufacturer" class="case-study-image" />
               <div class="case-study-overlay">
                 <span class="read-full-story">Read Full Story</span>
               </div>
@@ -62,7 +62,7 @@ export function loadCaseStudiesPage() {
           <!-- Case Study 2: Revenue Lifecycle Management (HIGH INTEREST - Advanced CPQ, sub-second pricing) -->
           <a href="/case-study/revenue-lifecycle-management" class="case-study-card">
             <div class="case-study-image-wrapper">
-              <img src="/images/case-studies/revenue-lifecycle-management.png" alt="Industrial Manufacturer" class="case-study-image" />
+              <img src="/images/case-studies/revenue-lifecycle-management.png" alt="Revenue Lifecycle Management case study showcasing dynamic CPQ with real-time ERP pricing for industrial manufacturer" class="case-study-image" />
               <div class="case-study-overlay">
                 <span class="read-full-story">Read Full Story</span>
               </div>
@@ -97,7 +97,7 @@ export function loadCaseStudiesPage() {
           <!-- Case Study 3: Platform Paralysis (MOST INTERESTING - High impact performance optimization) -->
           <a href="/case-study/platform-paralysis" class="case-study-card">
             <div class="case-study-image-wrapper">
-              <img src="/images/case-studies/platform-paralysis.png" alt="Professional Services Firm" class="case-study-image" />
+              <img src="/images/case-studies/platform-paralysis.png" alt="Platform Paralysis case study demonstrating agile Salesforce transformation for professional services firm" class="case-study-image" />
               <div class="case-study-overlay">
                 <span class="read-full-story">Read Full Story</span>
               </div>
@@ -132,7 +132,7 @@ export function loadCaseStudiesPage() {
           <!-- Case Study 4: Event Management Dashboard (MEDIUM-HIGH INTEREST - Real-time Platform Events) -->
           <a href="/case-study/event-management-dashboard" class="case-study-card">
             <div class="case-study-image-wrapper">
-              <img src="/images/case-studies/event-management-dashboard.png" alt="Marketing Organization" class="case-study-image" />
+              <img src="/images/case-studies/event-management-dashboard.png" alt="Event Management Dashboard case study displaying intelligent event tracking system for marketing organization" class="case-study-image" />
               <div class="case-study-overlay">
                 <span class="read-full-story">Read Full Story</span>
               </div>
@@ -167,7 +167,7 @@ export function loadCaseStudiesPage() {
           <!-- Case Study 5: UX/UI Modernization (MEDIUM-HIGH INTEREST - Modern LWC architecture) -->
           <a href="/case-study/ux-ui-modernization" class="case-study-card">
             <div class="case-study-image-wrapper">
-              <img src="/images/case-studies/ux-ui-modernization.png" alt="Medical Device Manufacturer" class="case-study-image" />
+              <img src="/images/case-studies/ux-ui-modernization.png" alt="UX/UI Modernization case study featuring Lightning Web Components redesign for medical device manufacturer" class="case-study-image" />
               <div class="case-study-overlay">
                 <span class="read-full-story">Read Full Story</span>
               </div>
@@ -602,6 +602,26 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                 ${caseStudy.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
               </div>
             ` : ''}
+            
+            <div class="case-study-share-buttons">
+              <span class="share-label">Share:</span>
+              <button class="share-btn share-linkedin" onclick="shareOnLinkedIn('${caseStudy.id}', '${encodeURIComponent(caseStudy.title)}')" title="Share on LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </button>
+              <button class="share-btn share-twitter" onclick="shareOnTwitter('${caseStudy.id}', '${encodeURIComponent(caseStudy.title)}')" title="Share on Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </button>
+              <button class="share-btn share-copy" onclick="copyShareLink('${caseStudy.id}')" title="Copy link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <!-- Main Layout: Two Columns -->
@@ -678,6 +698,29 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                         <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </button>
+                    <div class="screenshot-modal-zoom-controls">
+                      <button class="zoom-btn" onclick="zoomScreenshotIn(event)" title="Zoom in">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="11" cy="11" r="8"/>
+                          <path d="M21 21l-4.35-4.35"/>
+                          <line x1="11" y1="8" x2="11" y2="14"/>
+                          <line x1="8" y1="11" x2="14" y2="11"/>
+                        </svg>
+                      </button>
+                      <button class="zoom-btn" onclick="zoomScreenshotOut(event)" title="Zoom out">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="11" cy="11" r="8"/>
+                          <path d="M21 21l-4.35-4.35"/>
+                          <line x1="8" y1="11" x2="14" y2="11"/>
+                        </svg>
+                      </button>
+                      <button class="zoom-btn" onclick="resetScreenshotZoom(event)" title="Reset zoom">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                          <path d="M3 3v5h5"/>
+                        </svg>
+                      </button>
+                    </div>
                     <div class="screenshot-modal-content" onclick="event.stopPropagation()">
                       <img id="screenshot-modal-image" src="" alt="" class="screenshot-modal-img" />
                       <div class="screenshot-modal-title" id="screenshot-modal-title"></div>
@@ -1115,6 +1158,29 @@ export function loadCaseStudyDetailPage(caseStudyId) {
                         <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </button>
+                    <div class="screenshot-modal-zoom-controls">
+                      <button class="zoom-btn" onclick="zoomScreenshotIn(event)" title="Zoom in">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="11" cy="11" r="8"/>
+                          <path d="M21 21l-4.35-4.35"/>
+                          <line x1="11" y1="8" x2="11" y2="14"/>
+                          <line x1="8" y1="11" x2="14" y2="11"/>
+                        </svg>
+                      </button>
+                      <button class="zoom-btn" onclick="zoomScreenshotOut(event)" title="Zoom out">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="11" cy="11" r="8"/>
+                          <path d="M21 21l-4.35-4.35"/>
+                          <line x1="8" y1="11" x2="14" y2="11"/>
+                        </svg>
+                      </button>
+                      <button class="zoom-btn" onclick="resetScreenshotZoom(event)" title="Reset zoom">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                          <path d="M3 3v5h5"/>
+                        </svg>
+                      </button>
+                    </div>
                     <div class="screenshot-modal-content" onclick="event.stopPropagation()">
                       <img id="screenshot-modal-image" src="" alt="" class="screenshot-modal-img" />
                       <div class="screenshot-modal-title" id="screenshot-modal-title"></div>
@@ -1440,6 +1506,94 @@ export function loadCaseStudyDetailPage(caseStudyId) {
       };
     }
 
+    // Social sharing functions
+    if (!window.shareOnLinkedIn) {
+      window.shareOnLinkedIn = function(caseStudyId, title) {
+        const url = `${window.location.origin}/case-studies/${caseStudyId}`;
+        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        window.open(linkedInUrl, '_blank', 'width=600,height=600');
+      };
+    }
+    
+    if (!window.shareOnTwitter) {
+      window.shareOnTwitter = function(caseStudyId, title) {
+        const url = `${window.location.origin}/case-studies/${caseStudyId}`;
+        const text = decodeURIComponent(title) + ' - ApexRune Case Study';
+        const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+        window.open(twitterUrl, '_blank', 'width=600,height=600');
+      };
+    }
+    
+    if (!window.copyShareLink) {
+      window.copyShareLink = function(caseStudyId) {
+        const url = `${window.location.origin}/case-studies/${caseStudyId}`;
+        navigator.clipboard.writeText(url).then(() => {
+          // Show temporary feedback
+          const btn = event.target.closest('.share-copy');
+          if (btn) {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            `;
+            btn.style.background = 'var(--color-green)';
+            btn.style.color = 'white';
+            setTimeout(() => {
+              btn.innerHTML = originalHTML;
+              btn.style.background = '';
+              btn.style.color = '';
+            }, 2000);
+          }
+        }).catch(err => {
+          console.error('Failed to copy link:', err);
+          alert('Link copied: ' + url);
+        });
+      };
+    }
+
+    // Zoom state
+    let screenshotZoom = 1;
+    let screenshotPanX = 0;
+    let screenshotPanY = 0;
+    let isPanning = false;
+    let startX = 0;
+    let startY = 0;
+
+    if (!window.zoomScreenshotIn) {
+      window.zoomScreenshotIn = function(event) {
+        event.stopPropagation();
+        screenshotZoom = Math.min(screenshotZoom + 0.25, 3);
+        applyZoomToScreenshot();
+      };
+    }
+
+    if (!window.zoomScreenshotOut) {
+      window.zoomScreenshotOut = function(event) {
+        event.stopPropagation();
+        screenshotZoom = Math.max(screenshotZoom - 0.25, 0.5);
+        applyZoomToScreenshot();
+      };
+    }
+
+    if (!window.resetScreenshotZoom) {
+      window.resetScreenshotZoom = function(event) {
+        event.stopPropagation();
+        screenshotZoom = 1;
+        screenshotPanX = 0;
+        screenshotPanY = 0;
+        applyZoomToScreenshot();
+      };
+    }
+
+    function applyZoomToScreenshot() {
+      const img = document.getElementById('screenshot-modal-image');
+      if (img) {
+        img.style.transform = `scale(${screenshotZoom}) translate(${screenshotPanX}px, ${screenshotPanY}px)`;
+        img.style.cursor = screenshotZoom > 1 ? 'grab' : 'default';
+      }
+    }
+
     if (!window.closeScreenshotModal) {
       window.closeScreenshotModal = function(event) {
         if (event) {
@@ -1449,6 +1603,10 @@ export function loadCaseStudyDetailPage(caseStudyId) {
         if (modal) {
           modal.style.display = 'none';
           document.body.style.overflow = '';
+          // Reset zoom
+          screenshotZoom = 1;
+          screenshotPanX = 0;
+          screenshotPanY = 0;
         }
       };
       
@@ -1461,6 +1619,51 @@ export function loadCaseStudyDetailPage(caseStudyId) {
           }
         }
       });
+
+      // Add wheel zoom to modal image
+      const modalContent = document.querySelector('.screenshot-modal-content');
+      if (modalContent) {
+        modalContent.addEventListener('wheel', function(e) {
+          const modal = document.getElementById('screenshot-modal');
+          if (modal && modal.style.display === 'flex') {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            screenshotZoom = Math.max(0.5, Math.min(3, screenshotZoom + delta));
+            applyZoomToScreenshot();
+          }
+        }, { passive: false });
+
+        // Add pan functionality
+        const modalImg = document.getElementById('screenshot-modal-image');
+        if (modalImg) {
+          modalImg.addEventListener('mousedown', function(e) {
+            if (screenshotZoom > 1) {
+              isPanning = true;
+              startX = e.clientX - screenshotPanX;
+              startY = e.clientY - screenshotPanY;
+              modalImg.style.cursor = 'grabbing';
+            }
+          });
+
+          document.addEventListener('mousemove', function(e) {
+            if (isPanning) {
+              screenshotPanX = e.clientX - startX;
+              screenshotPanY = e.clientY - startY;
+              applyZoomToScreenshot();
+            }
+          });
+
+          document.addEventListener('mouseup', function() {
+            if (isPanning) {
+              isPanning = false;
+              const img = document.getElementById('screenshot-modal-image');
+              if (img && screenshotZoom > 1) {
+                img.style.cursor = 'grab';
+              }
+            }
+          });
+        }
+      }
     }
     
     // Animate components on scroll
@@ -1866,6 +2069,58 @@ function addCaseStudyDetailPageStyles() {
 
     .tech-tag:hover {
       background: rgba(255, 255, 255, 0.25);
+    }
+
+    .case-study-share-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .share-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .share-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .share-btn:active {
+      transform: translateY(0);
+    }
+
+    .share-linkedin:hover {
+      background: #0077b5;
+    }
+
+    .share-twitter:hover {
+      background: #000000;
+    }
+
+    .share-copy:hover {
+      background: rgba(255, 255, 255, 0.3);
     }
 
     /* Article Container */
@@ -4045,6 +4300,45 @@ function addCaseStudyDetailPageStyles() {
       background: rgba(255, 255, 255, 0.2);
       border-color: rgba(255, 255, 255, 0.3);
       transform: scale(1.1);
+    }
+
+    .screenshot-modal-zoom-controls {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 0.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 3001;
+    }
+
+    .zoom-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--white);
+      transition: all 0.2s ease;
+    }
+
+    .zoom-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .screenshot-modal-img {
+      transition: transform 0.2s ease;
+      user-select: none;
     }
 
     .screenshot-modal-content {
